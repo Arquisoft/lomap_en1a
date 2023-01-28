@@ -1,5 +1,5 @@
 FROM node:18.13.0
-LABEL org.opencontainers.image.source https://github.com/arquisoft/lomap_0
+LABEL org.opencontainers.image.source https://github.com/arquisoft/lomap_en1a
 COPY . /app
 WORKDIR /app
 #Install the dependencies
