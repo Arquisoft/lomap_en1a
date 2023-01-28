@@ -1,6 +1,6 @@
 # lomap_en1a
 
-[![Actions Status](https://github.com/arquisoft/lomap_en1a/workflows/CI%20for%20LOMAP_0/badge.svg)](https://github.com/arquisoft/lomap_en1a/actions)
+[![Actions Status](https://github.com/arquisoft/lomap_en1a/workflows/CI%20for%20LOMAP_en1a/badge.svg)](https://github.com/arquisoft/lomap_en1a/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_en1a&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_en1a)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_en1a&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_en1a)
 
