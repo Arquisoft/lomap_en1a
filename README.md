@@ -261,3 +261,4 @@ After the actions process is finished, we can access the application using the I
 Group members:
 Pablo Valdés Fernández: UO282655@uniovi.es
 Sergio del Rey Álvarez: UO282497@uniovi.es
+Vanesa Alonso Ramos: UO281801@uniovi.es
