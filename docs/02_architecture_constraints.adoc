@@ -38,6 +38,6 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 [options="header",cols="1,2"]
 |===
 |Constraint|Explanation
-| _Documentation_ | _We are going to use AsciiDoc, PlantUML and follow the Arc42 template_
+| _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
 | _Language_ | _The documentation and application will be developed in English_ 
 |===
