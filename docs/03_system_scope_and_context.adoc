@@ -1,47 +1,29 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
+In this chapter we will give a brief description of what will the scope of the project be, as well as for which context it is being created for.
 
+The project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. The application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
 
-[role="arc42help"]
-****
-.Contents
-System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
+(Insert diagram here)
 
-If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).
+== Business Context
+The system is related with several parters, shown in the following diagram:
 
-.Motivation
-The domain interfaces and technical interfaces to communication partners are among your system's most critical aspects. Make sure that you completely understand them.
+(Insert diagram here)
 
-.Form
-Various options:
+The elements shown in the diagram are explained here:
 
-* Context diagrams
-* Lists of communication partners and their interfaces.
-****
-
-
-=== Business Context
-
-[role="arc42help"]
-****
-.Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
-
-.Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
-
-.Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
-
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
+[options="header,footer"]
+|=======================
+|Partner          |Input             |Output
+|User             |Application services |User data
+|POD              |User data/request |User data
+|LoMap            |User input        |Service to user
+|(DataBase)       |User data request |User data
+|(Deployment)     |Application data  |Application deployment
+|(Image service)  |Image request     |Images
+|(Map service)    |Map data request  |Map data 
+|=======================
 
 === Technical Context
 
