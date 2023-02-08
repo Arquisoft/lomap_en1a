@@ -20,7 +20,6 @@ The elements shown in the diagram are explained here:
 |POD              |User data/request |User data
 |LoMap            |User input        |Service to user
 |(DataBase)       |User data request |User data
-|(Deployment)     |Application data  |Application deployment
 |(Image service)  |Image request     |Images
 |(Map service)    |Map data request  |Map data 
 |=======================
