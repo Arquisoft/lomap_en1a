@@ -4,8 +4,6 @@ In this chapter we will give a brief description of what will the scope of the p
 
 The project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. The application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
 
-(Insert diagram here)
-
 == Business Context
 The system is related with several parters, shown in the following diagram:
 
@@ -26,22 +24,20 @@ The elements shown in the diagram are explained here:
 
 === Technical Context
 
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
+The system's structure consists in the following components:
 
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
+image::images/technicalDiagram.svg[Technical Diagram]
 
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
+Each component will be explained in more detail:
 
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+[options="header,footer"]
+|=======================
+|Technical component   |Description
+|GitHub Repository     |Repository storing the code and documentation of the project
+|Documentation         |Text files explaining the system's architecture following the arc42 template
+|Frontend              |System parts that handle the interaction with the user through the user interface
+|Backend               |System parts that handle the data processing logic
+|DataBase              |Persistent storage system to store the system's data
+|SOLID                 |Architecture providing a way to store the user data in a decentralized and remote way
+|POD                   |Each different, decentralized data repositories used by SOLID to store a single user's information
+|=======================
