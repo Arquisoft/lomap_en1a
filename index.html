@@ -536,6 +536,9 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sect1">
 <h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.</p>
+</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -558,6 +561,37 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
+<div class="paragraph">
+<div class="title">Contents</div>
+<p>The software must include features to provide some services. It has to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Allow the users to add and store any location they want to include in their maps.</p>
+</li>
+<li>
+<p>Include features that allow to add reviews, comments, pics, etc. about the places.</p>
+</li>
+<li>
+<p>Include a way of managing the information that is accesible with other users.</p>
+</li>
+<li>
+<p>Filter the map by category, friends, etc.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All these requirements can be found in <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Motivation</div>
+<p>The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.</p>
+</div>
+<div class="paragraph">
+<div class="title">Form</div>
+<p>All requirements are specified in <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
+</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -601,9 +635,58 @@ If you as an architect do not know how the quality of your work will be judged �
 </div>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Source of stimulus</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Artifact</th>
+<th class="tableblock halign-left valign-top">Environment</th>
+<th class="tableblock halign-left valign-top">Response</th>
+<th class="tableblock halign-left valign-top">Response measure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal use of the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whole system</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal operation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aviability percentage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">99% aviability</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">40 concurrent users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request a map of a given city</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Response time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;0.5 seconds</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clients</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Search of a location</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&lt; 5 minutes</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_stakeholders">1.3. Stakeholders</h3>
+<div class="paragraph">
+<p>This part is related with all the roles which are involved in the development of the system:</p>
+</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -656,14 +739,28 @@ These stakeholders determine the extent and the level of detail of your work and
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-1&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Developers</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
+Pablo Valdés Fernández</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Create, test (not entirely), document the system and communicate with the other roles to get feedback and resources.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Teacher</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Pablo González González</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Guide the developers and solve any conflicts. He is present in the meeting minutes and also provided
+project&#8217;s skeleton.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Solid challenge</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Inrupt/Empathy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>From what is know currently. A challenge will take place and people in this role will have to evaluate the
+usage of the SOLID pattern regarding user data.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Users</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>People that use or are expected to use the application</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The developers will use them in the intermediate phases of the development to
+find problems, and test things like usability or UX</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1849,7 +1946,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-11 16:33:15 +0100
+Last updated 2023-02-12 16:51:08 +0100
 </div>
 </div>
 </body>
