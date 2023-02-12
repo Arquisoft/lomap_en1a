@@ -17,7 +17,7 @@ The software must include features to provide some services. It must:
 * Allow the users to add and store any location they want to include in their maps.
 * Include features that allow to add reviews, comments, pics, etc. about the places.
 * Include a way of managing the information that is accesible with other users.
-* Filyer the map by category, friends, etc.
+* Filter the map by category, friends, etc.
 
 
 The main group of interest are the users of the software. They expect it to include the basic functionality already described, as well as having their privacy respected as much as possible by just sharing the places of interest they include only to the people they choose. This is why security and 
