@@ -26,7 +26,7 @@ The elements shown in the diagram are explained here:
 
 The system's structure consists in the following components:
 
-image::images/technicalDiagram.svg[Technical Diagram]
+image::technicalDiagram.svg[Technical Diagram]
 
 Each component will be explained in more detail:
 
