@@ -1,7 +1,6 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
-The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc.
-
+The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
 
 [role="arc42help"]
 ****
@@ -13,14 +12,22 @@ Describes the relevant requirements and the driving forces that software archite
 ****
 
 === Requirements Overview
-The software must include features to provide some services. It must:
+.Contents
+The software must include features to provide some services. It has to:
+
 * Allow the users to add and store any location they want to include in their maps.
 * Include features that allow to add reviews, comments, pics, etc. about the places.
 * Include a way of managing the information that is accesible with other users.
 * Filter the map by category, friends, etc.
 
+All these requirements can be found in link:https://asciidoctor.org[version 1.0 of the assignment description].
 
-The main group of interest are the users of the software. They expect it to include the basic functionality already described, as well as having their privacy respected as much as possible by just sharing the places of interest they include only to the people they choose. This is why security and 
+
+.Motivation
+The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.
+
+.Form
+All requirements are specified in link:https://asciidoctor.org[version 1.0 of the assignment description].
 
 [role="arc42help"]
 ****
