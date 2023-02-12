@@ -54,6 +54,7 @@ A table with quality goals and concrete scenarios, ordered by priorities
 |===
 
 === Stakeholders
+This part is related with all the roles which are involved in the development of the system:
 
 [role="arc42help"]
 ****
@@ -78,6 +79,12 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+| _Developers_ | _Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
+Pablo Valdés Fernández_ | _Create, test (not entirely), document the system and communicate with the other roles to get feedback and resources._
+| _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provided
+project's skeleton._
+| _Solid challenge_ | _Inrupt/Empathy_ | _From what is know currently. A challenge will take place and people in this role will have to evaluate the 
+usage of the SOLID pattern regarding user data._
+| _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to 
+find problems, and test things like usability or UX_
 |===
