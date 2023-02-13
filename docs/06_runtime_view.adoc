@@ -30,7 +30,7 @@ There are many notations for describing scenarios, e.g.
 
 ****
 
-=== <Runtime Scenario 1>
+=== Login scenario
 
 
 * _<insert runtime diagram or textual description of the scenario>_
@@ -50,8 +50,6 @@ Alice  --> Pod: Store route
 Alice -> Bob: Another authentication Request
 Alice <-- Bob: another authentication Response
 ----
-=== <Runtime Scenario 2>
+=== Add location scenarios
 
-=== ...
-
-=== <Runtime Scenario n>
+=== Review location scenario
