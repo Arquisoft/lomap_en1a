@@ -1,0 +1,35 @@
+@startuml
+' Frontendlding Block View Diagram v0.1
+skinparam actorStyle awesome  
+'----------------------- 
+'Definition of actors 
+'----------------------- 
+ 
+package LoMap {
+    card Webapp as Frontend
+    card RestAPI as Backend
+    database Database 
+}
+package "User" as UserDat {
+    actor User
+    database POD 
+}
+ 
+package "External Services" {
+    cloud "Map Provider" as MapService
+    cloud "Image Provider" as ImgService
+}
+'----------------------- 
+'Definition of relations 
+'-----------------------
+User -r-> Frontend : interacts 
+' Hidden relations help with spacing
+User -[hidden]--- Frontend
+User -d-> POD : manages
+Frontend -0)-> Backend
+POD -l0)- Backend
+Backend -d-> Database
+Backend -> MapService
+Backend -> ImgService
+MapService -[hidden]- ImgService
+@enduml
