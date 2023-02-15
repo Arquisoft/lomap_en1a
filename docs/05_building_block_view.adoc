@@ -7,7 +7,7 @@ Here we will increasingly detailed descriptions and schematics for the component
 === Whitebox Overall System
 This is a high-level overview of the system and all its components. It shows the application components, the user-related components and the external services that the application uses.
 
-image::
+image::images/BuildingBlockView-Level1.svg[Building Block View (Level 1)]
 
 [role="arc42help"]
 ****
