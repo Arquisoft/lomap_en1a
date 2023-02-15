@@ -1,5 +1,5 @@
 @startuml
-' Frontendlding Block View Diagram v0.1
+' Building Block View Diagram v0.2
 skinparam actorStyle awesome  
 '----------------------- 
 'Definition of actors 
