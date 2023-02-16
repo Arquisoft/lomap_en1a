@@ -1,6 +1,11 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+LANGUAGE OF CHOICE -> TYPESCRIPT...
+LIBRARIES -> NODEJS/NONE + REACT
+STORAGE -> JSON
+PERSISTENCE (MARIADB, MONGODB, MYSQL...) FILES (JSON, XML...) PODS
+
 
 [role="arc42help"]
 ****
