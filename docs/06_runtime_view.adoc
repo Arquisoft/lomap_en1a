@@ -32,24 +32,47 @@ There are many notations for describing scenarios, e.g.
 
 === Login scenario
 
+The user must be logged in to see and modify their personal data.
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"Login scenario",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+@startuml
+actor User as "Alice"
+participant Frontend
+participant Backend
+database Pod as "User's Pod"
+Alice-> Frontend: Send credentials
+Frontend-> Backend: Authentication Request
+Backend-> Pod: Match credentials
+Pod --> Backend: Return comparison results
+Backend--> Frontend: Authentication response
+Frontend-> Frontend: Response-based redirection
+Frontend--> User: Result presentation
+@enduml
 ----
 === Add location scenarios
+[plantuml,"Add location scenario",png]
+----
+@startuml
+actor User as "Alice"
+participant Frontend
+participant Backend
+database DB as "General Purpose DB"
+User-> Frontend: Send location data
+Frontend-> Backend: Location data addition request
+Backend-> DB: Insert location data
+DB-> DB: Data insertion
+DB--> Backend: Insertion results
+Backend--> Frontend: Send feedback
+Frontend-> Frontend: Feedback-based redirection
+Frontend--> User: Feedback presentation
+@enduml
+----
 
 === Review location scenario
+[plantuml,"Review location scenario",png]
+----
+@startuml
+actor Alice
+@enduml
+----
