@@ -73,6 +73,25 @@ Frontend--> User: Feedback presentation
 [plantuml,"Review location scenario",png]
 ----
 @startuml
-actor Alice
+actor User as "Alice"
+participant Frontend
+participant Backend
+database DB as "General Purpose DB"
+User-> Frontend: Input location
+Frontend-> Backend: Send location identifier
+Backend-> DB: Location data request
+DB-> DB: Get location data
+DB--> Backend: Query results
+Backend--> Frontend: Location data
+Frontend-> Frontend: Redirection to result presentation
+Frontend--> User: Result presentation
+User-> Frontend: Review
+Frontend-> Backend: Review contents
+Backend-> DB: Review data insertion
+DB-> DB: Insert review
+DB--> Backend: Insertion results
+Backend--> Frontend: Send feedback
+Frontend-> Frontend: Feedback-based redirection
+Frontend--> User: Feedback presentation
 @enduml
 ----
