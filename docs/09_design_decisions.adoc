@@ -24,3 +24,16 @@ Various options:
 * more detailed in form of separate sections per decision
 * ADR (architecture decision record) for every important decision
 ****
+.Decisions
+[options="header",cols="1,2,3"]
+|===
+|Decision|Advantages|Disadvantages
+| _TypeScript_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
+| _React.js_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
+| _MySQL_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
+| _Node.js_ | _*ADVANTAGES*_|_*DISADVANTAGES*_ 
+| _Docker_ | _*ADVANTAGES*_|_*DISADVANTAGES*_ 
+| _PlantUML_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
+|===
+
+
