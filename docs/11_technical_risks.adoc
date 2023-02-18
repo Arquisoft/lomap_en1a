@@ -15,3 +15,25 @@ This should be your motto for systematic detection and evaluation of risks and t
 .Form
 List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
 ****
+.Risks 
+[options="header",cols="1,2,3"]
+|===
+|Risks|Explanation|Solution
+| _No knowledge of React_ | _We have never worked with React before, so we know nothing about it_|_Read React's documentation and analyze the provided exercises._
+| _No knowledge of SOLID_ | _It is a new concept for us_|_Explore SOLID's website to obtain more information_
+| _Little knowledge of TypeScript_ | _Some of us know some JavaScript, but TypeScript is a little bit different_|_Read TypeScript's documentation, see code examples_  
+| _Time_ | _We have to take into consideration the different deadlines_|_Trying to manage our free time better_  
+| _Team members_ | _It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way_|_Good communication between team members, assign tasks correctly_ 
+| _External APIs dependency_ | _During this project, we will use some external APIs, that is, if these APIs fail our project will not work correctly_ 
+|===
+
+.Technical debts
+[options="header",cols="1,2"]
+|===
+|Technical debt|Explanation
+| _MySQL_ | _For now, we will use MySQL database as it is the one we are more familiar with, and we still are not sure how to save the data_ 
+| _Creating the tests at the end of development_ | _Usually, tests should be created before starting the development, but for a lack of time,
+we create them at the end_ 
+|===
+
+
