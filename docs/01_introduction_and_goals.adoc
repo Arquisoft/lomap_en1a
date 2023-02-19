@@ -1,6 +1,5 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
-The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
 
 [role="arc42help"]
 ****
@@ -12,17 +11,6 @@ Describes the relevant requirements and the driving forces that software archite
 ****
 
 === Requirements Overview
-The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.
-
-The software must include features to provide some services. It has to:
-
-* Allow the users to add and store any location they want to include in their maps.
-* Include features that allow to add reviews, comments, pics, etc. about the places.
-* Include a way of managing the information that is accesible with other users.
-* Filter the map by category, friends, etc.
-
-All these requirements can be found in link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
-
 
 [role="arc42help"]
 ****
@@ -57,16 +45,7 @@ If you as an architect do not know how the quality of your work will be judged �
 A table with quality goals and concrete scenarios, ordered by priorities
 ****
 
-[options="header",cols="1,1,1,1,1"]
-|===
-|Ref|Quality attribute|Scenario|Priority|Implementation complexity
-|3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
-|4|Security|Sensible user data will not be accessible for anyone but the user|High|High
-|5|Usability|The application should be either usable on a computer and on mobile devices|High|Medium
-|===
-
 === Stakeholders
-This part is related with all the roles which are involved in the development of the system:
 
 [role="arc42help"]
 ****
@@ -91,12 +70,6 @@ Table with role names, person names, and their expectations with respect to the 
 [options="header",cols="1,2,2"]
 |===
 |Role/Name|Contact|Expectations
-| _Developers_ | _Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
-Pablo Valdés Fernández_ | _Create, test (not entirely), document the system and communicate with the other roles to get feedback and resources._
-| _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provided
-project's skeleton._
-| _Solid challenge_ | _Inrupt/Empathy_ | _From what is know currently. A challenge will take place and people in this role will have to evaluate the 
-usage of the SOLID pattern regarding user data._
-| _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to 
-find problems, and test things like usability or UX_
+| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
+| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
 |===
