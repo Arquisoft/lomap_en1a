@@ -3,7 +3,7 @@
 
 == Building Block View
 
-=== Whitebox Overall System
+=== Level 1: Whitebox Overall System
 
 This is a high-level static overview of the system and all its building blocks. It shows the application components, the user-related components and the external services that the application uses.
 
@@ -30,7 +30,10 @@ image::images/BuildingBlockView-Level1.svg[Building Block View (Level 1)]
 | Image Provider  | External service that provides image data to the application
 |===========================================================================================================
 
-=== Level 1: Webapp
+DISCLAIMER::
+The following sections have been intentionally left partially completed. This is because the application is yet to be builded, so a lower level of abstraction is, as of now, speculation. Nevertheless, the general structure of the section is presented for guidance.
+
+=== Level 2: Webapp
 The Webapp encompasses all UI-related components of the application. ...
 
 (insert diagram)
@@ -45,7 +48,7 @@ The Webapp encompasses all UI-related components of the application. ...
 | ... | ...
 |===
 
-==== Level 1: LoMapCore
+==== Level 2: LoMapCore
 The LoMapCore block encompasses all business-logic components, as well as data-source management and interaction with other services. ...
 
 (insert diagram)
@@ -65,76 +68,12 @@ The Database holds all common information that the application needs to run, suc
 
 TODO: Is it necessary to include a diagram for the Database?
 
-==== <Name interface 1>
+==== MapService
+The MapService is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user.
 
-...
+(insert API overview)
 
-==== <Name interface m>
+==== ImageService
+The ImageService is an external service, planned to provide access to marker images. Its usage is, as of now, uncertain, as there is not yet clear whether this service will be needed. 
 
-
-
-=== Level 2
-
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
-
-You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system
-****
-
-==== White Box _<building block 1>_
-
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
-
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
-
-
-_<white box template>_
-
-
-
-=== Level 3
-
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
-
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-****
-
-
-==== White Box <_building block x.1_>
-
-[role="arc42help"]
-****
-Specifies the internal structure of _building block x.1_.
-****
-
-
-_<white box template>_
-
-
-==== White Box <_building block x.2_>
-
-_<white box template>_
-
-
-
-==== White Box <_building block y.1_>
-
-_<white box template>_
+(insert API overview)
