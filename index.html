@@ -466,10 +466,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-runtime-view">6. Runtime View</a>
 <ul class="sectlevel2">
-<li><a href="#_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</a></li>
-<li><a href="#_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</a></li>
-<li><a href="#">6.3. &#8230;&#8203;</a></li>
-<li><a href="#_runtime_scenario_n">6.4. &lt;Runtime Scenario n&gt;</a></li>
+<li><a href="#_login_scenario">6.1. Login scenario</a></li>
+<li><a href="#_add_location_scenarios">6.2. Add location scenarios</a></li>
+<li><a href="#_review_location_scenario">6.3. Review location scenario</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a>
@@ -988,42 +987,26 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 <div class="sect1">
 <h2 id="section-solution-strategy">4. Solution Strategy</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>A short summary and explanation of the fundamental decisions and solution strategies, that shape the system&#8217;s architecture. These include</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>technology decisions</p>
-</li>
-<li>
-<p>decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern</p>
-</li>
-<li>
-<p>decisions on how to achieve key quality goals</p>
-</li>
-<li>
-<p>relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.</p>
-</li>
-</ul>
+<p>Our language of choice is TypeScript, due to to the need of it for the next decisions involving libraries, which were taken. Also, the majority of the team was familiar with JavaScript,
+which has similarities with TypeScript.</p>
 </div>
 <div class="paragraph">
-<div class="title">Motivation</div>
-<p>These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.</p>
+<p>Regarding libraries, we are going to use React, for the front-end of the application, and Node.js for the back end, due to that we were recommended in the lectures to use React, and after
+investigating a bit, we found that Node.js works surprisingly well with React.</p>
 </div>
 <div class="paragraph">
-<div class="title">Form</div>
-<p>Keep the explanation of these key decisions short.</p>
+<p>When it comes to storing information, we decided that we will use json files, because we were quite familiar with it and we think it will represent the information better than the other proposed
+ones such as XML. And having a look to persiting the information, we will use a relational database, and PODS to store sensitive user data. When discussing about the possible databases,
+ we found that the model we were trying to represent was easily mapped with a relationa approach, and from there, MariaDB and MySQL were proposed. From which we picked the second option
+ since most of us were quite familiar with it.</p>
 </div>
 <div class="paragraph">
-<p>Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.</p>
-</div>
-</div>
+<p>Taking a quick peek at the general structure of the application, the usage of some patterns was debated, those being:
+    -Command pattern: When accessing the database in CRUD operations.
+    -Façade pattern: When dividing responsabilities among the layers.
+    -MVC pattern: When assigning roles to the parts of the applications.
+But these patterns were just taken into consideration since the application design phase has still not started.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1389,37 +1372,31 @@ You will mainly capture scenarios in your documentation to communicate your arch
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><em>&lt;insert runtime diagram or textual description of the scenario&gt;</em></p>
-</li>
-<li>
-<p><em>&lt;insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.&gt;</em></p>
-</li>
-</ul>
-</div>
+<h3 id="_login_scenario">6.1. Login scenario</h3>
 <div class="paragraph">
-<p>It is possible to use a sequence diagram:</p>
+<p>The user must be logged in to see and modify their personal data.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Sequence%20diagram.png" alt="Sequence diagram" width="332" height="335">
+<img src="./images/Login%20scenario.png" alt="Login scenario" width="606" height="409">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</h3>
-
+<h3 id="_add_location_scenarios">6.2. Add location scenarios</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Add%20location%20scenario.png" alt="Add location scenario" width="604" height="452">
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="">6.3. &#8230;&#8203;</h3>
-
+<h3 id="_review_location_scenario">6.3. Review location scenario</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Review%20location%20scenario.png" alt="Review location scenario" width="645" height="721">
 </div>
-<div class="sect2">
-<h3 id="_runtime_scenario_n">6.4. &lt;Runtime Scenario n&gt;</h3>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1870,6 +1847,72 @@ concrete and measurable.</p>
 </div>
 </div>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Risks</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Risks</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+<th class="tableblock halign-left valign-top">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>No knowledge of React</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never worked with React before, so we know nothing about it</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Read React&#8217;s documentation and analyze the provided exercises.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>No knowledge of SOLID</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>It is a new concept for us</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Explore SOLID&#8217;s website to obtain more information</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Little knowledge of TypeScript</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Some of us know some JavaScript, but TypeScript is a little bit different</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Read TypeScript&#8217;s documentation, see code examples</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Time</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have to take into consideration the different deadlines</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Trying to manage our free time better</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Team members</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Good communication between team members, assign tasks correctly</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Technical debts</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Technical debt</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MySQL</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>For now, we will use MySQL database as it is the one we are more familiar with, and we still are not sure how to save the data</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Creating the tests at the end of development</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Usually, tests should be created before starting the development, but for a lack of time,
+we will create them at the end</em></p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1955,7 +1998,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-12 16:51:08 +0100
+Last updated 2023-02-08 19:00:52 +0100
 </div>
 </div>
 </body>
