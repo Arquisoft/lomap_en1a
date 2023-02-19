@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.18">
-<title>LoMap - EN-1A</title>
+<title>LOMAP_EN1A</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1><span class="image"><img src="./images/LogoASW.png" alt="arc42"></span> LoMap - EN-1A</h1>
+<h1><span class="image"><img src="./images/LogoASW.png" alt="arc42"></span> LOMAP_EN1A</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -470,7 +470,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_review_location_scenario">6.3. Review location scenario</a></li>
 </ul>
 </li>
-<li><a href="#section-deployment-view">7. Deployment View</a></li>
+<li><a href="#section-deployment-view">7. Deployment View</a>
+<ul class="sectlevel2">
+<li><a href="#_infrastructure_level_1">7.1. Infrastructure Level 1</a></li>
+<li><a href="#_infrastructure_level_2">7.2. Infrastructure Level 2</a></li>
+</ul>
+</li>
 <li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
 <li><a href="#_domain_model">8.1. Domain model</a></li>
@@ -530,9 +535,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sect1">
 <h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.</p>
-</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -555,31 +557,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
-<div class="paragraph">
-<p>The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.</p>
-</div>
-<div class="paragraph">
-<p>The software must include features to provide some services. It has to:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Allow the users to add and store any location they want to include in their maps.</p>
-</li>
-<li>
-<p>Include features that allow to add reviews, comments, pics, etc. about the places.</p>
-</li>
-<li>
-<p>Include a way of managing the information that is accesible with other users.</p>
-</li>
-<li>
-<p>Filter the map by category, friends, etc.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>All these requirements can be found in <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
-</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -623,53 +600,9 @@ If you as an architect do not know how the quality of your work will be judged �
 </div>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Ref</th>
-<th class="tableblock halign-left valign-top">Quality attribute</th>
-<th class="tableblock halign-left valign-top">Scenario</th>
-<th class="tableblock halign-left valign-top">Priority</th>
-<th class="tableblock halign-left valign-top">Implementation complexity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be either usable on a computer and on mobile devices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_stakeholders">1.3. Stakeholders</h3>
-<div class="paragraph">
-<p>This part is related with all the roles which are involved in the development of the system:</p>
-</div>
 <div class="sidebarblock arc42help">
 <div class="content">
 <div class="paragraph">
@@ -863,7 +796,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/businessDiagram.svg" alt="Business Diagram">
+<img src="./images/images/businessDiagram.svg" alt="Business Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -925,7 +858,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/technicalDiagram.svg" alt="Technical Diagram">
+<img src="./images/images/technicalDiagram.svg" alt="Technical Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -1350,54 +1283,89 @@ when your infrastructure is more complex.</p>
 </div>
 </div>
 </div>
-<div class="imageblock">
+<div class="sect2">
+<h3 id="_infrastructure_level_1">7.1. Infrastructure Level 1</h3>
+<div class="sidebarblock arc42help">
 <div class="content">
-<img src="./images/DeploymentView.svg" alt="Deployment diagram">
+<div class="paragraph">
+<p>Describe (usually in a combination of diagrams, tables, and text):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the distribution of your system to multiple locations, environments, computers, processors, .. as well as the physical connections between them</p>
+</li>
+<li>
+<p>important justification or motivation for this deployment structure</p>
+</li>
+<li>
+<p>Quality and/or performance features of the infrastructure</p>
+</li>
+<li>
+<p>the mapping of software artifacts to elements of the infrastructure</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For multiple environments or alternative deployments please copy that section of arc42 for all relevant environments.</p>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Component</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Azure Server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Both the application and the database will be hosted from docker containers, both of them inside of an azure virtual machine.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Web application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application itself, which will receive the users requests and will manage them.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A MySQL database, which will store the global information that the application needs, as well as the minimal information about the users.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Map API</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An external API to get the maps for the aplication.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The users of the aplication.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Device</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The device from which the user will interact with the application.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The POD will store users data (they are managed by the users).</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+<div class="paragraph">
+<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Motivation</dt>
+<dd>
+<p><em>&lt;explanation in text form&gt;</em></p>
+</dd>
+<dt class="hdlist1">Quality and/or Performance Features</dt>
+<dd>
+<p><em>&lt;explanation in text form&gt;</em></p>
+</dd>
+<dt class="hdlist1">Mapping of Building Blocks to Infrastructure</dt>
+<dd>
+<p><em>&lt;description of the mapping&gt;</em></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_infrastructure_level_2">7.2. Infrastructure Level 2</h3>
+<div class="sidebarblock arc42help">
+<div class="content">
+<div class="paragraph">
+<p>Here you can include the internal structure of (some) infrastructure elements from level 1.</p>
+</div>
+<div class="paragraph">
+<p>Please copy the structure from level 1 for each selected element.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_infrastructure_element_1">7.2.1. <em>&lt;Infrastructure Element 1&gt;</em></h4>
+<div class="paragraph">
+<p><em>&lt;diagram + explanation&gt;</em></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_infrastructure_element_2">7.2.2. <em>&lt;Infrastructure Element 2&gt;</em></h4>
+<div class="paragraph">
+<p><em>&lt;diagram + explanation&gt;</em></p>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_infrastructure_element_n">7.2.3. <em>&lt;Infrastructure Element n&gt;</em></h4>
+<div class="paragraph">
+<p><em>&lt;diagram + explanation&gt;</em></p>
+</div>
 <div style="page-break-after: always;"></div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1717,69 +1685,47 @@ concrete and measurable.</p>
 </div>
 </div>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/QualityTree.svg" alt="Quality Tree Diagram">
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Ref</th>
-<th class="tableblock halign-left valign-top">Quality attribute</th>
-<th class="tableblock halign-left valign-top">Scenario</th>
-<th class="tableblock halign-left valign-top">Priority</th>
-<th class="tableblock halign-left valign-top">Implementation complexity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Aviability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be aviable the 99% of the time</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">40 concurrent users request the map of a given city in less than 2 seconds</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be either usable on a computer and on mobile devices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-</tr>
-</tbody>
-</table>
+<div class="sidebarblock arc42help">
+<div class="content">
+<div class="paragraph">
+<div class="title">Contents</div>
+<p>Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.</p>
+</div>
+<div class="paragraph">
+<p>These scenarios describe what should happen when a stimulus arrives at the system.</p>
+</div>
+<div class="paragraph">
+<p>For architects, two kinds of scenarios are important:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.</p>
+</li>
+<li>
+<p>Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Motivation</div>
+<p>Scenarios make quality requirements concrete and allow to
+more easily measure or decide whether they are fulfilled.</p>
+</div>
+<div class="paragraph">
+<p>Especially when you want to assess your architecture using methods like
+ATAM you need to describe your quality goals (from section 1.2)
+more precisely down to a level of scenarios that can be discussed and evaluated.</p>
+</div>
+<div class="paragraph">
+<div class="title">Form</div>
+<p>Tabular or free form text.</p>
+</div>
+</div>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1973,7 +1919,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-20 00:06:42 +0100
+Last updated 2023-02-20 00:25:20 +0100
 </div>
 </div>
 </body>
