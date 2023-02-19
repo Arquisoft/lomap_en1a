@@ -95,7 +95,7 @@ Table with role names, person names, and their expectations with respect to the 
 Pablo Valdés Fernández_ | _Create, test (not entirely), document the system and communicate with the other roles to get feedback and resources._
 | _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provided
 project's skeleton._
-| _Solid challenge_ | _Inrupt/Empathy_ | _From what is know currently. A challenge will take place and people in this role will have to evaluate the 
+| _SOLID challenge_ | _Inrupt/Empathy_ | _From what is know currently. A challenge will take place and people in this role will have to evaluate the 
 usage of the SOLID pattern regarding user data._
 | _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to 
 find problems, and test things like usability or UX_
