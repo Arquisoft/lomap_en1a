@@ -1,35 +1,41 @@
 @startuml
-' Building Block View Diagram v0.2
+' Building Block View Diagram v1.0
 skinparam actorStyle awesome  
 '----------------------- 
 'Definition of actors 
 '----------------------- 
- 
-package LoMap {
-    card Webapp as Frontend
-    card RestAPI as Backend
+card LoMap {
+    component Webapp as Frontend
+    component LoMapCore as Backend
     database Database 
 }
-package "User" as UserDat {
+
+
+card "User" as UserDat {
     actor User
-    database POD 
+    database POD     
 }
  
-package "External Services" {
+rectangle "External Services" {
     cloud "Map Provider" as MapService
     cloud "Image Provider" as ImgService
 }
+
+
 '----------------------- 
 'Definition of relations 
 '-----------------------
+
 User -r-> Frontend : interacts 
 ' Hidden relations help with spacing
 User -[hidden]--- Frontend
 User -d-> POD : manages
-Frontend -0)-> Backend
-POD -l0)- Backend
+Frontend --> Backend
+POD -l- Backend
 Backend -d-> Database
-Backend -> MapService
-Backend -> ImgService
+Backend -r-> MapService
+Backend -r-> ImgService
 MapService -[hidden]- ImgService
+
+
 @enduml
