@@ -562,7 +562,9 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
 <div class="paragraph">
-<div class="title">Contents</div>
+<p>The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.</p>
+</div>
+<div class="paragraph">
 <p>The software must include features to provide some services. It has to:</p>
 </div>
 <div class="ulist">
@@ -583,14 +585,6 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 <div class="paragraph">
 <p>All these requirements can be found in <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>All requirements are specified in <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
 </div>
 <div class="sidebarblock arc42help">
 <div class="content">
@@ -637,47 +631,42 @@ If you as an architect do not know how the quality of your work will be judged �
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.667%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Source of stimulus</th>
-<th class="tableblock halign-left valign-top">Stimulus</th>
-<th class="tableblock halign-left valign-top">Artifact</th>
-<th class="tableblock halign-left valign-top">Environment</th>
-<th class="tableblock halign-left valign-top">Response</th>
-<th class="tableblock halign-left valign-top">Response measure</th>
+<th class="tableblock halign-left valign-top">Ref</th>
+<th class="tableblock halign-left valign-top">Quality attribute</th>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">Implementation complexity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Infrastructure</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normal use of the application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whole system</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normal operation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Aviability percentage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">99% aviability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Clients</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">40 concurrent users</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User interface</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request a map of a given city</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Response time</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;0.5 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Clients</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User interface</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Search of a location</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt; 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be either usable on a computer and on mobile devices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
 </tbody>
 </table>
@@ -1792,47 +1781,69 @@ concrete and measurable.</p>
 </div>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/QualityTree.svg" alt="Business Diagram">
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Contents</div>
-<p>Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.</p>
-</div>
-<div class="paragraph">
-<p>These scenarios describe what should happen when a stimulus arrives at the system.</p>
-</div>
-<div class="paragraph">
-<p>For architects, two kinds of scenarios are important:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.</p>
-</li>
-<li>
-<p>Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Scenarios make quality requirements concrete and allow to
-more easily measure or decide whether they are fulfilled.</p>
-</div>
-<div class="paragraph">
-<p>Especially when you want to assess your architecture using methods like
-ATAM you need to describe your quality goals (from section 1.2)
-more precisely down to a level of scenarios that can be discussed and evaluated.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>Tabular or free form text.</p>
-</div>
-</div>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ref</th>
+<th class="tableblock halign-left valign-top">Quality attribute</th>
+<th class="tableblock halign-left valign-top">Scenario</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">Implementation complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aviability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be aviable the 99% of the time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">40 concurrent users request the map of a given city in less than 2 seconds</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be either usable on a computer and on mobile devices</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
