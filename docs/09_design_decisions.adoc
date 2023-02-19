@@ -28,9 +28,9 @@ Various options:
 [options="header",cols="1,2,3"]
 |===
 |Decision|Advantages|Disadvantages
-| _TypeScript_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
-| _React.js_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
-| _MySQL_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
+| _TypeScript_ | _Similar to JavaScript, but with types._|_We have never used this language before_
+| _React.js_ | _Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web_|_We have never used it before_
+| _MySQL_ | _We already have experience with MySQL. Quite popular in the market_|_*DISADVANTAGES*_
 | _Node.js_ | _*ADVANTAGES*_|_*DISADVANTAGES*_ 
 | _Docker_ | _*ADVANTAGES*_|_*DISADVANTAGES*_ 
 | _PlantUML_ | _*ADVANTAGES*_|_*DISADVANTAGES*_
