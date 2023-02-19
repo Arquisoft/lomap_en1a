@@ -51,17 +51,32 @@ image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscuttin
 
 
 === Domain model
+image:Class_diagram.jpg["Class diagram with all the important elements of the architecture"]
 
-image:UmlDiagram.png["Example UML Diagram"]
+|===
+| *Element* | *Description and purpose*
+| User | The people that use the application.
+| Map | Each user has their own. They can contain marks of the places the users want to save.
+| Marker | They allow to put marks on the desired places.
+| POD | They store the user's data, friends and maps.
+| Review | Abstract superclass that encompasses all the different evaluations users can make about the places.
+| Comment | User use them to write an opinion of a marked place.
+| Score | Evaluation a user can add to a marked place.
+| Picture | Users can add them to marked places.
+|===
 
 
+=== Security and user privacy
 
-=== _<Concept 2>_
+In order to increase security and privacy, all users will have a personal POD that will store their data, friends and maps. This way the users can decide who can see and use their information, giving them more freedom and control over the application.
 
-_<explanation>_
 
-...
+=== Persistance
 
-=== _<Concept n>_
+A database will be used to store minimal data of the users and the reviews (pictures, comments, scores...) they want to add to the different marked places. In addition, they will be used to link the users with their PODs.
+To ease this task, MySQL was chosen for the development.
 
-_<explanation>_
+
+=== Session management
+
+Since only the device each user uses is going to be linked to each user's POD, each person will only sign in and have access to their saved data through it. Passwords will only be used to ensure the correct user is using the device.
