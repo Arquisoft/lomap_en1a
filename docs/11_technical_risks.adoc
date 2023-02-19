@@ -33,7 +33,7 @@ List of risks and/or technical debts, probably including suggested measures to m
 |Technical debt|Explanation
 | _MySQL_ | _For now, we will use MySQL database as it is the one we are more familiar with, and we still are not sure how to save the data_ 
 | _Creating the tests at the end of development_ | _Usually, tests should be created before starting the development, but for a lack of time,
-we create them at the end_ 
+we will create them at the end_ 
 |===
 
 
