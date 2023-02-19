@@ -24,3 +24,18 @@ Various options:
 * more detailed in form of separate sections per decision
 * ADR (architecture decision record) for every important decision
 ****
+The following table contains the design decisions we have taken, ordered by importance:
+
+.Decisions
+[options="header",cols="1,2,3"]
+|===
+|Decision|Advantages|Disadvantages
+| _TypeScript_ | _Similar to JavaScript, but with types._|_We have never used it before_
+| _React.js_ | _Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web_|_We have never used it before_
+| _MySQL_ | _We already have experience with MySQL. Quite popular in the market_|_Does not support a very large database size_
+| _Node.js_ | _Easy escalability, easy to learn, high performance for real-time applications_|_We have never used it before_ 
+| _Docker_ | _Fast deployment, ease of moving/maintaining your applications_|_We do not have much experience using Docker_ 
+| _PlantUML_ | _Allows drawing diagrams very easily, with a simple syntax._|_Does not allow as much control over the exact layout of the elements in the diagram as other tools._
+|===
+
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="404px" preserveAspectRatio="none" style="width:596px;height:404px;background:#FFFFFF;" version="1.1" viewBox="0 0 596 404" width="596px" zoomAndPan="magnify"><defs/><g><!--MD5=[1c6200e8c80f258dd5cab73c2ff307eb]
+cluster LoMap--><g id="cluster_LoMap"><rect fill="none" height="374.5" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="146" x="262" y="23.5"/><line style="stroke:#181818;stroke-width:1.0;" x1="262" x2="408" y1="45.1094" y2="45.1094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="47" x="311.5" y="40.0332">LoMap</text></g><!--MD5=[49828d7069746f59b6a205d1bf0afaed]
+cluster UserDat--><g id="cluster_UserDat"><rect fill="none" height="280.5" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="122" x="7" y="7"/><line style="stroke:#181818;stroke-width:1.0;" x1="7" x2="129" y1="28.6094" y2="28.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="33" x="51.5" y="23.5332">User</text></g><!--MD5=[13d7899ea3604682320811ddebea1115]
+cluster External Services--><g id="cluster_External Services"><rect fill="none" height="210.5" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="158" x="432" y="188"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="124" x="449" y="204.5332">External Services</text></g><!--MD5=[194a92f280a7d2c2f105939ff984a7cf]
+entity Frontend--><g id="elem_Frontend"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93" x="293.5" y="59.5"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="366.5" y="64.5"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="364.5" y="66.5"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="364.5" y="70.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="53" x="308.5" y="94.0332">Webapp</text></g><!--MD5=[a6db0c926898241e7c594507fb3ca544]
+entity Backend--><g id="elem_Backend"><rect fill="#F1F1F1" height="47.6094" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="278" y="224"/><rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="372" y="229"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="370" y="231"/><rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="370" y="235"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="293" y="258.5332">LoMapCore</text></g><!--MD5=[fa1e3283224feb76407c84b7e90ed808]
+entity Database--><g id="elem_Database"><path d="M294.5,345 C294.5,335 335,335 335,335 C335,335 375.5,335 375.5,345 L375.5,371.6094 C375.5,381.6094 335,381.6094 335,381.6094 C335,381.6094 294.5,381.6094 294.5,371.6094 L294.5,345 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M294.5,345 C294.5,355 335,355 335,355 C335,355 375.5,355 375.5,345 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="61" x="304.5" y="373.5332">Database</text></g><!--MD5=[fee662a292a0353a69bd162820bae93b]
+entity User--><g id="elem_User"><ellipse cx="55" cy="60.5" fill="#F1F1F1" rx="16" ry="16" style="stroke:#181818;stroke-width:1.5;"/><path d="M55,80.5 C59,80.5 62,80.5 66,76.5 C74,76.5 82,84.5 82,92.5 L82,96.5 C82,100.5 78,104.5 74,104.5 L36,104.5 C32,104.5 28,100.5 28,96.5 L28,92.5 C28,84.5 36,76.5 44,76.5 C48,80.5 51,80.5 55,80.5 " fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="40.5" y="120.5332">User</text></g><!--MD5=[7f06d07b13e3993ee583c29832bf9731]
+entity POD--><g id="elem_POD"><path d="M48,234.5 C48,224.5 73,224.5 73,224.5 C73,224.5 98,224.5 98,234.5 L98,261.1094 C98,271.1094 73,271.1094 73,271.1094 C73,271.1094 48,271.1094 48,261.1094 L48,234.5 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><path d="M48,234.5 C48,244.5 73,244.5 73,244.5 C73,244.5 98,244.5 98,234.5 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30" x="58" y="263.0332">POD</text></g><!--MD5=[88c14708aa7d81aebea62dae4aceda1f]
+entity MapService--><g id="elem_MapService"><path d="M460.5962,233.9073 C463.4111,228.6419 467.9075,226.9034 472.3377,232.0932 C474.6857,226.3496 480.5146,224.4186 484.9389,229.7254 C487.8974,224.0744 492.8996,224.5169 495.7637,229.8187 C498.6525,221.9208 504.1497,220.2478 510.0332,226.8773 C514.7204,220.9812 519.1374,221.6982 522.0051,228.5818 C525.7108,222.7068 531.8516,222.3641 534.6547,229.4619 C539.0558,224.5032 543.9966,226.3861 546.0858,231.9688 C550.5046,227.7245 554.9257,228.5742 557.5204,234.103 C566.7073,233.5938 570.1603,240.1433 566.1515,247.8932 C571.2426,257.8258 568.7368,263.2905 557.2126,264.0046 C554.8126,269.807 549.8638,271.1802 545.6964,265.8297 C542.0457,270.9825 537.8288,273.0125 533.491,266.5518 C530.2308,271.538 524.2337,273.071 521.0359,266.4846 C516.8422,271.409 512.4069,272.7562 508.6391,266.0313 C504.3072,271.1985 499.7867,271.0124 495.7809,265.6339 C491.9162,271.6473 488.2803,271.9873 483.9885,266.0555 C479.2376,272.0482 474.8507,271.5453 471.7831,264.4819 C468.9551,271.1343 463.7601,271.4461 459.8604,265.4959 C448.4013,263.9811 444.7628,258.0211 451.3756,247.8277 C447.121,238.8933 451.181,233.7872 460.5962,233.9073 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="466" y="253.5332">Map Provider</text></g><!--MD5=[5eeae9abb286a89f61d1216627a0d1de]
+entity ImgService--><g id="elem_ImgService"><path d="M457.7991,342.8085 C461.7113,336.2313 466.3754,336.243 470.3439,342.7544 C473.8687,336.0094 478.6348,334.3325 483.8731,341.0298 C488.4089,334.0559 492.7373,332.4848 498.5003,339.7711 C501.6265,331.7852 508.1965,331.856 512.9324,338.1437 C518.3754,332.2758 522.0786,333.4631 525.0708,340.4567 C529.4369,333.5334 534.6144,334.2047 538.8992,340.5415 C544.3803,334.8565 549.4982,335.0768 552.9172,342.7117 C558.0931,335.6064 564.2213,336.5827 567.4316,344.5985 C576.5973,346.8396 577.4422,352.2963 572.7527,359.4886 C578.8452,367.0745 575.3322,372.4211 567.2302,374.9305 C563.1611,381.454 557.6002,381.7907 553.5572,374.904 C549.8775,381.5353 544.181,381.789 539.4553,376.1014 C535.116,382.6879 530.5722,382.5951 526.1597,376.1762 C521.9009,383.818 515.6149,383.4713 511.828,375.7364 C507.6313,383.6656 503.3084,382.9155 497.8372,377.0269 C492.459,383.3704 488.2029,381.8639 484.0076,375.7172 C479.5327,382.2371 475.0821,381.394 470.3656,375.9936 C466.3846,381.338 461.5727,382.8652 457.5035,376.0872 C446.2469,374.342 444.7849,368.6902 449.5088,359.3237 C443.7552,350.4809 448.0885,343.8886 457.7991,342.8085 " fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="95" x="463.5" y="364.0332">Image Provider</text></g><!--MD5=[c9f718fe4a051611c03c12aa41ba5d12]
+link User to Frontend--><g id="link_User_Frontend"><path d="M83.63,83.5 C131.38,83.5 227.95,83.5 287.98,83.5 " fill="none" id="User-to-Frontend" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="293.32,83.5,284.32,79.5,288.32,83.5,284.32,87.5,293.32,83.5" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="50" x="163.5" y="76.9951">interacts</text></g><!--MD5=[c9f718fe4a051611c03c12aa41ba5d12]
+link User to Frontend--><!--MD5=[b2bcd3093a19aabdd86d25c05065617a]
+link User to POD--><g id="link_User_POD"><path d="M59.4,124.25 C62.66,153.67 67.02,193.02 69.91,219.14 " fill="none" id="User-to-POD" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="70.47,224.19,73.4428,214.8005,69.9131,219.2211,65.4925,215.6915,70.47,224.19" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53" x="66" y="168.4951">manages</text></g><!--MD5=[2c52bf2a9f4c69e755a5015cfec4aff1]
+link Frontend to Backend--><g id="link_Frontend_Backend"><path d="M339.28,107.78 C338.39,136.98 336.85,187.03 335.88,218.49 " fill="none" id="Frontend-to-Backend" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="335.72,223.76,340.0007,214.8901,335.8771,218.7625,332.0047,214.6388,335.72,223.76" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[f90ffc427be379fbde3dc0146a383eb4]
+link Backend to POD--><g id="link_Backend_POD"><path d="M277.62,248 C217.77,248 157.92,248 98.07,248 " fill="none" id="Backend-POD" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[80ce1f6df5d8c077a380ce2c2e013c12]
+link Backend to Database--><g id="link_Backend_Database"><path d="M335,272.01 C335,288.81 335,311.67 335,329.53 " fill="none" id="Backend-to-Database" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="335,334.9,339,325.9,335,329.9,331,325.9,335,334.9" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[72aab314991f7c4017b051744a1c4154]
+link Backend to MapService--><g id="link_Backend_MapService"><path d="M392.1,248 C410.04,248 427.97,248 445.9,248 " fill="none" id="Backend-to-MapService" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="450.96,248,441.96,244,445.96,248,441.96,252,450.96,248" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[27be673598c573273efff092a023e870]
+link Backend to ImgService--><g id="link_Backend_ImgService"><path d="M372.33,272.01 C400.7,289.5 439.73,313.56 469.16,331.7 " fill="none" id="Backend-to-ImgService" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="473.43,334.34,467.8736,326.2082,469.1756,331.7131,463.6707,333.0152,473.43,334.34" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[0f524e4e707aca97a9cfceab28fa0112]
+link MapService to ImgService--><!--MD5=[7541c6d1ae90474c540d802f14aabdad]
+@startuml
+' Building Block View Diagram v1.0
+skinparam actorStyle awesome  
+'- - - - - - - - - - - - - - - - - - - - - - - 
+'Definition of actors 
+'- - - - - - - - - - - - - - - - - - - - - - - 
+card LoMap {
+    component Webapp as Frontend
+    component LoMapCore as Backend
+    database Database 
+}
+
+
+card "User" as UserDat {
+    actor User
+    database POD     
+}
+ 
+rectangle "External Services" {
+    cloud "Map Provider" as MapService
+    cloud "Image Provider" as ImgService
+}
+
+
+'- - - - - - - - - - - - - - - - - - - - - - - 
+'Definition of relations 
+'- - - - - - - - - - - - - - - - - - - - - - -
+
+User -r-> Frontend : interacts 
+' Hidden relations help with spacing
+User -[hidden]- - - Frontend
+User -d-> POD : manages
+Frontend - -> Backend
+POD -l- Backend
+Backend -d-> Database
+Backend -r-> MapService
+Backend -r-> ImgService
+MapService -[hidden]- ImgService
+
+
+@enduml
+
+@startuml
+skinparam actorStyle awesome  
+card LoMap {
+    component Webapp as Frontend
+    component LoMapCore as Backend
+    database Database 
+}
+
+
+card "User" as UserDat {
+    actor User
+    database POD     
+}
+ 
+rectangle "External Services" {
+    cloud "Map Provider" as MapService
+    cloud "Image Provider" as ImgService
+}
+
+
+
+User -r-> Frontend : interacts 
+User -[hidden]- - - Frontend
+User -d-> POD : manages
+Frontend - -> Backend
+POD -l- Backend
+Backend -d-> Database
+Backend -r-> MapService
+Backend -r-> ImgService
+MapService -[hidden]- ImgService
+
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: es
+Country: ES
+--></g></svg>
