@@ -57,12 +57,12 @@ If you as an architect do not know how the quality of your work will be judged â
 A table with quality goals and concrete scenarios, ordered by priorities
 ****
 
-[options="header",cols="1,1,1,1,1,1"]
+[options="header",cols="1,1,1,1,1"]
 |===
-|Source of stimulus|Stimulus|Artifact|Environment|Response|Response measure
-|Infrastructure|Normal use of the application|Whole system|Normal operation|Aviability percentage|99% aviability
-|Clients|40 concurrent users|User interface|Request a map of a given city|Response time|<0.5 seconds
-|Clients|A new user wants to find a place with the app|User interface|Search of a location|Time|< 5 minutes
+|Ref|Quality attribute|Scenario|Priority|Implementation complexity
+|3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
+|4|Security|Sensible user data will not be accessible for anyone but the user|High|High
+|5|Usability|The application should be either usable on a computer and on mobile devices|High|Medium
 |===
 
 === Stakeholders
