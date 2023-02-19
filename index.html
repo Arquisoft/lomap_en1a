@@ -459,9 +459,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
 <li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
-<li><a href="#_whitebox_overall_system">5.1. Whitebox Overall System</a></li>
-<li><a href="#_level_2">5.2. Level 2</a></li>
-<li><a href="#_level_3">5.3. Level 3</a></li>
+<li><a href="#_level_1_whitebox_overall_system">5.1. Level 1: Whitebox Overall System</a></li>
+<li><a href="#_level_2_webapp">5.2. Level 2: Webapp</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Runtime View</a>
@@ -475,8 +474,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
 <li><a href="#_domain_model">8.1. Domain model</a></li>
-<li><a href="#_concept_2">8.2. <em>&lt;Concept 2&gt;</em></a></li>
-<li><a href="#_concept_n">8.3. <em>&lt;Concept n&gt;</em></a></li>
+<li><a href="#_security_and_user_privacy">8.2. Security and user privacy</a></li>
+<li><a href="#_persistance">8.3. Persistance</a></li>
+<li><a href="#_session_management">8.4. Session management</a></li>
 </ul>
 </li>
 <li><a href="#section-design-decisions">9. Design Decisions</a></li>
@@ -863,7 +863,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/businessDiagram.svg" alt="Business Diagram">
+<img src="./images/images/businessDiagram.svg" alt="Business Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -925,7 +925,7 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/technicalDiagram.svg" alt="Technical Diagram">
+<img src="./images/images/technicalDiagram.svg" alt="Technical Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -1009,296 +1009,197 @@ But these patterns were just taken into consideration since the application desi
 <div class="sect1">
 <h2 id="section-building-block-view">5. Building Block View</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<div class="title">Content</div>
-<p>The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations,
-datas structures, &#8230;&#8203;) as well as their dependencies (relationships, associations, &#8230;&#8203;)</p>
-</div>
-<div class="paragraph">
-<p>This view is mandatory for every architecture documentation.
-In analogy to a house this is the <em>floor plan</em>.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>Maintain an overview of your source code by making its structure understandable through
-abstraction.</p>
-</div>
-<div class="paragraph">
-<p>This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.</p>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="./images/05_building_blocks-EN.png" alt="Hierarchy of building blocks"></span></p>
-</div>
-<div class="paragraph">
-<p><strong>Level 1</strong> is the white box description of the overall system together with black
-box descriptions of all contained building blocks.</p>
-</div>
-<div class="paragraph">
-<p><strong>Level 2</strong> zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.</p>
-</div>
-<div class="paragraph">
-<p><strong>Level 3</strong> zooms into selected building blocks of level 2, and so on.</p>
-</div>
-</div>
-</div>
 <div class="sect2">
-<h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
+<h3 id="_level_1_whitebox_overall_system">5.1. Level 1: Whitebox Overall System</h3>
 <div class="paragraph">
-<p>Here you describe the decomposition of the overall system using the following white box template. It contains</p>
+<p>This is a high-level static overview of the system and all its building blocks. It shows the application components, the user-related components and the external services that the application uses.</p>
+</div>
+<div class="paragraph">
+<p>The main actor for the application is the user, which interacts with the application and provides access to a POD on which its data is stored. The application is divided into the frontend –managing the user interaction–, and backend which interacts with external services.</p>
+</div>
+<div class="paragraph">
+<p>This diagram is divided based on data ownership. Three main groups are considered:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>an overview diagram</p>
+<p>User: groups all user-related blocks.</p>
 </li>
 <li>
-<p>a motivation for the decomposition</p>
+<p>LoMap: groups all application-specific blocks.</p>
 </li>
 <li>
-<p>black box descriptions of the contained building blocks. For these we offer you alternatives:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>use <em>one</em> table for a short and pragmatic overview of all contained building blocks and their interfaces</p>
-</li>
-<li>
-<p>use a list of black box descriptions of the building blocks according to the black box template (see below).
-Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).</p>
+<p>External Services: groups all other blocks that are not directly related to the user nor to the application.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p>(optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Motivation</dt>
-<dd>
-<p><em>&lt;text explanation&gt;</em></p>
-</dd>
-<dt class="hdlist1">Contained Building Blocks</dt>
-<dd>
-<p><em>&lt;Description of contained building block (black boxes)&gt;</em></p>
-</dd>
-<dt class="hdlist1">Important Interfaces</dt>
-<dd>
-<p><em>&lt;Description of important interfaces&gt;</em></p>
-</dd>
-</dl>
-</div>
-<div class="sidebarblock arc42help">
+<div class="imageblock">
 <div class="content">
-<div class="paragraph">
-<p>Insert your explanations of black boxes from level 1:</p>
+<img src="./images/images/BuildingBlockView-Level1.svg" alt="Building Block View (Level 1)">
 </div>
-<div class="paragraph">
-<p>If you use tabular form you will only describe your black boxes with name and
-responsibility according to the following schema:</p>
 </div>
+<div class="sect3">
+<h4 id="_contained_blackboxes">5.1.1. Contained BlackBoxes</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top"><strong>Name</strong></th>
-<th class="tableblock halign-left valign-top"><strong>Responsibility</strong></th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;black box 1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> <em>&lt;Text&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External user that provides its data through a POD and that makes use of the application services</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;black box 2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"> <em>&lt;Text&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privately holds all user data. The application asks for permission to access this information</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Webapp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides an user-friendly interface to access all application services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LoMapCore</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides the services that the application offers. Connects to data sources to provide those services</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds all common data that the application needs to run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External service that provides map data to the application</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Image Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External service that provides image data to the application</p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
-Its headline is the name of the black box.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_black_box_1">5.1.1. &lt;Name black box 1&gt;</h4>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you describe &lt;black box 1&gt;
-according the the following black box template:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Purpose/Responsibility</p>
-</li>
-<li>
-<p>Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.</p>
-</li>
-<li>
-<p>(Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, &#8230;&#8203;.</p>
-</li>
-<li>
-<p>(Optional) directory/file location</p>
-</li>
-<li>
-<p>(Optional) Fulfilled requirements (if you need traceability to requirements).</p>
-</li>
-<li>
-<p>(Optional) Open issues/problems/risks</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><em>&lt;Purpose/Responsibility&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;Interface(s)&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Quality/Performance Characteristics&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Directory/File Location&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Fulfilled Requirements&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(optional) Open Issues/Problems/Risks&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_black_box_2">5.1.2. &lt;Name black box 2&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_black_box_n">5.1.3. &lt;Name black box n&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_interface_1">5.1.4. &lt;Name interface 1&gt;</h4>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_interface_m">5.1.5. &lt;Name interface m&gt;</h4>
-
-</div>
-</div>
-<div class="sect2">
-<h3 id="_level_2">5.2. Level 2</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.</p>
-</div>
-<div class="paragraph">
-<p>You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_1">5.2.1. White Box <em>&lt;building block 1&gt;</em></h4>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="paragraph">
-<p>&#8230;&#8203;describes the internal structure of <em>building block 1</em>.</p>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_2">5.2.2. White Box <em>&lt;building block 2&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_m">5.2.3. White Box <em>&lt;building block m&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">DISCLAIMER</dt>
+<dd>
+<p>The following sections have been intentionally left partially completed. This is because the application is yet to be builded, so a lower level of abstraction is, as of now, speculation. Nevertheless, the general structure of the section is presented for guidance.</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_level_3">5.3. Level 3</h3>
-<div class="sidebarblock arc42help">
-<div class="content">
+<h3 id="_level_2_webapp">5.2. Level 2: Webapp</h3>
 <div class="paragraph">
-<p>Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.</p>
+<p>The Webapp encompasses all UI-related components of the application. &#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p>When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.</p>
+<p>(insert diagram)</p>
 </div>
+<div class="sect3">
+<h4 id="_contained_blackboxes_2">5.2.1. Contained BlackBoxes</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Component 1 of the Webapp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comp2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Component 2 of the Webapp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comp3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Component 3 of the Webapp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_level_2_lomapcore">5.2.2. Level 2: LoMapCore</h4>
+<div class="paragraph">
+<p>The LoMapCore block encompasses all business-logic components, as well as data-source management and interaction with other services. &#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>(insert diagram)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_x_1">5.3.1. White Box &lt;_building block x.1_&gt;</h4>
-<div class="sidebarblock arc42help">
-<div class="content">
+<h4 id="_contained_blackboxes_3">5.2.3. Contained BlackBoxes</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RestAPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> API that allows all the other parts of the application to connect to the LoMapCore</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comp2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Component 2 of the RestAPI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comp3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"> Component 3 of the RestAPI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_database">5.2.4. Database</h4>
 <div class="paragraph">
-<p>Specifies the internal structure of <em>building block x.1</em>.</p>
-</div>
-</div>
+<p>The Database holds all common information that the application needs to run, such as cached data, ???, &#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<p>TODO: Is it necessary to include a diagram for the Database?</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_x_2">5.3.2. White Box &lt;_building block x.2_&gt;</h4>
+<h4 id="_mapservice">5.2.5. MapService</h4>
 <div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<p>The MapService is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user.</p>
+</div>
+<div class="paragraph">
+<p>(insert API overview)</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_white_box_building_block_y_1">5.3.3. White Box &lt;_building block y.1_&gt;</h4>
+<h4 id="_imageservice">5.2.6. ImageService</h4>
 <div class="paragraph">
-<p><em>&lt;white box template&gt;</em></p>
+<p>The ImageService is an external service, planned to provide access to marker images. Its usage is, as of now, uncertain, as there is not yet clear whether this service will be needed.</p>
+</div>
+<div class="paragraph">
+<p>(insert API overview)</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1601,22 +1502,70 @@ on this list.</p>
 <div class="sect2">
 <h3 id="_domain_model">8.1. Domain model</h3>
 <div class="paragraph">
-<p><span class="image"><img src="./images/UmlDiagram.png" alt="Example UML Diagram"></span></p>
+<p><span class="image"><img src="./images/Class_diagram.jpg" alt="Class diagram with all the important elements of the architecture"></span></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Element</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Description and purpose</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The people that use the application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each user has their own. They can contain marks of the places the users want to save.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">They allow to put marks on the desired places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">They store the user&#8217;s data, friends and maps.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Review</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Abstract superclass that encompasses all the different evaluations users can make about the places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User use them to write an opinion of a marked place.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Score</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluation a user can add to a marked place.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Picture</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can add them to marked places.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_security_and_user_privacy">8.2. Security and user privacy</h3>
+<div class="paragraph">
+<p>In order to increase security and privacy, all users will have a personal POD that will store their data, friends and maps. This way the users can decide who can see and use their information, giving them more freedom and control over the application.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_concept_2">8.2. <em>&lt;Concept 2&gt;</em></h3>
+<h3 id="_persistance">8.3. Persistance</h3>
 <div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
+<p>A database will be used to store minimal data of the users and the reviews (pictures, comments, scores&#8230;&#8203;) they want to add to the different marked places. In addition, they will be used to link the users with their PODs.
+To ease this task, MySQL was chosen for the development.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_concept_n">8.3. <em>&lt;Concept n&gt;</em></h3>
+<h3 id="_session_management">8.4. Session management</h3>
 <div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
+<p>Since only the device each user uses is going to be linked to each user&#8217;s POD, each person will only sign in and have access to their saved data through it. Passwords will only be used to ensure the correct user is using the device.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1663,6 +1612,56 @@ here in this central section or whether you better document it locally
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>The following table contains the design decisions we have taken, ordered by importance:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Decisions</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Decision</th>
+<th class="tableblock halign-left valign-top">Advantages</th>
+<th class="tableblock halign-left valign-top">Disadvantages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>TypeScript</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Similar to JavaScript, but with types.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>React.js</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MySQL</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We already have experience with MySQL. Quite popular in the market</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Does not support a very large database size</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Node.js</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Easy escalability, easy to learn, high performance for real-time applications</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Docker</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Fast deployment, ease of moving/maintaining your applications</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We do not have much experience using Docker</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>PlantUML</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Allows drawing diagrams very easily, with a simple syntax.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Does not allow as much control over the exact layout of the elements in the diagram as other tools.</em></p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1808,7 +1807,7 @@ concrete and measurable.</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Risks</caption>
+<caption class="title">Table 5. Risks</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 33.3333%;">
@@ -1850,7 +1849,7 @@ concrete and measurable.</p>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Technical debts</caption>
+<caption class="title">Table 6. Technical debts</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -1924,12 +1923,28 @@ we will create them at the end</em></p></td>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;Term-1&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;definition-1&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software platform that allows you to deliver software in packages called containers</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;Term-2&gt;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&lt;definition-2&gt;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open-source relational database management system that uses the SQL language</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Single-threaded, open-source, cross-platform runtime environment for building fast and scalable server-side and networking applications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decentralized data stores. They are like secure personal web servers for data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">React.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript library that allows developers to easily create fast user interfaces for websites and applications alike</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TypeScript</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Open source high-level programming language. It is a strict syntactical superset of JavaScript and adds optional static typing</p></td>
 </tr>
 </tbody>
 </table>
@@ -1958,7 +1973,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-08 19:00:52 +0100
+Last updated 2023-02-19 23:43:19 +0100
 </div>
 </div>
 </body>
