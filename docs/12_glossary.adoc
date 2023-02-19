@@ -29,7 +29,7 @@ Potentially more columns in case you need translations.
 | Docker     | Software platform that allows you to deliver software in packages called containers
 | MySQL     | Open-source relational database management system that uses the SQL language
 | Node.js     | Single-threaded, open-source, cross-platform runtime environment for building fast and scalable server-side and networking applications
-| Pod    | Decentralized data stores. They are like secure personal web servers for data
+| POD    | Decentralized data stores. They are like secure personal web servers for data
 | React.js    | JavaScript library that allows developers to easily create fast user interfaces for websites and applications alike
 | TypeScript    | Open source high-level programming language. It is a strict syntactical superset of JavaScript and adds optional static typing
 |===
