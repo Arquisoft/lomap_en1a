@@ -1,24 +1,20 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+Our language of choice is TypeScript, due to to the need of it for the next decisions involving libraries, which were taken. Also, the majority of the team was familiar with JavaScript,
+which has similarities with TypeScript.
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
+Regarding libraries, we are going to use React, for the front-end of the application, and Node.js for the back end, due to that we were recommended in the lectures to use React, and after 
+investigating a bit, we found that Node.js works surprisingly well with React.
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+When it comes to storing information, we decided that we will use json files, because we were quite familiar with it and we think it will represent the information better than the other proposed
+ones such as XML. And having a look to persiting the information, we will use a relational database, and PODS to store sensitive user data. When discussing about the possible databases,
+ we found that the model we were trying to represent was easily mapped with a relationa approach, and from there, MariaDB and MySQL were proposed. From which we picked the second option
+ since most of us were quite familiar with it.
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
+Taking a quick peek at the general structure of the application, the usage of some patterns was debated, those being:
+    -Command pattern: When accessing the database in CRUD operations.
+    -Façade pattern: When dividing responsabilities among the layers.
+    -MVC pattern: When assigning roles to the parts of the applications.
+But these patterns were just taken into consideration since the application design phase has still not started.
 
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
