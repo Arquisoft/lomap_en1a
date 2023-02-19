@@ -15,7 +15,7 @@ This diagram is divided based on data ownership. Three main groups are considere
 - LoMap: groups all application-specific blocks.
 - External Services: groups all other blocks that are not directly related to the user nor to the application.
 
-image::images/BuildingBlockView-Level1.svg[Building Block View (Level 1)]
+image::BuildingBlockView-Level1.svg[Building Block View (Level 1)]
 
 ==== Contained BlackBoxes
 [options="header"]
