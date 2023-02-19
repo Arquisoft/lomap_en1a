@@ -17,6 +17,7 @@ If needed you can subdivide them into
 technical constraints, organizational and political constraints and
 conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
 ****
+
 .Technical constraints
 [options="header",cols="1,2"]
 |===
@@ -41,3 +42,4 @@ conventions (e.g. programming or versioning guidelines, documentation or naming 
 | _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
 | _Language_ | _The documentation and application will be developed in English_ 
 |===
+
