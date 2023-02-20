@@ -17,3 +17,29 @@ If needed you can subdivide them into
 technical constraints, organizational and political constraints and
 conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
 ****
+
+.Technical constraints
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+| _SOLID project_ | _The shared information of the users will be stored in a personal POD according to the SOLID project.
+ It is a specification that stores data securely in decentralized data stores called PODs_
+| _GIT_ | _We will use GIT with github_  
+|===
+
+.Organizational constraints
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+| _Time_ | _Documentation 0.1 must be delivered in week 4; prototype 0.1 in week 7; prototype 1.0 and documentation 1.0 in week 10; prototype 1.1 and documentation 1.1 in week 13_ 
+| _Team members_ | _The project will be done in teams of 5-8 students_ 
+|===
+
+.Political constraints
+[options="header",cols="1,2"]
+|===
+|Constraint|Explanation
+| _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
+| _Language_ | _The documentation and application will be developed in English_ 
+|===
+

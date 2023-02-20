@@ -3,204 +3,77 @@
 
 == Building Block View
 
-[role="arc42help"]
-****
-.Content
-The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations,
-datas structures, ...) as well as their dependencies (relationships, associations, ...)
+=== Level 1: Whitebox Overall System
 
-This view is mandatory for every architecture documentation.
-In analogy to a house this is the _floor plan_.
+This is a high-level static overview of the system and all its building blocks. It shows the application components, the user-related components and the external services that the application uses.
 
-.Motivation
-Maintain an overview of your source code by making its structure understandable through
-abstraction.
+The main actor for the application is the user, which interacts with the application and provides access to a POD on which its data is stored. The application is divided into the frontend –managing the user interaction–, and backend which interacts with external services.
 
-This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.
+This diagram is divided based on data ownership. Three main groups are considered:
 
-.Form
-The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.
+- User: groups all user-related blocks.
+- LoMap: groups all application-specific blocks.
+- External Services: groups all other blocks that are not directly related to the user nor to the application.
 
-image:05_building_blocks-EN.png["Hierarchy of building blocks"]
+image::BuildingBlockView-Level1.svg[Building Block View (Level 1)]
 
-*Level 1* is the white box description of the overall system together with black
-box descriptions of all contained building blocks.
+==== Contained BlackBoxes
+[options="header"]
+|===========================================================================================================
+| Name            | Description                                                                                      
+| User            | External user that provides its data through a POD and that makes use of the application services
+| POD             | Privately holds all user data. The application asks for permission to access this information    
+| Webapp          | Provides an user-friendly interface to access all application services                           
+| LoMapCore       | Provides the services that the application offers. Connects to data sources to provide those services
+| Database        | Holds all common data that the application needs to run
+| Map Provider    | External service that provides map data to the application
+| Image Provider  | External service that provides image data to the application
+|===========================================================================================================
 
-*Level 2* zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.
+DISCLAIMER::
+The following sections have been intentionally left partially completed. This is because the application is yet to be builded, so a lower level of abstraction is, as of now, speculation. Nevertheless, the general structure of the section is presented for guidance.
 
-*Level 3* zooms into selected building blocks of level 2, and so on.
-****
+=== Level 2: Webapp
+The Webapp encompasses all UI-related components of the application. ...
 
-=== Whitebox Overall System
+(insert diagram)
 
-[role="arc42help"]
-****
-Here you describe the decomposition of the overall system using the following white box template. It contains
-
- * an overview diagram
- * a motivation for the decomposition
- * black box descriptions of the contained building blocks. For these we offer you alternatives:
-
-   ** use _one_ table for a short and pragmatic overview of all contained building blocks and their interfaces
-   ** use a list of black box descriptions of the building blocks according to the black box template (see below).
-   Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).
-
-
- * (optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.
-
-****
-
-_**<Overview Diagram>**_
-
-Motivation::
-
-_<text explanation>_
-
-
-Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
-
-Important Interfaces::
-_<Description of important interfaces>_
-
-[role="arc42help"]
-****
-Insert your explanations of black boxes from level 1:
-
-If you use tabular form you will only describe your black boxes with name and
-responsibility according to the following schema:
-
-[cols="1,2" options="header"]
+==== Contained BlackBoxes
+[options="header"]
 |===
-| **Name** | **Responsibility**
-| _<black box 1>_ | _<Text>_
-| _<black box 2>_ | _<Text>_
+| Name            | Responsibility
+| Comp1   | Component 1 of the Webapp
+| Comp2   | Component 2 of the Webapp
+| Comp3   | Component 3 of the Webapp
+| ... | ...
 |===
 
+==== Level 2: LoMapCore
+The LoMapCore block encompasses all business-logic components, as well as data-source management and interaction with other services. ...
 
+(insert diagram)
 
-If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
-Its headline is the name of the black box.
-****
+==== Contained BlackBoxes
+[options="header"]
+|===
+| Name            | Responsibility
+| RestAPI   | API that allows all the other parts of the application to connect to the LoMapCore
+| Comp2   | Component 2 of the RestAPI
+| Comp3   | Component 3 of the RestAPI
+| ... | ...
+|===
 
+==== Database
+The Database holds all common information that the application needs to run, such as cached data, ???, ...
 
-==== <Name black box 1>
+TODO: Is it necessary to include a diagram for the Database?
 
-[role="arc42help"]
-****
-Here you describe <black box 1>
-according the the following black box template:
+==== MapService
+The MapService is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user.
 
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
+(insert API overview)
 
-****
+==== ImageService
+The ImageService is an external service, planned to provide access to marker images. Its usage is, as of now, uncertain, as there is not yet clear whether this service will be needed. 
 
-_<Purpose/Responsibility>_
-
-_<Interface(s)>_
-
-_<(Optional) Quality/Performance Characteristics>_
-
-_<(Optional) Directory/File Location>_
-
-_<(Optional) Fulfilled Requirements>_
-
-_<(optional) Open Issues/Problems/Risks>_
-
-
-
-
-==== <Name black box 2>
-
-_<black box template>_
-
-==== <Name black box n>
-
-_<black box template>_
-
-
-==== <Name interface 1>
-
-...
-
-==== <Name interface m>
-
-
-
-=== Level 2
-
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
-
-You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system
-****
-
-==== White Box _<building block 1>_
-
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
-
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
-
-
-_<white box template>_
-
-
-
-=== Level 3
-
-[role="arc42help"]
-****
-Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
-
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-****
-
-
-==== White Box <_building block x.1_>
-
-[role="arc42help"]
-****
-Specifies the internal structure of _building block x.1_.
-****
-
-
-_<white box template>_
-
-
-==== White Box <_building block x.2_>
-
-_<white box template>_
-
-
-
-==== White Box <_building block y.1_>
-
-_<white box template>_
+(insert API overview)
