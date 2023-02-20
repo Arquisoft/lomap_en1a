@@ -45,6 +45,14 @@ If you as an architect do not know how the quality of your work will be judged â
 A table with quality goals and concrete scenarios, ordered by priorities
 ****
 
+[options="header",cols="1,1,1,1,1,1"]
+|===
+|Source of stimulus|Stimulus|Artifact|Environment|Response|Response measure
+|Infrastructure|Normal use of the application|Whole system|Normal operation|Aviability percentage|99% aviability
+|Clients|40 concurrent users|User interface|Request a map of a given city|Response time|<0.5 seconds
+|Clients|A new user wants to find a place with the app|User interface|Search of a location|Time|< 5 minutes
+|===
+
 === Stakeholders
 
 [role="arc42help"]
