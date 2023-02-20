@@ -11,6 +11,16 @@ Describes the relevant requirements and the driving forces that software archite
 ****
 
 === Requirements Overview
+The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.
+
+The software must include features to provide some services. It has to:
+
+* Allow the users to add and store any location they want to include in their maps.
+* Include features that allow to add reviews, comments, pics, etc. about the places.
+* Include a way of managing the information that is accesible with other users.
+* Filter the map by category, friends, etc.
+
+All these requirements can be found in link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
 
 [role="arc42help"]
 ****
