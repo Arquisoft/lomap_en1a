@@ -1,6 +1,6 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
-
+The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
 [role="arc42help"]
 ****
 Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
