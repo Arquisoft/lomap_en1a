@@ -1,12 +1,15 @@
-class UserRepository implements Repository<User>{
-    get(id: String): User {
+class UserDAO implements DAO<User>{
+
+
+
+    getTbyId(id: String): User {
         throw new Error("Method not implemented.");
     }
-    remove(id: String) {
+    save(entity: User) {
         throw new Error("Method not implemented.");
     }
-    insert(entity: User) {
-        throw new Error("Method not implemented.");
+    remove(entity: User) {
+        throw new Error("Method no implemented.");
     }
     update(entity: User) {
         throw new Error("Method not implemented.");

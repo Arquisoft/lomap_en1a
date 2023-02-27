@@ -1,9 +1,8 @@
 interface Repository<T> {
 
-    getTbyId(id: String): T;
-    save(entity: T);
-    remove(entity: T);
+    get(id: String): T;
+    remove(id: String);
+    insert(entity: T);
     update(entity: T);
-
 
 }
