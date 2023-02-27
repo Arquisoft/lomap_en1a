@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
-import EmailForm from './components/EmailForm';
-import Welcome from './components/Welcome';
-import UserList from './components/UserList';
-import  {getUsers} from './api/api';
-import {User} from './shared/shareddtypes';
-import './App.css';
 
-function App(): JSX.Element {
+import Navbar from "./components/mainPage/Navbar"
+import Home from "./components/mainPage/Home"
+import About from "./components/mainPage/About"
+import Contact from "./components/mainPage/Contact"
+import Footer from "./components/mainPage/Footer"
+import { Route, Routes } from "react-router-dom"
+import "./App.css";
+import LoginForm from "./components/mainPage/LoginForm"
 
-  const [users,setUsers] = useState<User[]>([]);
-
-  const refreshUserList = async () => {
-    setUsers(await getUsers());
-  }
-
-  useEffect(()=>{
-    refreshUserList();
-  },[]);
-
+function App() {
   return (
     <>
-      <Container maxWidth="sm">
-        <Welcome message="ASW students"/>
-        <Box component="div" sx={{ py: 2}}>This is a basic example of a React application using Typescript. You can add your email to the list filling the form below.</Box>
-        <EmailForm OnUserListChange={refreshUserList}/>        
-        <UserList users={users}/>
-        <Link href="https://github.com/arquisoft/lomap_en1a">Source code</Link>
-      </Container>
+    
+    <div className="background-image container">
+    <Navbar />
+    
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<LoginForm />} />
+        </Routes>
+      
+    <Footer/>
+    
+      </div>
+    
+
     </>
-  );
+  )
 }
 
-export default App;
+export default App
+
