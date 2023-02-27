@@ -1,4 +1,7 @@
-class UserRepository implements Repository<User>{
+import { Repository } from "../Repository";
+import { User } from "../../domain/User";
+
+export class UserRepository implements Repository<User>{
     get(id: String): User {
         throw new Error("Method not implemented.");
     }
