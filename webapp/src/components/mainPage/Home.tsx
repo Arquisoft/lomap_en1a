@@ -17,10 +17,6 @@ export default function Home(): JSX.Element {
     </Grid>
 
     </Grid>
-
-  
-  
-  
   
   )
 }

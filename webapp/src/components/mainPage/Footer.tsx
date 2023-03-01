@@ -1,11 +1,12 @@
-import { CustomLink } from "./Navbar";
+import { truncate } from "lodash";
+import { CustomLink } from "../CustomLink";
 
 
+export default function Footer():JSX.Element {
+  
 
-
-export default function Footer() {
   return (
-    <footer className="menu">
+  <footer className="menu">
       <ul>
         <CustomLink to="/about">About us</CustomLink>
         <CustomLink to="/contact">Contact</CustomLink>

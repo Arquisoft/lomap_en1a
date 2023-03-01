@@ -7,22 +7,33 @@ import Footer from "./components/mainPage/Footer"
 import { Route, Routes } from "react-router-dom"
 import "./App.css";
 import LoginForm from "./components/mainPage/LoginForm"
+import MapView from "./components/map/MapView"
+import { useState } from "react"
+
+
 
 function App() {
+  const [hidden, setHidden] = useState(false);
+
+  const hide=(b:boolean)=>{
+    setHidden(b);
+  }
+
   return (
     <>
     
     <div className="background-image container">
-    <Navbar />
+    <Navbar/>
     
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/map" element={<MapView/>} />
         </Routes>
       
-    <Footer/>
+    {!hidden &&<Footer/>}
     
       </div>
     
