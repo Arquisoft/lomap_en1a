@@ -6,6 +6,7 @@ import { FormControlLabel, Paper, Slide, Switch }
     from "@mui/material";
 import Button from "@mui/material/Button/Button";
 import React from "react";
+import InfoWindow from './InfoWindow';
 
 export default function MapView():JSX.Element{
   const [isChecked, setIsChecked] = React.useState(false);
@@ -30,11 +31,16 @@ export default function MapView():JSX.Element{
             <div style={{ display: "flex" }}>
                 <Slide in={isChecked}
                     container={containerRef.current} direction='left'>
-                        <p>PRUEBA</p>
+                        <p>prueba</p>
                 </Slide>
             </div>
         </div>
           </Grid>
+
+          <Grid item>
+          <InfoWindow/>
+          </Grid>
+
         
                 
         
