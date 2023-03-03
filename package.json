@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "react-icons": "^4.7.1",
+    "react-pro-sidebar": "^1.0.0",
     "react-router-dom": "^6.8.1",
     "styled-components": "^5.3.6"
   },

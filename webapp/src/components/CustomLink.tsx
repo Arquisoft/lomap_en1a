@@ -4,6 +4,7 @@ import logo from '../../images/logo.png';
 
 interface Props {
     to:To;
+    children:any;
     }
   export const CustomLink:React.FC<Props>=( {to, children, ...props }) =>{
     const resolvedPath = useResolvedPath(to);

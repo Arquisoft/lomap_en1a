@@ -65,6 +65,14 @@ footer{
   direction:row;
 }
 
+.map-container{
+  margin-top:5em;
+  margin-bottom:5em;
+  justify-content:stretch;
+  text-align: justify;
+  direction:row;
+}
+
 
 
 .menu ul {
