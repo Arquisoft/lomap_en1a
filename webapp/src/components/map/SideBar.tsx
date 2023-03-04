@@ -14,7 +14,7 @@ export default function MySideBar():JSX.Element{
 
     const { collapseSidebar } = useProSidebar();
     return (
-        <Sidebar style={{ height: "100vh" }}>
+        <Sidebar style={{ height: "30vh" }}>
         <Menu>
           <MenuItem
             icon={<MenuOutlinedIcon />}

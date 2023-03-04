@@ -1,11 +1,11 @@
-import {User} from '../shared/shareddtypes';
+import {Comment} from '../shared/shareddtypes';
 
-export async function addUser(user:User):Promise<boolean>{
+export async function addComment(comment:Comment):Promise<boolean>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
     let response = await fetch(apiEndPoint+'/users/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'name':user.name, 'email':user.email})
+        body: JSON.stringify({'name':comment.name, 'text':comment.text})
       });
     if (response.status===200)
       return true;
@@ -13,9 +13,9 @@ export async function addUser(user:User):Promise<boolean>{
       return false;
 }
 
-export async function getUsers():Promise<User[]>{
+export async function getComments():Promise<Comment[]>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
     let response = await fetch(apiEndPoint+'/users/list');
-    //The objects returned by the api are directly convertible to User objects
+    //The objects returned by the api are directly convertible to Comment objects
     return response.json()
 }

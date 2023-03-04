@@ -1,4 +1,4 @@
-export type User = {
+  export type Comment = {
     name:string;
-    email:string;
+    text:string;
   }

@@ -9,7 +9,8 @@ import "./App.css";
 import LoginForm from "./components/mainPage/LoginForm"
 import MapView from "./components/map/MapView"
 import { useState } from "react"
-
+import SlidingPane from "react-sliding-pane";
+import "react-sliding-pane/dist/react-sliding-pane.css";
 
 
 function App() {
@@ -18,10 +19,15 @@ function App() {
   const hide=(b:boolean)=>{
     setHidden(b);
   }
+  const [state, setState] = useState({
+    isPaneOpen: false,
+  });
 
   return (
     <>
     
+
+
     <div className="background-image container">
     <Navbar/>
     
@@ -36,7 +42,6 @@ function App() {
     {!hidden &&<Footer/>}
     
       </div>
-    
 
     </>
   )

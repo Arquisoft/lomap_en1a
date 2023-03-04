@@ -1,51 +1,46 @@
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
-import { FormControlLabel, Paper, Slide, Switch }
-    from "@mui/material";
-import Button from "@mui/material/Button/Button";
-import React from "react";
 import InfoWindow from './InfoWindow';
+import SlidingPane from "react-sliding-pane";
+import { useState } from 'react';
+
+
+
+
 
 export default function MapView():JSX.Element{
-  const [isChecked, setIsChecked] = React.useState(false);
-  const containerRef = React.useRef(null);
+  const [state, setState] = useState({
+    isPaneOpen: false,
+  });
+
     return (
+      <div>
+      <ProSidebarProvider>
+          
+          <MySideBar/>
+      </ProSidebarProvider>
+        <div>
+        <button onClick={() => setState({ isPaneOpen: true })}>
+        Click me to open right pane!
+      </button>
+              <SlidingPane
+                      isOpen={state.isPaneOpen}
+                      onRequestClose={() => {
+                        // triggered on "<" on left top click or on outside click
+                        setState({ isPaneOpen: false });
+                      }}
+                    >
+                        <InfoWindow/>
+                    </SlidingPane>
+          </div>
+      </div>
 
 
       
-        <ProSidebarProvider>
-        <Grid container  justifyContent="space-between">
-          
-       
-        <Grid item >
-          <MySideBar/>
-        </Grid>
-        <Grid item >
-          
-        </Grid>
-        <Grid item >
-        <div  ref={containerRef}>
-            <Button onClick={() => {setIsChecked((prev) => !prev);}}>PRUEBA</Button>
-            <div style={{ display: "flex" }}>
-                <Slide in={isChecked}
-                    container={containerRef.current} direction='left'>
-                        <p>prueba</p>
-                </Slide>
-            </div>
-        </div>
-          </Grid>
 
-          <Grid item>
-          <InfoWindow/>
-          </Grid>
 
-        
-                
-        
-        </Grid>
-        </ProSidebarProvider>
+
 
         );
       

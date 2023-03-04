@@ -1,4 +1,4 @@
-import {User} from '../shared/shareddtypes';
+import { Comment } from '../../shared/shareddtypes';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -7,21 +7,21 @@ import ContactPageIcon from '@mui/icons-material/ContactPage';
 
 
 
-type UserListProps = {
-  users: User[];
+type CommentListProps = {
+  comments: Comment[];
 }
 
-function UserList(props: UserListProps): JSX.Element {
+export default function CommentList(props: CommentListProps): JSX.Element {
   return (
     <>
       <List>
-      {props.users.map((user,i)=>{
+      {props.comments.map((comment,i)=>{
         return (
-          <ListItem key={user.email}>
+          <ListItem key={comment.text}>
             <ListItemIcon>
               <ContactPageIcon/>
             </ListItemIcon>
-            <ListItemText primary={user.name} secondary={user.email}/>
+            <ListItemText primary={comment.name} secondary={comment.text}/>
           </ListItem>
         )
       })}
@@ -33,4 +33,3 @@ function UserList(props: UserListProps): JSX.Element {
   );
 }
 
-export default UserList;
