@@ -11,11 +11,13 @@ import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../shared/shareddtypes';
 
+import "../../App.css"
+
 
 
 export default function InfoWindow():JSX.Element{
   
-  /*const [comments,setComments] = useState<Comment[]>([]);
+  const [comments,setComments] = useState<Comment[]>([]);
 
   const refreshCommentList = async () => {
     setComments(await getComments());
@@ -23,17 +25,17 @@ export default function InfoWindow():JSX.Element{
 
   useEffect(()=>{
     refreshCommentList();
-  },[]);*/
+  },[]);
 
 
       return (
   
   
-        <section>
-          <Grid container direction="column">
+        <section >
+          <Grid container direction="column" >
             
             <Grid item >
-                <Box component="h3" className="fade-in">TITLE-PLACEHOLDER</Box>
+                <Box component="h3" >TITLE-PLACEHOLDER</Box>
             </Grid>
             <Grid item >
               <Button variant="contained">Save</Button>
@@ -47,9 +49,8 @@ export default function InfoWindow():JSX.Element{
             </Grid> 
             <Grid item>
             
-
-          
-
+            <CommentForm OnCommentListChange={refreshCommentList}/>        
+                <CommentList comments={comments}/>
             </Grid>
 
                     
