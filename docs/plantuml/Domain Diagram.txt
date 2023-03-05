@@ -1,0 +1,109 @@
+@startuml
+
+interface PlaceVisibility{
+    isVisibleFor(user : User) : boolean
+}
+
+class UserPlaceVisibility{
+
+}
+
+class FriendsPlaceVisibility{
+
+}
+
+class GroupPlaceVisibility{
+
+}
+
+class FullPlaceVisibility{
+
+}
+
+interface GroupVisibility {
+    isVisibleFor(user : User) : boolean
+}
+
+class PrivateGroup {
+
+}
+
+class PublicGroup {
+
+}
+
+class Place{
+    name : String
+    coordinates : Coordinates
+    isVisibleFor(user : User) : boolean
+}
+
+class Category{
+    name : String
+}
+
+class Picture{
+    url : String
+}
+
+class Comment{
+    text : String
+}
+
+class Score{
+    score : int
+}
+
+class Route{
+    name : String
+}
+
+class User{
+    username : String
+    password : String
+    podId : String
+}
+
+enum Role{
+    CITIZEN
+    TOURIST
+    BUSINESS
+}
+
+class Group{
+    name : String
+    isVisibleFor(user : User) : boolean
+}
+
+class GroupPlaceVisibility {
+
+}
+
+Place "0..n" -down- "1" Category
+Place o-down- "0..n" Picture
+Place o-down- "0..n" Comment
+Place o-down- "0..n" Score
+Place "0..n" -left- "1" PlaceVisibility
+
+User "1" -up- "0..n" Picture
+User "1" -up- "0..n" Comment
+User "1" -up- "0..n" Score
+User "1" -- "0..n" User : is friends with
+User "1..n" -left- "0..n" Group
+User "0..n" -- "1" Role
+User "1" -left- "0..n" Place
+
+Route "0..n" -- "1" Category
+Route "0..n" -left- "0..n" Place
+
+PlaceVisibility <|-up- UserPlaceVisibility
+PlaceVisibility <|-up- FriendsPlaceVisibility
+PlaceVisibility <|-up- GroupPlaceVisibility
+PlaceVisibility <|-up- FullPlaceVisibility
+
+GroupPlaceVisibility "0..n" -- "0..n" Group
+
+GroupVisibility <|-up- PrivateGroup
+GroupVisibility <|-up- PublicGroup
+GroupVisibility -right- Group
+@enduml
