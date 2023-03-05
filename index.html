@@ -1499,7 +1499,7 @@ on this list.</p>
 <div class="sect2">
 <h3 id="_domain_model">8.1. Domain model</h3>
 <div class="paragraph">
-<p><span class="image"><img src="./images/Class_diagram.jpg" alt="Class diagram with all the important elements of the architecture"></span></p>
+<p><span class="image"><img src="./images/DomainDiagram.svg" alt="Class diagram with all the important elements of the architecture"></span></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1516,32 +1516,44 @@ on this list.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The people that use the application.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Map</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each user has their own. They can contain marks of the places the users want to save.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users, if they want, can join groups with other users, where they can share places.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Marker</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">They allow to put marks on the desired places.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GroupVisibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groups can have different types of visibilities.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">They store the user&#8217;s data, friends and maps.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Place</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">They represent the points on the map (they can be either created by users or be given by the application).</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Review</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Abstract superclass that encompasses all the different evaluations users can make about the places.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PlaceVisibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Places have different types of visibilities.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comment</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User use them to write an opinion of a marked place.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Score</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluation a user can add to a marked place.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Places are classified into cateogries.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Picture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Users can add them to marked places.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can upload pictures to places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Score</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can score places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can upload comments to places.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Route</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">They are sets of places, of the same category.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users can be classified into different roles.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1970,7 +1982,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-20 09:00:38 +0100
+Last updated 2023-02-20 15:43:24 +0100
 </div>
 </div>
 </body>
