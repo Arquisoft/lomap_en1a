@@ -18,6 +18,11 @@ h3{
   color:black;
 }
 
+p{
+  color: black;
+}
+
+
 
 
 footer{
@@ -29,6 +34,9 @@ footer{
 }
 
 
+.info-window{
+  background-color: gray;
+}
 
 .background-image {
   background-image: url(images/map.jpg);

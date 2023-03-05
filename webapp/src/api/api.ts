@@ -13,6 +13,7 @@ export async function addComment(comment:Comment):Promise<boolean>{
       return false;
 }
 
+//Hay algo mal al retornar el json()
 export async function getComments():Promise<Comment[]>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
     let response = await fetch(apiEndPoint+'/users/list');

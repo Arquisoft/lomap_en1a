@@ -1,44 +1,68 @@
 import Grid from '@mui/material/Grid';
-import MySideBar from './SideBar';
+import {MySideBar} from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
-import InfoWindow from './InfoWindow';
+import {InfoWindow} from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
 import { useState } from 'react';
-import "../../App.css"
-import "react-sliding-pane/dist/react-sliding-pane.css";
+import "../../App.css";
 
 
 
-
+export interface IInfoWindowData{
+  setInfoWindowData:React.Dispatch<React.SetStateAction<{
+    isOpen: boolean;
+    title: string;
+    stars:number;
+}>>
+  infoWindowData?:{
+    isOpen:boolean;
+    title:string;
+    stars:number
+  }
+}
 
 export default function MapView():JSX.Element{
-  const [state, setState] = useState({
-    isPaneOpen: false,
+  const [infoWindowData, setInfoWindowData] = useState({
+    isOpen:false,
+    title:"",
+    stars:0
   });
+
+  //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
 
     return (
       <div>
       <ProSidebarProvider>
-          <MySideBar/>
+          <MySideBar setInfoWindowData={setInfoWindowData}/>
       </ProSidebarProvider>
 
         
-        <button onClick={() => setState({ isPaneOpen: true })}>
+        <button onClick={()=>setInfoWindowData({
+          isOpen:true,
+          title:"Title 1",
+          stars:3
+        })}>
         Click me to open right pane!
       </button>
-      <SlidingPane
-          isOpen={state.isPaneOpen}
+      
+      <SlidingPane 
+          isOpen={infoWindowData.isOpen}
           onRequestClose={() => {
-          // triggered on "<" on left top click or on outside click
-            setState({ isPaneOpen: false });
+            setInfoWindowData({
+              isOpen:false,
+              title:"",
+              stars:0
+            });
           }}
-          width="50vh"
-          className="some-custom-class"
-          overlayClassName="some-custom-overlay-class"
+          width="70vh"
+          className='info-window'
+          overlayClassName='info-window'
           >
-          <InfoWindow/>
+          <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>
                         
       </SlidingPane>
+      
+
           </div>
 
         );

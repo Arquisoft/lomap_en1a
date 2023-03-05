@@ -27,6 +27,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
     let result:boolean = await addComment({name,text});
     if (result){
       setNotificationStatus(true);
@@ -53,13 +54,13 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
         <TextField
           required
           name="text"
-          label="text" 
+          label="Write your review" 
           variant="outlined"
           value={text}
           onChange={e => setText(e.target.value)}
           sx={{ my: 2 }}
         />
-        <Button variant="contained" type="submit" sx={{ my: 2 }}>Accept</Button>
+        <Button variant="contained" type="submit" sx={{ my: 2 }}>Post</Button>
       </form>
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={()=>{setNotificationStatus(false)}}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
