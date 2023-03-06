@@ -5,6 +5,7 @@ import {InfoWindow} from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
 import { useState } from 'react';
 import "../../App.css";
+import { FilterList } from './FilterList';
 
 
 
@@ -35,6 +36,7 @@ export default function MapView():JSX.Element{
       <ProSidebarProvider>
           <MySideBar setInfoWindowData={setInfoWindowData}/>
       </ProSidebarProvider>
+      <FilterList/>
 
         
         <button onClick={()=>setInfoWindowData({
