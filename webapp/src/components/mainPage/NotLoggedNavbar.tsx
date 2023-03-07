@@ -14,6 +14,7 @@ export default function NotLoggedNavbar() {
       <ul>
         <CustomLink to="/login" >Log in</CustomLink>
         <CustomLink to="/signup" >Sign up</CustomLink>
+        <CustomLink to="/map">TESTING PURPOSES</CustomLink>
       </ul>
     </nav>
   )
