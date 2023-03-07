@@ -1,5 +1,6 @@
 
-import Navbar from "./components/mainPage/Navbar"
+import LoggedNavbar from "./components/mainPage/LoggedNavbar"
+import NotLoggedNavbar from "./components/mainPage/NotLoggedNavbar"
 import Home from "./components/mainPage/Home"
 import About from "./components/mainPage/About"
 import Contact from "./components/mainPage/Contact"
@@ -11,10 +12,23 @@ import MapView from "./components/map/MapView"
 import { useState } from "react"
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
+import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
 
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [hidden, setHidden] = useState(false);
+
+  const { session } = useSession();
+
+  session.onLogin(()=>{
+    setIsLoggedIn(true)
+  })
+  
+  session.onLogout(()=>{
+    setIsLoggedIn(false)
+  })
 
   const hide=(b:boolean)=>{
     setHidden(b);
@@ -22,29 +36,53 @@ function App() {
   const [state, setState] = useState({
     isPaneOpen: false,
   });
+  
+  if (isLoggedIn) {
+    return (
+      <>
 
-  return (
-    <>
-    
 
-
-    <div className="background-image container">
-    <Navbar/>
-    
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/map" element={<MapView/>} />
-        </Routes>
+      <div className="background-image container">
+      <LoggedNavbar/>
       
-    {!hidden &&<Footer/>}
-    
-      </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/map" element={<MapView/>} />
+          </Routes>
+        
+      {!hidden &&<Footer/>}
+      
+        </div>
 
-    </>
-  )
+      </>
+    )
+  } else {
+    return (
+      <>
+
+
+      <div className="background-image container">
+      <NotLoggedNavbar/>
+      
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/map" element={<MapView/>} />
+          </Routes>
+        
+      {!hidden &&<Footer/>}
+      
+        </div>
+
+      </>
+    )
+  }
 }
 
 export default App
