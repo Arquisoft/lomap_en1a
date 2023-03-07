@@ -34,6 +34,7 @@ footer{
 
 
 
+
 .map-view{
   display: grid;
   grid-template-rows: [first]5em [second]20em[last] ;
@@ -68,7 +69,7 @@ footer{
 }
 
 .info-window{
-  background-color: gray;
+  color:black;
 }
 
 .background-image {

@@ -16,13 +16,12 @@ export default function CommentList(props: CommentListProps): JSX.Element {
     <>
       <List>
       {props.comments.map((comment,i)=>{
-        
         return (
           <ListItem key={i}>
             <ListItemIcon>
               <ContactPageIcon/>
             </ListItemIcon>
-            <ListItemText primary={comment.text} secondary={comment.text}/>
+            <ListItemText primary={comment.name} secondary={comment.text}/>
           </ListItem>
         )
       })}

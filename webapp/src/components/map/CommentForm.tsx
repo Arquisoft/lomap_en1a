@@ -5,6 +5,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
 import { addComment } from '../../api/api';
+import Grid from '@mui/material/Grid';
+
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
@@ -50,17 +52,25 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   return (
     <>
       <form name="register" onSubmit={handleSubmit}>
+        <Grid container spacing={2} justifyContent="space-around">
+          
+          <TextField
+            required
+            name="text"
+            label="Write your review" 
+            variant="filled"
+            value={text}
+            onChange={e => {
+              setText(e.target.value);
+              setName("PLACEHOLDER");
+              
+            }}
+            
+          />
+          <Button variant="contained" type="submit">Post</Button>
+        </Grid>
 
-        <TextField
-          required
-          name="text"
-          label="Write your review" 
-          variant="outlined"
-          value={text}
-          onChange={e => setText(e.target.value)}
-          sx={{ my: 2 }}
-        />
-        <Button variant="contained" type="submit" sx={{ my: 2 }}>Post</Button>
+
       </form>
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={()=>{setNotificationStatus(false)}}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
