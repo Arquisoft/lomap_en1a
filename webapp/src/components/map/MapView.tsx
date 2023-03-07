@@ -32,40 +32,58 @@ export default function MapView():JSX.Element{
   //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
 
     return (
-      <div>
-      <ProSidebarProvider>
-          <MySideBar setInfoWindowData={setInfoWindowData}/>
-      </ProSidebarProvider>
-      <FilterList/>
 
-        
-        <button onClick={()=>setInfoWindowData({
-          isOpen:true,
-          title:"Title 1",
-          stars:3
-        })}>
-        Click me to open right pane!
-      </button>
-      
-      <SlidingPane 
-          isOpen={infoWindowData.isOpen}
-          onRequestClose={() => {
-            setInfoWindowData({
-              isOpen:false,
-              title:"",
-              stars:0
-            });
-          }}
-          width="70vh"
-          className='info-window'
-          overlayClassName='info-window'
-          >
-          <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>
-                        
-      </SlidingPane>
-      
+      <>
+      <div className='map-view'>
+        <div className='side-bar'>
+          <ProSidebarProvider>
+                <MySideBar setInfoWindowData={setInfoWindowData}/>
+          </ProSidebarProvider>
+        </div>
+
+        <div className='filter-list'>
+          <FilterList/>
+        </div>
+         
+
+          <div className='map'>
 
           </div>
+      </div>
+
+        
+        
+
+
+        
+        <SlidingPane 
+            isOpen={infoWindowData.isOpen}
+            onRequestClose={() => {
+              setInfoWindowData({
+                isOpen:false,
+                title:"",
+                stars:0
+              });
+            }}
+            width="70vh"
+            className='info-window'
+            overlayClassName='info-window'
+            >
+            <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>
+                          
+        </SlidingPane>
+      
+      </>
+        
+
+
+
+      
+        
+
+      
+
+          
 
         );
       
