@@ -34,6 +34,41 @@ footer{
 }
 
 
+
+
+.map-view{
+  display: grid;
+  grid-template-rows: [first]5em [second]20em[last] ;
+  grid-template-columns: [firstC]12em [secondC]30em[lastC] ;
+}
+
+.filter-list{
+  grid-row-start: first;
+  grid-row-end:second;
+  grid-column-start:secondC ;
+  grid-column-end: lastC;
+}
+
+.toggle-buttons{
+  background-color: #388fe6;
+  margin-top: 0.5em;
+
+  
+}
+.side-bar{
+  grid-row-start: first;
+  grid-row-end:last;
+  grid-column-start:firstC ;
+  grid-column-end: secondC;
+}
+
+.map{
+  grid-row-start: second;
+  grid-row-end:last;
+  grid-column-start:secondC ;
+  grid-column-end: lastC;
+}
+
 .info-window{
   background-color: gray;
 }
