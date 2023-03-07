@@ -51,18 +51,21 @@ image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscuttin
 
 
 === Domain model
-image:Class_diagram.jpg["Class diagram with all the important elements of the architecture"]
+image:ClassDiagram.jpg["Class diagram with all the important elements of the architecture"]
 
 |===
 | *Element* | *Description and purpose*
 | User | The people that use the application.
-| Map | Each user has their own. They can contain marks of the places the users want to save.
-| Marker | They allow to put marks on the desired places.
-| POD | They store the user's data, friends and maps.
-| Review | Abstract superclass that encompasses all the different evaluations users can make about the places.
-| Comment | User use them to write an opinion of a marked place.
-| Score | Evaluation a user can add to a marked place.
-| Picture | Users can add them to marked places.
+| Group | Users, if they want, can join groups with other users, where they can share places.
+| GroupVisibility | Groups can have different types of visibilities.
+| Place | They represent the points on the map (they can be either created by users or be given by the application).
+| PlaceVisibility | Places have different types of visibilities.
+| Category | Places are classified into cateogries.
+| Picture | Users can upload pictures to places.
+| Score | Users can score places.
+| Comment | Users can upload comments to places.
+| Route | They are sets of places, of the same category.
+| Role | Users can be classified into different roles.
 |===
 
 
