@@ -13,6 +13,7 @@ import { useState } from "react"
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
+import { useNavigate } from "react-router-dom";
 
 
 function App() {
@@ -22,12 +23,16 @@ function App() {
 
   const { session } = useSession();
 
+  const nav = useNavigate();
+
   session.onLogin(()=>{
     setIsLoggedIn(true)
+    nav("/")
   })
   
   session.onLogout(()=>{
     setIsLoggedIn(false)
+    nav("/")
   })
 
   const hide=(b:boolean)=>{
