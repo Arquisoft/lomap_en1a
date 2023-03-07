@@ -27,7 +27,7 @@ function App() {
 
   session.onLogin(()=>{
     setIsLoggedIn(true)
-    nav("/")
+    nav("/map")
   })
   
   session.onLogout(()=>{
