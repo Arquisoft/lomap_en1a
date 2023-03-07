@@ -6,13 +6,17 @@ import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
 import { addComment } from '../../api/api';
 import Grid from '@mui/material/Grid';
+import { Place } from '../../domain/Place';
+import { User } from '../../domain/User';
+import { UserPlaceVisilibity } from '../../domain/Visibility';
+import { Comment } from '../../domain/Comment';
 
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
 }
 
-type NotificationType = {
+export type NotificationType = {
   severity: AlertColor,
   message: string;
 }
@@ -29,8 +33,14 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    //FOR TESTING ONLY***
+    var u = new User("P","P","P");
+    var p = new Place("PLACEHOLDER",u,new UserPlaceVisilibity());
+    var comment = new Comment(text,p,u);
+    //**************
   
-    let result:boolean = await addComment({name,text});
+    let result:boolean = await addComment(comment); //THIS IS TO TEST ONLY
     if (result){
       setNotificationStatus(true);
       setNotification({ 

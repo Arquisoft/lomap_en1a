@@ -5,6 +5,7 @@ import SlidingPane from "react-sliding-pane";
 import { useState } from 'react';
 import "../../App.css";
 import { FilterList } from './FilterList';
+import { CreatePlaceWindow } from './CreatePlaceWindow';
 
 
 export interface IInfoWindowData{
@@ -21,6 +22,8 @@ export interface IInfoWindowData{
 }
 
 export default function MapView():JSX.Element{
+
+  const[isNew, setIsNew]=useState(true); //True if it is a new place to add, false if it is already a place in the map
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
     title:"",
@@ -67,7 +70,8 @@ export default function MapView():JSX.Element{
             className='info-window'
             overlayClassName='info-window'
             >
-            <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>
+          {isNew ?  <CreatePlaceWindow/>: <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>}
+            
                           
         </SlidingPane>
       

@@ -10,16 +10,13 @@ import "./App.css";
 import LoginForm from "./components/mainPage/LoginForm"
 import MapView from "./components/map/MapView"
 import { useState } from "react"
-import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
-import { SessionProvider, useSession } from "@inrupt/solid-ui-react";
+import { useSession } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const [hidden, setHidden] = useState(false);
 
   const { session } = useSession();
 
@@ -35,33 +32,26 @@ function App() {
     nav("/")
   })
 
-  const hide=(b:boolean)=>{
-    setHidden(b);
-  }
-  const [state, setState] = useState({
-    isPaneOpen: false,
-  });
+
   
   return (
-    <>
-
-
+    
     <div className="background-image container">
-    {isLoggedIn ? <LoggedNavbar/> : <NotLoggedNavbar/>}
-    
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/map" element={<MapView/>} />
-        </Routes>
+      {isLoggedIn ? <LoggedNavbar/> : <NotLoggedNavbar/>}
       
-    {!hidden &&<Footer/>}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/map" element={<MapView/>} />
+          </Routes>
+        
+      <Footer/>
     
-      </div>
+    </div>
 
-    </>
+    
   )
 }
 

@@ -6,28 +6,42 @@ import { Rating } from 'react-simple-star-rating';
 
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments } from '../../api/api';
+import { getComments, getScores } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
-import { Comment } from '../../shared/shareddtypes';
+import { Comment } from '../../domain/Comment';
 import { IInfoWindowData } from './MapView';
 import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
-
+import { Score } from '../../domain/Score';
 
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
   
-  //LO DE LOS COMENTARIOS NO FUNCIONA BIEN
+  
   const [comments,setComments] = useState<Comment[]>([]);
+  const [scores,setScores] = useState<Score[]>([]);
+  const [avg,setAvg] = useState(0);
 
   const refreshCommentList = async () => {
     setComments(await getComments());
   }
 
+
+  const refreshScores = async () => {
+    setScores(await getScores());//Pasarle el nombre del sito?
+    let aux = 0;
+    for (let i = 0; i < scores.length; i++) {
+      aux+=scores[i].getScore();
+    }
+    setAvg(aux/scores.length);
+  }
+
+
   useEffect(()=>{
     refreshCommentList();
   },[]);
+
 
   
   
@@ -53,15 +67,21 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid>
 
            <Grid item xs={6}>
-            <Rating transition fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']} allowFraction/>
+              <Rating
+                transition
+                fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
+                allowFraction
+                onClick={()=>refreshScores()}
+                
+                />
             </Grid> 
 
             <Grid item xs={3}>
-            <Box component="p" textAlign="right">{infoWindowData?.stars}</Box>
+              <Box component="p" textAlign="right">{avg}</Box>
             </Grid> 
 
             <Grid item xs={3}>
-            <StarIcon htmlColor='orange' fontSize='large'/>
+              <StarIcon htmlColor='orange' fontSize='large'/>
             </Grid> 
 
             <Grid item xs={12}>
