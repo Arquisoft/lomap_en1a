@@ -42,52 +42,27 @@ function App() {
     isPaneOpen: false,
   });
   
-  if (isLoggedIn) {
-    return (
-      <>
+  return (
+    <>
 
 
-      <div className="background-image container">
-      <LoggedNavbar/>
+    <div className="background-image container">
+    {isLoggedIn ? <LoggedNavbar/> : <NotLoggedNavbar/>}
+    
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/map" element={<MapView/>} />
+        </Routes>
       
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/map" element={<MapView/>} />
-          </Routes>
-        
-      {!hidden &&<Footer/>}
-      
-        </div>
+    {!hidden &&<Footer/>}
+    
+      </div>
 
-      </>
-    )
-  } else {
-    return (
-      <>
-
-
-      <div className="background-image container">
-      <NotLoggedNavbar/>
-      
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/map" element={<MapView/>} />
-          </Routes>
-        
-      {!hidden &&<Footer/>}
-      
-        </div>
-
-      </>
-    )
-  }
+    </>
+  )
 }
 
 export default App
