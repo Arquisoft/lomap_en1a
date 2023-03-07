@@ -5,7 +5,7 @@ import logo from '../../images/logo.png';
 import { CustomLink } from "../CustomLink";
 
 
-export default function Navbar() {
+export default function NotLoggedNavbar() {
   return (
     <nav className="menu">
       <Link to="/" className="site-title">
