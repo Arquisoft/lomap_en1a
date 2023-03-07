@@ -33,7 +33,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
-        message:'You have been registered in the system!'
+        message:'You comment has been posted!'
       });
       //Notify the change to the parent component
       props.OnCommentListChange();
@@ -42,7 +42,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       setNotificationStatus(true);
       setNotification({ 
         severity:'error',
-        message:'There\'s been an error in the register proccess.'
+        message:'There\'s been an error posting your comment.'
       });
     }
   }

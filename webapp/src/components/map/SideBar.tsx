@@ -13,6 +13,8 @@ import { IInfoWindowData } from "./MapView";
 
 const places  =["Place 1", "Place 2", "Place 3"]; //This will be loaded from other layer
 
+const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layer
+
 export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData}) =>{
 
   //Style must be in-line; does not work otherwise
@@ -50,9 +52,11 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData}) =>{
 
           </SubMenu>
           <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
-              <MenuItem icon={<PersonIcon />}>Friend 1</MenuItem>
-              <MenuItem icon={<PersonIcon />}>Friend 2</MenuItem>
-              <MenuItem icon={<PersonIcon />}>Friend 3</MenuItem>
+                  {friends.map((ti, index) => (
+                    <MenuItem icon={<PersonIcon />}
+                    key={index}
+                    >{ti}</MenuItem>
+                    ))}
           </SubMenu>
           <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
           <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>

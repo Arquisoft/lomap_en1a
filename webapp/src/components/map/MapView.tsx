@@ -1,4 +1,3 @@
-import Grid from '@mui/material/Grid';
 import {MySideBar} from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import {InfoWindow} from './InfoWindow';
@@ -6,7 +5,6 @@ import SlidingPane from "react-sliding-pane";
 import { useState } from 'react';
 import "../../App.css";
 import { FilterList } from './FilterList';
-
 
 
 export interface IInfoWindowData{
@@ -47,7 +45,7 @@ export default function MapView():JSX.Element{
          
 
           <div className='map'>
-
+              
           </div>
       </div>
 
