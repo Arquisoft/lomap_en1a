@@ -1,3 +1,5 @@
+import "../../App.css"
+import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
 import { LoginButton } from "@inrupt/solid-ui-react";
 import { Button, TextField, FormGroup, Container } from "@material-ui/core";
@@ -12,29 +14,28 @@ const LoginForm = () => {
   }, [setCurrentUrl]);
 
   return (
-    <SessionProvider sessionId="log-in-example">
-    <Container fixed>
-      <FormGroup>
-        <TextField
-          label="Identity Provider"
-          placeholder="Identity Provider"
-          type="url"
-          value={idp}
-          onChange={(e) => setIdp(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
-                <Button variant="contained" color="primary">
-                  Login
-                  </Button>
-              </LoginButton>
-            ),
-          }}
-        />
-      </FormGroup>
-    </Container>
-    </SessionProvider>
-
+    <div className="login-div">
+      <SessionProvider sessionId="log-in-example">
+        <FormGroup className="login-form">
+            <TextField
+              label="Identity Provider"
+              placeholder="Identity Provider"
+              type="url"
+              value={idp}
+              onChange={(e) => setIdp(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
+                    <Button className="login-button" variant="contained" color="primary">
+                      Login
+                      </Button>
+                  </LoginButton>
+                ),
+              }}
+            />
+        </FormGroup>
+      </SessionProvider>
+    </div>
   );
 }
 

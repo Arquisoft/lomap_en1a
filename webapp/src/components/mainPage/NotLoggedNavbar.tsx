@@ -5,7 +5,7 @@ import logo from '../../images/logo.png';
 import { CustomLink } from "../CustomLink";
 
 
-export default function Navbar() {
+export default function NotLoggedNavbar() {
   return (
     <nav className="menu">
       <Link to="/" className="site-title">
@@ -14,7 +14,6 @@ export default function Navbar() {
       <ul>
         <CustomLink to="/login" >Log in</CustomLink>
         <CustomLink to="/signup" >Sign up</CustomLink>
-        <CustomLink to="/map">TESTING PURPOSES</CustomLink>
       </ul>
     </nav>
   )
