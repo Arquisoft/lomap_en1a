@@ -169,10 +169,22 @@ footer{
   position: absolute; top: 0; left: 0;
 }
 
-.login-container {
-  margin-left: auto;
-  margin-bottom: auto;
-  vertical-align: center;
-  align-self: center;
-  background-color: white;
+.login-div {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 50%;
+}
+
+.login-form {
+  background-color: #eeeeee;
+  width: 90vh;
+  height: inherit;
+  padding-left: 10px;
+}
+
+.login-button {
+  position: absolute;
+  height: inherit;
 }

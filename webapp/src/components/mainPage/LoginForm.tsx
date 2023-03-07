@@ -14,33 +14,28 @@ const LoginForm = () => {
   }, [setCurrentUrl]);
 
   return (
-    <SessionProvider sessionId="log-in-example">
-    <Container fixed className="login-container">
-      <FormGroup>
-        <Grid container className="centered-container">
-          <Grid item xs={4}>
-          <TextField
-            label="Identity Provider"
-            placeholder="Identity Provider"
-            type="url"
-            value={idp}
-            onChange={(e) => setIdp(e.target.value)}
-            InputProps={{
-              endAdornment: (
-                <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
-                  <Button variant="contained" color="primary">
-                    Login
-                    </Button>
-                </LoginButton>
-              ),
-            }}
-          />
-          </Grid>
-        </Grid>
-      </FormGroup>
-    </Container>
-    </SessionProvider>
-
+    <div className="login-div">
+      <SessionProvider sessionId="log-in-example">
+        <FormGroup className="login-form">
+            <TextField
+              label="Identity Provider"
+              placeholder="Identity Provider"
+              type="url"
+              value={idp}
+              onChange={(e) => setIdp(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
+                    <Button className="login-button" variant="contained" color="primary">
+                      Login
+                      </Button>
+                  </LoginButton>
+                ),
+              }}
+            />
+        </FormGroup>
+      </SessionProvider>
+    </div>
   );
 }
 
