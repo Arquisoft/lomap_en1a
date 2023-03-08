@@ -8,7 +8,7 @@ import { addComment } from '../../api/api';
 import Grid from '@mui/material/Grid';
 import { Place } from '../../domain/Place';
 import { User } from '../../domain/User';
-import { UserPlaceVisilibity } from '../../domain/Visibility';
+import { PlaceVisibility } from '../../domain/Visibility';
 import { Comment } from '../../domain/Comment';
 
 
@@ -36,8 +36,8 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
 
     //FOR TESTING ONLY***
     var u = new User("P","P","P");
-    var p = new Place("PLACEHOLDER",u,new UserPlaceVisilibity());
-    var comment = new Comment(text,p,u);
+    var p = new Place("PLACEHOLDER","PLACEHOLDER",u,PlaceVisibility.FULL,5,5);
+    var comment = new Comment("PLACEHOLDER",text,p,u);
     //**************
   
     let result:boolean = await addComment(comment); //THIS IS TO TEST ONLY
