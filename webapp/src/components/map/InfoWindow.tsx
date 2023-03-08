@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from "@mui/material/Button/Button";
 import image from "../../images/placeHolder.png";
 import { Rating } from 'react-simple-star-rating';
-
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getComments, getScores } from '../../api/api';
@@ -14,10 +13,20 @@ import { IInfoWindowData } from './MapView';
 import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
+import { Place } from '../../domain/Place';
+import { PlaceVisibility } from '../../domain/Visibility';
+import { User } from '../../domain/User';
+import { addPlace } from '../../api/api';
+import { NotificationType } from './CommentForm';
 
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
+
+  var user = new User("PLACEHOLDER","PLACEHOLDER","PLACEHOLDER"); //TEMPORAL
+  var place = new Place(infoWindowData?.id,infoWindowData?.title,user,PlaceVisibility.FULL,infoWindowData?.latitude,infoWindowData?.longitude);
   
+  const [notificationStatus, setNotificationStatus] = useState(false);
+  const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
   
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
@@ -44,10 +53,34 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
     setAvg(aux/scores.length);
   }
 
+  //Saves this place for the user
+  const savePlace = async () => {
+  
+      
+      let result:boolean = await addPlace(place);
+      if (result){
+        setNotificationStatus(true);
+        setNotification({ 
+          severity:'success',
+          message:'Place saved succesfully!'
+        });
+      }
+      else{
+        setNotificationStatus(true);
+        setNotification({ 
+          severity:'error',
+          message:'There\'s been an error saving this place.'
+        });
+      }
+    }
+
 
   useEffect(()=>{
     refreshCommentList();
   },[]);
+
+
+
 
 
   
@@ -66,7 +99,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid>
 
             <Grid item xs={6} textAlign="center">
-              <Button variant="contained">Save</Button>
+              <Button variant="contained" onClick={()=>savePlace()}>Save</Button>
             </Grid>
 
             <Grid item xs={12}>
@@ -92,7 +125,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={place} user={user}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>

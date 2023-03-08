@@ -11,13 +11,18 @@ import { CreatePlaceWindow } from './CreatePlaceWindow';
 export interface IInfoWindowData{
   setInfoWindowData:React.Dispatch<React.SetStateAction<{
     isOpen: boolean; //If the info window is open or not
-    id:string //The ID of the place to show
+    id:string; //The ID of the place to show
     title: string; //The name of the place to show
+    latitude: number;
+    longitude:number;
+
 }>>
   infoWindowData:{
     isOpen:boolean;
     id:string;
     title:string;
+    latitude: number;
+    longitude:number;
   }
 }
 
@@ -27,7 +32,9 @@ export default function MapView():JSX.Element{
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
     title:"",
-    id:""
+    id:"",
+    latitude: 0,
+    longitude:0
 
   });
 
@@ -64,7 +71,9 @@ export default function MapView():JSX.Element{
               setInfoWindowData({
                 isOpen:false,
                 title:"",
-                id:""
+                id:"",
+                latitude: 0,
+                longitude:0
               });
             }}
             width="70vh"

@@ -8,18 +8,21 @@ import { addComment } from '../../api/api';
 import Grid from '@mui/material/Grid';
 import { Place } from '../../domain/Place';
 import { User } from '../../domain/User';
-import { PlaceVisibility } from '../../domain/Visibility';
 import { Comment } from '../../domain/Comment';
 
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
+  place:Place;
+  user:User;
 }
 
 export type NotificationType = {
   severity: AlertColor,
   message: string;
 }
+
+
 
 export default function CommentForm(props: CommentFormProps): JSX.Element {
 
@@ -34,13 +37,8 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    //FOR TESTING ONLY***
-    var u = new User("P","P","P");
-    var p = new Place("PLACEHOLDER","PLACEHOLDER",u,PlaceVisibility.FULL,5,5);
-    var comment = new Comment("PLACEHOLDER",text,p,u);
-    //**************
-  
-    let result:boolean = await addComment(comment); //THIS IS TO TEST ONLY
+    
+    let result:boolean = await addComment(new Comment("",text,props.place,props.user)); //The comment still has no ID
     if (result){
       setNotificationStatus(true);
       setNotification({ 
@@ -72,7 +70,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
             value={text}
             onChange={e => {
               setText(e.target.value);
-              setName("PLACEHOLDER");
+              setName(props.user.getUsername());//This may not be necessary
               
             }}
             

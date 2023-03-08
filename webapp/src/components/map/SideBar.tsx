@@ -45,7 +45,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
             {" "}
             <h2>LoMap</h2>
           </MenuItem>
-          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}>
+          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}> 
 
                 {places.map((place, index) => (
 
@@ -55,7 +55,9 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
                     setInfoWindowData({
                       isOpen:true,
                       title:place.getName(),
-                      id:place.getId()
+                      id:place.getId(),
+                      latitude:place.getLatitude(),
+                      longitude:place.getLongitude()
                       
                     });
                   }}
