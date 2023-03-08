@@ -1,35 +1,64 @@
 import express, { Request, Response, Router } from 'express';
-import {check} from 'express-validator';
+import { MapController } from './controllers/MapController';
+import { PlaceController } from './controllers/PlaceController';
 
-const api:Router = express.Router()
+const api: Router = express.Router();
 
-interface User {
-    name: string;
-    email: string;
-}
-
-//This is not a restapi as it mantains state but it is here for
-//simplicity. A database should be used instead.
-let users: Array<User> = [];
-
-api.get(
-    "/users/list",
-    async (req: Request, res: Response): Promise<Response> => {
-        return res.status(200).send(users);
-    }
+//Map
+//Get a map
+api.post("/map", MapController.getMapChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return MapController.getMap(req, res);
+  }
 );
 
-api.post(
-  "/users/add",[
-    check('name').isLength({ min: 1 }).trim().escape(),
-    check('email').isEmail().normalizeEmail(),
-  ],
+//Place
+api.post("/place/listall", PlaceController.getAllPlacesChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    let name = req.body.name;
-    let email = req.body.email;
-    let user: User = {name:name,email:email}
-    users.push(user);
-    return res.sendStatus(200);
+    return PlaceController.getAllPlaces(req, res);
+  }
+);
+
+//List places by visibility
+api.post("/place/list", PlaceController.getPlacesByVisibilityChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.getPlacesByVisibility(req, res);
+  }
+);
+
+//Get a place
+api.post("/place/details", PlaceController.addScorePlacesChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.addScore(req, res);
+  }
+);
+
+//Add a place
+api.post("/place/add", PlaceController.addPlaceChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.addPlace(req, res);
+  }
+);
+
+//Reviews
+//Add a score
+api.post("/score/add", PlaceController.addScorePlacesChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.addScore(req, res);
+  }
+);
+
+//Add a comment
+api.post("/comment/add", PlaceController.addCommentChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.addComment(req, res);
+  }
+);
+
+//Add a picture
+api.post("/picture/add", PlaceController.addPictureChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PlaceController.addPicture(req, res);
   }
 );
 
