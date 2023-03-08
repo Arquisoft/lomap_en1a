@@ -7,15 +7,27 @@ import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { IInfoWindowData } from "./MapView";
+import { useState } from 'react';
+import { Place } from "../../domain/Place";
+import { getPlacesByUser } from "../../api/api";
 
 
 
-
-const places  =["Place 1", "Place 2", "Place 3"]; //This will be loaded from other layer
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layer
 
-export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData}) =>{
+export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindowData}) =>{
+
+  //For the places
+  const [places,setPlaces] = useState<Place[]>([]);
+
+
+  //Get the list of places for the current user
+  const refreshPlaceList = async () => {
+    setPlaces(await getPlacesByUser("PLACEHOLDER"));//EL ID DEL USUARIO
+  }
+
+
 
   //Style must be in-line; does not work otherwise
 
@@ -33,21 +45,22 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData}) =>{
             {" "}
             <h2>LoMap</h2>
           </MenuItem>
-          <SubMenu label="My sites" icon={<AddLocationIcon />}>
+          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}>
 
-                {places.map((ti, index) => (
+                {places.map((place, index) => (
 
                   <MenuItem icon={<ArrowRightIcon />}
                   key={index}
                   onClick={() => {
                     setInfoWindowData({
                       isOpen:true,
-                      title:ti,
-                      stars:index
+                      title:place.getName(),
+                      id:place.getId()
+                      
                     });
                   }}
 
-                  >{ti}</MenuItem>
+                  >{place.getName()}</MenuItem>
                    ))}
 
           </SubMenu>

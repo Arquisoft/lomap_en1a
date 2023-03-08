@@ -19,17 +19,24 @@ import { Score } from '../../domain/Score';
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
   
   
+  //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
+
+  //For the scores
   const [scores,setScores] = useState<Score[]>([]);
+
+  //For the computation of the avg score
   const [avg,setAvg] = useState(0);
 
+  //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    setComments(await getComments());
+    setComments(await getComments(infoWindowData?.id)); 
   }
 
 
+  //Gets the list of scores for a specific place
   const refreshScores = async () => {
-    setScores(await getScores());//Pasarle el nombre del sito?
+    setScores(await getScores(infoWindowData?.id));
     let aux = 0;
     for (let i = 0; i < scores.length; i++) {
       aux+=scores[i].getScore();

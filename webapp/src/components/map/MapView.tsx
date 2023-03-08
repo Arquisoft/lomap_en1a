@@ -10,24 +10,25 @@ import { CreatePlaceWindow } from './CreatePlaceWindow';
 
 export interface IInfoWindowData{
   setInfoWindowData:React.Dispatch<React.SetStateAction<{
-    isOpen: boolean;
-    title: string;
-    stars:number;
+    isOpen: boolean; //If the info window is open or not
+    id:string //The ID of the place to show
+    title: string; //The name of the place to show
 }>>
-  infoWindowData?:{
+  infoWindowData:{
     isOpen:boolean;
+    id:string;
     title:string;
-    stars:number
   }
 }
 
 export default function MapView():JSX.Element{
 
-  const[isNew, setIsNew]=useState(true); //True if it is a new place to add, false if it is already a place in the map
+  const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
     title:"",
-    stars:0
+    id:""
+
   });
 
   //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
@@ -38,7 +39,7 @@ export default function MapView():JSX.Element{
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-                <MySideBar setInfoWindowData={setInfoWindowData}/>
+                <MySideBar setInfoWindowData={setInfoWindowData} infoWindowData={infoWindowData}/>
           </ProSidebarProvider>
         </div>
 
@@ -63,7 +64,7 @@ export default function MapView():JSX.Element{
               setInfoWindowData({
                 isOpen:false,
                 title:"",
-                stars:0
+                id:""
               });
             }}
             width="70vh"
