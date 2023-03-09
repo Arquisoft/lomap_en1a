@@ -1,12 +1,10 @@
 import { PlaceService } from "./PlaceService";
-import { CommentDto } from "../../domain/dtos/CommentDto";
 import { PictureDto } from "../../domain/dtos/PictureDto";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
 import { ScoreDto } from "../../domain/dtos/ScoreDto";
 import { UserDto } from "../../domain/dtos/UserDto";
 import { ScoreRepository } from "../repositories/ScoreRepository";
 import { Factory } from "../../Factory";
-import { CommentRepository } from "../repositories/CommentRepository";
 import { PictureRepository } from "../repositories/PictureRepository";
 import { PlaceRepository } from "../repositories/PlaceRepository";
 import { v4 as generateUUID } from 'uuid';
@@ -16,7 +14,6 @@ import { PlaceVisibility } from "../../domain/Visibility";
 export class PlaceServiceImpl implements PlaceService {
 
     scoreRepository: ScoreRepository = new Factory().repositories.getScoreRepository();
-    commentRepository: CommentRepository = new Factory().repositories.getCommentRepository();
     pictureRepository: PictureRepository = new Factory().repositories.getPictureRepository();
     placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
@@ -47,22 +44,7 @@ export class PlaceServiceImpl implements PlaceService {
         return this.placeRepository.getPlacesByVisibility(user, visibilty);
     }
 
-    addScore(score: ScoreDto, user: UserDto): void {
-        score.id = generateUUID();
-        this.scoreRepository.add(user, score);
-    }
-
-    addComment(comment: CommentDto, user: UserDto): void {
-        comment.id = generateUUID();
-        this.commentRepository.add(user, comment);
-    }
-
-    addPicture(picture: PictureDto, user: UserDto): void {
-        picture.id = generateUUID();
-        this.pictureRepository.add(user, picture);
-    }
-
-    addPlace(place: PlaceDto, user: UserDto): void {
+    add(place: PlaceDto, user: UserDto): void {
         place.id = generateUUID();
         this.placeRepository.add(user, place);
     }
