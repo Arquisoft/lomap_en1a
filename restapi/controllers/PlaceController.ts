@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { check, ValidationChain } from 'express-validator';
 import { PlaceService } from '../business/place/PlaceService';
+import { CommentDto } from '../domain/dtos/CommentDto';
+import { PictureDto } from '../domain/dtos/PictureDto';
 import { PlaceDto } from '../domain/dtos/PlaceDto';
+import { ScoreDto } from '../domain/dtos/ScoreDto';
 import { UserDto } from '../domain/dtos/UserDto';
 import { PlaceVisibility } from '../domain/Visibility';
 import { Factory } from '../Factory';
@@ -10,101 +13,108 @@ export class PlaceController {
 
     private static placeService: PlaceService = new Factory().services.getPlaceService();
 
-    public static async list(req: Request, res: Response): Promise<Response> {
-        var owner: string = <string>req.body.user;
-
-        var user: UserDto = new UserDto();
-        user.podId = owner;
+    public static async getAllPlaces(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
 
         res.send(this.placeService.getAllPlaces(user));
 
         return res.status(200);
     }
 
-    public static listChecks(): ValidationChain[] {
+    public static getAllPlacesChecks(): ValidationChain[] {
         var validations: ValidationChain[] = [];
-
-        validations.push(check("user").exists());
 
         return validations;
     }
 
-    public static async listByVisibility(req: Request, res: Response): Promise<Response> {
-        var owner: string = <string>req.body.user;
-        var filter: string = <string>req.body.visibility;
+    public static async getPlacesByVisibility(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
+        var visibilty: PlaceVisibility = <PlaceVisibility>req.body.visibilty;
 
-        var user: UserDto = new UserDto();
-        user.podId = owner;
-
-        var index = filter as keyof typeof PlaceVisibility;
-
-        var visibility: PlaceVisibility = PlaceVisibility[index];
-
-        res.send(this.placeService.getPlacesByVisibility(user, visibility));
+        res.send(this.placeService.getPlacesByVisibility(user, visibilty));
 
         return res.status(200);
     }
 
-    public static listByVisibilityChecks(): ValidationChain[] {
+    public static getPlacesByVisibilityChecks(): ValidationChain[] {
         var validations: ValidationChain[] = [];
-
-        validations.push(check("user").exists());
-        validations.push(check("visibilty").exists());
 
         return validations;
     }
 
-    public static async details(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.place;
+    public static async getPlace(req: Request, res: Response): Promise<Response> {
+        return res.status(200);
+    }
 
-        var place: PlaceDto = new PlaceDto();
-        place.id = id;
+    public static getPlaceChecks(): ValidationChain[] {
+        var validations: ValidationChain[] = [];
+
+        return validations;
+    }
+
+    public static async addScore(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
+        var score: ScoreDto = <ScoreDto>req.body.score;
+
+        res.send(this.placeService.addScore(score, user));
 
         return res.status(200);
     }
 
-    public static detailsChecks(): ValidationChain[] {
+    public static addScorePlacesChecks(): ValidationChain[] {
         var validations: ValidationChain[] = [];
-
-        validations.push(check("place").exists());
 
         return validations;
     }
 
-    public static async add(req: Request, res: Response): Promise<Response> {
-        var owner: string = <string>req.body.user;
-        var name: string = <string>req.body.name;
-        var filter: string = <string>req.body.visibility;
-        var latitude: number = <number>req.body.latitude;
-        var longitude: number = <number>req.body.longitude;
+    public static async addComment(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
+        var comment: CommentDto = <CommentDto>req.body.comment;
 
-        var index = filter as keyof typeof PlaceVisibility;
+        res.send(this.placeService.addComment(comment, user));
+        return res.status(200);
+    }
 
-        var visibility: PlaceVisibility = PlaceVisibility[index];
+    public static addCommentChecks(): ValidationChain[] {
+        var validations: ValidationChain[] = [];
 
-        var user: UserDto = new UserDto();
-        user.podId = owner;
+        return validations;
+    }
 
-        var place: PlaceDto = new PlaceDto();
-        place.name = name;
-        place.latitude = latitude;
-        place.longitude = longitude;
-        place.visibility = visibility;
+    public static async addPicture(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
+        var picture: PictureDto = <PictureDto>req.body.picture;
 
-        this.placeService.add(place, user);
+        res.send(this.placeService.addPicture(picture, user));
 
         return res.status(200);
     }
 
-    public static addChecks(): ValidationChain[] {
+    public static addPictureChecks(): ValidationChain[] {
         var validations: ValidationChain[] = [];
 
-        validations.push(check("owner").exists());
-        validations.push(check("name").exists());
-        validations.push(check("filter").exists());
-        validations.push(check("latitude").exists().isNumeric());
-        validations.push(check("longitude").exists().isNumeric());
+        return validations;
+    }
+
+    public static async addPlace(req: Request, res: Response): Promise<Response> {
+        var user: UserDto = <UserDto>req.body.user;
+        var place: PlaceDto = <PlaceDto>req.body.place;
+
+        res.send(this.placeService.addPlace(place, user));
+
+        return res.status(200);
+    }
+
+    public static addPlaceChecks(): ValidationChain[] {
+        var validations: ValidationChain[] = [];
 
         return validations;
+    }
+
+    public static async test(req: Request, res: Response): Promise<Response> {
+
+        this.placeService.test();
+
+        return res.status(200);
     }
 }

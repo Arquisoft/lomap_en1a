@@ -3,8 +3,7 @@ import { PlaceVisibility } from "../../domain/Visibility";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
 import { UserDto } from "../../domain/dtos/UserDto";
 
-export interface PlaceRepository {
+export interface MapService {
 
-    add(user: UserDto, place: PlaceDto): void;
-    getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[];
+    getMap(places: PlaceDto[]): void;
 }
