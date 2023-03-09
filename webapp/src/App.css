@@ -222,3 +222,11 @@ footer{
   position: absolute;
   height: inherit;
 }
+
+
+#logo_img {
+  max-height: 2em;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+}

@@ -31,7 +31,7 @@ export default function MapView():JSX.Element{
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
 
-  const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
+  const[isNew, setIsNew]=useState(true); //True if it is a new place to add, false if it is already a place in the map
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
     title:"",

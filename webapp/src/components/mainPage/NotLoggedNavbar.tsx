@@ -9,7 +9,7 @@ export default function NotLoggedNavbar() {
   return (
     <nav className="menu">
       <Link to="/" className="site-title">
-        <img src={logo} alt="Logo"></img>
+        <img src={logo} alt="Logo" id="logo_img"></img>
       </Link>
       <ul>
         <CustomLink to="/login" >Log in</CustomLink>

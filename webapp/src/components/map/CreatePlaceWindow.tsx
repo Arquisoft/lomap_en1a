@@ -1,4 +1,6 @@
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import image from "../../images/new_Place.png";
 import "../../App.css";
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
@@ -63,12 +65,15 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
         <form name="register" onSubmit={handleSubmit}>
           <Grid container spacing={2} justifyContent="space-around">
             
+            <Grid item xs={12}>
+                <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto',}}></Box>
+            </Grid>
             <TextField
               required
               name="text"
               label="Write the name of your new place" 
               variant="filled"
-              value={name}
+              value={text}
               onChange={e => {
                 setText(e.target.value);
                 

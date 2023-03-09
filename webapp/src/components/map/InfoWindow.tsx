@@ -103,7 +103,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
 
             <Grid item xs={12}>
-                <Box component="img" src={image} sx={{width: 400, height: 250,}}></Box>
+                <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
             </Grid>
 
            <Grid item xs={6}>
