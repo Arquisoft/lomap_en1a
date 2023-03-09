@@ -1,65 +1,102 @@
 import express, { Request, Response, Router } from 'express';
-import { MapController } from './controllers/MapController';
+import { CommentController } from './controllers/CommentController';
+import { PictureController } from './controllers/PictureController';
 import { PlaceController } from './controllers/PlaceController';
+import { ScoreController } from './controllers/ScoreController';
 
 const api: Router = express.Router();
 
-//Map
-//Get a map
-api.post("/map", MapController.getMapChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return MapController.getMap(req, res);
-  }
-);
-
 //Place
-api.post("/place/listall", PlaceController.getAllPlacesChecks(),
+
+//List all places
+api.get("/place/list", PlaceController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.getAllPlaces(req, res);
+    return PlaceController.list(req, res);
   }
 );
 
 //List places by visibility
-api.post("/place/list", PlaceController.getPlacesByVisibilityChecks(),
+api.get("/place/list/visibility", PlaceController.listByVisibilityChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.getPlacesByVisibility(req, res);
+    return PlaceController.listByVisibility(req, res);
   }
 );
 
 //Get a place
-api.post("/place/details", PlaceController.addScorePlacesChecks(),
+api.get("/place/details", PlaceController.detailsChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.addScore(req, res);
+    return PlaceController.details(req, res);
   }
 );
 
 //Add a place
-api.post("/place/add", PlaceController.addPlaceChecks(),
+api.post("/place/add", PlaceController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.addPlace(req, res);
+    return PlaceController.add(req, res);
   }
 );
 
-//Reviews
-//Add a score
-api.post("/score/add", PlaceController.addScorePlacesChecks(),
+//Score
+
+//List all scores
+api.post("/score/list", ScoreController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.addScore(req, res);
+    return ScoreController.list(req, res);
+  }
+);
+
+//Get a score
+api.post("/score/details", ScoreController.detailsChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return ScoreController.details(req, res);
+  }
+);
+
+//Add a score
+api.post("/score/add", ScoreController.addChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return ScoreController.add(req, res);
+  }
+);
+
+//Comment
+
+//List all comments
+api.get("/comment/list", CommentController.listChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return CommentController.list(req, res);
+  }
+);
+
+//Get a comment
+api.get("/comment/details", CommentController.detailsChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return CommentController.details(req, res);
   }
 );
 
 //Add a comment
-api.post("/comment/add", PlaceController.addCommentChecks(),
+api.post("/comment/add", CommentController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.addComment(req, res);
+    return CommentController.add(req, res);
   }
 );
 
+//Picture
+
 //Add a picture
-api.post("/picture/add", PlaceController.addPictureChecks(),
+api.post("/picture/add", PictureController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.addPicture(req, res);
+    return PictureController.add(req, res);
   }
 );
+
+api.get("/",
+  async (req: Request, res: Response): Promise<Response> => {
+
+    res.send("Rest API for LoMap");
+
+    return res.status(200);
+  });
 
 export default api;

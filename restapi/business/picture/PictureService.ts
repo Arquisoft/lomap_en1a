@@ -3,10 +3,10 @@ import { PlaceDto } from "../../domain/dtos/PlaceDto";
 import { UserDto } from "../../domain/dtos/UserDto";
 import { Picture } from "../../domain/Picture";
 
-export interface PictureRepository {
+export interface PictureService {
 
-    add(user: UserDto, picture: PictureDto, place: PlaceDto): boolean;
+    add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean;
     findById(id: string): Picture;
     findByUser(user: UserDto): Picture[];
-    findByPlace(user: PlaceDto): Picture[];
+    findByPlace(place: PlaceDto): Picture[];
 }
