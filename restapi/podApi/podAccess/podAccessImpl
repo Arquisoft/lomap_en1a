@@ -1,0 +1,95 @@
+import PodAccess from "./podAccess";
+
+// Domain classes
+import { Place } from "../../domain/Place";
+import { User } from "../../domain/User";
+import { FullPlaceVisilibity } from "../../domain/Visibility";
+
+// Use of solid-client-authn for login
+import {
+  getSessionFromStorage,
+  getSessionIdFromStorageAll,
+  Session,
+} from "@inrupt/solid-client-authn-node";
+
+//import fetch, { Response } from "node-fetch";
+
+export class PodAccessImpl implements PodAccess {
+  private idp: string;
+  private webId: string;
+
+  public constructor() {
+    // Default identity provider
+    this.idp = "https://inrupt.net";
+
+    // Default testing webID
+    this.webId = "test_webID";
+
+    this.login("username", "password");
+  }
+
+  /*
+    Login function.
+  */
+  async login(req:Request, res:Response) {
+    // 1. Create a new Session
+    const session = new Session();
+    req.session.sessionId = session.info.sessionId;
+    const redirectToSolidIdentityProvider = (url) => {
+      // Since we use Express in this example, we can call `res.redirect` to send the user to the
+      // given URL, but the specific method of redirection depend on your app's particular setup.
+      // For example, if you are writing a command line app, this might simply display a prompt for
+      // the user to visit the given URL in their browser.
+      res.redirect(url);
+    };
+    // 2. Start the login process; redirect handler will handle sending the user to their
+    //    Solid Identity Provider.
+    await session.login({
+      // After login, the Solid Identity Provider will send the user back to the following
+      // URL, with the data necessary to complete the authentication process
+      // appended as query parameters:
+      redirectUrl: `http://localhost:${port}/redirect-from-solid-idp`,
+      // Set to the user's Solid Identity Provider; e.g., "https://login.inrupt.com"
+      oidcIssuer: "https://login.inrupt.com",
+      // Pick an application name that will be shown when asked
+      // to approve the application's access to the requested data.
+      clientName: "Demo app",
+      handleRedirect: redirectToSolidIdentityProvider,
+    });
+  }
+
+  // Identity provider
+  setIDP(idp: string) {
+    // Login and logout functions?
+    this.idp = idp;
+    return true;
+  }
+
+  getIDP() {
+    return this.idp;
+  }
+
+  // WebID
+  setWebID(webID: string) {
+    this.webId = webID;
+    return true;
+  }
+
+  getWebID() {
+    return this.webId;
+  }
+
+  // Markers
+  getPlaces() {
+    // Sample data
+    let u1 = new User("user1", "p", "webID_1");
+    let u2 = new User("user2", "p", "webID_2");
+
+    let places: Place[] = [
+      new Place("Place 1", u2, new FullPlaceVisilibity()),
+      new Place("Place 2", u2, new FullPlaceVisilibity()),
+    ];
+
+    return places;
+  }
+}

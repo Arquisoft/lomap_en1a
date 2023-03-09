@@ -1,6 +1,0 @@
-class User {
-    id: String;
-    name: String;
-    password: String;
-
-}

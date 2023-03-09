@@ -2,20 +2,34 @@ import express, { Application, RequestHandler } from "express";
 import cors from 'cors';
 import bp from 'body-parser';
 import promBundle from 'express-prom-bundle';
-import api from "./api"; 
+import app from "./podApi/podApi"; 
 
-const app: Application = express();
+
+// Cookies for the SOLID session
+// npm install cookie-session
+const cookieSession = require("cookie-session");
+
+const myapp: Application = express();
 const port: number = 5000;
 
 const metricsMiddleware:RequestHandler = promBundle({includeMethod: true});
-app.use(metricsMiddleware);
+myapp.use(metricsMiddleware);
 
-app.use(cors());
-app.use(bp.json());
+myapp.use(cors());
+myapp.use(bp.json());
 
-app.use("/api", api)
+myapp.use("/", app)
+myapp.use(cookieSession({
+    name: "session",
+    // These keys are required by cookie-session to sign the cookies.
+    keys: [
+      "Required, but value not relevant for this demo - key1",
+      "Required, but value not relevant for this demo - key2",
+    ],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  }));
 
-app.listen(port, ():void => {
+myapp.listen(port, ():void => {
     console.log('Restapi listening on '+ port);
 }).on("error",(error:Error)=>{
     console.error('Error occured: ' + error.message);

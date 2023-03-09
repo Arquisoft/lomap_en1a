@@ -1,0 +1,17 @@
+import {Place} from '../../../domain/Place';
+
+export default interface PodAccess {
+    // Identity provider config
+    setIDP(idp:string): boolean;
+    getIDP():string;
+
+    // WebID config
+    setWebID(webID:string): boolean;
+    getWebID():string;
+
+    // Login and logout
+    login(req:Request, res:Response):any;
+
+    // CRUD Operations
+    getPlaces():Place[];
+}
