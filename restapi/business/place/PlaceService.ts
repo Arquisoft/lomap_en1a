@@ -10,5 +10,8 @@ export interface PlaceService {
 
     getAllPlaces(user: UserDto): Place[];
     getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[];
-    add(place: PlaceDto, user: UserDto): void;
+    addScore(score: ScoreDto, user: UserDto): void;
+    addComment(comment: CommentDto, user: UserDto): void;
+    addPicture(picture: PictureDto, user: UserDto): void;
+    addPlace(place: PlaceDto, user: UserDto): void;
 }
