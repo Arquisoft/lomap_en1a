@@ -1,26 +1,19 @@
 
 import { User } from "../../domain/User";
-import { DAO } from "../DAO";
-export class UserDAO implements DAO<User>{
+
+
+export class UserDAO {
 
     mysql = new MySql();
 
-    getTbyId(id: String): User {
+    getTbyId = async (id: String) => {
         var res;
-        (async () => {
-            res = await this.mysql.get("USER", "");
-            return res;
-        })().then((result) => res = result);
+        await this.mysql.get("USER", "").then((result: any) => res = result);
+
         console.log(res);
-        //procesar salida
-
-
         return res;
-
-
-
-
     }
+
     save(entity: User) {
         throw new Error("Method not implemented.");
     }

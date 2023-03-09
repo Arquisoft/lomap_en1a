@@ -72,11 +72,8 @@ class MySql {
                 }
             );
         });
-
-
-
-
     }
+
 
 
     insertSample() {

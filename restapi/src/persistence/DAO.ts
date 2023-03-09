@@ -1,5 +1,4 @@
-module.exports = 
-interface DAO<T> {
+export interface DAO<T> {
 
     getTbyId(id: String): T;
     save(entity: T): void;
