@@ -3,9 +3,9 @@ import { ScoreDto } from "../../domain/dtos/ScoreDto";
 import { UserDto } from "../../domain/dtos/UserDto";
 import { Score } from "../../domain/Score";
 
-export interface ScoreRepository {
+export interface ScoreService {
 
-    add(user: UserDto, score: ScoreDto, place: PlaceDto): boolean;
+    add(picture: ScoreDto, user: UserDto, place: PlaceDto): boolean;
     findById(id: string): Score;
     findByUser(user: UserDto): Score[];
     findByPlace(user: PlaceDto): Score[];
