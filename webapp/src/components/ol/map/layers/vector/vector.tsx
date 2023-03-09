@@ -11,14 +11,23 @@ import Stroke from "ol/style/Stroke";
 import { MapContext } from "../../map";
 import { IMapContext } from "../../map-types";
 import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
+import { Geometry } from 'ol/geom';
 
-class VectorLayerComponent extends React.PureComponent<
-  TVectorLayerComponentProps
-> {
-  layer: VectorLayer;
-  source: VectorSource;
+class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
+
+  source: VectorSource=new VectorSource({
+    features: undefined,
+  });
+
+  layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
+    source: this.source,
+  });
+
+
+
 
   componentDidMount() {
+    //Igual estas inicializaciones no hacen falta ya
     this.source = new VectorSource({
       features: undefined,
     });
@@ -45,7 +54,7 @@ class VectorLayerComponent extends React.PureComponent<
   }
   */
 
-  onMapClick = (event: MapBrowserEvent) => {
+  onMapClick = (event: MapBrowserEvent<UIEvent>) => {
     const featureToAdd = new Feature({
       geometry: new Point(event.coordinate),
     });

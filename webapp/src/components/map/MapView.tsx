@@ -6,6 +6,7 @@ import { useState } from 'react';
 import "../../App.css";
 import { FilterList } from './FilterList';
 import { CreatePlaceWindow } from './CreatePlaceWindow';
+import { MapComponent } from '../ol/map/map';
 
 
 export interface IInfoWindowData{
@@ -59,7 +60,7 @@ export default function MapView():JSX.Element{
          
 
           <div className='map'>
-              
+              <MapComponent/>
           </div>
       </div>
 
