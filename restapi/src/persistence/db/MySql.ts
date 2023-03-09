@@ -23,7 +23,7 @@ class MySql {
         });
 
 
-        
+
 
 
         //OPERACION GET
@@ -77,6 +77,7 @@ class MySql {
 
 
     }
+
 
     insertSample() {
         this.query("INSERT INTO USER (USER_ID) VALUES ('A1')");
