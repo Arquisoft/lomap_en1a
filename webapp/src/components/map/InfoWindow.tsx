@@ -16,13 +16,16 @@ import { Score } from '../../domain/Score';
 import { Place } from '../../domain/Place';
 import { PlaceVisibility } from '../../domain/Visibility';
 import { User } from '../../domain/User';
-import { addPlace } from '../../api/api';
 import { NotificationType } from './CommentForm';
+import { addScore } from '../../api/api';
+import { useSession} from "@inrupt/solid-ui-react";
 
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
 
-  var user = new User("PLACEHOLDER","PLACEHOLDER","PLACEHOLDER"); //TEMPORAL
+  const { session } = useSession();
+  var webId = session.info.webId as string;
+  var user = new User("","PLACEHOLDER",webId); 
   var place = new Place(infoWindowData?.id,infoWindowData?.title,user,PlaceVisibility.FULL,infoWindowData?.latitude,infoWindowData?.longitude);
   
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -43,49 +46,49 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   }
 
 
+  const handleAddScore = async (value:number) => {
+    //e.preventDefault();
+
+    var score = new Score("",value,place,user);
+    let result:boolean = await addScore(score); //The score still has no ID
+    if (result){
+      setNotificationStatus(true);
+      setNotification({ 
+        severity:'success',
+        message:'You score has been posted!'
+      });
+      //Notify the change to the parent component
+      //props.OnCommentListChange();
+    }
+    else{
+      setNotificationStatus(true);
+      setNotification({ 
+        severity:'error',
+        message:'There\'s been an error posting your score.'
+      });
+    }
+  }
+
+
   //Gets the list of scores for a specific place
-  const refreshScores = async () => {
+  const refreshScores = async (value:number) => {
+    handleAddScore(value); //Adds the new score
+    
+
+
     setScores(await getScores(infoWindowData?.id));
     let aux = 0;
     for (let i = 0; i < scores.length; i++) {
       aux+=scores[i].getScore();
     }
-    setAvg(aux/scores.length);
+    setAvg(aux/scores.length); //Calculates the new average
   }
 
-  //Saves this place for the user
-  const savePlace = async () => {
   
-      
-      let result:boolean = await addPlace(place);
-      if (result){
-        setNotificationStatus(true);
-        setNotification({ 
-          severity:'success',
-          message:'Place saved succesfully!'
-        });
-      }
-      else{
-        setNotificationStatus(true);
-        setNotification({ 
-          severity:'error',
-          message:'There\'s been an error saving this place.'
-        });
-      }
-    }
-
 
   useEffect(()=>{
     refreshCommentList();
   },[]);
-
-
-
-
-
-  
-  
-  
 
 
       return (
@@ -98,9 +101,6 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
                 <Box component="h3" ><>{infoWindowData?.title}</></Box>
             </Grid>
 
-            <Grid item xs={6} textAlign="center">
-              <Button variant="contained" onClick={()=>savePlace()}>Save</Button>
-            </Grid>
 
             <Grid item xs={12}>
                 <Box component="img" src={image} sx={{width: 400, height: 250,}}></Box>
@@ -111,7 +111,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
                 transition
                 fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
                 allowFraction
-                onClick={()=>refreshScores()}
+                onClick={(value)=>refreshScores(value)}
                 
                 />
             </Grid> 

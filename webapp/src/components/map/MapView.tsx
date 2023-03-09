@@ -28,6 +28,9 @@ export interface IInfoWindowData{
 
 export default function MapView():JSX.Element{
 
+  const[latitude, setLatitude]=useState(0);
+  const[longitude, setLongitude]=useState(0);
+
   const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
@@ -60,7 +63,15 @@ export default function MapView():JSX.Element{
           </div>
       </div>
 
-        
+      <button onClick={() => setInfoWindowData({ 
+            isOpen:true,
+            title:"",
+            id:"",
+            latitude: 0,
+            longitude:0
+       })}>
+        Click me to open right pane!
+      </button>
         
 
 
@@ -80,7 +91,7 @@ export default function MapView():JSX.Element{
             className='info-window'
             overlayClassName='info-window'
             >
-          {isNew ?  <CreatePlaceWindow/>: <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>}
+          {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude}/>: <InfoWindow infoWindowData={infoWindowData} setInfoWindowData={setInfoWindowData}/>}
             
                           
         </SlidingPane>

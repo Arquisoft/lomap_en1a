@@ -24,7 +24,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    setPlaces(await getPlacesByUser("PLACEHOLDER"));//EL ID DEL USUARIO
+    setPlaces(await getPlacesByUser("PLACEHOLDER"));//EL podID DEL USUARIO
   }
 
 

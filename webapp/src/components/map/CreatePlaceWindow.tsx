@@ -6,10 +6,24 @@ import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import { NotificationType } from './CommentForm';
 import Alert from '@mui/material/Alert';
+import { User } from '../../domain/User';
+import { addPlace } from '../../api/api';
+import { PlaceVisibility } from '../../domain/Visibility';
+import { Place } from '../../domain/Place';
+import { useSession} from "@inrupt/solid-ui-react";
+
+export interface ICreatePlaceWindowData{
+  latitude:number,
+  longitude:number
+}
+
+export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longitude}) =>{
+
+  const { session } = useSession();
+  var webId = session.info.webId as string;
+  var user = new User("","PLACEHOLDER",webId); //TEMPORAL
 
 
-
-export const CreatePlaceWindow=() =>{
   const [name, setName] = useState('');
   const [text, setText] = useState('');
 
@@ -18,10 +32,12 @@ export const CreatePlaceWindow=() =>{
   
 
   
- /* const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+
   
-    let result:boolean = await addPlace({name,text});
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    var place = new Place("",name,user,PlaceVisibility.FULL,latitude,longitude);
+    let result:boolean = await addPlace(place);
     if (result){
       setNotificationStatus(true);
       setNotification({ 
@@ -38,13 +54,13 @@ export const CreatePlaceWindow=() =>{
         message:'There\'s been an error adding your place.'
       });
     }
-  }*/
+  }
   
       return (
   
   
         <>
-        <form name="register" /*onSubmit={handleSubmit}*/ >
+        <form name="register" onSubmit={handleSubmit}>
           <Grid container spacing={2} justifyContent="space-around">
             
             <TextField

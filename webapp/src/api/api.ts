@@ -14,7 +14,7 @@ export async function addComment(comment:Comment):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/comment/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'text':comment.getText(),'place':comment.getPlace().getId(),'owner':comment.getOwner().getId()})
+        body: JSON.stringify({'text':comment.getText(),'place':comment.getPlace().getId(),'user':comment.getOwner().getPodId()})
       });
     if (response.status===200)
       return true;
@@ -38,7 +38,7 @@ export async function addScore(score:Score):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/score/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace().getId(),'owner':score.getOwner().getId()})
+       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace().getId(),'user':score.getOwner().getPodId()})
       });
     if (response.status===200)
       return true;

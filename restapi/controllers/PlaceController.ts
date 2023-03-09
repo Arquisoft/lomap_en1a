@@ -113,7 +113,7 @@ export class PlaceController {
 
     public static async test(req: Request, res: Response): Promise<Response> {
 
-        this.placeService.test();
+        //this.placeService.test();
 
         return res.status(200);
     }
