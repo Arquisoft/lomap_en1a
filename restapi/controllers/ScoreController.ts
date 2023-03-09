@@ -40,7 +40,10 @@ export class ScoreController {
     }
 
     public static async list(req: Request, res: Response): Promise<Response> {
-        var place: PlaceDto = <PlaceDto>req.body.place;
+        var id: string = <string>req.body.place;
+
+        var place: PlaceDto = new PlaceDto();
+        place.id = id;
 
         res.send(this.scoreService.findByPlace(place));
         return res.status(200);
