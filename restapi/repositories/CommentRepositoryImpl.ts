@@ -7,13 +7,12 @@ import { PlaceVisibility } from "../domain/Visibility";
 export class CommentRepositoryImpl implements CommentRepository {
 
 
-    private u: User = new User("1", "User 1", "podId");
-    private comments: Comment[] = [new Comment("1", "Comment", new Place("1", "Place 1", this.u, PlaceVisibility.USER, 1, 1), this.u)];
+    private comments: Comment[] = [new Comment("1", "Comment", new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
     findById(id: string): Comment {
         return this.comments[0];
     }
-    findByUser(user: User): Comment[] {
+    findByUser(user: string): Comment[] {
         return this.comments;
     }
     findByPlace(user: Place): Comment[] {

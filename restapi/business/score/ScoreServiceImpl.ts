@@ -20,8 +20,8 @@ export class ScoreServiceImpl implements ScoreService {
     add(score: ScoreDto, user: UserDto, place: PlaceDto): boolean {
         score.id = generateUUID();
 
-        if (user.id == undefined) {
-            throw new Error("The user id cannot be undefined");
+        if (user.podId == undefined) {
+            throw new Error("The user podId cannot be undefined");
         }
 
         if (place.id == undefined) {
@@ -32,12 +32,11 @@ export class ScoreServiceImpl implements ScoreService {
             throw new Error("The score cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
         var p: Place = this.placeRepository.findById(place.id);
 
-        var s = new Score(score.id, score.score, p, u);
+        var s = new Score(score.id, score.score, p, user.podId);
 
-        return this.scoreRepository.add(s);
+        return this.scoreRepository.add(s, user.podId);
     }
 
     findById(id: string): Score {
@@ -45,13 +44,11 @@ export class ScoreServiceImpl implements ScoreService {
     }
 
     findByUser(user: UserDto): Score[] {
-        if (user.id == undefined) {
-            throw new Error("The user id cannot be undefined");
+        if (user.podId == undefined) {
+            throw new Error("The user podId cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
-        return this.scoreRepository.findByUser(u);
+        return this.scoreRepository.findByUser(user.podId);
     }
 
     findByPlace(place: PlaceDto): Score[] {

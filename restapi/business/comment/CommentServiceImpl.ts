@@ -7,7 +7,6 @@ import { v4 as generateUUID } from 'uuid';
 import { Comment } from "../../domain/Comment";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
 import { UserRepository } from "../repositories/UserRepository";
-import { User } from "../../domain/User";
 import { PlaceRepository } from "../repositories/PlaceRepository";
 import { Place } from "../../domain/Place";
 
@@ -20,7 +19,7 @@ export class CommentServiceImpl implements CommentService {
     add(comment: CommentDto, user: UserDto, place: PlaceDto): boolean {
         comment.id = generateUUID();
 
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
@@ -32,12 +31,11 @@ export class CommentServiceImpl implements CommentService {
             throw new Error("The comment text cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
         var p: Place = this.placeRepository.findById(place.id);
 
-        var c: Comment = new Comment(comment.id, comment.text, p, u);
+        var c: Comment = new Comment(comment.id, comment.text, p, user.podId);
 
-        return this.commentRepository.add(c);
+        return this.commentRepository.add(c, user.podId);
     }
 
     findById(id: string): Comment {
@@ -45,13 +43,11 @@ export class CommentServiceImpl implements CommentService {
     }
 
     findByUser(user: UserDto): Comment[] {
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
-        return this.commentRepository.findByUser(u);
+        return this.commentRepository.findByUser(user.podId);
     }
 
     findByPlace(place: PlaceDto): Comment[] {

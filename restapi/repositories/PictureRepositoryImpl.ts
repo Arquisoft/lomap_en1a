@@ -6,13 +6,12 @@ import { PlaceVisibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 
-    private u: User = new User("1", "User 1", "podId");
-    private pictures: Picture[] = [new Picture("1", "url", new Place("1", "Place 1", this.u, PlaceVisibility.USER, 1, 1), this.u)];
+    private pictures: Picture[] = [new Picture("1", "url", new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
     findById(id: string): Picture {
         return this.pictures[0];
     }
-    findByUser(user: User): Picture[] {
+    findByUser(user: string): Picture[] {
         return this.pictures;
     }
 

@@ -4,8 +4,8 @@ import { Picture } from "../../domain/Picture";
 
 export interface PictureRepository {
 
-    add(picture: Picture): boolean;
+    add(picture: Picture, podId: string): boolean;
     findById(id: string): Picture;
-    findByUser(user: User): Picture[];
+    findByUser(user: string): Picture[];
     findByPlace(user: Place): Picture[];
 }

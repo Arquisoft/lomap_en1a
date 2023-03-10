@@ -4,8 +4,8 @@ import { Place } from "../../domain/Place";
 
 export interface CommentRepository {
 
-    add(comment: Comment): boolean;
+    add(comment: Comment, podId: string): boolean;
     findById(id: string): Comment;
-    findByUser(user: User): Comment[];
+    findByUser(user: string): Comment[];
     findByPlace(user: Place): Comment[];
 }

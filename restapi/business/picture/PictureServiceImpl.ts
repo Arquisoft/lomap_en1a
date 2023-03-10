@@ -20,7 +20,7 @@ export class PictureServiceImpl implements PictureService {
     add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean {
         picture.id = generateUUID();
 
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
@@ -32,12 +32,11 @@ export class PictureServiceImpl implements PictureService {
             throw new Error("The picture url cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
         var p: Place = this.placeRepository.findById(place.id);
 
-        var pic: Picture = new Picture(picture.id, picture.url, p, u);
+        var pic: Picture = new Picture(picture.id, picture.url, p, user.podId);
 
-        return this.pictureRepository.add(pic);
+        return this.pictureRepository.add(pic, user.podId);
     }
 
     findById(id: string): Picture {
@@ -45,13 +44,11 @@ export class PictureServiceImpl implements PictureService {
     }
 
     findByUser(user: UserDto): Picture[] {
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
-        return this.pictureRepository.findByUser(u);
+        return this.pictureRepository.findByUser(user.podId);
     }
 
     findByPlace(place: PlaceDto): Picture[] {
