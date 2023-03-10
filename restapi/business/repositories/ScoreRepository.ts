@@ -4,8 +4,8 @@ import { User } from "../../domain/User";
 
 export interface ScoreRepository {
 
-    add(score: Score): boolean;
+    add(score: Score, podId: string): boolean;
     findById(id: string): Score;
-    findByUser(user: User): Score[];
+    findByUser(user: string): Score[];
     findByPlace(user: Place): Score[];
 }

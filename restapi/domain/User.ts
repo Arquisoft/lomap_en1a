@@ -1,8 +1,4 @@
 import { BaseEntity } from "./BaseEntity";
-import { Group } from "./Group";
-import { Picture } from "./Picture";
-import { Place } from "./Place";
-import { Score } from "./Score";
 
 export class User extends BaseEntity {
 

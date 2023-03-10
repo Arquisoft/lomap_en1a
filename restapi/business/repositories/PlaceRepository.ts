@@ -4,7 +4,7 @@ import { User } from "../../domain/User";
 
 export interface PlaceRepository {
 
-    add(place: Place): boolean;
+    add(place: Place, podId: string): boolean;
     findById(id: string): Place;
-    getPlacesByVisibility(user: User, visibilty: PlaceVisibility): Place[];
+    getPlacesByVisibility(user: string, visibilty: PlaceVisibility): Place[];
 }
