@@ -25,6 +25,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
   const { session } = useSession();
   var webId = session.info.webId as string;
+  
   var user = new User("","PLACEHOLDER",webId); 
   var place = new Place(infoWindowData?.id,infoWindowData?.title,user,PlaceVisibility.FULL,infoWindowData?.latitude,infoWindowData?.longitude);
   

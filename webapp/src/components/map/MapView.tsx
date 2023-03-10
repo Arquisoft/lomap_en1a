@@ -1,4 +1,4 @@
-import {MySideBar} from './SideBar';
+import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import {InfoWindow} from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
@@ -52,7 +52,7 @@ export default function MapView():JSX.Element{
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-                <MySideBar setInfoWindowData={setInfoWindowData} infoWindowData={infoWindowData}/>
+                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew}/>
           </ProSidebarProvider>
         </div>
 
