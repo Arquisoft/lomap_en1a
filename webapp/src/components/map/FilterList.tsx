@@ -21,11 +21,9 @@ const buttonStyle={
   
 }
 
-export const FilterList=( ) =>{
+export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
   const [isSelected, setIsSelected] = useState([false, false, false, false]);
-  const [visibility, setVisibility] = useState({
-    value:""
-  });
+
 
   const handleVisibility = (
     event: React.MouseEvent<HTMLElement>,

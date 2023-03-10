@@ -20,9 +20,9 @@ type SideBarProps = {
     title: string; //The name of the place to show
     latitude: number;
     longitude:number;
-
   }>>
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>
+  visibility:string
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
@@ -99,7 +99,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     });
                     props.setIsNew(false);
                   }}>PARA PRUEBAS</MenuItem>
-          <MenuItem></MenuItem>
+          <MenuItem>{props.visibility}</MenuItem>
         </Menu>
       </Sidebar>
       
