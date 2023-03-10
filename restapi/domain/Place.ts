@@ -5,13 +5,13 @@ import { PlaceVisibility } from "./Visibility";
 export class Place extends BaseEntity {
 
     private name: string;
-    private owner: User;
+    private owner: string;
     private visibility: PlaceVisibility;
 
     private latitude: number;
     private longitude: number;
 
-    public constructor(id: string, name: string, owner: User, visibility: PlaceVisibility, latitude: number, longitude: number) {
+    public constructor(id: string, name: string, owner: string, visibility: PlaceVisibility, latitude: number, longitude: number) {
         super(id);
         this.name = name;
         this.owner = owner;
@@ -28,11 +28,11 @@ export class Place extends BaseEntity {
         return this.name;
     }
 
-    public setOwner(owner: User) {
+    public setOwner(owner: string) {
         this.owner = owner;
     }
 
-    public getOwner(): User {
+    public getOwner(): string {
         return this.owner;
     }
 

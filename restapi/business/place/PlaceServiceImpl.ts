@@ -21,16 +21,14 @@ export class PlaceServiceImpl implements PlaceService {
     getAllPlaces(user: UserDto): Place[] {
         var places: Place[] = [];
 
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
-        places = places.concat(this.placeRepository.getPlacesByVisibility(u, PlaceVisibility.USER));
-        places = places.concat(this.placeRepository.getPlacesByVisibility(u, PlaceVisibility.FRIENDS));
-        places = places.concat(this.placeRepository.getPlacesByVisibility(u, PlaceVisibility.GROUP));
-        places = places.concat(this.placeRepository.getPlacesByVisibility(u, PlaceVisibility.FULL));
+        places = places.concat(this.placeRepository.getPlacesByVisibility(user.podId, PlaceVisibility.USER));
+        places = places.concat(this.placeRepository.getPlacesByVisibility(user.podId, PlaceVisibility.FRIENDS));
+        places = places.concat(this.placeRepository.getPlacesByVisibility(user.podId, PlaceVisibility.GROUP));
+        places = places.concat(this.placeRepository.getPlacesByVisibility(user.podId, PlaceVisibility.FULL));
 
         places = this.uniqByReduce(places);
 
@@ -48,17 +46,15 @@ export class PlaceServiceImpl implements PlaceService {
 
 
     getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[] {
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
-        return this.placeRepository.getPlacesByVisibility(u, visibilty);
+        return this.placeRepository.getPlacesByVisibility(user.podId, visibilty);
     }
 
     add(place: PlaceDto, user: UserDto): void {
-        if (user.id == undefined) {
+        if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
@@ -80,11 +76,9 @@ export class PlaceServiceImpl implements PlaceService {
             throw new Error("The place longitude cannot be undefined");
         }
 
-        var u: User = this.userRepository.findById(user.id);
-
         place.id = generateUUID();
-        var p: Place = new Place(place.id, place.name, u, place.visibility, place.latitude, place.longitude);
+        var p: Place = new Place(place.id, place.name, user.podId, place.visibility, place.latitude, place.longitude);
 
-        this.placeRepository.add(p);
+        this.placeRepository.add(p, user.podId);
     }
 }
