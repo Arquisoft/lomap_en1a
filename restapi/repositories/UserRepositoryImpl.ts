@@ -13,28 +13,19 @@ export class UserRepositoryImpl implements UserRepository {
             this.mysql.con.query(
                 "SELECT * FROM USERS WHERE PODID = '" + id + "';",
                 (err: any, result: any, fields: any) => {
-                    var length = Object.keys(result).length;
-                    var places: Place[] = new Array(length);
-                    Object.keys(result).forEach(function (key) {
-                        var aux: number = +key;
-                        var row = result[key];
-                        places[aux] = new Place(
-                            row.PLACE_ID,
-                            row.NAME,
-                            row.OWNER_ID,
-                            (<any>PlaceVisibility)[row.VISIBILITY],
-                            row.LATITUDE,
-                            row.LONGITUDE
-                        );
+                    var u = new User(
+                        result.USER_ID,
+                        result.USERNAME,
+                        result.PODID
+
+                    );
 
 
 
+                    resolve(u);
+                });
 
-                    });
-
-                    resolve(places);
-                }
-            );
-        });
+        }
+        );
     }
 }
