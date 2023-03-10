@@ -27,10 +27,6 @@ export const FilterList=( ) =>{
     value:""
   });
 
-  const [visibilityVal, setInfoWindowData] = useState({
-    value:""
-  });
-
   const handleVisibility = (
     event: React.MouseEvent<HTMLElement>,
     newVisibility: string

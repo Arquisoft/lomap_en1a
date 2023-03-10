@@ -9,9 +9,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import { IInfoWindowData } from "./MapView";
 import { useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getPlacesByUser, getPlaces } from "../../api/api";
+import { getPlacesByUser } from "../../api/api";
 import { useSession } from "@inrupt/solid-ui-react";
-
+import { IVisibility } from "./FilterList";
 
 
 
@@ -27,9 +27,8 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    setPlaces(await getPlaces());//EL podID DEL USUARIO
+    setPlaces(await getPlacesByUser(webId));//EL podID DEL USUARIO
   }
-
 
 
   //Style must be in-line; does not work otherwise
@@ -88,6 +87,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
                       
                     });
                   }}>PARA PRUEBAS</MenuItem>
+          <MenuItem></MenuItem>
         </Menu>
       </Sidebar>
       
