@@ -3,8 +3,16 @@ import { ToggleButton } from "@mui/material";
 import {ToggleButtonGroup} from "@mui/material";
 import { createTheme } from '@mui/material/styles';
 import { useState } from "react";
+import { PlaceVisibility } from "../../domain/Visibility";
 
-
+export interface IVisibility{
+  setVisibility:React.Dispatch<React.SetStateAction<{
+    value:string
+}>>
+  visibility:{
+    value:string;
+  }
+}
 
 const buttonStyle={
   backgroundColor:"green",
@@ -14,37 +22,46 @@ const buttonStyle={
 }
 
 export const FilterList=( ) =>{
-  const [alignment, setAlignment] = useState<string | null>('left');
+  const [isSelected, setIsSelected] = useState([false, false, false, false]);
+  const [visibility, setVisibility] = useState({
+    value:""
+  });
 
-  const handleAlignment = (
+  const [visibilityVal, setInfoWindowData] = useState({
+    value:""
+  });
+
+  const handleVisibility = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null,
+    newVisibility: string
   ) => {
-    setAlignment(newAlignment);
+    setVisibility({value: newVisibility});
+    console.log(newVisibility);
   };
 
   return (
       <ToggleButtonGroup
         className="toggle-button-group"
-        value={alignment}
+        value={visibility}
         exclusive
         fullWidth
-        onChange={handleAlignment}
+        onChange={handleVisibility}
         aria-label="filters"
         
       >
-        <ToggleButton value="filter1" aria-label="filter 1" style = {buttonStyle}>
-          Filter 1
+        <ToggleButton value="FULL" aria-label="filter full" style = {buttonStyle}>
+          Show All
         </ToggleButton>
-        <ToggleButton value="filter2" aria-label="filter 2" style = {buttonStyle}>
-          Filter 2
+        <ToggleButton value="USER" aria-label="filter user" style = {buttonStyle}>
+          Filter by User
         </ToggleButton>
-        <ToggleButton value="filter3" aria-label="filter 3" style = {buttonStyle}>
-          Filter 3
+        <ToggleButton value="GROUP" aria-label="filter group" style = {buttonStyle}>
+          Filter by Group
         </ToggleButton>
-        <ToggleButton value="filter4" aria-label="filter 4" style = {buttonStyle}>
-          Filter 4
+        <ToggleButton value="FRIENDS" aria-label="filter friends" style = {buttonStyle}>
+          Filter by Friends
         </ToggleButton>
+        
       </ToggleButtonGroup>
   );
   
