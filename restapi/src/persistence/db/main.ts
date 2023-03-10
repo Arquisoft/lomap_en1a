@@ -1,23 +1,19 @@
 import { Console } from "console";
-
-// import { MySql } from "./MySql";
-var a = require('./MySql.ts');
-
-
-function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { PlaceServiceImpl } from "../../../business/place/PlaceServiceImpl";
+import { UserDto } from "../../../domain/dtos/UserDto";
+import { PlaceRepositoryImpl } from "../../../repositories/PlaceRepositoryImpl";
+import { MySql } from "./MySql";
 
 
-a.connect();
-a.query("USE LOMAP");
+var b: MySql = MySql.getInstance();
+var a: PlaceRepositoryImpl = new PlaceRepositoryImpl();
+var c: PlaceServiceImpl = new PlaceServiceImpl();
+
+var u = new UserDto();
+u.podId = "USUARIO1";
+
+c.getAllPlaces(u).then((list) => console.log(list));
 
 
-const main = async () => {
-    var res;
-    await a.get("USER", "").then((result: any) => res = result);
 
-    console.log(res);
-}
 
-main();

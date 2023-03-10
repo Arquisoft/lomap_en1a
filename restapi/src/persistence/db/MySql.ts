@@ -1,6 +1,15 @@
-class MySql {
+export class MySql {
 
 
+    private static instance: MySql;
+
+    public static getInstance() {
+        if (!MySql.instance) {
+            MySql.instance = new MySql();
+        }
+
+        return MySql.instance;
+    }
 
     mysql = require('mysql');
     con = this.mysql.createConnection({
@@ -10,7 +19,10 @@ class MySql {
     });
 
 
-
+    private constructor() {
+        this.connect();
+        this.con.query("USE LOMAP");
+    }
 
 
     connect() {
@@ -88,4 +100,3 @@ class MySql {
         this.query("INSERT INTO USER (USER_ID) VALUES ('C3')");
     }
 }
-module.exports = new MySql();
