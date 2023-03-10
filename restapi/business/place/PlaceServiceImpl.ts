@@ -18,7 +18,7 @@ export class PlaceServiceImpl implements PlaceService {
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
     private userRepository: UserRepository = new Factory().repositories.getUserRepository();
 
-    getAllPlaces(user: UserDto): Place[] {
+    getAllPlaces(user: UserDto): Promise<Place[]> {
         var places: Place[] = [];
 
         if (user.podId == undefined) {
@@ -45,7 +45,7 @@ export class PlaceServiceImpl implements PlaceService {
     }
 
 
-    getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[] {
+    getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Promise<Place[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
@@ -53,7 +53,7 @@ export class PlaceServiceImpl implements PlaceService {
         return this.placeRepository.getPlacesByVisibility(user.podId, visibilty);
     }
 
-    add(place: PlaceDto, user: UserDto): void {
+    add(place: PlaceDto, user: UserDto): Promise<boolean> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }

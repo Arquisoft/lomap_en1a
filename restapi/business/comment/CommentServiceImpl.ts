@@ -16,7 +16,7 @@ export class CommentServiceImpl implements CommentService {
     private userRepository: UserRepository = new Factory().repositories.getUserRepository();
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
-    add(comment: CommentDto, user: UserDto, place: PlaceDto): boolean {
+    add(comment: CommentDto, user: UserDto, place: PlaceDto): Promise<boolean> {
         comment.id = generateUUID();
 
         if (user.podId == undefined) {
@@ -38,11 +38,11 @@ export class CommentServiceImpl implements CommentService {
         return this.commentRepository.add(c, user.podId);
     }
 
-    findById(id: string): Comment {
+    findById(id: string): Promise<Comment> {
         return this.commentRepository.findById(id);
     }
 
-    findByUser(user: UserDto): Comment[] {
+    findByUser(user: UserDto): Promise<Comment[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
@@ -50,7 +50,7 @@ export class CommentServiceImpl implements CommentService {
         return this.commentRepository.findByUser(user.podId);
     }
 
-    findByPlace(place: PlaceDto): Comment[] {
+    findByPlace(place: PlaceDto): Promise<Comment[]> {
         if (place.id == undefined) {
             throw new Error("The place id cannot be undefined");
         }

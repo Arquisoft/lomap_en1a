@@ -39,11 +39,11 @@ export class PictureServiceImpl implements PictureService {
         return this.pictureRepository.add(pic, user.podId);
     }
 
-    findById(id: string): Picture {
+    findById(id: string): Promise<Picture> {
         return this.pictureRepository.findById(id);
     }
 
-    findByUser(user: UserDto): Picture[] {
+    findByUser(user: UserDto): Promise<Picture[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
@@ -51,7 +51,7 @@ export class PictureServiceImpl implements PictureService {
         return this.pictureRepository.findByUser(user.podId);
     }
 
-    findByPlace(place: PlaceDto): Picture[] {
+    findByPlace(place: PlaceDto): Promise<Picture[]> {
         if (place.id == undefined) {
             throw new Error("The place id cannot be undefined");
         }
