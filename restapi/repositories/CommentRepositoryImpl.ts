@@ -1,20 +1,27 @@
 import { CommentRepository } from "../business/repositories/CommentRepository";
 import { Comment } from "../domain/Comment";
-import { CommentDto } from "../domain/dtos/CommentDto";
-import { PlaceDto } from "../domain/dtos/PlaceDto";
-import { UserDto } from "../domain/dtos/UserDto";
+import { Place } from "../domain/Place";
+import { User } from "../domain/User";
+import { PlaceVisibility } from "../domain/Visibility";
 
 export class CommentRepositoryImpl implements CommentRepository {
 
+
+    private u: User = new User("1", "User 1", "podId");
+    private comments: Comment[] = [new Comment("1", "Comment", new Place("1", "Place 1", this.u, PlaceVisibility.USER, 1, 1), this.u)];
+
     findById(id: string): Comment {
-        throw new Error("Method not implemented.");
+        return this.comments[0];
     }
-    findByUser(user: UserDto): Comment[] {
-        throw new Error("Method not implemented.");
+    findByUser(user: User): Comment[] {
+        return this.comments;
     }
-    findByPlace(user: PlaceDto): Comment[] {
-        throw new Error("Method not implemented.");
+    findByPlace(user: Place): Comment[] {
+        return this.comments;
     }
 
-    add(user: UserDto, comment: CommentDto, place: PlaceDto): boolean { return true; }
+    add(comment: Comment): boolean {
+        this.comments.push(comment);
+        return true;
+    }
 }

@@ -84,6 +84,20 @@ api.post("/comment/add", CommentController.addChecks(),
 
 //Picture
 
+//List all comments
+api.get("/picture/list", PictureController.listChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PictureController.list(req, res);
+  }
+);
+
+//Get a comment
+api.get("/picture/details", PictureController.detailsChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PictureController.details(req, res);
+  }
+);
+
 //Add a picture
 api.post("/picture/add", PictureController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
