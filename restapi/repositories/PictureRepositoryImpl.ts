@@ -1,19 +1,27 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
-import { PictureDto } from "../domain/dtos/PictureDto";
-import { PlaceDto } from "../domain/dtos/PlaceDto";
-import { UserDto } from "../domain/dtos/UserDto";
+import { Place } from "../domain/Place";
+import { User } from "../domain/User";
 import { Picture } from "../domain/Picture";
+import { PlaceVisibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
+
+    private u: User = new User("1", "User 1", "podId");
+    private pictures: Picture[] = [new Picture("1", "url", new Place("1", "Place 1", this.u, PlaceVisibility.USER, 1, 1), this.u)];
+
     findById(id: string): Picture {
-        throw new Error("Method not implemented.");
+        return this.pictures[0];
     }
-    findByUser(user: UserDto): Picture[] {
-        throw new Error("Method not implemented.");
-    }
-    findByPlace(user: PlaceDto): Picture[] {
-        throw new Error("Method not implemented.");
+    findByUser(user: User): Picture[] {
+        return this.pictures;
     }
 
-    add(user: UserDto, picture: PictureDto, place: PlaceDto): boolean { return true; }
+    findByPlace(user: Place): Picture[] {
+        return this.pictures;
+    }
+
+    add(picture: Picture): boolean {
+        this.pictures.push(picture);
+        return true;
+    }
 }

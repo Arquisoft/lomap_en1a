@@ -1,12 +1,11 @@
-import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { ScoreDto } from "../../domain/dtos/ScoreDto";
-import { UserDto } from "../../domain/dtos/UserDto";
+import { Place } from "../../domain/Place";
 import { Score } from "../../domain/Score";
+import { User } from "../../domain/User";
 
 export interface ScoreRepository {
 
-    add(user: UserDto, score: ScoreDto, place: PlaceDto): boolean;
+    add(score: Score): boolean;
     findById(id: string): Score;
-    findByUser(user: UserDto): Score[];
-    findByPlace(user: PlaceDto): Score[];
+    findByUser(user: User): Score[];
+    findByPlace(user: Place): Score[];
 }

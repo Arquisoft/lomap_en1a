@@ -1,20 +1,28 @@
 import { ScoreRepository } from "../business/repositories/ScoreRepository";
-import { PlaceDto } from "../domain/dtos/PlaceDto";
-import { ScoreDto } from "../domain/dtos/ScoreDto";
-import { UserDto } from "../domain/dtos/UserDto";
+import { Place } from "../domain/Place";
 import { Score } from "../domain/Score";
+import { User } from "../domain/User";
+import { PlaceVisibility } from "../domain/Visibility";
 
 export class ScoreRepositoryImpl implements ScoreRepository {
 
+    private u: User = new User("1", "User 1", "podId");
+    private scores: Score[] = [new Score("1", 10, new Place("1", "Place 1", this.u, PlaceVisibility.USER, 1, 1), this.u)];
+
     findById(id: string): Score {
-        throw new Error("Method not implemented.");
-    }
-    findByUser(user: UserDto): Score[] {
-        throw new Error("Method not implemented.");
-    }
-    findByPlace(user: PlaceDto): Score[] {
-        throw new Error("Method not implemented.");
+        return this.scores[0];
     }
 
-    add(user: UserDto, score: ScoreDto, place: PlaceDto): boolean { return true; }
+    findByUser(user: User): Score[] {
+        return this.scores;
+    }
+
+    findByPlace(user: Place): Score[] {
+        return this.scores;
+    }
+
+    add(score: Score): boolean {
+        this.scores.push(score);
+        return true;
+    }
 }

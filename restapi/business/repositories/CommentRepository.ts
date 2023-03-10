@@ -1,12 +1,11 @@
-import { CommentDto } from "../../domain/dtos/CommentDto";
 import { Comment } from "../../domain/Comment";
-import { UserDto } from "../../domain/dtos/UserDto";
-import { PlaceDto } from "../../domain/dtos/PlaceDto";
+import { User } from "../../domain/User";
+import { Place } from "../../domain/Place";
 
 export interface CommentRepository {
 
-    add(user: UserDto, comment: CommentDto, place: PlaceDto): boolean;
+    add(comment: Comment): boolean;
     findById(id: string): Comment;
-    findByUser(user: UserDto): Comment[];
-    findByPlace(user: PlaceDto): Comment[];
+    findByUser(user: User): Comment[];
+    findByPlace(user: Place): Comment[];
 }
