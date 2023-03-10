@@ -75,6 +75,16 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
           </SubMenu>
           <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
           <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+          <MenuItem  onClick={() => {
+                    setInfoWindowData({
+                      isOpen:true,
+                      title:"TITLE",
+                      id:"",
+                      latitude:0,
+                      longitude:0
+                      
+                    });
+                  }}>PARA PRUEBAS</MenuItem>
         </Menu>
       </Sidebar>
       

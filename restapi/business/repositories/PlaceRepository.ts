@@ -5,6 +5,7 @@ import { UserDto } from "../../domain/dtos/UserDto";
 
 export interface PlaceRepository {
 
-    add(user: UserDto, place: PlaceDto): void;
+    add(user: UserDto, place: PlaceDto): boolean;
+    findById(): Place;
     getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[];
 }

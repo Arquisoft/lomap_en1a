@@ -37,15 +37,16 @@ footer{
 
 .map-view{
   display: grid;
-  grid-template-rows: [first]5em [second]20em[last] ;
-  grid-template-columns: [firstC]12em [secondC]30em[lastC] ;
+  grid-template-rows: [first]5em [second]21em[last] ;
+  grid-template-columns: [firstC]12em [secondC]30em[thirdC]21.3em[lastC] ;
 }
 
 .filter-list{
+  z-index : 1;
   grid-row-start: first;
   grid-row-end:second;
   grid-column-start:secondC ;
-  grid-column-end: lastC;
+  grid-column-end: thirdC;
 }
 
 .toggle-buttons{
@@ -62,10 +63,16 @@ footer{
 }
 
 .map{
-  grid-row-start: second;
+  grid-row-start: first;
   grid-row-end:last;
-  grid-column-start:secondC ;
+  grid-column-start:firstC ;
   grid-column-end: lastC;
+}
+
+.map .ol-zoom {
+  top: 10px;
+  left: auto;
+  right: 10px;
 }
 
 .info-window{

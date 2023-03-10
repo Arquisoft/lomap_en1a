@@ -6,6 +6,7 @@ import { useState } from 'react';
 import "../../App.css";
 import { FilterList } from './FilterList';
 import { CreatePlaceWindow } from './CreatePlaceWindow';
+import { MapComponent } from '../ol/map/map';
 
 
 export interface IInfoWindowData{
@@ -58,23 +59,12 @@ export default function MapView():JSX.Element{
         </div>
          
 
-          <div className='map'>
-              
-          </div>
+          <MapComponent/>
+          
       </div>
 
-      <button onClick={() => setInfoWindowData({ 
-            isOpen:true,
-            title:"",
-            id:"",
-            latitude: 0,
-            longitude:0
-       })}>
-        Click me to open right pane!
-      </button>
+
         
-
-
         
         <SlidingPane 
             isOpen={infoWindowData.isOpen}
