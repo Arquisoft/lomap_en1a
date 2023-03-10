@@ -32,7 +32,8 @@ export default function MapView():JSX.Element{
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
 
-  const[isNew, setIsNew]=useState(true); //True if it is a new place to add, false if it is already a place in the map
+  const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
+  //const[isOpen, setIsOpen]=useState(false); Will be used when refactoring code 
   const [infoWindowData, setInfoWindowData] = useState({
     isOpen:false,
     title:"",
@@ -41,6 +42,7 @@ export default function MapView():JSX.Element{
     longitude:0
 
   });
+
 
   //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
 
@@ -59,7 +61,7 @@ export default function MapView():JSX.Element{
         </div>
          
 
-          <MapComponent/>
+          <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} setLatitude={setLatitude} setLongitude={setLongitude}/>
           
       </div>
 

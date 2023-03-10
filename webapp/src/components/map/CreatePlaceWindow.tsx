@@ -19,6 +19,7 @@ export interface ICreatePlaceWindowData{
   longitude:number
 }
 
+
 export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longitude}) =>{
 
   const { session } = useSession();
@@ -33,12 +34,11 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
   
 
-  
 
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var place = new Place("",name,user,PlaceVisibility.FULL,latitude,longitude);
+    var place = new Place("",name,user,PlaceVisibility.USER,latitude,longitude);
     let result:boolean = await addPlace(place);
     if (result){
       setNotificationStatus(true);

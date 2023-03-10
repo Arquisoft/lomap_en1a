@@ -10,6 +10,7 @@ import { IInfoWindowData } from "./MapView";
 import { useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
+import { useSession } from "@inrupt/solid-ui-react";
 
 
 
@@ -17,14 +18,16 @@ import { getPlacesByUser } from "../../api/api";
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layer
 
 export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindowData}) =>{
+  //Isnew FALSE 
 
   //For the places
   const [places,setPlaces] = useState<Place[]>([]);
-
+  const { session } = useSession();
+  var webId = session.info.webId as string;
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    setPlaces(await getPlacesByUser("PLACEHOLDER"));//EL podID DEL USUARIO
+    setPlaces(await getPlacesByUser(webId));//EL podID DEL USUARIO
   }
 
 

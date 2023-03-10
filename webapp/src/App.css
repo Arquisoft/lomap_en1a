@@ -33,7 +33,10 @@ footer{
 
 
 
+#togge-button{
+  margin-left: 2em;
 
+}
 
 .map-view{
   display: grid;
@@ -49,12 +52,14 @@ footer{
   grid-column-end: thirdC;
 }
 
-.toggle-buttons{
-  background-color: #388fe6;
+.toggle-button-group{
+  display: flex;
+  gap:5%;
   margin-top: 0.5em;
-
   
 }
+
+
 .side-bar{
   grid-row-start: first;
   grid-row-end:last;

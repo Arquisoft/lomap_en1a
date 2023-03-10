@@ -107,7 +107,7 @@ export async function addPicture(picture:Picture):Promise<boolean>{
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({'url':picture.getUrl(),'place':picture.getPlace().getId(),
-      'owner':picture.getOwner().getId()})
+      'owner':picture.getOwner().getPodId()})
     });
   if (response.status===200)
     return true;

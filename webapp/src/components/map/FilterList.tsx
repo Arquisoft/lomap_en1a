@@ -6,6 +6,12 @@ import { useState } from "react";
 
 
 
+const buttonStyle={
+  backgroundColor:"green",
+  borderRadius:"2em",
+  color:"white"
+  
+}
 
 export const FilterList=( ) =>{
   const [alignment, setAlignment] = useState<string | null>('left');
@@ -19,7 +25,7 @@ export const FilterList=( ) =>{
 
   return (
       <ToggleButtonGroup
-        className="toggle-buttons"
+        className="toggle-button-group"
         value={alignment}
         exclusive
         fullWidth
@@ -27,16 +33,16 @@ export const FilterList=( ) =>{
         aria-label="filters"
         
       >
-        <ToggleButton value="filter1" aria-label="filter 1" >
+        <ToggleButton value="filter1" aria-label="filter 1" style = {buttonStyle}>
           Filter 1
         </ToggleButton>
-        <ToggleButton value="filter2" aria-label="filter 2">
+        <ToggleButton value="filter2" aria-label="filter 2" style = {buttonStyle}>
           Filter 2
         </ToggleButton>
-        <ToggleButton value="filter3" aria-label="filter 3">
+        <ToggleButton value="filter3" aria-label="filter 3" style = {buttonStyle}>
           Filter 3
         </ToggleButton>
-        <ToggleButton value="filter4" aria-label="filter 4">
+        <ToggleButton value="filter4" aria-label="filter 4" style = {buttonStyle}>
           Filter 4
         </ToggleButton>
       </ToggleButtonGroup>
