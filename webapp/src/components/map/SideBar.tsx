@@ -23,6 +23,8 @@ type SideBarProps = {
 
   }>>
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>
+
+
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern

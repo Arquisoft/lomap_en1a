@@ -62,7 +62,7 @@ export async function addPlace(place:Place):Promise<boolean>{
   let response = await fetch(apiEndPoint+'/place/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({'name':place.getName(),'owner':place.getOwner().getId(),
+      body: JSON.stringify({'name':place.getName(),'user':place.getOwner().getPodId(),
       'visibility':place.getVisibility(),'latitude':place.getLatitude(),'longitude':place.getLongitude()})
     });
   if (response.status===200)
@@ -72,9 +72,9 @@ export async function addPlace(place:Place):Promise<boolean>{
 }
 
 //List places by visibility
-export async function getPlaces():Promise<Place[]>{
+export async function getPlaces(id:string):Promise<Place[]>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint+'/place/list');
+  let response = await fetch(apiEndPoint+'/place/list/visibility/'+id);
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -84,7 +84,7 @@ export async function getPlaces():Promise<Place[]>{
 //List places by user
 export async function getPlacesByUser(id:string):Promise<Place[]>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint+'/place/listall/'+id);
+  let response = await fetch(apiEndPoint+'/place/list/'+id);
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
