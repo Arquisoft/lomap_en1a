@@ -17,7 +17,7 @@ export class PictureServiceImpl implements PictureService {
     private userRepository: UserRepository = new Factory().repositories.getUserRepository();
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
-    add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean {
+    async add(picture: PictureDto, user: UserDto, place: PlaceDto): Promise<boolean> {
         picture.id = generateUUID();
 
         if (user.podId == undefined) {
@@ -32,18 +32,18 @@ export class PictureServiceImpl implements PictureService {
             throw new Error("The picture url cannot be undefined");
         }
 
-        var p: Place = this.placeRepository.findById(place.id);
+        var p: Place = await this.placeRepository.findById(place.id);
 
         var pic: Picture = new Picture(picture.id, picture.url, p, user.podId);
 
         return this.pictureRepository.add(pic, user.podId);
     }
 
-    findById(id: string): Promise<Picture> {
+    async findById(id: string): Promise<Picture> {
         return this.pictureRepository.findById(id);
     }
 
-    findByUser(user: UserDto): Promise<Picture[]> {
+    async findByUser(user: UserDto): Promise<Picture[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
@@ -51,12 +51,12 @@ export class PictureServiceImpl implements PictureService {
         return this.pictureRepository.findByUser(user.podId);
     }
 
-    findByPlace(place: PlaceDto): Promise<Picture[]> {
+    async findByPlace(place: PlaceDto): Promise<Picture[]> {
         if (place.id == undefined) {
             throw new Error("The place id cannot be undefined");
         }
 
-        var p: Place = this.placeRepository.findById(place.id);
+        var p: Place = await this.placeRepository.findById(place.id);
 
         return this.pictureRepository.findByPlace(p);
     }

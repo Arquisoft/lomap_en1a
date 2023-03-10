@@ -9,7 +9,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     private places: Place[] = [new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1)];
     private mysql = MySql.getInstance();
 
-    findById(id: String): Promise<Place> {
+    async findById(id: String): Promise<Place> {
         return new Promise((resolve, reject) => {
             this.mysql.con.query(
                 "SELECT * FROM PLACES WHERE PLACE_ID= " + id + ";",
@@ -31,7 +31,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         throw Error("not implemented");
     }
 
-    add(place: Place): boolean {
+    async add(place: Place): Promise<boolean> {
         this.places.push(place);
         return true;
     }

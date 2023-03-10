@@ -4,7 +4,7 @@ import { Picture } from "../../domain/Picture";
 
 export interface PictureRepository {
 
-    add(picture: Picture, podId: string): boolean;
+    add(picture: Picture, podId: string): Promise<boolean>;
     findById(id: string): Promise<Picture>;
     findByUser(user: string): Promise<Picture[]>;
     findByPlace(user: Place): Promise<Picture[]>;

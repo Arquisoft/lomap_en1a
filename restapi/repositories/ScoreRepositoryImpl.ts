@@ -8,19 +8,19 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
     private scores: Score[] = [new Score("1", 10, new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
-    findById(id: string): Score {
+    async findById(id: string): Promise<Score> {
         return this.scores[0];
     }
 
-    findByUser(user: string): Score[] {
+    async findByUser(user: string): Promise<Score[]> {
         return this.scores;
     }
 
-    findByPlace(user: Place): Score[] {
+    async findByPlace(user: Place): Promise<Score[]> {
         return this.scores;
     }
 
-    add(score: Score): boolean {
+    async add(score: Score): Promise<boolean> {
         this.scores.push(score);
         return true;
     }
