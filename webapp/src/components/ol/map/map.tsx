@@ -6,7 +6,7 @@ import XYZ from "ol/source/XYZ";
 import { VectorLayer } from "./layers";
 import { TMapProps, IMapContext, TMapState } from "./map-types";
 import "ol/ol.css";
-import "./map.css";
+import "../../../App.css";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
