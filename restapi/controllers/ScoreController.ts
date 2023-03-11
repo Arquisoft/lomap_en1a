@@ -49,9 +49,11 @@ export class ScoreController {
 
         var place: PlaceDto = new PlaceDto();
         place.id = id;
+    
 
         return new Promise((resolve, reject) => {
             this.scoreService.findByPlace(place).then(b => {
+                console.log(b[0])
                 resolve(res.send(b));
             });
 

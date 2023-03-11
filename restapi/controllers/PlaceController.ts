@@ -18,7 +18,6 @@ export class PlaceController {
 
         return new Promise((resolve, reject) => {
             this.placeService.getAllPlaces(user).then(b => {
-                console.log(user);
                 resolve(res.send(b));
             });
         });
@@ -83,11 +82,6 @@ export class PlaceController {
         var filter: string = <string>req.body.visibility;
         var latitude: number = <number>req.body.latitude;
         var longitude: number = <number>req.body.longitude;
-        console.log(owner)
-        console.log(name)
-        console.log(filter)
-        console.log(latitude)
-        console.log(longitude)
 
         var index = filter as keyof typeof PlaceVisibility;
 

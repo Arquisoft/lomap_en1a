@@ -4,8 +4,8 @@ import { User } from "./User";
 
 export abstract class Review extends BaseEntity {
 
-    private place: string;
-    private owner: string;
+    public place: string;
+    public owner: string;
 
     public constructor(id: string, place: string, owner: string) {
         super(id);

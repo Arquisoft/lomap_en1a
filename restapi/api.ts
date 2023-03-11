@@ -11,20 +11,19 @@ const api: Router = express.Router();
 //List all places
 api.get("/place/list/:user", PlaceController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    console.log("API REST:LIST")
     return PlaceController.list(req, res);
   }
 );
 
 //List places by visibility
-api.get("/place/list/visibility:user:visibility", PlaceController.listByVisibilityChecks(),
+api.get("/place/list/visibility/:user/:visibility", PlaceController.listByVisibilityChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return PlaceController.listByVisibility(req, res);
   }
 );
 
 //Get a place
-api.get("/place/details:place", PlaceController.detailsChecks(),
+api.get("/place/details/:place", PlaceController.detailsChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return PlaceController.details(req, res);
   }
@@ -33,7 +32,6 @@ api.get("/place/details:place", PlaceController.detailsChecks(),
 //Add a place
 api.post("/place/add", PlaceController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    console.log("API REST:ADD")
     return PlaceController.add(req, res);
   }
 );
@@ -41,14 +39,14 @@ api.post("/place/add", PlaceController.addChecks(),
 //Score
 
 //List all scores
-api.post("/score/list:user", ScoreController.listChecks(),
+api.get("/score/list/:place", ScoreController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return ScoreController.list(req, res);
   }
 );
 
 //Get a score
-api.post("/score/details:score", ScoreController.detailsChecks(),
+api.get("/score/details/:score", ScoreController.detailsChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return ScoreController.details(req, res);
   }
@@ -64,14 +62,14 @@ api.post("/score/add", ScoreController.addChecks(),
 //Comment
 
 //List all comments
-api.get("/comment/list:place", CommentController.listChecks(),
+api.get("/comment/list/:place", CommentController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.list(req, res);
   }
 );
 
 //Get a comment
-api.get("/comment/details:comment", CommentController.detailsChecks(),
+api.get("/comment/details/:comment", CommentController.detailsChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.details(req, res);
   }
@@ -87,14 +85,14 @@ api.post("/comment/add", CommentController.addChecks(),
 //Picture
 
 //List all pictures
-api.get("/picture/list:user", PictureController.listChecks(),
+api.get("/picture/list/:user", PictureController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return PictureController.list(req, res);
   }
 );
 
 //Get a picture
-api.get("/picture/details:picture", PictureController.detailsChecks(),
+api.get("/picture/details/:picture", PictureController.detailsChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return PictureController.details(req, res);
   }

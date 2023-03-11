@@ -19,12 +19,14 @@ import { User } from '../../domain/User';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
+import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
 
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
 
-  const { session } = useSession();
+ const { session } = useSession();
   var webId = session.info.webId as string;
+  
   
 
   
@@ -72,15 +74,21 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
   //Gets the list of scores for a specific place
   const refreshScores = async (value:number) => {
-    handleAddScore(value); //Adds the new score
+    await handleAddScore(value); //Adds the new score
     
 
-    getScores(infoWindowData?.id).then((s)=>setScores(s));
-    let aux = 0;
-    for (let i = 0; i < scores.length; i++) {
-      aux+=scores[i].getScore();
-    }
-    setAvg(aux/scores.length); //Calculates the new average
+    //NOT FIXED YET
+    getScores(infoWindowData?.id).then((s)=>{
+        setScores(s);
+        let aux = 0;
+        for (let i = 0; i < scores.length; i++) {
+        
+          aux+=scores[i].score;
+        }
+        let avg = aux/scores.length;
+        let a = avg.toFixed(1)
+        setAvg(parseFloat(a)); //Calculates the new average
+    });
   }
 
   
@@ -124,7 +132,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={infoWindowData?.id} user={webId}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={infoWindowData?.id} user={"username"}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>

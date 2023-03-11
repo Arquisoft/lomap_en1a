@@ -27,7 +27,6 @@ type SideBarProps = {
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
-  //Isnew FALSE 
 
   //For the places
   const [places,setPlaces] = useState<Place[]>([]);
