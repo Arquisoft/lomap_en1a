@@ -19,7 +19,7 @@ export class PictureRepositoryImpl implements PictureRepository {
         return this.pictures;
     }
 
-    async add(picture: Picture, podId: string): Promise<boolean> {
+    add(picture: Picture, podId: string): boolean {
         this.pictures.push(picture);
         return true;
     }

@@ -31,7 +31,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         throw Error("not implemented");
     }
 
-    async add(place: Place): Promise<boolean> {
+    add(place: Place): boolean {
         this.places.push(place);
         return true;
     }

@@ -40,7 +40,7 @@ export class ScoreController {
     }
 
     public static async list(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.place;
+        var id: string = <string>req.params.place;
 
         var place: PlaceDto = new PlaceDto();
         place.id = id;
@@ -58,7 +58,7 @@ export class ScoreController {
     }
 
     public static async details(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.comment;
+        var id: string = <string>req.params.comment;
 
         res.send(this.scoreService.findById(id));
 

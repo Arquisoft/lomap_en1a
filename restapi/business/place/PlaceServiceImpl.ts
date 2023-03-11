@@ -11,58 +11,56 @@ import { v4 as generateUUID } from 'uuid';
 import { Place } from "../../domain/Place";
 import { PlaceVisibility } from "../../domain/Visibility";
 import { PlaceRepositoryImpl } from "../../repositories/PlaceRepositoryImpl";
+import { resolve } from "path";
 
 
 export class PlaceServiceImpl implements PlaceService {
 
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
-    async getAllPlaces(user: UserDto): Promise<Place[]> {
+    getAllPlaces(user: UserDto): Promise<Place[]> {
         var places: Place[] = [];
 
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-
-
         return this.placeRepository.getAllPlaces(user.podId);
     }
 
-    async getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Promise<Place[]> {
+    getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Promise<Place[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
 
-        return await this.placeRepository.getPlacesByVisibility(user.podId, visibilty);
+        return this.placeRepository.getPlacesByVisibility(user.podId, visibilty);
     }
 
-    async add(place: PlaceDto, user: UserDto): Promise<boolean> {
-        if (user.podId == undefined) {
-            throw new Error("The user id cannot be undefined");
-        }
+    add(place: PlaceDto, user: UserDto): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            if (user.podId == undefined) {
+                throw new Error("The user id cannot be undefined");
+            }
 
-        if (place.name == undefined) {
-            throw new Error("The place name cannot be undefined");
-        }
+            if (place.name == undefined) {
+                throw new Error("The place name cannot be undefined");
+            }
 
-        if (place.visibility == undefined) {
-            throw new Error("The place visibility cannot be undefined");
-        }
-
-
-        if (place.latitude == undefined) {
-            throw new Error("The place latitude cannot be undefined");
-        }
+            if (place.visibility == undefined) {
+                throw new Error("The place visibility cannot be undefined");
+            }
 
 
-        if (place.longitude == undefined) {
-            throw new Error("The place longitude cannot be undefined");
-        }
+            if (place.latitude == undefined) {
+                throw new Error("The place latitude cannot be undefined");
+            }
 
-        place.id = generateUUID();
-        var p: Place = new Place(place.id, place.name, user.podId, place.visibility, place.latitude, place.longitude);
-
-        return this.placeRepository.add(p, user.podId);
+            if (place.longitude == undefined) {
+                throw new Error("The place longitude cannot be undefined");
+            }
+            place.id = generateUUID();
+            var p: Place = new Place(place.id, place.name, user.podId, place.visibility, place.latitude, place.longitude);
+            resolve(this.placeRepository.add(p, user.podId));
+        });
     }
 }

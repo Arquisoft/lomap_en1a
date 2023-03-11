@@ -20,7 +20,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
         return this.scores;
     }
 
-    async add(score: Score): Promise<boolean> {
+    add(score: Score): boolean {
         this.scores.push(score);
         return true;
     }

@@ -40,7 +40,7 @@ export class PictureController {
     }
 
     public static async list(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.place;
+        var id: string = <string>req.params.place;
 
         var place: PlaceDto = new PlaceDto();
         place.id = id;
@@ -58,7 +58,7 @@ export class PictureController {
     }
 
     public static async details(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.picture;
+        var id: string = <string>req.params.picture;
 
         res.send(this.pictureService.findById(id));
 

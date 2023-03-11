@@ -19,7 +19,7 @@ export class CommentRepositoryImpl implements CommentRepository {
         throw Error("not implemented");
     }
 
-    async add(comment: Comment): Promise<boolean> {
+    add(comment: Comment): boolean {
         this.comments.push(comment);
         return true;
     }
