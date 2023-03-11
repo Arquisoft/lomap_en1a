@@ -43,7 +43,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    setComments(await getComments(infoWindowData?.id)); 
+    getComments(infoWindowData?.id).then((s)=>setComments(s));
   }
 
 
@@ -76,8 +76,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
     handleAddScore(value); //Adds the new score
     
 
-
-    setScores(await getScores(infoWindowData?.id));
+    getScores(infoWindowData?.id).then((s)=>setScores(s));
     let aux = 0;
     for (let i = 0; i < scores.length; i++) {
       aux+=scores[i].getScore();

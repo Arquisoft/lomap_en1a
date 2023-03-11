@@ -52,7 +52,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
             <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
-            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude}/>
+            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen}/>
           </MapContext.Provider>
         )}
       </div>

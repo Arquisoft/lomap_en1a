@@ -10,14 +10,12 @@ import { MapComponent } from '../ol/map/map';
 
 export interface IInfoWindowData{
   setInfoWindowData:React.Dispatch<React.SetStateAction<{
-    isOpen: boolean; //If the info window is open or not
     id:string; //The ID of the place to show
     title: string; //The name of the place to show
     latitude: number;
     longitude:number;
 }>>
   infoWindowData:{
-    isOpen:boolean;
     id:string;
     title:string;
     latitude: number;
@@ -34,9 +32,8 @@ export default function MapView():JSX.Element{
   });
 
   const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
-  //const[isOpen, setIsOpen]=useState(false); Will be used when refactoring code 
+  const[isOpen, setIsOpen]=useState(false);
   const [infoWindowData, setInfoWindowData] = useState({
-    isOpen:false,
     title:"",
     id:"",
     latitude: 0,
@@ -52,7 +49,7 @@ export default function MapView():JSX.Element{
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew} visibility={visibility.value}/>
+                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew} visibility={visibility.value} setIsOpen={setIsOpen}/>
           </ProSidebarProvider>
         </div>
 
@@ -61,7 +58,7 @@ export default function MapView():JSX.Element{
         </div>
          
 
-          <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} setLatitude={setLatitude} setLongitude={setLongitude}/>
+          <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen}/>
           
       </div>
 
@@ -69,15 +66,9 @@ export default function MapView():JSX.Element{
         
         
         <SlidingPane 
-            isOpen={infoWindowData.isOpen}
+            isOpen={isOpen}
             onRequestClose={() => {
-              setInfoWindowData({
-                isOpen:false,
-                title:"",
-                id:"",
-                latitude: 0,
-                longitude:0,
-              });
+                setIsOpen(false)
             }}
             width="70vh"
             className='info-window'
