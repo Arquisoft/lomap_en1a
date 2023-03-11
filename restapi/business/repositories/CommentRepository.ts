@@ -7,5 +7,5 @@ export interface CommentRepository {
     add(comment: Comment, podId: string): boolean;
     findById(id: string): Promise<Comment>;
     findByUser(user: string): Promise<Comment[]>;
-    findByPlace(user: Place): Promise<Comment[]>;
+    findByPlace(place: string): Promise<Comment[]>;
 }
