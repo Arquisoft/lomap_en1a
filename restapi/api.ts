@@ -4,7 +4,13 @@ import { PictureController } from './controllers/PictureController';
 import { PlaceController } from './controllers/PlaceController';
 import { ScoreController } from './controllers/ScoreController';
 
+
 const api: Router = express.Router();
+
+// const for locally storing images (Prototype only)
+const multer  = require('multer'); 
+const app = express();
+const exp = require("express");
 
 //Place
 
@@ -62,7 +68,7 @@ api.post("/score/add", ScoreController.addChecks(),
 //Comment
 
 //List all comments
-api.get("/comment/list", CommentController.listChecks(),
+/*api.get("/comment/list", CommentController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.list(req, res);
   }
@@ -80,14 +86,30 @@ api.post("/comment/add", CommentController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.add(req, res);
   }
-);
+);*/
 
 //Picture
 
+
 //Add a picture
-api.post("/picture/add", PictureController.addChecks(),
+// setup multer for file upload
+api.use(express.json());
+api.use(express.static(__dirname + "/../webapp/images"));
+
+var storage = multer.diskStorage(
+  {
+      destination: './images',
+      filename: function (req:any, file:any, cb:any ) {
+          cb( null, file.originalname);
+      }
+  }
+);
+const upload = multer({ storage: storage } )
+
+api.post("/picture/add", upload.single('myFile'), //PictureController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
-    return PictureController.add(req, res);
+    //return PictureController.add(req, res);
+    return res.status(200);
   }
 );
 
@@ -98,5 +120,20 @@ api.get("/",
 
     return res.status(200);
   });
+
+
+
+
+
+
+/*// route for file upload
+api.post("/api/uploadfile", upload.single('myFile'), async (req: Request, res: Response) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.sendStatus(200);
+});
+
+//app.listen(4000, () => console.log("Listening on port 4000"));*/
+
 
 export default api;

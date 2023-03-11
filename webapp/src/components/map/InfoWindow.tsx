@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from "@mui/material/Button/Button";
 import image from "../../images/placeHolder.png";
 import { Rating } from 'react-simple-star-rating';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
 import { getComments, getScores } from '../../api/api';
 import CommentForm from './CommentForm';
@@ -14,11 +14,13 @@ import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
 import { Place } from '../../domain/Place';
+import { Picture } from '../../domain/Picture';
 import { PlaceVisibility } from '../../domain/Visibility';
 import { User } from '../../domain/User';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
+import axios from 'axios';
 
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
@@ -31,6 +33,10 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
   
+  //For the pictures
+  const [pictures,setPictures] = useState<Picture[]>([]);
+  const [fileList, setFileList] = useState<FileList | null>(null);
+
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
 
@@ -39,12 +45,53 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
   //For the computation of the avg score
   const [avg,setAvg] = useState(0);
+  
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
     setComments(await getComments(infoWindowData?.id)); 
   }
 
+  
+  
+  // Image upload -------------------------------------------------------
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFileList(e.target.files);
+  };
+
+  const files = fileList ? [...fileList] : [];
+
+  const handleUploadClick = () => {
+    if (!fileList) {
+      return;
+    }
+
+    const data = new FormData();
+    files.forEach((file, i) => {
+      data.append(`file-${i}`, file, file.name);
+    });
+
+
+    // Uploading the file using the fetch API to the server
+    /*fetch('http://localhost:5000/api/uploadfile', {
+      method: 'POST',
+      body: data,
+      mode:'cors',
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err));*/
+
+    axios.post("http://localhost:3000/picture/add", data, {
+      headers: {
+        "content-type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+      }
+    });     
+  };
+
+  // ------------------------------------------------------------
 
   const handleAddScore = async (value:number) => {
     //e.preventDefault();
@@ -105,6 +152,20 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             <Grid item xs={12}>
                 <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
             </Grid>
+
+            <div>
+      <input type="file" onChange={handleFileChange} multiple />
+
+      <ul>
+        {files.map((file, i) => (
+          <li key={i}>
+            {file.name} - {file.type}
+          </li>
+        ))}
+      </ul>
+
+      <button onClick={handleUploadClick}>Upload</button>
+    </div>
 
            <Grid item xs={6}>
               <Rating
