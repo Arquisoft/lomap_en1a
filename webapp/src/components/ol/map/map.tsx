@@ -6,7 +6,7 @@ import XYZ from "ol/source/XYZ";
 import { VectorLayer } from "./layers";
 import { TMapProps, IMapContext, TMapState } from "./map-types";
 import "ol/ol.css";
-import "./map.css";
+import "../../../App.css";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -51,7 +51,8 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       <div className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
-            <VectorLayer />
+            <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
+            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen}/>
           </MapContext.Provider>
         )}
       </div>

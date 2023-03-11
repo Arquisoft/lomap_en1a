@@ -59,6 +59,7 @@ export class PlaceServiceImpl implements PlaceService {
                 throw new Error("The place longitude cannot be undefined");
             }
             place.id = generateUUID();
+            console.log(place.latitude)
             var p: Place = new Place(place.id, place.name, user.podId, place.visibility, place.latitude, place.longitude);
             resolve(this.placeRepository.add(p, user.podId));
         });

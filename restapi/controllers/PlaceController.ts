@@ -18,7 +18,8 @@ export class PlaceController {
 
         return new Promise((resolve, reject) => {
             this.placeService.getAllPlaces(user).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                console.log(user);
+                resolve(res.send(b));
             });
         });
     }
@@ -82,12 +83,19 @@ export class PlaceController {
         var filter: string = <string>req.body.visibility;
         var latitude: number = <number>req.body.latitude;
         var longitude: number = <number>req.body.longitude;
+        console.log(owner)
+        console.log(name)
+        console.log(filter)
+        console.log(latitude)
+        console.log(longitude)
 
         var index = filter as keyof typeof PlaceVisibility;
-
-        var visibility: PlaceVisibility = PlaceVisibility[index];
+    
+        var visibility: PlaceVisibility = PlaceVisibility["USER"];//FIXME
+        
 
         var user: UserDto = new UserDto();
+        
         user.podId = owner;
 
         var place: PlaceDto = new PlaceDto();
@@ -96,9 +104,11 @@ export class PlaceController {
         place.longitude = longitude;
         place.visibility = visibility;
 
+
         return new Promise((resolve, reject) => {
             this.placeService.add(place, user).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                //res.send(b)
+                resolve(res.sendStatus(200));
             });
         });
     }

@@ -11,6 +11,7 @@ const api: Router = express.Router();
 //List all places
 api.get("/place/list/:user", PlaceController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
+    console.log("API REST:LIST")
     return PlaceController.list(req, res);
   }
 );
@@ -32,6 +33,7 @@ api.get("/place/details:place", PlaceController.detailsChecks(),
 //Add a place
 api.post("/place/add", PlaceController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
+    console.log("API REST:ADD")
     return PlaceController.add(req, res);
   }
 );

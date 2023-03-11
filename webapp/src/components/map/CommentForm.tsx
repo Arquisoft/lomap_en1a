@@ -4,21 +4,30 @@ import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
-import {addUser} from '../api/api';
+import { addComment } from '../../api/api';
+import Grid from '@mui/material/Grid';
+import { Place } from '../../domain/Place';
+import { User } from '../../domain/User';
+import { Comment } from '../../domain/Comment';
 
-type EmailFormProps = {
-  OnUserListChange: () => void;
+
+type CommentFormProps = {
+  OnCommentListChange: () => void;
+  place:string;
+  user:string;
 }
 
-type NotificationType = {
+export type NotificationType = {
   severity: AlertColor,
   message: string;
 }
 
-function EmailForm(props: EmailFormProps): JSX.Element {
+
+
+export default function CommentForm(props: CommentFormProps): JSX.Element {
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [text, setText] = useState('');
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
@@ -27,21 +36,23 @@ function EmailForm(props: EmailFormProps): JSX.Element {
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let result:boolean = await addUser({name,email});
+
+    
+    let result:boolean = await addComment(new Comment("",text,props.place,props.user)); //The comment still has no ID
     if (result){
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
-        message:'You have been registered in the system!'
+        message:'You comment has been posted!'
       });
       //Notify the change to the parent component
-      props.OnUserListChange();
+      props.OnCommentListChange();
     }
     else{
       setNotificationStatus(true);
       setNotification({ 
         severity:'error',
-        message:'There\'s been an error in the register proccess.'
+        message:'There\'s been an error posting your comment.'
       });
     }
   }
@@ -49,25 +60,25 @@ function EmailForm(props: EmailFormProps): JSX.Element {
   return (
     <>
       <form name="register" onSubmit={handleSubmit}>
-        <TextField
+        <Grid container spacing={2} justifyContent="space-around">
+          
+          <TextField
             required
-            name="username"
-            label="Name" 
-            variant="outlined"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            sx={{ my: 2 }}
+            name="text"
+            label="Write your review" 
+            variant="filled"
+            value={text}
+            onChange={e => {
+              setText(e.target.value);
+              setName(props.user);//This may not be necessary
+              
+            }}
+            
           />
-        <TextField
-          required
-          name="email"
-          label="Email" 
-          variant="outlined"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          sx={{ my: 2 }}
-        />
-        <Button variant="contained" type="submit" sx={{ my: 2 }}>Accept</Button>
+          <Button variant="contained" type="submit">Post</Button>
+        </Grid>
+
+
       </form>
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={()=>{setNotificationStatus(false)}}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
@@ -78,4 +89,4 @@ function EmailForm(props: EmailFormProps): JSX.Element {
   );
 }
 
-export default EmailForm;
+
