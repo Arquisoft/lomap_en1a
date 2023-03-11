@@ -12,19 +12,16 @@ import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
 import { useSession } from "@inrupt/solid-ui-react";
 
-
 type SideBarProps = {
   setInfoWindowData:React.Dispatch<React.SetStateAction<{
-    isOpen: boolean; //If the info window is open or not
     id:string; //The ID of the place to show
     title: string; //The name of the place to show
     latitude: number;
     longitude:number;
-
   }>>
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>
-
-
+  visibility:string
+  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
@@ -39,9 +36,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    setPlaces(await getPlacesByUser(webId));//EL podID DEL USUARIO
+   getPlacesByUser(webId).then((places)=>setPlaces(places));
   }
-
 
 
   //Style must be in-line; does not work otherwise
@@ -62,23 +58,24 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           </MenuItem>
           <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}> 
 
-                {places.map((place, index) => (
+                {places.map((place, index,array) => (
+                  
 
                   <MenuItem icon={<ArrowRightIcon />}
                   key={index}
                   onClick={() => {
                     props.setInfoWindowData({
-                      isOpen:true,
-                      title:place.getName(),
-                      id:place.getId(),
-                      latitude:place.getLatitude(),
-                      longitude:place.getLongitude()
+                      title:place.name,
+                      id:place.id,
+                      latitude:place.latitude,
+                      longitude:place.longitude
                       
                     });
                     props.setIsNew(false);
+                    props.setIsOpen(true);
                   }}
 
-                  >{place.getName()}</MenuItem>
+                  >{place.name}</MenuItem>
                    ))}
 
           </SubMenu>
@@ -93,7 +90,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
           <MenuItem  onClick={() => {
                     props.setInfoWindowData({
-                      isOpen:true,
                       title:"TITLE",
                       id:"",
                       latitude:0,
@@ -101,7 +97,9 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                       
                     });
                     props.setIsNew(false);
+                    props.setIsOpen(true);
                   }}>PARA PRUEBAS</MenuItem>
+          <MenuItem>{props.visibility}</MenuItem>
         </Menu>
       </Sidebar>
       

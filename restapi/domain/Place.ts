@@ -20,6 +20,7 @@ export class Place extends BaseEntity {
         this.longitude = longitude;
     }
 
+
     public setName(name: string) {
         this.name = name;
     }
@@ -50,5 +51,8 @@ export class Place extends BaseEntity {
 
     public getLongitude(): number {
         return this.longitude;
+    }
+    public toString(): string {
+        return this.getId() + ": " + this.getLatitude() + "-" + this.getLongitude();
     }
 }

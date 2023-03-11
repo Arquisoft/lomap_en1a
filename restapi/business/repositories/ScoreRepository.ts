@@ -5,7 +5,7 @@ import { User } from "../../domain/User";
 export interface ScoreRepository {
 
     add(score: Score, podId: string): boolean;
-    findById(id: string): Score;
-    findByUser(user: string): Score[];
-    findByPlace(user: Place): Score[];
+    findById(id: string): Promise<Score>;
+    findByUser(user: string): Promise<Score[]>;
+    findByPlace(user: Place): Promise<Score[]>;
 }

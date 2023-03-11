@@ -11,14 +11,17 @@ export class PlaceController {
     private static placeService: PlaceService = new Factory().services.getPlaceService();
 
     public static async list(req: Request, res: Response): Promise<Response> {
-        var owner: string = <string>req.body.user;
+        var owner: string = <string>req.params.user;
 
         var user: UserDto = new UserDto();
         user.podId = owner;
 
-        res.send(this.placeService.getAllPlaces(user));
-
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.placeService.getAllPlaces(user).then(b => {
+                console.log(user);
+                resolve(res.send(b));
+            });
+        });
     }
 
     public static listChecks(): ValidationChain[] {
@@ -30,8 +33,8 @@ export class PlaceController {
     }
 
     public static async listByVisibility(req: Request, res: Response): Promise<Response> {
-        var owner: string = <string>req.body.user;
-        var filter: string = <string>req.body.visibility;
+        var owner: string = <string>req.params.user;
+        var filter: string = <string>req.params.visibility;
 
         var user: UserDto = new UserDto();
         user.podId = owner;
@@ -40,9 +43,11 @@ export class PlaceController {
 
         var visibility: PlaceVisibility = PlaceVisibility[index];
 
-        res.send(this.placeService.getPlacesByVisibility(user, visibility));
-
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.placeService.getPlacesByVisibility(user, visibility).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static listByVisibilityChecks(): ValidationChain[] {
@@ -55,12 +60,13 @@ export class PlaceController {
     }
 
     public static async details(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.place;
+        var id: string = <string>req.params.place;
 
-        var place: PlaceDto = new PlaceDto();
-        place.id = id;
-
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.placeService.findById(id).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static detailsChecks(): ValidationChain[] {
@@ -77,10 +83,16 @@ export class PlaceController {
         var filter: string = <string>req.body.visibility;
         var latitude: number = <number>req.body.latitude;
         var longitude: number = <number>req.body.longitude;
+        console.log(owner)
+        console.log(name)
+        console.log(filter)
+        console.log(latitude)
+        console.log(longitude)
 
         var index = filter as keyof typeof PlaceVisibility;
-
-        var visibility: PlaceVisibility = PlaceVisibility[index];
+    
+        var visibility: PlaceVisibility = PlaceVisibility["USER"];//FIXME
+        
 
         var user: UserDto = new UserDto();
         
@@ -92,9 +104,13 @@ export class PlaceController {
         place.longitude = longitude;
         place.visibility = visibility;
 
-        this.placeService.add(place, user);
 
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.placeService.add(place, user).then(b => {
+                //res.send(b)
+                resolve(res.sendStatus(200));
+            });
+        });
     }
 
     public static addChecks(): ValidationChain[] {

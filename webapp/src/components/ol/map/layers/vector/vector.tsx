@@ -5,13 +5,11 @@ import VectorSource from "ol/source/Vector";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import Style from "ol/style/Style";
-import Circle from "ol/style/Circle";
-import Fill from "ol/style/Fill";
-import Stroke from "ol/style/Stroke";
 import { MapContext } from "../../map";
 import { IMapContext } from "../../map-types";
 import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
 import { Geometry } from 'ol/geom';
+import Icon from "ol/style/Icon";
 
 class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
 
@@ -57,13 +55,7 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
   onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
     this.props.setIsNew(true);
-    this.props.setInfoWindowData({ 
-      isOpen:true, //Right now only this one is important
-      title:"",
-      id:"",
-      latitude:0,
-      longitude:0
-    })
+    this.props.setIsOpen(true);
 
     this.props.setLatitude(event.coordinate[1]);
     this.props.setLongitude(event.coordinate[0]);
@@ -71,13 +63,18 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
       geometry: new Point(event.coordinate),
     });
     const style = new Style({
-      image: new Circle({
+      image: new Icon({
+        src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+        anchor:[0.5,0]
+      })
+      /*
+        image: new Circle({
         radius: 6,
         fill: new Fill({color: 'red'}),
         stroke: new Stroke({
           color: [0,0,0], width: 2
         })
-      })
+      */
     });
     featureToAdd.setStyle(style);    
     this.source.addFeatures([featureToAdd]);

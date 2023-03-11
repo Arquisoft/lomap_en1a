@@ -24,11 +24,10 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
 
   const { session } = useSession();
   var webId = session.info.webId as string;
-  var user = new User("","PLACEHOLDER",webId); //TEMPORAL
 
 
   const [name, setName] = useState('');
-  const [text, setText] = useState('');
+  //const [text, setText] = useState('');
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
@@ -38,7 +37,7 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var place = new Place("",name,user,PlaceVisibility.USER,latitude,longitude);
+    var place = new Place("",name,webId,PlaceVisibility.USER,latitude,longitude);
     let result:boolean = await addPlace(place);
     if (result){
       setNotificationStatus(true);
@@ -73,9 +72,9 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
               name="text"
               label="Write the name of your new place" 
               variant="filled"
-              value={text}
+              value={name}
               onChange={e => {
-                setText(e.target.value);
+                setName(e.target.value);
                 
               }}
               

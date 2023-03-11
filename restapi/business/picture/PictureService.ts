@@ -5,8 +5,8 @@ import { Picture } from "../../domain/Picture";
 
 export interface PictureService {
 
-    add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean;
-    findById(id: string): Picture;
-    findByUser(user: UserDto): Picture[];
-    findByPlace(place: PlaceDto): Picture[];
+    add(picture: PictureDto, user: UserDto, place: PlaceDto): Promise<boolean>;
+    findById(id: string): Promise<Picture>;
+    findByUser(user: UserDto): Promise<Picture[]>;
+    findByPlace(place: PlaceDto): Promise<Picture[]>;
 }

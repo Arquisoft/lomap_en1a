@@ -6,21 +6,19 @@ import { PlaceVisibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 
-    private pictures: Picture[] = [new Picture("1", "url", new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
-    findById(id: string): Picture {
-        return this.pictures[0];
+    async findById(id: string): Promise<Picture> {
+        throw new Error();
     }
-    findByUser(user: string): Picture[] {
-        return this.pictures;
-    }
-
-    findByPlace(user: Place): Picture[] {
-        return this.pictures;
+    async findByUser(user: string): Promise<Picture[]> {
+        throw new Error();
     }
 
-    add(picture: Picture): boolean {
-        this.pictures.push(picture);
-        return true;
+    async findByPlace(user: Place): Promise<Picture[]> {
+        throw new Error();
+    }
+
+    add(picture: Picture, podId: string): boolean {
+        throw new Error();
     }
 }

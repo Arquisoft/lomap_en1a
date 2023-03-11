@@ -14,7 +14,7 @@ export async function addComment(comment:Comment):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/comment/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'text':comment.getText(),'place':comment.getPlace().getId(),'user':comment.getOwner().getPodId()})
+        body: JSON.stringify({'text':comment.getText(),'place':comment.getPlace(),'user':comment.getOwner()})
       });
     if (response.status===200)
       return true;
@@ -38,7 +38,7 @@ export async function addScore(score:Score):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/score/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace().getId(),'user':score.getOwner().getPodId()})
+       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace(),'user':score.getOwner()})
       });
     if (response.status===200)
       return true;
@@ -62,7 +62,7 @@ export async function addPlace(place:Place):Promise<boolean>{
   let response = await fetch(apiEndPoint+'/place/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({'name':place.getName(),'user':place.getOwner().getPodId(),
+      body: JSON.stringify({'name':place.getName(),'user':place.getOwner().replaceAll("/","-").replaceAll("#","-"),
       'visibility':place.getVisibility(),'latitude':place.getLatitude(),'longitude':place.getLongitude()})
     });
   if (response.status===200)
@@ -84,7 +84,8 @@ export async function getPlaces(id:string):Promise<Place[]>{
 //List places by user
 export async function getPlacesByUser(id:string):Promise<Place[]>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint+'/place/list/'+id);
+
+  let response = await fetch(apiEndPoint+'/place/list/'+id.replaceAll("/","-").replaceAll("#","-"));
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -106,8 +107,8 @@ export async function addPicture(picture:Picture):Promise<boolean>{
   let response = await fetch(apiEndPoint+'/picture/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({'url':picture.getUrl(),'place':picture.getPlace().getId(),
-      'owner':picture.getOwner().getPodId()})
+      body: JSON.stringify({'url':picture.getUrl(),'place':picture.getPlace(),
+      'owner':picture.getOwner()})
     });
   if (response.status===200)
     return true;

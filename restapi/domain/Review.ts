@@ -4,20 +4,20 @@ import { User } from "./User";
 
 export abstract class Review extends BaseEntity {
 
-    private place: Place;
+    private place: string;
     private owner: string;
 
-    public constructor(id: string, place: Place, owner: string) {
+    public constructor(id: string, place: string, owner: string) {
         super(id);
         this.place = place;
         this.owner = owner;
     }
 
-    public setPlace(place: Place) {
+    public setPlace(place: string) {
         this.place = place;
     }
 
-    public getPlace(): Place {
+    public getPlace(): string {
         return this.place;
     }
 
