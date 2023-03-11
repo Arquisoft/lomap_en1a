@@ -34,7 +34,7 @@ export class ScoreServiceImpl implements ScoreService {
 
         var p: Place = await this.placeRepository.findById(place.id);
 
-        var s = new Score(score.id, score.score, p, user.podId);
+        var s = new Score(score.id, score.score, p.getId(), user.podId);
 
         return this.scoreRepository.add(s, user.podId);
     }

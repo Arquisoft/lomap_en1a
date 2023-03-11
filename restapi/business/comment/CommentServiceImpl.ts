@@ -31,8 +31,9 @@ export class CommentServiceImpl implements CommentService {
                     if (comment.text == undefined) {
                         throw new Error("The comment text cannot be undefined");
                     }
+                    console.log(place.getId());
                     comment.id = generateUUID();
-                    var c: Comment = new Comment(comment.id, comment.text, place, user.podId);
+                    var c: Comment = new Comment(comment.id, comment.text, place.getId(), user.podId);
                     resolve(this.commentRepository.add(c, user.podId));
                 }
             );
@@ -58,9 +59,10 @@ export class CommentServiceImpl implements CommentService {
             }
             this.placeRepository.findById(place.id).then(
                 (place) => {
-                    resolve(this.commentRepository.findByPlace(place));
+                    resolve(this.commentRepository.findByPlace(place.getId()));
                 }
             );
         });
     }
+
 }
