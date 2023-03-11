@@ -12,23 +12,21 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     async findById(id: String): Promise<Place> {
         return new Promise((resolve, reject) => {
             this.mysql.con.query(
-                "SELECT * FROM PLACES WHERE PLACE_ID= " + id + ";",
-                (result: any) => {
-                    var a = <string>result["VISIBILITY"];
-                    var enumA = (<any>PlaceVisibility)[a];
+                "SELECT * FROM PLACES WHERE PLACE_ID= '" + id + "';",
+                (err: any, result: any, fields: any) => {
 
+                    console.log(result);
 
-                    resolve(new Place(result["PLACE_ID"],
-                        result["NAME"],
-                        result["OWNER_ID"],
-                        enumA,
-                        result["LATITUDE"],
-                        result["LONGITUDE"]));
+                    resolve(new Place(result.PLACE_ID,
+                        result.NAME,
+                        result.OWNER_ID,
+                        (<any>PlaceVisibility)[result.VISIBILITY],
+                        result.LATITUDE,
+                        result.LONGITUDE));
                 }
             );
         });
 
-        throw Error("not implemented");
     }
 
     add(place: Place): boolean {

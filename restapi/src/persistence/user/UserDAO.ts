@@ -1,10 +1,11 @@
 
-import { User } from "../../domain/User";
+import { User } from "../../../domain/User";
+import { MySql } from "../db/MySql";
 
 
 export class UserDAO {
 
-    mysql = new MySql();
+    mysql = MySql.getInstance();
 
     getTbyId = async (id: String) => {
         var res;
