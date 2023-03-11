@@ -1,11 +1,8 @@
 {
   "dependencies": {
-    "react-icons": "^4.7.1",
-    "react-pro-sidebar": "^1.0.0",
-    "react-router-dom": "^6.8.1",
-    "styled-components": "^5.3.6"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.26"
+    "@types/node": "^18.14.2"
   }
 }
