@@ -11,7 +11,6 @@ import { useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
 import { useSession } from "@inrupt/solid-ui-react";
-import { IVisibility } from "./FilterList";
 
 type SideBarProps = {
   setInfoWindowData:React.Dispatch<React.SetStateAction<{

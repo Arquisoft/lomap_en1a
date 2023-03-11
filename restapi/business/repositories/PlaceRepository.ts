@@ -1,11 +1,11 @@
 import { Place } from "../../domain/Place";
 import { PlaceVisibility } from "../../domain/Visibility";
-import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { UserDto } from "../../domain/dtos/UserDto";
+import { User } from "../../domain/User";
 
 export interface PlaceRepository {
 
-    add(user: UserDto, place: PlaceDto): boolean;
-    findById(): Place;
-    getPlacesByVisibility(user: UserDto, visibilty: PlaceVisibility): Place[];
+    add(place: Place, podId: string): boolean;
+    findById(id: string): Promise<Place>;
+    getPlacesByVisibility(user: string, visibilty: PlaceVisibility): Promise<Place[]>;
+    getAllPlaces(user: string): Promise<Place[]>;
 }

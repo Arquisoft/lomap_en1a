@@ -24,8 +24,11 @@ export class CommentController {
         var place = new PlaceDto();
         place.id = placeId;
 
-        this.commentService.add(comment, user, place);
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.commentService.add(comment, user, place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static addChecks(): ValidationChain[] {
@@ -39,13 +42,16 @@ export class CommentController {
     }
 
     public static async list(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.place;
+        var id: string = <string>req.params.place;
 
         var place: PlaceDto = new PlaceDto();
         place.id = id;
 
-        res.send(this.commentService.findByPlace(place));
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.commentService.findByPlace(place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static listChecks(): ValidationChain[] {
@@ -57,11 +63,13 @@ export class CommentController {
     }
 
     public static async details(req: Request, res: Response): Promise<Response> {
-        var id: string = <string>req.body.comment;
+        var id: string = <string>req.params.comment;
 
-        res.send(this.commentService.findById(id));
-
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.commentService.findById(id).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static detailsChecks(): ValidationChain[] {
