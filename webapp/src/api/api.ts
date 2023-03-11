@@ -114,3 +114,9 @@ export async function addPicture(picture:Picture):Promise<boolean>{
   else
     return false;
 }
+
+export async function getPictures(id:string):Promise<Picture[]>{
+  const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint+'/picture/list/'+id);
+  return response.json();
+}

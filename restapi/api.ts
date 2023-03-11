@@ -8,9 +8,9 @@ import { ScoreController } from './controllers/ScoreController';
 const api: Router = express.Router();
 
 // const for locally storing images (Prototype only)
-const multer  = require('multer'); 
+/*const multer  = require('multer'); 
 const app = express();
-const exp = require("express");
+const exp = require("express");*/
 
 //Place
 
@@ -68,7 +68,7 @@ api.post("/score/add", ScoreController.addChecks(),
 //Comment
 
 //List all comments
-/*api.get("/comment/list", CommentController.listChecks(),
+api.get("/comment/list", CommentController.listChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.list(req, res);
   }
@@ -86,7 +86,7 @@ api.post("/comment/add", CommentController.addChecks(),
   async (req: Request, res: Response): Promise<Response> => {
     return CommentController.add(req, res);
   }
-);*/
+);
 
 //Picture
 
@@ -105,24 +105,10 @@ api.get("/picture/details", PictureController.detailsChecks(),
 );
 
 //Add a picture
-// setup multer for file upload
-api.use(express.json());
-api.use(express.static(__dirname + "/../webapp/images"));
-
-var storage = multer.diskStorage(
-  {
-      destination: './images',
-      filename: function (req:any, file:any, cb:any ) {
-          cb( null, file.originalname);
-      }
-  }
-);
-const upload = multer({ storage: storage } )
-
-api.post("/picture/add", upload.single('myFile'), //PictureController.addChecks(),
+api.post("/picture/add", PictureController.addChecks(), // upload.single('myFile'), 
   async (req: Request, res: Response): Promise<Response> => {
-    //return PictureController.add(req, res);
-    return res.status(200);
+    return PictureController.add(req, res);
+    //return res.status(200);
   }
 );
 
@@ -137,9 +123,21 @@ api.get("/",
 
 
 
+// setup multer for file upload
+/*api.use(express.json());
+api.use(express.static(__dirname + "/../webapp/images"));
 
+var storage = multer.diskStorage(
+  {
+      destination: './images',
+      filename: function (req:any, file:any, cb:any ) {
+          cb( null, file.originalname);
+      }
+  }
+);
+const upload = multer({ storage: storage } )
 
-/*// route for file upload
+// route for file upload
 api.post("/api/uploadfile", upload.single('myFile'), async (req: Request, res: Response) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

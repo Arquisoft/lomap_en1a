@@ -1,11 +1,13 @@
+import React from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from "@mui/material/Button/Button";
 import image from "../../images/placeHolder.png";
+import btnImage from "../../images/Add_image.png";
 import { Rating } from 'react-simple-star-rating';
 import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
-import { getComments, getScores } from '../../api/api';
+import { addPicture, getComments, getScores, getPictures } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
@@ -22,7 +24,6 @@ import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
 import axios from 'axios';
 
-
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
 
   const { session } = useSession();
@@ -36,7 +37,6 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   
   //For the pictures
   const [pictures,setPictures] = useState<Picture[]>([]);
-  const [fileList, setFileList] = useState<FileList | null>(null);
 
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
@@ -53,10 +53,12 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
     setComments(await getComments(infoWindowData?.id)); 
   }
 
+
+  var picURL = "";
   
   
   // Image upload -------------------------------------------------------
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  /*const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFileList(e.target.files);
   };
 
@@ -74,25 +76,52 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
 
     // Uploading the file using the fetch API to the server
-    /*fetch('http://localhost:5000/api/uploadfile', {
+    fetch('http://localhost:5000/api/uploadfile', {
       method: 'POST',
       body: data,
       mode:'cors',
     })
       .then((res) => res.json())
       .then((data) => console.log(data))
-      .catch((err) => console.error(err));*/
+      .catch((err) => console.error(err));
 
-    axios.post("http://localhost:3000/picture/add", data, {
+    axios.post("http://localhost:3000/api/picture/add", data, {
       headers: {
         "content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
       }
     });     
-  };
+  };*/
 
   // ------------------------------------------------------------
+
+
+  const handleAddPicture = async (value:string) => { // value should be file in final implementation
+    var pic = new Picture("",value,place,user);
+    //let result:boolean = await addPicture(pic); //The picture still has no ID
+    picURL = value;
+    /*if (result) {
+      setNotificationStatus(true);
+      setNotification({ 
+        severity:'success',
+        message:'Your picture has been posted!'
+      });
+    }
+    else{
+      setNotificationStatus(true);
+      setNotification({ 
+        severity:'error',
+        message:'There\'s been an error posting your picture.'
+      });
+    }*/
+  }
+
+  //Gets the list of pictures for a specific place
+  const refreshPictures = async (value:string) => {
+    handleAddPicture(value); //Adds the new picture
+    setPictures(await getPictures(infoWindowData?.id));
+  }
 
   const handleAddScore = async (value:number) => {
     //e.preventDefault();
@@ -103,7 +132,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
-        message:'You score has been posted!'
+        message:'Your score has been posted!'
       });
       //Notify the change to the parent component
       //props.OnCommentListChange();
@@ -152,21 +181,23 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
             <Grid item xs={12}>
                 <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
-            </Grid>
+                <Button id="btn-Add-Image" onClick={() => refreshPictures("../../images-places/eii.png")}><img id="img-Add-Image" src={btnImage} alt="Add_image"/></Button>
+                <img src={picURL}></img>
+            </Grid>            
+              
+            {/*<div>
+              <input type="file" onChange={handleFileChange} multiple />
 
-            <div>
-      <input type="file" onChange={handleFileChange} multiple />
+              <ul>
+                {files.map((file, i) => (
+                  <li key={i}>
+                    {file.name} - {file.type}
+                  </li>
+                ))}
+              </ul>
 
-      <ul>
-        {files.map((file, i) => (
-          <li key={i}>
-            {file.name} - {file.type}
-          </li>
-        ))}
-      </ul>
-
-      <button onClick={handleUploadClick}>Upload</button>
-    </div>
+              <button onClick={handleUploadClick}>Upload</button>
+                </div>*/}
 
            <Grid item xs={6}>
               <Rating
