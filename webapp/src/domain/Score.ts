@@ -6,7 +6,7 @@ export class Score extends Review {
 
     private score: number;
 
-    public constructor(id: string, score: number, place: Place, owner: User) {
+    public constructor(id: string, score: number, place: string, owner: string) {
         super(id, place, owner);
         this.score = score;
     }

@@ -13,8 +13,8 @@ import { Comment } from '../../domain/Comment';
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
-  place:Place;
-  user:User;
+  place:string;
+  user:string;
 }
 
 export type NotificationType = {
@@ -70,7 +70,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
             value={text}
             onChange={e => {
               setText(e.target.value);
-              setName(props.user.getUsername());//This may not be necessary
+              setName(props.user);//This may not be necessary
               
             }}
             

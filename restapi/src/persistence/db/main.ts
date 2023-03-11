@@ -17,7 +17,7 @@ var d: CommentServiceImpl = new CommentServiceImpl();
 var e: ScoreServiceImpl = new ScoreServiceImpl();
 
 var u = new UserDto();
-u.podId = "USUARIO1";
+u.podId = "https:--var27.inrupt.net-profile-card#me";
 
 var p = new PlaceDto();
 p.id = "1";
@@ -39,7 +39,8 @@ com.owner = "USUARIO1";
 //d.findById("e4686e1b-8c24-44ed-ad98-ffca867a11f6");
 //d.findByUser(u).then((res) => console.log(res));
 //d.findByPlace(p).then((res) => console.log(res));
-e.findById('2').then((res) => console.log(res));
+//e.findById('2').then((res) => console.log(res));
+c.getAllPlaces(u).then((res)=>console.log)
 
 
 

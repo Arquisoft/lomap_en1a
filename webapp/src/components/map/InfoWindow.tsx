@@ -26,8 +26,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   const { session } = useSession();
   var webId = session.info.webId as string;
   
-  var user = new User("","PLACEHOLDER",webId); 
-  var place = new Place(infoWindowData?.id,infoWindowData?.title,user,PlaceVisibility.FULL,infoWindowData?.latitude,infoWindowData?.longitude);
+
   
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
@@ -50,7 +49,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   const handleAddScore = async (value:number) => {
     //e.preventDefault();
 
-    var score = new Score("",value,place,user);
+    var score = new Score("",value,infoWindowData?.id,webId);
     let result:boolean = await addScore(score); //The score still has no ID
     if (result){
       setNotificationStatus(true);
@@ -125,7 +124,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={place} user={user}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={infoWindowData?.id} user={webId}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>

@@ -1,6 +1,6 @@
 export abstract class BaseEntity {
 
-    private id: string;
+    public id: string;
 
     public constructor(id: string) {
         this.id = id;

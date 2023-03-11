@@ -30,7 +30,6 @@ export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
     newVisibility: string
   ) => {
     setVisibility({value: newVisibility});
-    console.log(newVisibility);
   };
 
   return (

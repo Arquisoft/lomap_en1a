@@ -36,7 +36,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    getPlacesByUser(webId).then((places)=>setPlaces(places));
+   getPlacesByUser(webId).then((places)=>setPlaces(places));
   }
 
 
@@ -58,23 +58,24 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           </MenuItem>
           <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}> 
 
-                {places.map((place, index) => (
+                {places.map((place, index,array) => (
+                  
 
                   <MenuItem icon={<ArrowRightIcon />}
                   key={index}
                   onClick={() => {
                     props.setInfoWindowData({
-                      title:place.getName(),
-                      id:place.getId(),
-                      latitude:place.getLatitude(),
-                      longitude:place.getLongitude()
+                      title:place.name,
+                      id:place.id,
+                      latitude:place.latitude,
+                      longitude:place.longitude
                       
                     });
                     props.setIsNew(false);
                     props.setIsOpen(true);
                   }}
 
-                  >{place.getName()}</MenuItem>
+                  >{place.name}</MenuItem>
                    ))}
 
           </SubMenu>
