@@ -24,9 +24,12 @@ export class PictureController {
         var place = new PlaceDto();
         place.id = placeId;
 
-        this.pictureService.add(picture, user, place);
+        return new Promise((resolve, reject) => {
+            this.pictureService.add(picture, user, place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
 
-        return res.status(200);
+        });
     }
 
     public static addChecks(): ValidationChain[] {
@@ -45,8 +48,12 @@ export class PictureController {
         var place: PlaceDto = new PlaceDto();
         place.id = id;
 
-        res.send(this.pictureService.findByPlace(place));
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.pictureService.findByPlace(place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+
+        });
     }
 
     public static listChecks(): ValidationChain[] {
@@ -60,9 +67,12 @@ export class PictureController {
     public static async details(req: Request, res: Response): Promise<Response> {
         var id: string = <string>req.params.picture;
 
-        res.send(this.pictureService.findById(id));
+        return new Promise((resolve, reject) => {
+            this.pictureService.findById(id).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
 
-        return res.status(200);
+        });
     }
 
     public static detailsChecks(): ValidationChain[] {

@@ -63,4 +63,8 @@ export class PlaceServiceImpl implements PlaceService {
             resolve(this.placeRepository.add(p, user.podId));
         });
     }
+
+    findById(id: string): Promise<Place> {
+        throw this.placeRepository.findById(id);
+    }
 }

@@ -5,6 +5,8 @@ import { check, ValidationChain } from 'express-validator';
 import { Factory } from "../Factory";
 import { ScoreService } from "../business/score/ScoreService";
 import { PlaceDto } from "../domain/dtos/PlaceDto";
+import { resolve } from "path";
+import { rejects } from "assert";
 
 export class ScoreController {
 
@@ -24,9 +26,12 @@ export class ScoreController {
         var place = new PlaceDto();
         place.id = placeId;
 
-        res.send(this.scoreService.add(score, user, place));
+        return new Promise((resolve, reject) => {
+            this.scoreService.add(score, user, place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
 
-        return res.status(200);
+        });
     }
 
     public static addChecks(): ValidationChain[] {
@@ -45,8 +50,12 @@ export class ScoreController {
         var place: PlaceDto = new PlaceDto();
         place.id = id;
 
-        res.send(this.scoreService.findByPlace(place));
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.scoreService.findByPlace(place).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+
+        });
     }
 
     public static listChecks(): ValidationChain[] {
@@ -60,9 +69,11 @@ export class ScoreController {
     public static async details(req: Request, res: Response): Promise<Response> {
         var id: string = <string>req.params.comment;
 
-        res.send(this.scoreService.findById(id));
-
-        return res.status(200);
+        return new Promise((resolve, reject) => {
+            this.scoreService.findById(id).then(b => {
+                resolve(res.send(b).sendStatus(200));
+            });
+        });
     }
 
     public static detailsChecks(): ValidationChain[] {
