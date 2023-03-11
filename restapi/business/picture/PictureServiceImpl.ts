@@ -35,7 +35,7 @@ export class PictureServiceImpl implements PictureService {
                     }
 
                     picture.id = generateUUID();
-                    var pic: Picture = new Picture(picture.id, picture.url, place, user.podId);
+                    var pic: Picture = new Picture(picture.id, picture.url, place.getId(), user.podId);
 
                     resolve(this.pictureRepository.add(pic, user.podId));
                 }
