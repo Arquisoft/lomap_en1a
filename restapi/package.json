@@ -4,6 +4,7 @@
   "scripts": {
     "start": "ts-node-dev ./server.ts",
     "sergio": "ts-node-dev ./src/persistence/db/main.ts",
+    "ruben": "ts-node-dev ./src/persistence/Main.ts",
     "test": "cd tests && jest --runInBand"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
     "express": "^4.18.2",
     "express-prom-bundle": "^6.6.0",
     "express-validator": "^6.15.0",
+    "mysql": "^2.18.1",
     "node-fetch": "^2.6.7",
     "prom-client": "^14.1.1",
     "uuid": "^9.0.0"

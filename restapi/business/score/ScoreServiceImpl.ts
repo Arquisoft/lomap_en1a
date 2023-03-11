@@ -17,7 +17,7 @@ export class ScoreServiceImpl implements ScoreService {
     private userRepository: UserRepository = new Factory().repositories.getUserRepository();
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
-    add(score: ScoreDto, user: UserDto, place: PlaceDto): boolean {
+    async add(score: ScoreDto, user: UserDto, place: PlaceDto): Promise<boolean> {
         score.id = generateUUID();
 
         if (user.podId == undefined) {
@@ -32,18 +32,18 @@ export class ScoreServiceImpl implements ScoreService {
             throw new Error("The score cannot be undefined");
         }
 
-        var p: Place = this.placeRepository.findById(place.id);
+        var p: Place = await this.placeRepository.findById(place.id);
 
         var s = new Score(score.id, score.score, p, user.podId);
 
         return this.scoreRepository.add(s, user.podId);
     }
 
-    findById(id: string): Score {
+    async findById(id: string): Promise<Score> {
         return this.scoreRepository.findById(id);
     }
 
-    findByUser(user: UserDto): Score[] {
+    async findByUser(user: UserDto): Promise<Score[]> {
         if (user.podId == undefined) {
             throw new Error("The user podId cannot be undefined");
         }
@@ -51,12 +51,12 @@ export class ScoreServiceImpl implements ScoreService {
         return this.scoreRepository.findByUser(user.podId);
     }
 
-    findByPlace(place: PlaceDto): Score[] {
+    async findByPlace(place: PlaceDto): Promise<Score[]> {
         if (place.id == undefined) {
             throw new Error("The place id cannot be undefined");
         }
 
-        var p: Place = this.placeRepository.findById(place.id);
+        var p: Place = await this.placeRepository.findById(place.id);
 
         return this.scoreRepository.findByPlace(p);
     }
