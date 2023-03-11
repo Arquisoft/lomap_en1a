@@ -1,12 +1,11 @@
-import { PictureDto } from "../../domain/dtos/PictureDto";
-import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { UserDto } from "../../domain/dtos/UserDto";
+import { Place } from "../../domain/Place";
+import { User } from "../../domain/User";
 import { Picture } from "../../domain/Picture";
 
 export interface PictureRepository {
 
-    add(user: UserDto, picture: PictureDto, place: PlaceDto): boolean;
+    add(picture: Picture, podId: string): boolean;
     findById(id: string): Picture;
-    findByUser(user: UserDto): Picture[];
-    findByPlace(user: PlaceDto): Picture[];
+    findByUser(user: string): Picture[];
+    findByPlace(user: Place): Picture[];
 }

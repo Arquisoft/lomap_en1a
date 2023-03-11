@@ -55,6 +55,18 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
   */
 
   onMapClick = (event: MapBrowserEvent<UIEvent>) => {
+
+    this.props.setIsNew(true);
+    this.props.setInfoWindowData({ 
+      isOpen:true, //Right now only this one is important
+      title:"",
+      id:"",
+      latitude:0,
+      longitude:0
+    })
+
+    this.props.setLatitude(event.coordinate[1]);
+    this.props.setLongitude(event.coordinate[0]);
     const featureToAdd = new Feature({
       geometry: new Point(event.coordinate),
     });
@@ -68,7 +80,6 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
       })
     });
     featureToAdd.setStyle(style);    
-    this.source.clear();
     this.source.addFeatures([featureToAdd]);
   };
 

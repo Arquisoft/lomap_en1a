@@ -8,12 +8,14 @@ import { CommentRepository } from "./business/repositories/CommentRepository";
 import { PictureRepository } from "./business/repositories/PictureRepository";
 import { PlaceRepository } from "./business/repositories/PlaceRepository";
 import { ScoreRepository } from "./business/repositories/ScoreRepository";
+import { UserRepository } from "./business/repositories/UserRepository";
 import { ScoreService } from "./business/score/ScoreService";
 import { ScoreServiceImpl } from "./business/score/ScoreServiceImpl";
 import { CommentRepositoryImpl } from "./repositories/CommentRepositoryImpl";
 import { PictureRepositoryImpl } from "./repositories/PictureRepositoryImpl";
 import { PlaceRepositoryImpl } from "./repositories/PlaceRepositoryImpl";
 import { ScoreRepositoryImpl } from "./repositories/ScoreRepositoryImpl";
+import { UserRepositoryImpl } from "./repositories/UserRepositoryImpl";
 
 export class Factory {
 
@@ -56,5 +58,9 @@ class RepositoriesFactory {
 
     public getScoreRepository(): ScoreRepository {
         return new ScoreRepositoryImpl();
+    }
+
+    public getUserRepository(): UserRepository {
+        return new UserRepositoryImpl();
     }
 }

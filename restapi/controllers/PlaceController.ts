@@ -83,6 +83,7 @@ export class PlaceController {
         var visibility: PlaceVisibility = PlaceVisibility[index];
 
         var user: UserDto = new UserDto();
+        
         user.podId = owner;
 
         var place: PlaceDto = new PlaceDto();

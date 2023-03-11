@@ -90,6 +90,19 @@ api.post("/comment/add", CommentController.addChecks(),
 
 //Picture
 
+//List all pictures
+api.get("/picture/list", PictureController.listChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PictureController.list(req, res);
+  }
+);
+
+//Get a picture
+api.get("/picture/details", PictureController.detailsChecks(),
+  async (req: Request, res: Response): Promise<Response> => {
+    return PictureController.details(req, res);
+  }
+);
 
 //Add a picture
 // setup multer for file upload

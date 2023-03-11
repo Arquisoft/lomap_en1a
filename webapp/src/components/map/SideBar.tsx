@@ -10,21 +10,36 @@ import { IInfoWindowData } from "./MapView";
 import { useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
+import { useSession } from "@inrupt/solid-ui-react";
 
 
+type SideBarProps = {
+  setInfoWindowData:React.Dispatch<React.SetStateAction<{
+    isOpen: boolean; //If the info window is open or not
+    id:string; //The ID of the place to show
+    title: string; //The name of the place to show
+    latitude: number;
+    longitude:number;
+
+  }>>
+  setIsNew:React.Dispatch<React.SetStateAction<boolean>>
 
 
-const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layer
+}
 
-export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindowData}) =>{
+const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
+
+export default function MySideBar(props: SideBarProps): JSX.Element {
+  //Isnew FALSE 
 
   //For the places
   const [places,setPlaces] = useState<Place[]>([]);
-
+  const { session } = useSession();
+  var webId = session.info.webId as string;
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    setPlaces(await getPlacesByUser("PLACEHOLDER"));//EL podID DEL USUARIO
+    setPlaces(await getPlacesByUser(webId));//EL podID DEL USUARIO
   }
 
 
@@ -52,7 +67,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
                   <MenuItem icon={<ArrowRightIcon />}
                   key={index}
                   onClick={() => {
-                    setInfoWindowData({
+                    props.setInfoWindowData({
                       isOpen:true,
                       title:place.getName(),
                       id:place.getId(),
@@ -60,6 +75,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
                       longitude:place.getLongitude()
                       
                     });
+                    props.setIsNew(false);
                   }}
 
                   >{place.getName()}</MenuItem>
@@ -76,7 +92,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
           <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
           <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
           <MenuItem  onClick={() => {
-                    setInfoWindowData({
+                    props.setInfoWindowData({
                       isOpen:true,
                       title:"TITLE",
                       id:"",
@@ -84,6 +100,7 @@ export const MySideBar:React.FC<IInfoWindowData>=( {setInfoWindowData,infoWindow
                       longitude:0
                       
                     });
+                    props.setIsNew(false);
                   }}>PARA PRUEBAS</MenuItem>
         </Menu>
       </Sidebar>

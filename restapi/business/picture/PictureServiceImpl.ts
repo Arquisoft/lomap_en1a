@@ -6,14 +6,37 @@ import { PictureService } from "./PictureService";
 import { v4 as generateUUID } from 'uuid';
 import { Picture } from "../../domain/Picture";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
+import { User } from "../../domain/User";
+import { Place } from "../../domain/Place";
+import { UserRepository } from "../repositories/UserRepository";
+import { PlaceRepository } from "../repositories/PlaceRepository";
 
 export class PictureServiceImpl implements PictureService {
 
     private pictureRepository: PictureRepository = new Factory().repositories.getPictureRepository();
+    private userRepository: UserRepository = new Factory().repositories.getUserRepository();
+    private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
     add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean {
         picture.id = generateUUID();
-        return this.pictureRepository.add(user, picture, place);
+
+        if (user.podId == undefined) {
+            throw new Error("The user id cannot be undefined");
+        }
+
+        if (place.id == undefined) {
+            throw new Error("The place id cannot be undefined");
+        }
+
+        if (picture.url == undefined) {
+            throw new Error("The picture url cannot be undefined");
+        }
+
+        var p: Place = this.placeRepository.findById(place.id);
+
+        var pic: Picture = new Picture(picture.id, picture.url, p, user.podId);
+
+        return this.pictureRepository.add(pic, user.podId);
     }
 
     findById(id: string): Picture {
@@ -21,11 +44,21 @@ export class PictureServiceImpl implements PictureService {
     }
 
     findByUser(user: UserDto): Picture[] {
-        return this.pictureRepository.findByUser(user);
+        if (user.podId == undefined) {
+            throw new Error("The user id cannot be undefined");
+        }
+
+        return this.pictureRepository.findByUser(user.podId);
     }
 
     findByPlace(place: PlaceDto): Picture[] {
-        return this.pictureRepository.findByPlace(place);
+        if (place.id == undefined) {
+            throw new Error("The place id cannot be undefined");
+        }
+
+        var p: Place = this.placeRepository.findById(place.id);
+
+        return this.pictureRepository.findByPlace(p);
     }
 
 }
