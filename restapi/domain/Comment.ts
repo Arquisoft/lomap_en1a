@@ -6,7 +6,7 @@ export class Comment extends Review {
 
     private text: string;
 
-    public constructor(id: string, text: string, place: Place, owner: string) {
+    public constructor(id: string, text: string, place: string, owner: string) {
         super(id, place, owner);
         this.text = text;
     }

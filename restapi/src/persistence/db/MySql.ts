@@ -75,7 +75,6 @@ export class MySql {
 
     get(table: string, where: string) {
 
-
         return new Promise((resolve, reject) => {
             this.con.query(
                 "SELECT * FROM " + table + " " + where,
