@@ -17,33 +17,37 @@ export class PictureServiceImpl implements PictureService {
     private userRepository: UserRepository = new Factory().repositories.getUserRepository();
     private placeRepository: PlaceRepository = new Factory().repositories.getPlaceRepository();
 
-    add(picture: PictureDto, user: UserDto, place: PlaceDto): boolean {
-        picture.id = generateUUID();
+    add(picture: PictureDto, user: UserDto, place: PlaceDto): Promise<boolean> {
 
-        if (user.podId == undefined) {
-            throw new Error("The user id cannot be undefined");
-        }
+        return new Promise((resolve, reject) => {
+            if (place.id == undefined) {
+                throw new Error("The place id cannot be undefined");
+            }
 
-        if (place.id == undefined) {
-            throw new Error("The place id cannot be undefined");
-        }
+            this.placeRepository.findById(place.id).then(
+                (place) => {
+                    if (user.podId == undefined) {
+                        throw new Error("The user id cannot be undefined");
+                    }
 
-        if (picture.url == undefined) {
-            throw new Error("The picture url cannot be undefined");
-        }
+                    if (picture.url == undefined) {
+                        throw new Error("The picture url cannot be undefined");
+                    }
 
-        var p: Place = this.placeRepository.findById(place.id);
+                    picture.id = generateUUID();
+                    var pic: Picture = new Picture(picture.id, picture.url, place, user.podId);
 
-        var pic: Picture = new Picture(picture.id, picture.url, p, user.podId);
-
-        return this.pictureRepository.add(pic, user.podId);
+                    resolve(this.pictureRepository.add(pic, user.podId));
+                }
+            );
+        });
     }
 
-    findById(id: string): Picture {
+    findById(id: string): Promise<Picture> {
         return this.pictureRepository.findById(id);
     }
 
-    findByUser(user: UserDto): Picture[] {
+    findByUser(user: UserDto): Promise<Picture[]> {
         if (user.podId == undefined) {
             throw new Error("The user id cannot be undefined");
         }
@@ -51,14 +55,18 @@ export class PictureServiceImpl implements PictureService {
         return this.pictureRepository.findByUser(user.podId);
     }
 
-    findByPlace(place: PlaceDto): Picture[] {
-        if (place.id == undefined) {
-            throw new Error("The place id cannot be undefined");
-        }
+    findByPlace(place: PlaceDto): Promise<Picture[]> {
 
-        var p: Place = this.placeRepository.findById(place.id);
-
-        return this.pictureRepository.findByPlace(p);
+        return new Promise((resolve, reject) => {
+            if (place.id == undefined) {
+                throw new Error("The place id cannot be undefined");
+            }
+            this.placeRepository.findById(place.id).then(
+                (place) => {
+                    resolve(this.pictureRepository.findByPlace(place));
+                }
+            );
+        });
     }
 
 }

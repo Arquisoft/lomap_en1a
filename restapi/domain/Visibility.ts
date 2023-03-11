@@ -4,10 +4,10 @@ import { Place } from "./Place";
 import { User } from "./User";
 
 export enum PlaceVisibility {
-    USER,
-    GROUP,
-    FRIENDS,
-    FULL
+    USER = "USER",
+    GROUP = "GROUP",
+    FRIENDS = "FRIENDS",
+    FULL = "FULL"
 }
 
 export enum GroupVisibility {
