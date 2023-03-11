@@ -8,18 +8,18 @@ export class PictureRepositoryImpl implements PictureRepository {
 
     private pictures: Picture[] = [new Picture("1", "url", new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
-    findById(id: string): Picture {
+    async findById(id: string): Promise<Picture> {
         return this.pictures[0];
     }
-    findByUser(user: string): Picture[] {
+    async findByUser(user: string): Promise<Picture[]> {
         return this.pictures;
     }
 
-    findByPlace(user: Place): Picture[] {
+    async findByPlace(user: Place): Promise<Picture[]> {
         return this.pictures;
     }
 
-    add(picture: Picture): boolean {
+    add(picture: Picture, podId: string): boolean {
         this.pictures.push(picture);
         return true;
     }

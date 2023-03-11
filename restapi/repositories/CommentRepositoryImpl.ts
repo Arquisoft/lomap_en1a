@@ -9,14 +9,14 @@ export class CommentRepositoryImpl implements CommentRepository {
 
     private comments: Comment[] = [new Comment("1", "Comment", new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1), "podId")];
 
-    findById(id: string): Comment {
-        return this.comments[0];
+    async findById(id: string): Promise<Comment> {
+        throw Error("not implemented");
     }
-    findByUser(user: string): Comment[] {
-        return this.comments;
+    async findByUser(user: string): Promise<Comment[]> {
+        throw Error("not implemented");
     }
-    findByPlace(user: Place): Comment[] {
-        return this.comments;
+    async findByPlace(user: Place): Promise<Comment[]> {
+        throw Error("not implemented");
     }
 
     add(comment: Comment): boolean {
