@@ -9,30 +9,42 @@ export class PlaceRepositoryImpl implements PlaceRepository {
     private places: Place[] = [new Place("1", "Place 1", "podId", PlaceVisibility.USER, 1, 1)];
     private mysql = MySql.getInstance();
 
-    findById(id: String): Promise<Place> {
+    async findById(id: String): Promise<Place> {
         return new Promise((resolve, reject) => {
             this.mysql.con.query(
-                "SELECT * FROM PLACES WHERE PLACE_ID= " + id + ";",
-                (result: any) => {
-                    var a = <string>result["VISIBILITY"];
-                    var enumA = (<any>PlaceVisibility)[a];
+                "SELECT * FROM PLACES WHERE PLACE_ID= '" + id + "';",
+                (err: any, result: any, fields: any) => {
 
+                    console.log(result);
 
-                    resolve(new Place(result["PLACE_ID"],
-                        result["NAME"],
-                        result["OWNER_ID"],
-                        enumA,
-                        result["LATITUDE"],
-                        result["LONGITUDE"]));
+                    resolve(new Place(result.PLACE_ID,
+                        result.NAME,
+                        result.OWNER_ID,
+                        (<any>PlaceVisibility)[result.VISIBILITY],
+                        result.LATITUDE,
+                        result.LONGITUDE));
                 }
             );
         });
 
-        throw Error("not implemented");
     }
 
     add(place: Place): boolean {
-        this.places.push(place);
+        this.mysql.con.query(
+            "INSERT INTO PLACES VALUES (" +
+            "'" + place.getId() + "'," +
+            "'" + place.getName() + "'," +
+            "'" + place.getOwner() + "'," +
+            "'" + PlaceVisibility[place.getVisibility()] + "'," +
+            "" + place.getLatitude() + "," +
+            "'" + place.getLongitude() + "'" +
+            ");",
+            (err: any, result: any, fields: any) => {
+                console.log("ADDED");
+
+            }
+        );
+
         return true;
     }
 
