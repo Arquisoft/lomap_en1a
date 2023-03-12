@@ -27,8 +27,6 @@ export default function MapView():JSX.Element{
     latitude: 0,
     longitude:0,
   });
-  //For the scores
-  const [scores,setScores] = useState<Score[]>([]);
 
   //For the computation of the avg score
   const [avg,setAvg] = useState(0);
@@ -39,17 +37,21 @@ export default function MapView():JSX.Element{
 
   const refreshScores = async (place:string) => {
 
-    //NOT FIXED YET
+
     getScores(place).then((s)=>{
-        setScores(s);
+      if(s.length>0){
         let aux = 0;
-        for (let i = 0; i < scores.length; i++) {
+        for (let i = 0; i < s.length; i++) {
         
-          aux+=scores[i].score;
+          aux+=s[i].score;
         }
-        let avg = aux/scores.length;
+        let avg = aux/s.length;
         let a = avg.toFixed(1)
         setAvg(parseFloat(a)); //Calculates the new average
+      }else{
+        setAvg(0)
+      }
+
     });
   }
 
