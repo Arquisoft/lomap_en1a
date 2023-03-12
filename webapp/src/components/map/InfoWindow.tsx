@@ -26,10 +26,12 @@ import { useSession} from "@inrupt/solid-ui-react";
 import axios from 'axios';
 import SlideshowPictures from "../mainPage/SlideShowPictures";
 import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
+import PictureSelector from "../mainPage/PictureSelector";
 
 type InfoWindowProps = {
   avg:number;
   refreshScores:(place: string) => Promise<void>;
+  refreshPictures: (place: string) => Promise<void>;
   infoWindowData:{
     id:string;
     title:string;
@@ -52,7 +54,6 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
   //For the pictures
   const [pictures,setPictures] = useState<Picture[]>([]);
 
-  const [list,setList] = useState<string[]>([]);
   var picName = "";
   var newPicUrl = "../../images-places/" + picName;
 
@@ -64,6 +65,11 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
     getComments(props.infoWindowData?.id).then((s)=>setComments(s));
+  }
+
+  //Gets the list of pictures for a specific place
+  const refreshPictureList = async () => {
+    getPictures(props.infoWindowData?.id).then((s)=>setPictures(s));
   }
   
   
@@ -107,35 +113,6 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
   // ------------------------------------------------------------
 
 
-  const handleAddPicture = async (value:string) => { // value should be file in final implementation
-    var pic = new Picture("",value,infoWindowData?.id,webId);
-    let result:boolean = await addPicture(pic); //The picture still has no ID
-    setList(array => [...array, value]);
-    
-    
-    if (result) {
-      setNotificationStatus(true);
-      setNotification({ 
-        severity:'success',
-        message:'Your picture has been posted!'
-      });
-    }
-    else{
-      setNotificationStatus(true);
-      setNotification({ 
-        severity:'error',
-        message:'There\'s been an error posting your picture.'
-      });
-    }
-  }
-
-  //Gets the list of pictures for a specific place
-  const refreshPictures = async (value:string) => {
-    handleAddPicture(value); //Adds the new picture
-    console.log("picture created: " + value);
-    getPictures(infoWindowData?.id).then((s)=>setPictures(s));
-  }
-
   const handleAddScore = async (value:number) => {
     //e.preventDefault();
 
@@ -165,12 +142,6 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
     
     props.refreshScores(props.infoWindowData.id);
   }
-
-
-
-
-
-
   
 
   useEffect(()=>{
@@ -190,22 +161,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
 
 
             <Grid item xs={12}>
-                <SlideshowPictures/>
-                {/*<Box component="img" src={picURL} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>*/}
-                <TextField
-                  required
-                  name="text"
-                  label="Write the URL of your new picture" 
-                  variant="filled"
-                  onChange={e => {
-                    picName = e.target.value;
-                    
-                  }}
-                  
-                />
-                <Button id="btn-Add-Image" onClick={() => refreshPictures(newPicUrl)}>
-                  <img id="img-Add-Image" src={btnImage} alt="Add_image"/>
-                </Button>
+                <PictureSelector OnPictureListChange={refreshPictureList} place={props.infoWindowData?.id} user={"username"}/>
                 
             </Grid>            
               

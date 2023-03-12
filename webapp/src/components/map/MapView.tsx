@@ -8,7 +8,8 @@ import { FilterList, IVisibility } from './FilterList';
 import { CreatePlaceWindow } from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map/map';
 import { Score } from '../../domain/Score';
-import { getScores } from '../../api/api';
+import { getScores, getPictures } from '../../api/api';
+import { Picture } from '../../domain/Picture';
 
 
 
@@ -30,7 +31,7 @@ export default function MapView():JSX.Element{
 
   //For the computation of the avg score
   const [avg,setAvg] = useState(0);
-
+  const [list,setPicList] = useState<Picture[]>([]);
 
 
 
@@ -52,6 +53,12 @@ export default function MapView():JSX.Element{
         setAvg(0)
       }
 
+    });
+  }
+
+  const refreshPictures = async (place:string) => {
+    getPictures(place).then((s)=>{
+      setPicList(s);
     });
   }
 
@@ -91,7 +98,7 @@ export default function MapView():JSX.Element{
             overlayClassName='info-window'
             >
           {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude}/>:
-           <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg}/>}
+           <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} refreshPictures={refreshPictures} avg={avg}/>}
             
                           
         </SlidingPane>

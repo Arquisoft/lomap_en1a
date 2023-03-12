@@ -50,6 +50,7 @@ footer{
 #btn-Add-Image {
   border-width: 0px;
   opacity: 0.6;
+  color: white;
 }
 
 #btn-Add-Image:hover {
