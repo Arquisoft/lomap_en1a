@@ -10,6 +10,10 @@ import { IMapContext } from "../../map-types";
 import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
+import { Coordinate } from "ol/coordinate";
+import { Place } from "../../../../../domain/Place";
+import { useSession } from "@inrupt/solid-ui-react";
+import { getPlacesByUser } from "../../../../../api/api";
 
 class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
 
@@ -20,6 +24,39 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
   layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
     source: this.source,
   });
+
+  places:Place[]=[];
+
+
+  addMarker(coordinate: Coordinate){
+    const featureToAdd = new Feature({
+      geometry: new Point(coordinate),
+    });
+    const style = new Style({
+      image: new Icon({
+        src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+        anchor:[0.5,0]
+      })
+
+    });
+    featureToAdd.setStyle(style);    
+    this.source.addFeatures([featureToAdd]);
+
+  }
+
+
+  async getMarkers(){
+    await getPlacesByUser(this.props.webId).then((p)=>{
+      var coordinates:number[];
+      for(let i = 0;i<p.length;i++){
+         coordinates= [p[i].longitude,p[i].latitude];
+         this.addMarker(coordinates);
+  
+      }
+
+    });
+  }
+
 
 
 
@@ -36,7 +73,18 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
 
     this.props.map.addLayer(this.layer);
     this.props.map.on("singleclick", this.onMapClick);
+    this.getMarkers();
+
+    
+
+
   }
+
+
+
+   
+
+  
   /*
   componentWillUnmount() {
     this.props.map.removeLayer(this.layer);
@@ -52,6 +100,8 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
   }
   */
 
+  
+
   onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
     this.props.setIsNew(true);
@@ -59,6 +109,8 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
 
     this.props.setLatitude(event.coordinate[1]);
     this.props.setLongitude(event.coordinate[0]);
+    this.addMarker(event.coordinate);
+    /*
     const featureToAdd = new Feature({
       geometry: new Point(event.coordinate),
     });
@@ -75,9 +127,9 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
           color: [0,0,0], width: 2
         })
       */
-    });
+    /*});
     featureToAdd.setStyle(style);    
-    this.source.addFeatures([featureToAdd]);
+    this.source.addFeatures([featureToAdd]);*/
   };
 
   render() {
@@ -86,12 +138,12 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
 }
 
 export const VectorLayerWithContext = (props: TVectorLayerProps) => {
-  console.log(props);
+ // console.log(props);
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          console.log(mapContext);
+          //console.log(mapContext);
           return <VectorLayerComponent {...props} map={mapContext.map} />;
         }
       }}

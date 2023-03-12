@@ -1,6 +1,8 @@
 import Map from "ol/Map";
+import { Place } from "../../../domain/Place";
 
 export type TMapProps = {
+  webId:string;
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude:React.Dispatch<React.SetStateAction<number>>;
   setLongitude:React.Dispatch<React.SetStateAction<number>>;
