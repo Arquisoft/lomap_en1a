@@ -1,34 +1,244 @@
-.App {
+
+body {
+  margin: 0;
+  height: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5em;   
+}
+
+
+
+h1{
+  font-size: 2em;
+}
+
+h3{
+  color:black;
+}
+
+
+
+
+
+
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  margin-top: 5em;
+}
+
+
+
+#togge-button{
+  margin-left: 2em;
+
+}
+
+.map-view{
+  display: grid;
+  grid-template-rows: [first]5em [second]21em[last] ;
+  grid-template-columns: [firstC]12em [secondC]30em[thirdC]21.3em[lastC] ;
+}
+
+.filter-list{
+  z-index : 1;
+  grid-row-start: first;
+  grid-row-end:second;
+  grid-column-start:secondC ;
+  grid-column-end: thirdC;
+}
+
+.toggle-button-group{
+  display: flex;
+  gap:5%;
+  margin-top: 0.5em;
+  
+}
+
+
+.side-bar{
+  grid-row-start: first;
+  grid-row-end:last;
+  grid-column-start:firstC ;
+  grid-column-end: secondC;
+}
+
+.map{
+  grid-row-start: first;
+  grid-row-end:last;
+  grid-column-start:firstC ;
+  grid-column-end: lastC;
+}
+
+.map .ol-zoom {
+  top: 10px;
+  left: auto;
+  right: 10px;
+}
+
+.info-window{
+  color:black;
+}
+
+.background-image {
+  background-image: url(images/map.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat:no-repeat ;
+  max-width: 100%;
+  background-color: #464646;
+}
+
+.menu {
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2em;
+
+  font-size: 1em;
+  display: flex;
+
+}
+
+.centered-container{
+  margin-top:5em;
+  margin-bottom:5em;
+  justify-content:space-evenly;
+  text-align: justify;
+  direction:row;
+}
+
+
+
+
+.menu ul {
+  padding: 0;
+  margin: 0;
+  margin-right:1em;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.menu a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: .25rem;
+}
+
+.menu li.active {
+  background-color: #555;
+}
+
+.menu li:hover {
+  background-color: #777;
+}
+
+
+.fade-in {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+/* Slideshow */
+
+.slideshow {
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 100%;
+  
+}
+
+.slideshowSlider {
+  white-space: nowrap;
+  transition: ease 1000ms;
+}
+
+.slide {
+  display: inline-block;
+
+  height: 400px;
+  width: 100%;
+  border-radius: 4em;
+  
+
+}
+
+/* Buttons */
+
+.slideshowDots {
   text-align: center;
 }
 
+.slideshowDot {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  cursor: pointer;
+  margin: 15px 7px 0px;
+
+  background-color: #c4c4c4;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.slideshowDot.active {
+  background-color: blue;
+}
+
+/* Container */
+
+.container {
+  margin: 0;
+  border: 0;
+  text-align: center;
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
+}
+
+.login-div {
+  display: grid;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  text-align: center;
+  min-height: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+.login-form {
+  background-color: #eeeeee;
+  width: 90vh;
+  height: inherit;
+  padding-left: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-button {
+  position: absolute;
+  height: inherit;
+}
+
+
+#logo_img {
+  max-height: 2em;
+  max-width: 100%;
+  height: auto;
+  width: auto;
 }
