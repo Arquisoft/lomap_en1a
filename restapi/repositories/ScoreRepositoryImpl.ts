@@ -58,10 +58,10 @@ export class ScoreRepositoryImpl implements ScoreRepository {
         });
     }
 
-    async findByPlace(user: Place): Promise<Score[]> {
+    async findByPlace(place: Place): Promise<Score[]> {
         return new Promise((resolve, reject) => {
             this.mysql.con.query(
-                "SELECT * FROM SCORES WHERE PLACE_ID= '" + user + "';",
+                "SELECT * FROM SCORES WHERE PLACE_ID= '" + place.getId() + "';",
 
                 (err: any, result: any, fields: any) => {
                     var aux: Score[] = new Array(Object.keys(result).length);

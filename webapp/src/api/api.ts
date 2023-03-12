@@ -14,7 +14,7 @@ export async function addComment(comment:Comment):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/comment/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({'text':comment.getText(),'place':comment.getPlace(),'user':comment.getOwner()})
+        body: JSON.stringify({'comment':comment.getText(),'place':comment.getPlace(),'user':comment.getOwner().replaceAll("/","-").replaceAll("#","-")})
       });
     if (response.status===200)
       return true;
@@ -24,6 +24,7 @@ export async function addComment(comment:Comment):Promise<boolean>{
 
 export async function getComments(id:string):Promise<Comment[]>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+    
     let response = await fetch(apiEndPoint+'/comment/list/'+id);
     //The objects returned by the api are directly convertible to Comment objects
     return response.json();
@@ -38,7 +39,7 @@ export async function addScore(score:Score):Promise<boolean>{
     let response = await fetch(apiEndPoint+'/score/add', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace(),'user':score.getOwner()})
+       body: JSON.stringify({'score':score.getScore(),'place':score.getPlace(),'user':score.getOwner().replaceAll("/","-").replaceAll("#","-")})
       });
     if (response.status===200)
       return true;

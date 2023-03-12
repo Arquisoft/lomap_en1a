@@ -28,7 +28,7 @@ export class ScoreController {
 
         return new Promise((resolve, reject) => {
             this.scoreService.add(score, user, place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
 
         });
@@ -49,10 +49,12 @@ export class ScoreController {
 
         var place: PlaceDto = new PlaceDto();
         place.id = id;
+    
 
         return new Promise((resolve, reject) => {
             this.scoreService.findByPlace(place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                console.log(b[0])
+                resolve(res.send(b));
             });
 
         });
@@ -71,7 +73,7 @@ export class ScoreController {
 
         return new Promise((resolve, reject) => {
             this.scoreService.findById(id).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
         });
     }

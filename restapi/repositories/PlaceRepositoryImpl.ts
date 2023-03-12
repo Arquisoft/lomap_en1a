@@ -24,7 +24,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
                             (<any>PlaceVisibility)[row.VISIBILITY],
                             row.LATITUDE,
                             row.LONGITUDE);
-                        console.log(aux);
+                    
 
                     });
 

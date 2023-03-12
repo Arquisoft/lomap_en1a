@@ -26,7 +26,7 @@ export class PictureController {
 
         return new Promise((resolve, reject) => {
             this.pictureService.add(picture, user, place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
 
         });
@@ -50,7 +50,7 @@ export class PictureController {
 
         return new Promise((resolve, reject) => {
             this.pictureService.findByPlace(place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
 
         });
@@ -69,7 +69,7 @@ export class PictureController {
 
         return new Promise((resolve, reject) => {
             this.pictureService.findById(id).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
 
         });

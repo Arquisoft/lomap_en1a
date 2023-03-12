@@ -11,7 +11,7 @@ export class UserDAO {
         var res;
         await this.mysql.get("USER", "").then((result: any) => res = result);
 
-        console.log(res);
+    
         return res;
     }
 
