@@ -26,7 +26,7 @@ export class CommentController {
 
         return new Promise((resolve, reject) => {
             this.commentService.add(comment, user, place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
         });
     }
@@ -49,7 +49,7 @@ export class CommentController {
 
         return new Promise((resolve, reject) => {
             this.commentService.findByPlace(place).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
         });
     }
@@ -67,7 +67,7 @@ export class CommentController {
 
         return new Promise((resolve, reject) => {
             this.commentService.findById(id).then(b => {
-                resolve(res.send(b).sendStatus(200));
+                resolve(res.send(b));
             });
         });
     }

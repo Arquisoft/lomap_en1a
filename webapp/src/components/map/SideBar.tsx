@@ -6,7 +6,6 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
-import { IInfoWindowData } from "./MapView";
 import { useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
@@ -22,12 +21,12 @@ type SideBarProps = {
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>
   visibility:string
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
+  refreshScores:(place: string) => Promise<void>;
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
-  //Isnew FALSE 
 
   //For the places
   const [places,setPlaces] = useState<Place[]>([]);
@@ -36,8 +35,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    getPlacesByUser(webId).then((places)=>setPlaces(places));
+   getPlacesByUser(webId).then((places)=>setPlaces(places));
   }
+
+
+  
 
 
   //Style must be in-line; does not work otherwise
@@ -58,23 +60,25 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           </MenuItem>
           <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}> 
 
-                {places.map((place, index) => (
+                {places.map((place, index,array) => (
+                  
 
                   <MenuItem icon={<ArrowRightIcon />}
                   key={index}
                   onClick={() => {
                     props.setInfoWindowData({
-                      title:place.getName(),
-                      id:place.getId(),
-                      latitude:place.getLatitude(),
-                      longitude:place.getLongitude()
+                      title:place.name,
+                      id:place.id,
+                      latitude:place.latitude,
+                      longitude:place.longitude
                       
                     });
                     props.setIsNew(false);
                     props.setIsOpen(true);
+                    props.refreshScores(place.id);
                   }}
 
-                  >{place.getName()}</MenuItem>
+                  >{place.name}</MenuItem>
                    ))}
 
           </SubMenu>
