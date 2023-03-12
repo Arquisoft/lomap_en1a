@@ -2,17 +2,22 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "../../App.css";
 import { FilterList, IVisibility } from './FilterList';
 import { CreatePlaceWindow } from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map/map';
 import { Score } from '../../domain/Score';
-import { getScores } from '../../api/api';
+import { getPlaces, getPlacesByUser, getScores } from '../../api/api';
+import { Place } from '../../domain/Place';
+import { useSession } from '@inrupt/solid-ui-react';
 
 
 
 export default function MapView():JSX.Element{
+
+  const { session } = useSession();
+  var webId = session.info.webId as string;
 
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
@@ -27,10 +32,20 @@ export default function MapView():JSX.Element{
     latitude: 0,
     longitude:0,
   });
+  var p:Place[] = []; //Initial value for hook
+  const [places, setPlaces]=useState<Place[]>(p);
 
   //For the computation of the avg score
   const [avg,setAvg] = useState(0);
 
+
+
+  const getPrivatePlaces = async() =>{
+    await getPlacesByUser(webId).then((p)=>{
+      setPlaces(p); 
+    });
+
+  }
 
 
 
@@ -56,6 +71,11 @@ export default function MapView():JSX.Element{
   }
 
 
+  //Function will be executed when maps renders
+  /*useEffect(() => {
+    getPrivatePlaces();
+  },[places]);*/
+
 
   //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
 
@@ -65,7 +85,8 @@ export default function MapView():JSX.Element{
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew} visibility={visibility.value} setIsOpen={setIsOpen} refreshScores={refreshScores}/>
+                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew}
+                 visibility={visibility.value} setIsOpen={setIsOpen} refreshScores={refreshScores}/>
           </ProSidebarProvider>
         </div>
 
@@ -74,7 +95,8 @@ export default function MapView():JSX.Element{
         </div>
          
 
-          <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen}/>
+          <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} 
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}/>
           
       </div>
 
