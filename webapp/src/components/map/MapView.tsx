@@ -40,16 +40,6 @@ export default function MapView():JSX.Element{
 
 
 
-  const getPrivatePlaces = async() =>{
-    await getPlacesByUser(webId).then((p)=>{
-      setPlaces(p); 
-    });
-
-  }
-
-
-
-
   const refreshScores = async (place:string) => {
 
 
@@ -71,10 +61,8 @@ export default function MapView():JSX.Element{
   }
 
 
-  //Function will be executed when maps renders
-  /*useEffect(() => {
-    getPrivatePlaces();
-  },[places]);*/
+
+
 
 
   //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
