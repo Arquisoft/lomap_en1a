@@ -21,7 +21,7 @@ export default function CommentList(props: CommentListProps): JSX.Element {
             <ListItemIcon>
               <ContactPageIcon/>
             </ListItemIcon>
-            <ListItemText primary={comment.getOwner()} secondary={comment.getText()}/>
+            <ListItemText primary={comment.owner} secondary={comment.text}/>
           </ListItem>
         )
       })}

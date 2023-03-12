@@ -9,7 +9,6 @@ import { getComments, getScores } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
-import { IInfoWindowData } from './MapView';
 import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
@@ -19,12 +18,24 @@ import { User } from '../../domain/User';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
+import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
 
+type InfoWindowProps = {
+  avg:number;
+  refreshScores:(place: string) => Promise<void>;
+  infoWindowData:{
+    id:string;
+    title:string;
+    latitude: number;
+    longitude:number;
+  }
+}
 
-export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
+export default function InfoWindow(props: InfoWindowProps):JSX.Element {
 
-  const { session } = useSession();
+ const { session } = useSession();
   var webId = session.info.webId as string;
+  
   
 
   
@@ -34,22 +45,18 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
 
-  //For the scores
-  const [scores,setScores] = useState<Score[]>([]);
 
-  //For the computation of the avg score
-  const [avg,setAvg] = useState(0);
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    getComments(infoWindowData?.id).then((s)=>setComments(s));
+    getComments(props.infoWindowData?.id).then((s)=>setComments(s));
   }
 
 
   const handleAddScore = async (value:number) => {
     //e.preventDefault();
 
-    var score = new Score("",value,infoWindowData?.id,webId);
+    var score = new Score("",value,props.infoWindowData?.id,webId);
     let result:boolean = await addScore(score); //The score still has no ID
     if (result){
       setNotificationStatus(true);
@@ -70,18 +77,16 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   }
 
 
-  //Gets the list of scores for a specific place
-  const refreshScores = async (value:number) => {
-    handleAddScore(value); //Adds the new score
+  const refreshScoresAfterAdding = async (value:number) => {
+    await handleAddScore(value); //Adds the new score
     
-
-    getScores(infoWindowData?.id).then((s)=>setScores(s));
-    let aux = 0;
-    for (let i = 0; i < scores.length; i++) {
-      aux+=scores[i].getScore();
-    }
-    setAvg(aux/scores.length); //Calculates the new average
+    props.refreshScores(props.infoWindowData.id);
   }
+
+
+
+
+
 
   
 
@@ -97,7 +102,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
           <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
             
             <Grid item xs={6} textAlign="center">
-                <Box component="h3" ><>{infoWindowData?.title}</></Box>
+                <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
             </Grid>
 
 
@@ -110,13 +115,13 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
                 transition
                 fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
                 allowFraction
-                onClick={(value)=>refreshScores(value)}
+                onClick={(value)=>refreshScoresAfterAdding(value)}
                 
                 />
             </Grid> 
 
             <Grid item xs={3}>
-              <Box component="p" textAlign="right">{avg}</Box>
+              <Box component="p" textAlign="right">{props.avg}</Box>
             </Grid> 
 
             <Grid item xs={3}>
@@ -124,7 +129,7 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={infoWindowData?.id} user={webId}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>
