@@ -43,7 +43,7 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
-        message:'You new place has been added!'
+        message:'Your new place has been added!'
       });
       //Notify the change to the parent component
       //props.OnCommentListChange();

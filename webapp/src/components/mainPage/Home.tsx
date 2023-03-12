@@ -1,7 +1,11 @@
 import Slideshow from "./SlideShow"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-
+import React from "react";
+import image1 from "../../images/placeHolder.png";
+import image2 from "../../images/placeHolder.png";
+import image3 from "../../images/placeHolder.png";
+const colors = [image1, image2, image3];
 
 
 export default function Home(): JSX.Element {

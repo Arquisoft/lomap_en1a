@@ -2,8 +2,10 @@ import React from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from "@mui/material/Button/Button";
+import TextField from '@mui/material/TextField';
 import image from "../../images/placeHolder.png";
 import btnImage from "../../images/Add_image.png";
+import picURL from "../../images-places/eii.jpg";
 import { Rating } from 'react-simple-star-rating';
 import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
@@ -23,6 +25,7 @@ import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
 import axios from 'axios';
+import SlideshowPictures from "../mainPage/SlideShowPictures";
 
 export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindowData}) =>{
 
@@ -35,6 +38,10 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   
   //For the pictures
   const [pictures,setPictures] = useState<Picture[]>([]);
+
+  const [list,setList] = useState<string[]>([]);
+  var picName = "";
+  var newPicUrl = "../../images-places/" + picName;
 
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
@@ -50,9 +57,6 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   const refreshCommentList = async () => {
     getComments(infoWindowData?.id).then((s)=>setComments(s));
   }
-
-
-  var picURL = "";
   
   
   // Image upload -------------------------------------------------------
@@ -96,10 +100,12 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
 
   const handleAddPicture = async (value:string) => { // value should be file in final implementation
-    var pic = new Picture("",value,place,user);
-    //let result:boolean = await addPicture(pic); //The picture still has no ID
-    picURL = value;
-    /*if (result) {
+    var pic = new Picture("",value,infoWindowData?.id,webId);
+    let result:boolean = await addPicture(pic); //The picture still has no ID
+    setList(array => [...array, value]);
+    
+    
+    if (result) {
       setNotificationStatus(true);
       setNotification({ 
         severity:'success',
@@ -112,13 +118,14 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
         severity:'error',
         message:'There\'s been an error posting your picture.'
       });
-    }*/
+    }
   }
 
   //Gets the list of pictures for a specific place
   const refreshPictures = async (value:string) => {
     handleAddPicture(value); //Adds the new picture
-    setPictures(await getPictures(infoWindowData?.id));
+    console.log("picture created: " + value);
+    getPictures(infoWindowData?.id).then((s)=>setPictures(s));
   }
 
   const handleAddScore = async (value:number) => {
@@ -149,7 +156,6 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
   const refreshScores = async (value:number) => {
     handleAddScore(value); //Adds the new score
     
-
     getScores(infoWindowData?.id).then((s)=>setScores(s));
     let aux = 0;
     for (let i = 0; i < scores.length; i++) {
@@ -177,9 +183,23 @@ export const InfoWindow:React.FC<IInfoWindowData>=( {infoWindowData,setInfoWindo
 
 
             <Grid item xs={12}>
-                <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
-                <Button id="btn-Add-Image" onClick={() => refreshPictures("../../images-places/eii.png")}><img id="img-Add-Image" src={btnImage} alt="Add_image"/></Button>
-                <img src={picURL}></img>
+                <SlideshowPictures/>
+                {/*<Box component="img" src={picURL} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>*/}
+                <TextField
+                  required
+                  name="text"
+                  label="Write the URL of your new picture" 
+                  variant="filled"
+                  onChange={e => {
+                    picName = e.target.value;
+                    
+                  }}
+                  
+                />
+                <Button id="btn-Add-Image" onClick={() => refreshPictures(newPicUrl)}>
+                  <img id="img-Add-Image" src={btnImage} alt="Add_image"/>
+                </Button>
+                
             </Grid>            
               
             {/*<div>
