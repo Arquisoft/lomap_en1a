@@ -6,7 +6,6 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
-import { IInfoWindowData } from "./MapView";
 import { useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
@@ -22,6 +21,7 @@ type SideBarProps = {
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>
   visibility:string
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
+  refreshScores:(place: string) => Promise<void>;
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
@@ -37,6 +37,9 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const refreshPlaceList = async () => {
    getPlacesByUser(webId).then((places)=>setPlaces(places));
   }
+
+
+  
 
 
   //Style must be in-line; does not work otherwise
@@ -72,6 +75,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     });
                     props.setIsNew(false);
                     props.setIsOpen(true);
+                    props.refreshScores(place.id);
                   }}
 
                   >{place.name}</MenuItem>
