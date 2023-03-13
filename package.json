@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
-    "@types/styled-components": "^5.1.26",
-    "@types/node": "^18.14.2"
-  }
-}
