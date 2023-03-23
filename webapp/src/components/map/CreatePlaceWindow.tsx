@@ -14,6 +14,8 @@ import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { useSession} from "@inrupt/solid-ui-react";
 
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+
 export interface ICreatePlaceWindowData{
   latitude:number,
   longitude:number
@@ -27,17 +29,23 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
 
 
   const [name, setName] = useState('');
+  const [visibility, setVisibility] = useState<PlaceVisibility>(PlaceVisibility.GROUP);
   //const [text, setText] = useState('');
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
   
 
+  const handleChange = (value: string) => {
+    var newVisibility = (PlaceVisibility as any)[value]
+
+    setVisibility(newVisibility);
+  }
 
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var place = new Place("",name,webId,PlaceVisibility.USER,latitude,longitude);
+    var place = new Place("",name,webId,visibility,latitude,longitude);
     let result:boolean = await addPlace(place);
     if (result){
       setNotificationStatus(true);
@@ -79,9 +87,27 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
               }}
               
             />
+
+          <FormControl>
+            <InputLabel id="visibility-select-label">Age</InputLabel>
+            <Select
+              labelId="visibility-select-label"
+              id="visibility-select"
+              value={visibility}
+              label="Visibility"
+              onChange={e => {
+                handleChange(e.target.value as string);
+              }}
+            >
+              <MenuItem value={'USER'}>User</MenuItem>
+              <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+              <MenuItem value={'GROUP'}>Group</MenuItem>
+              <MenuItem value={'FULL'}>Full</MenuItem>
+            </Select>
+          </FormControl>
+
             <Button variant="contained" type="submit">Add place</Button>
           </Grid>
-  
   
         </form>
         <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={()=>{setNotificationStatus(false)}}>
