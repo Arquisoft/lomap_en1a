@@ -79,13 +79,9 @@ export class PlaceController {
     public static async add(req: Request, res: Response): Promise<Response> {
         var owner: string = <string>req.body.user;
         var name: string = <string>req.body.name;
-        var filter: string = <string>req.body.visibility;
+        var visibility: PlaceVisibility = req.body.visibility;
         var latitude: number = <number>req.body.latitude;
         var longitude: number = <number>req.body.longitude;
-
-        var index = filter as keyof typeof PlaceVisibility;
-
-        var visibility: PlaceVisibility = (PlaceVisibility as any)[index];
 
         var user: UserDto = new UserDto();
 
