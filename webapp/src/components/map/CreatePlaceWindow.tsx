@@ -89,7 +89,7 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
             />
 
           <FormControl>
-            <InputLabel id="visibility-select-label">Age</InputLabel>
+            <InputLabel id="visibility-select-label">Visibility</InputLabel>
             <Select
               labelId="visibility-select-label"
               id="visibility-select"

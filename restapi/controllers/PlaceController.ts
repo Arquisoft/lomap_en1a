@@ -85,8 +85,7 @@ export class PlaceController {
 
         var index = filter as keyof typeof PlaceVisibility;
 
-        var visibility: PlaceVisibility = PlaceVisibility["USER"];//FIXME
-
+        var visibility: PlaceVisibility = (PlaceVisibility as any)[index];
 
         var user: UserDto = new UserDto();
 
