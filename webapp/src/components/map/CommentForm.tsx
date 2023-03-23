@@ -6,15 +6,14 @@ import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
 import { addComment } from '../../api/api';
 import Grid from '@mui/material/Grid';
-import { Place } from '../../domain/Place';
-import { User } from '../../domain/User';
 import { Comment } from '../../domain/Comment';
-
+import { useEffect } from 'react';
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
   place:string;
   user:string;
+  changePlace:number;
 }
 
 export type NotificationType = {
@@ -56,6 +55,8 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       });
     }
   }
+
+
 
   return (
     <>

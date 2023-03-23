@@ -12,10 +12,10 @@ import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
 import { Place } from "../../../../../domain/Place";
-import { useSession } from "@inrupt/solid-ui-react";
 import { getPlacesByUser } from "../../../../../api/api";
+import { useEffect } from "react";
 
-class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
+/*class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
 
   source: VectorSource=new VectorSource({
     features: undefined,
@@ -26,6 +26,15 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
   });
 
   places:Place[]=[];
+
+  lastMarker: Feature<Point>= new Feature({
+    geometry: new Point([0,0]),
+  });
+
+
+  removeMarker(){
+    this.source.removeFeature(this.lastMarker)
+  }
 
 
   addMarker(coordinate: Coordinate){
@@ -41,6 +50,7 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
     });
     featureToAdd.setStyle(style);    
     this.source.addFeatures([featureToAdd]);
+    this.lastMarker = featureToAdd;
 
   }
 
@@ -57,6 +67,12 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
     });
   }
 
+  componentDidUpdate(prevProps: Readonly<TVectorLayerComponentProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    alert("hola")
+    if(this.props.removeMarker){
+      this.removeMarker();
+    }
+  }
 
 
 
@@ -75,9 +91,8 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
     this.props.map.on("singleclick", this.onMapClick);
     this.getMarkers();
 
-    
 
-
+  
   }
 
 
@@ -85,20 +100,7 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
    
 
   
-  /*
-  componentWillUnmount() {
-    this.props.map.removeLayer(this.layer);
-  }
 
-  componentDidUpdate(prevProps: TVectorLayerComponentProps) {
-    if (prevProps.features != this.props.features) {
-      this.source.clear();
-      if (this.props.features) {
-        this.source.addFeatures(this.props.features);
-      }
-    }
-  }
-  */
 
   
 
@@ -110,31 +112,94 @@ class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProp
     this.props.setLatitude(event.coordinate[1]);
     this.props.setLongitude(event.coordinate[0]);
     this.addMarker(event.coordinate);
-    /*
+
+  };
+
+  render() {
+    return null;
+  }
+}*/
+
+function Vector(props:TVectorLayerComponentProps){
+  let source: VectorSource=new VectorSource({
+    features: undefined,
+  });
+
+  let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
+    source: source,
+  });
+
+  let lastMarker: Feature<Point>= new Feature({
+    geometry: new Point([0,0]),
+  });
+
+
+
+  const addMarker=(coordinate: Coordinate)=>{
     const featureToAdd = new Feature({
-      geometry: new Point(event.coordinate),
+      geometry: new Point(coordinate),
     });
     const style = new Style({
       image: new Icon({
         src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
         anchor:[0.5,0]
       })
-      /*
-        image: new Circle({
-        radius: 6,
-        fill: new Fill({color: 'red'}),
-        stroke: new Stroke({
-          color: [0,0,0], width: 2
-        })
-      */
-    /*});
+
+    });
     featureToAdd.setStyle(style);    
-    this.source.addFeatures([featureToAdd]);*/
+    source.addFeatures([featureToAdd]);
+    lastMarker = featureToAdd;
+
+  }
+
+  const  onMapClick = (event: MapBrowserEvent<UIEvent>) => {
+
+    props.setIsNew(true);
+    props.setIsOpen(true);
+
+    props.setLatitude(event.coordinate[1]);
+    props.setLongitude(event.coordinate[0]);
+    addMarker(event.coordinate);
+
   };
 
-  render() {
-    return null;
+
+  const getMarkers=async() =>{
+    await getPlacesByUser(props.webId).then((p)=>{
+      var coordinates:number[];
+      for(let i = 0;i<p.length;i++){
+         coordinates= [p[i].longitude,p[i].latitude];
+         addMarker(coordinates);
+  
+      }
+      
+
+    });
   }
+
+
+  //When map is first rendered
+  useEffect(()=>{    
+        props.map.addLayer(layer);
+        props.map.on("singleclick", onMapClick);
+        getMarkers();
+  },[])
+
+  //Remove last marker
+  useEffect(()=>{   
+    
+    if(props.removeMarker){
+      alert(source.getFeatures().length)
+      source.removeFeature(lastMarker) 
+      alert(source.getFeatures().length)
+    } 
+    
+  },[props.updateMap])
+
+  return null;
+  
+
+  
 }
 
 export const VectorLayerWithContext = (props: TVectorLayerProps) => {
@@ -144,7 +209,7 @@ export const VectorLayerWithContext = (props: TVectorLayerProps) => {
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
           //console.log(mapContext);
-          return <VectorLayerComponent {...props} map={mapContext.map} />;
+          return <Vector {...props} map={mapContext.map} />;
         }
       }}
     </MapContext.Consumer>

@@ -21,6 +21,7 @@ import { useSession} from "@inrupt/solid-ui-react";
 import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
 
 type InfoWindowProps = {
+  changePlace:number,
   avg:number;
   refreshScores:(place: string) => Promise<void>;
   infoWindowData:{
@@ -83,16 +84,16 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
     props.refreshScores(props.infoWindowData.id);
   }
 
-
-
-
-
-
   
 
+
+  //Update comment list when a new place is added
   useEffect(()=>{
-    refreshCommentList();
-  },[]);
+    refreshCommentList()
+  },[props.changePlace]);
+
+
+
 
 
       return (
@@ -129,7 +130,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"} changePlace={props.changePlace}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>

@@ -5,7 +5,7 @@ import SlidingPane from "react-sliding-pane";
 import { useState, useEffect } from 'react';
 import "../../App.css";
 import { FilterList, IVisibility } from './FilterList';
-import { CreatePlaceWindow } from './CreatePlaceWindow';
+import CreatePlaceWindow  from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map/map';
 import { Score } from '../../domain/Score';
 import { getPlaces, getPlacesByUser, getScores } from '../../api/api';
@@ -18,6 +18,13 @@ export default function MapView():JSX.Element{
 
   const { session } = useSession();
   var webId = session.info.webId as string;
+  const[removeMarker, setRemoveMarker]=useState(false); //To control when to remove a marker from the map automatically
+  const[addedPlace, setAddedPlace]=useState(false); //To control when to remove a marker from the map automatically
+
+  //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
+  const[updateMap, setUpdateMap]=useState(0);
+  const[changePlace, setChangePlace]=useState(0);
+  const[newPlace, setNewPlace]=useState(0);
 
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
@@ -61,6 +68,12 @@ export default function MapView():JSX.Element{
   }
 
 
+  //When th
+  useEffect(()=>{
+    
+  },[newPlace])
+
+
 
 
 
@@ -73,8 +86,8 @@ export default function MapView():JSX.Element{
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew}
-                 visibility={visibility.value} setIsOpen={setIsOpen} refreshScores={refreshScores}/>
+                <MySideBar setInfoWindowData={setInfoWindowData} setIsNew={setIsNew} setChangePlace={setChangePlace} changePlace={changePlace}
+                 visibility={visibility.value} setIsOpen={setIsOpen} refreshScores={refreshScores} newPlace={newPlace}/>
           </ProSidebarProvider>
         </div>
 
@@ -84,7 +97,8 @@ export default function MapView():JSX.Element{
          
 
           <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} 
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}/>
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}
+          removeMarker={removeMarker} updateMap={updateMap}/>
           
       </div>
 
@@ -94,14 +108,22 @@ export default function MapView():JSX.Element{
         <SlidingPane 
             isOpen={isOpen}
             onRequestClose={() => {
-                setIsOpen(false)
+                setIsOpen(false);
+                setUpdateMap(updateMap+1);//These will force the useEffect hook of vector.tsx to execute
+                //If a place was not added, when closing setRemoveMarker(true)
+                setRemoveMarker(!addedPlace);
+
+                setAddedPlace(false);
+
+                
             }}
             width="70vh"
             className='info-window'
             overlayClassName='info-window'
             >
-          {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude}/>:
-           <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg}/>}
+          {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
+          setAddedPlace={setAddedPlace}/>:
+           <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg} changePlace={changePlace}/>}
             
                           
         </SlidingPane>

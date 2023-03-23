@@ -14,20 +14,25 @@ import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { useSession} from "@inrupt/solid-ui-react";
 
-export interface ICreatePlaceWindowData{
+export interface CreatePlaceWindowProps{
   latitude:number,
-  longitude:number
+  longitude:number,
+  setNewPlace:React.Dispatch<React.SetStateAction<number>>
+  newPlace:number,
+  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>
+
+  
 }
 
 
-export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longitude}) =>{
+export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.Element {
 
   const { session } = useSession();
   var webId = session.info.webId as string;
 
 
   const [name, setName] = useState('');
-  //const [text, setText] = useState('');
+  const [showError, setShowError] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
@@ -37,25 +42,46 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    var place = new Place("",name,webId,PlaceVisibility.USER,latitude,longitude);
-    let result:boolean = await addPlace(place);
-    if (result){
-      setNotificationStatus(true);
-      setNotification({ 
-        severity:'success',
-        message:'You new place has been added!'
-      });
-      //Notify the change to the parent component
-      //props.OnCommentListChange();
+    if(validateText()){
+        var place = new Place("",name,webId,PlaceVisibility.USER,props.latitude,props.longitude);
+        let result:boolean = await addPlace(place);
+        if (result){
+          props.setNewPlace(props.newPlace+1); //New place is increased when a place is added
+          setNotificationStatus(true);
+          setNotification({ 
+            severity:'success',
+            message:'You new place has been added!'
+          });
+          //Notify the change to the parent component
+          //props.OnCommentListChange();
+          props.setAddedPlace(true);
+        }
+        else{
+          setNotificationStatus(true);
+          setNotification({ 
+            severity:'error',
+            message:'There\'s been an error adding your place.'
+          });
+          props.setAddedPlace(false);
+        }
     }
-    else{
-      setNotificationStatus(true);
-      setNotification({ 
-        severity:'error',
-        message:'There\'s been an error adding your place.'
-      });
-    }
+
+
+    
   }
+
+
+  const validateText =()=>{
+      if(name.trim().length===0){
+          setShowError(true);
+          return false;
+      }else{
+          setShowError(false);
+          return true;
+      }
+
+  }
+
   
       return (
   
@@ -68,6 +94,8 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
                 <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto',}}></Box>
             </Grid>
             <TextField
+              error ={showError}
+              helperText = {"Invalid name"}
               required
               name="text"
               label="Write the name of your new place" 
@@ -79,7 +107,7 @@ export const CreatePlaceWindow:React.FC<ICreatePlaceWindowData>=({latitude,longi
               }}
               
             />
-            <Button variant="contained" type="submit">Add place</Button>
+            <Button variant="contained" type="submit" >Add place</Button>
           </Grid>
   
   

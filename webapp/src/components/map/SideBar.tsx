@@ -6,7 +6,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
 import { useSession } from "@inrupt/solid-ui-react";
@@ -17,11 +17,14 @@ type SideBarProps = {
     title: string; //The name of the place to show
     latitude: number;
     longitude:number;
-  }>>
-  setIsNew:React.Dispatch<React.SetStateAction<boolean>>
-  visibility:string
-  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
-  refreshScores:(place: string) => Promise<void>;
+  }>>,
+  setIsNew:React.Dispatch<React.SetStateAction<boolean>>,
+  visibility:string,
+  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>,
+  refreshScores:(place: string) => Promise<void>,
+  newPlace: number,
+  changePlace:number,
+  setChangePlace:React.Dispatch<React.SetStateAction<number>>
 }
 
 const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
@@ -39,7 +42,10 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   }
 
 
-  
+  //Update place list when a new place is added
+  useEffect(()=>{
+    refreshPlaceList()
+  },[props.newPlace]);
 
 
   //Style must be in-line; does not work otherwise
@@ -58,7 +64,9 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
             {" "}
             <h2>LoMap</h2>
           </MenuItem>
-          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>refreshPlaceList()}> 
+          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>{refreshPlaceList();}
+          
+          }> 
 
                 {places.map((place, index,array) => (
                   
@@ -76,6 +84,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     props.setIsNew(false);
                     props.setIsOpen(true);
                     props.refreshScores(place.id);
+                    props.setChangePlace(props.changePlace+1);
                   }}
 
                   >{place.name}</MenuItem>
