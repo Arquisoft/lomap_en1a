@@ -42,17 +42,20 @@ export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
         aria-label="filters"
         
       >
-        <ToggleButton value="FULL" aria-label="filter full" style = {buttonStyle}>
-          Show All
+        <ToggleButton value="" aria-label="filter full" style = {buttonStyle}>
+          Show all
         </ToggleButton>
-        <ToggleButton value="USER" aria-label="filter user" style = {buttonStyle}>
-          Filter by User
+        <ToggleButton value="FULL" aria-label="filter full" style = {buttonStyle}>
+          Filter by Full
         </ToggleButton>
         <ToggleButton value="GROUP" aria-label="filter group" style = {buttonStyle}>
           Filter by Group
         </ToggleButton>
         <ToggleButton value="FRIENDS" aria-label="filter friends" style = {buttonStyle}>
           Filter by Friends
+        </ToggleButton>
+        <ToggleButton value="USER" aria-label="filter user" style = {buttonStyle}>
+          Filter by User
         </ToggleButton>
         
       </ToggleButtonGroup>
