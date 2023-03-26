@@ -21,13 +21,12 @@ h3{
 
 
 
-
-
 footer{
-  position: absolute;
+  z-index: 3;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  height: 2.5rem;
+  height: 11%;
   margin-top: 5em;
 }
 
@@ -40,8 +39,8 @@ footer{
 
 .map-view{
   display: grid;
-  grid-template-rows: [first]5em [second]21em[last] ;
-  grid-template-columns: [firstC]12em [secondC]30em[thirdC]21.3em[lastC] ;
+  grid-template-rows: [first]10% [second]90%[last] ;
+  grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC] ;
 }
 
 .filter-list{
@@ -61,6 +60,7 @@ footer{
 
 
 .side-bar{
+  z-index: 2;
   grid-row-start: first;
   grid-row-end:last;
   grid-column-start:firstC ;
@@ -82,6 +82,7 @@ footer{
 
 .info-window{
   color:black;
+  z-index: 3;
 }
 
 .background-image {
@@ -89,7 +90,8 @@ footer{
   background-position: center;
   background-size: cover;
   background-repeat:no-repeat ;
-  max-width: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
   background-color: #464646;
 }
 
@@ -100,9 +102,8 @@ footer{
   justify-content: space-between;
   align-items: stretch;
   gap: 2em;
-
+  width: 100%;
   font-size: 1em;
-  display: flex;
 
 }
 
