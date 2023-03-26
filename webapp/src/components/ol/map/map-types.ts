@@ -1,8 +1,6 @@
 import Map from "ol/Map";
 
 export type TMapProps = {
-  updateMap:number,
-  removeMarker:boolean,
   webId:string;
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude:React.Dispatch<React.SetStateAction<number>>;

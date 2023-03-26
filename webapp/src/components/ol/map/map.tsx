@@ -51,9 +51,8 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       <div className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
-            <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData} removeMarker={this.props.removeMarker}
-            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen} webId={this.props.webId}
-            updateMap={this.props.updateMap}/>
+            <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
+            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen} webId={this.props.webId}/>
           </MapContext.Provider>
         )}
       </div>

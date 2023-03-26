@@ -11,6 +11,7 @@ import { Score } from '../../domain/Score';
 import { getPlaces, getPlacesByUser, getScores } from '../../api/api';
 import { Place } from '../../domain/Place';
 import { useSession } from '@inrupt/solid-ui-react';
+import { deleteMarker } from '../ol/map/layers/vector/vector';
 
 
 
@@ -97,8 +98,7 @@ export default function MapView():JSX.Element{
          
 
           <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} 
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}
-          removeMarker={removeMarker} updateMap={updateMap}/>
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}/>
           
       </div>
 
@@ -111,8 +111,10 @@ export default function MapView():JSX.Element{
                 setIsOpen(false);
                 setUpdateMap(updateMap+1);//These will force the useEffect hook of vector.tsx to execute
                 //If a place was not added, when closing setRemoveMarker(true)
-                setRemoveMarker(!addedPlace);
-
+                if(!addedPlace){
+                  deleteMarker();
+                }
+                
                 setAddedPlace(false);
 
                 

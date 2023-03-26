@@ -11,10 +11,8 @@ import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { Place } from "../../../../../domain/Place";
 import { getPlacesByUser } from "../../../../../api/api";
 import { useEffect } from "react";
-
 /*class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
 
   source: VectorSource=new VectorSource({
@@ -120,22 +118,26 @@ import { useEffect } from "react";
   }
 }*/
 
+var source: VectorSource=new VectorSource({
+  features: undefined,
+});
+
+var counter = 0;
+var lastMarker = 0;
+
+
+export function deleteMarker(){
+  let marker = source.getFeatureById(lastMarker);
+  source.removeFeature(marker as Feature<Geometry>);
+}
+
 function Vector(props:TVectorLayerComponentProps){
-  let source: VectorSource=new VectorSource({
-    features: undefined,
-  });
 
   let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
     source: source,
   });
 
-  let lastMarker: Feature<Point>= new Feature({
-    geometry: new Point([0,0]),
-  });
-
-
-
-  const addMarker=(coordinate: Coordinate)=>{
+  const addMarker= (coordinate: Coordinate)=>{
     const featureToAdd = new Feature({
       geometry: new Point(coordinate),
     });
@@ -148,7 +150,9 @@ function Vector(props:TVectorLayerComponentProps){
     });
     featureToAdd.setStyle(style);    
     source.addFeatures([featureToAdd]);
-    lastMarker = featureToAdd;
+    featureToAdd.setId(counter);
+    lastMarker = counter;
+    counter++;
 
   }
 
@@ -160,8 +164,11 @@ function Vector(props:TVectorLayerComponentProps){
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
     addMarker(event.coordinate);
+  
 
   };
+
+
 
 
   const getMarkers=async() =>{
@@ -170,12 +177,14 @@ function Vector(props:TVectorLayerComponentProps){
       for(let i = 0;i<p.length;i++){
          coordinates= [p[i].longitude,p[i].latitude];
          addMarker(coordinates);
-  
       }
       
 
     });
   }
+  
+
+
 
 
   //When map is first rendered
@@ -185,16 +194,6 @@ function Vector(props:TVectorLayerComponentProps){
         getMarkers();
   },[])
 
-  //Remove last marker
-  useEffect(()=>{   
-    
-    if(props.removeMarker){
-      alert(source.getFeatures().length)
-      source.removeFeature(lastMarker) 
-      alert(source.getFeatures().length)
-    } 
-    
-  },[props.updateMap])
 
   return null;
   
