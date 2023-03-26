@@ -7,6 +7,7 @@ import { VectorLayer } from "./layers";
 import { TMapProps, IMapContext, TMapState } from "./map-types";
 import "ol/ol.css";
 import "../../../App.css";
+import { defaults } from 'ol/interaction';
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -26,6 +27,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
 
     const map = new Map({
       target: this.mapDivRef.current,
+      interactions : defaults({doubleClickZoom :false}),
       layers: [
         new TileLayer({
           source: new XYZ({
@@ -48,7 +50,7 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
 
   render() {
     return (
-      <div className="map" ref={this.mapDivRef}>
+      <div  className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
             <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}

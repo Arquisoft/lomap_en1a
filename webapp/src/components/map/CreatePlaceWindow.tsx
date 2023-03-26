@@ -60,7 +60,6 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             message:'You new place has been added!'
           });
           //Notify the change to the parent component
-          //props.OnCommentListChange();
           props.setAddedPlace(true);
         }
         else{
