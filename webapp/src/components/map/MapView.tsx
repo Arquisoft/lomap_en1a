@@ -30,7 +30,7 @@ export default function MapView():JSX.Element{
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
   const [visibility, setVisibility] = useState({
-    value:"FULL"
+    value:""
   });
   const[isNew, setIsNew]=useState(false); //True if it is a new place to add, false if it is already a place in the map
   const[isOpen, setIsOpen]=useState(false);
