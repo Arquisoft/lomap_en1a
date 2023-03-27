@@ -156,7 +156,7 @@ function Vector(props:TVectorLayerComponentProps){
 
   }
 
-  const  onMapClick = (event: MapBrowserEvent<UIEvent>) => {
+  const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
     props.setIsNew(true);
     props.setIsOpen(true);
