@@ -4,6 +4,7 @@ import {ToggleButtonGroup} from "@mui/material";
 import { createTheme } from '@mui/material/styles';
 import { useState } from "react";
 import { PlaceVisibility } from "../../domain/Visibility";
+import { refreshMarkers } from "../ol/map/layers/vector/vector";
 
 export interface IVisibility{
   setVisibility:React.Dispatch<React.SetStateAction<{
@@ -22,14 +23,14 @@ const buttonStyle={
 }
 
 export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
-  const [isSelected, setIsSelected] = useState([false, false, false, false]);
-
 
   const handleVisibility = (
     event: React.MouseEvent<HTMLElement>,
     newVisibility: string
   ) => {
     setVisibility({value: newVisibility});
+    //FIXME: refreshMarkers causing problems when logging in
+    refreshMarkers(newVisibility);
   };
 
   return (

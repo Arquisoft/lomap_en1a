@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -125,10 +125,86 @@ var source: VectorSource=new VectorSource({
 });
 
 var lastMarker = new Feature();
+var webId = "";
+
+const getMarkers=async (visibilityLevel: string) =>{
+  if (visibilityLevel === "") {
+    await getPlacesByUser(webId).then((p)=>{
+      var coordinates:number[];
+      for(let i = 0;i<p.length;i++){
+        coordinates= [p[i].longitude,p[i].latitude];
+        var visibility=p[i].visibility;
+        addMarker(coordinates, visibility);
+      }
+    });
+  } else {
+    await getPlaces(webId, visibilityLevel).then((p)=>{
+      var coordinates:number[];
+      var visibility = visibilityLevel;
+      for(let i = 0;i<p.length;i++){
+        coordinates= [p[i].longitude,p[i].latitude];
+        visibility=p[i].visibility;
+        addMarker(coordinates, visibility);
+      }
+    });
+  }
+}
+
+const addMarker= (coordinate: Coordinate, visibility: string)=>{
+
+  const featureToAdd = new Feature({
+    geometry: new Point(coordinate),
+    name: "feature"
+  });
+
+  var color;
+
+  switch (visibility) {
+    case "USER":
+      color = 'rgb(255, 0, 0)';
+      break;
+    
+    case "GROUP":
+      color = 'rgb(0, 255, 0)';
+      break;
+
+    case "FRIENDS":
+      color = 'rgb(0, 0, 255)';
+      break;
+    
+    case "FULL":
+      color = 'rgb(127, 127, 127)';
+      break;
+  }
+
+  const style = new Style({
+    image: new Icon({
+      color: color,
+      src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+      anchor:[0.5,0]
+    })
+  
+
+  });
+  featureToAdd.setStyle(style);   
+  source.addFeatures([featureToAdd]);
+  //featureToAdd.setId();
+  lastMarker = featureToAdd;
+
+}
 
 
 export function deleteMarker(){
   source.removeFeature(lastMarker);
+}
+
+export function refreshMarkers(visibility: string) {
+  while (source.getFeatures().length > 0) {
+    var pos = source.getFeatures().length - 1;
+    source.removeFeature(source.getFeatures()[pos]);
+  }
+
+  getMarkers(visibility)
 }
 
 function Vector(props:TVectorLayerComponentProps){
@@ -138,48 +214,6 @@ function Vector(props:TVectorLayerComponentProps){
     source: source,
   });
 
-  const addMarker= (coordinate: Coordinate, visibility: string)=>{
-
-    const featureToAdd = new Feature({
-      geometry: new Point(coordinate),
-      name: "feature"
-    });
-
-    var color;
-
-    switch (visibility) {
-      case "USER":
-        color = 'rgb(255, 0, 0)';
-        break;
-      
-      case "GROUP":
-        color = 'rgb(0, 255, 0)';
-        break;
-
-      case "FRIENDS":
-        color = 'rgb(0, 0, 255)';
-        break;
-      
-      case "FULL":
-        color = 'rgb(127, 127, 127)';
-        break;
-    }
-
-    const style = new Style({
-      image: new Icon({
-        color: color,
-        src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
-        anchor:[0.5,0]
-      })
-    
-
-    });
-    featureToAdd.setStyle(style);   
-    source.addFeatures([featureToAdd]);
-    //featureToAdd.setId();
-    lastMarker = featureToAdd;
-
-  }
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
@@ -194,24 +228,7 @@ function Vector(props:TVectorLayerComponentProps){
 
 
 
-  const getMarkers=async() =>{
-    if (props.visibility.value === "") {
-      await getPlacesByUser(props.webId).then((p)=>{
-        var coordinates:number[];
-        var visibility = props.visibility.value;
-        for(let i = 0;i<p.length;i++){
-          coordinates= [p[i].longitude,p[i].latitude];
-          visibility=p[i].visibility;
-          addMarker(coordinates, visibility);
-        }
-        
-
-      });
-    } else {
-      // Hay que pasar la visibility al getPlaces de alguna forma
-      await getPlaces(props.webId)
-    }
-  }
+  
 
   const onMarkerClick=async(feature:FeatureLike)=>{
                 
@@ -238,7 +255,8 @@ function Vector(props:TVectorLayerComponentProps){
 
 
   //When map is first rendered
-  useEffect(()=>{   
+  useEffect(()=>{
+        webId = props.webId;   
         props.map.addLayer(layer);
         props.map.on("dblclick", onMapClick);
         props.map.on('singleclick', function (e) {  
@@ -250,7 +268,7 @@ function Vector(props:TVectorLayerComponentProps){
         });
 
       
-        getMarkers();
+        getMarkers(props.visibility.value);
         
 
   },[])
