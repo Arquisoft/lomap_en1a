@@ -98,7 +98,7 @@ export default function MapView():JSX.Element{
          
 
           <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData} 
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId}/>
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId} visibility={visibility}/>
           
       </div>
 

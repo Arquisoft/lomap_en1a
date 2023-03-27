@@ -1,6 +1,9 @@
 import Map from "ol/Map";
 
 export type TMapProps = {
+  visibility: {
+    value: string;
+  }
   webId:string;
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude:React.Dispatch<React.SetStateAction<number>>;

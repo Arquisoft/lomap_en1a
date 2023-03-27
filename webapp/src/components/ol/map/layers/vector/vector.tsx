@@ -11,7 +11,7 @@ import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaceDetails, getPlacesByUser } from "../../../../../api/api";
+import { getPlaceDetails, getPlaces, getPlacesByUser } from "../../../../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 
@@ -195,17 +195,22 @@ function Vector(props:TVectorLayerComponentProps){
 
 
   const getMarkers=async() =>{
-    await getPlacesByUser(props.webId).then((p)=>{
-      var coordinates:number[];
-      var visibility:string;
-      for(let i = 0;i<p.length;i++){
-         coordinates= [p[i].longitude,p[i].latitude];
-         visibility=p[i].visibility;
-         addMarker(coordinates, visibility);
-      }
-      
+    if (props.visibility.value === "") {
+      await getPlacesByUser(props.webId).then((p)=>{
+        var coordinates:number[];
+        var visibility = props.visibility.value;
+        for(let i = 0;i<p.length;i++){
+          coordinates= [p[i].longitude,p[i].latitude];
+          visibility=p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+        
 
-    });
+      });
+    } else {
+      // Hay que pasar la visibility al getPlaces de alguna forma
+      await getPlaces(props.webId)
+    }
   }
 
   const onMarkerClick=async(feature:FeatureLike)=>{
