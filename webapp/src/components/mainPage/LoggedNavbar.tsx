@@ -1,9 +1,9 @@
 
-import { Link, useMatch, useResolvedPath,To } from "react-router-dom";
+import { Link, useMatch, useResolvedPath, To } from "react-router-dom";
 import React from 'react';
 import logo from '../../images/logo.png';
 import { CustomLink } from "../CustomLink";
-import { Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { LogoutButton } from "@inrupt/solid-ui-react";
 
 
@@ -14,11 +14,8 @@ export default function LoggedNavbar() {
         <img src={logo} alt="Logo" id="logo_img"></img>
       </Link>
       <ul>
-        <CustomLink to="/map">TESTING PURPOSES</CustomLink>
         <LogoutButton>
-          <Button style={{ marginTop: 20 }} variant="contained" color="primary">
-            Logout
-          </Button>
+          <CustomLink to="/logout">Logout</CustomLink>
         </LogoutButton>
       </ul>
     </nav>
