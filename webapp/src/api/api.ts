@@ -92,9 +92,9 @@ export async function getPlacesByUser(id:string):Promise<Place[]>{
 }
 
 //Get a place
-export async function getPlaceDetails():Promise<Place[]>{
+export async function getPlaceDetails(id:string):Promise<Place[]>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint+'/place/details');
+  let response = await fetch(apiEndPoint+'/place/details/'+id);
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }

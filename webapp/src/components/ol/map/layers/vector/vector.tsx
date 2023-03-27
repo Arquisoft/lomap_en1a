@@ -11,8 +11,10 @@ import { TVectorLayerProps, TVectorLayerComponentProps } from "./vector-types";
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlacesByUser } from "../../../../../api/api";
+import { getPlaceDetails, getPlacesByUser } from "../../../../../api/api";
 import { useEffect } from "react";
+import { FeatureLike } from "ol/Feature";
+
 /*class VectorLayerComponent extends React.PureComponent<TVectorLayerComponentProps> {
 
   source: VectorSource=new VectorSource({
@@ -122,37 +124,38 @@ var source: VectorSource=new VectorSource({
   features: undefined,
 });
 
-var counter = 0;
-var lastMarker = 0;
+var lastMarker = new Feature();
 
 
 export function deleteMarker(){
-  let marker = source.getFeatureById(lastMarker);
-  source.removeFeature(marker as Feature<Geometry>);
+  source.removeFeature(lastMarker);
 }
 
 function Vector(props:TVectorLayerComponentProps){
+
 
   let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
     source: source,
   });
 
   const addMarker= (coordinate: Coordinate)=>{
+
     const featureToAdd = new Feature({
       geometry: new Point(coordinate),
+      name: "feature"
     });
     const style = new Style({
       image: new Icon({
         src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
         anchor:[0.5,0]
       })
+    
 
     });
-    featureToAdd.setStyle(style);    
+    featureToAdd.setStyle(style);   
     source.addFeatures([featureToAdd]);
-    featureToAdd.setId(counter);
-    lastMarker = counter;
-    counter++;
+    //featureToAdd.setId();
+    lastMarker = featureToAdd;
 
   }
 
@@ -182,17 +185,50 @@ function Vector(props:TVectorLayerComponentProps){
 
     });
   }
+
+  const onMarkerClick=async(feature:FeatureLike)=>{
+                
+    let f =feature as Feature<Point>;
+    props.setIsOpen(true);
+    props.setIsNew(false);
+    let id = f.getId() as string;
+
+    await getPlaceDetails(id).then((p)=>{
+      let place = p[0];
+      props.setInfoWindowData({
+        id:id,
+        title:place.name,
+        latitude: place.latitude,
+        longitude:place.longitude
+      });
+    })
+
+  }
+
   
 
 
 
 
   //When map is first rendered
-  useEffect(()=>{    
+  useEffect(()=>{   
         props.map.addLayer(layer);
-        props.map.on("singleclick", onMapClick);
+        props.map.on("dblclick", onMapClick);
+        props.map.on('singleclick', function (e) {  
+          props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+            //NO FUNCIONA AUN
+           // onMarkerClick(feature);
+            
+          })
+        });
+
+      
         getMarkers();
+        
+
   },[])
+
+  
 
 
   return null;

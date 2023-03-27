@@ -18,9 +18,10 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 export interface CreatePlaceWindowProps{
   latitude:number,
   longitude:number,
-  setNewPlace:React.Dispatch<React.SetStateAction<number>>
+  setNewPlace:React.Dispatch<React.SetStateAction<number>>,
   newPlace:number,
-  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>
+  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 
   
 }
@@ -59,9 +60,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             severity:'success',
             message:'You new place has been added!'
           });
-          //Notify the change to the parent component
-          //props.OnCommentListChange();
-          props.setAddedPlace(true);
+          props.setAddedPlace(true); //A place was added
+          props.setIsOpen(false); //Close the create place window automatically
         }
         else{
           setNotificationStatus(true);
