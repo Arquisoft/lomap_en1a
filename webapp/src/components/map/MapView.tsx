@@ -124,7 +124,7 @@ export default function MapView():JSX.Element{
             overlayClassName='info-window'
             >
           {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
-          setAddedPlace={setAddedPlace}/>:
+          setAddedPlace={setAddedPlace} setIsOpen={setIsOpen}/>:
            <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg} changePlace={changePlace}/>}
             
                           
