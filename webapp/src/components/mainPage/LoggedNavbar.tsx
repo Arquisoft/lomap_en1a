@@ -5,6 +5,8 @@ import logo from '../../images/logo.png';
 import { CustomLink } from "../CustomLink";
 import { Button} from "@material-ui/core";
 import { LogoutButton } from "@inrupt/solid-ui-react";
+import Profile from "./Profile";
+import { User } from "../../domain/User";
 
 
 export default function LoggedNavbar() {
@@ -20,6 +22,7 @@ export default function LoggedNavbar() {
             Logout
           </Button>
         </LogoutButton>
+        <Profile user={new User("1", "hello", "pod")}></Profile>
       </ul>
     </nav>
   )

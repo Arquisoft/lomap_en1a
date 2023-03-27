@@ -98,7 +98,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
 
       return (
   
-  
+
         <>
           <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
             
