@@ -138,14 +138,36 @@ function Vector(props:TVectorLayerComponentProps){
     source: source,
   });
 
-  const addMarker= (coordinate: Coordinate)=>{
+  const addMarker= (coordinate: Coordinate, visibility: string)=>{
 
     const featureToAdd = new Feature({
       geometry: new Point(coordinate),
       name: "feature"
     });
+
+    var color;
+
+    switch (visibility) {
+      case "USER":
+        color = 'rgb(255, 0, 0)';
+        break;
+      
+      case "GROUP":
+        color = 'rgb(0, 255, 0)';
+        break;
+
+      case "FRIENDS":
+        color = 'rgb(0, 0, 255)';
+        break;
+      
+      case "FULL":
+        color = 'rgb(127, 127, 127)';
+        break;
+    }
+
     const style = new Style({
       image: new Icon({
+        color: color,
         src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
         anchor:[0.5,0]
       })
@@ -166,9 +188,7 @@ function Vector(props:TVectorLayerComponentProps){
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate);
-  
-
+    addMarker(event.coordinate, "USER");
   };
 
 
@@ -177,9 +197,11 @@ function Vector(props:TVectorLayerComponentProps){
   const getMarkers=async() =>{
     await getPlacesByUser(props.webId).then((p)=>{
       var coordinates:number[];
+      var visibility:string;
       for(let i = 0;i<p.length;i++){
          coordinates= [p[i].longitude,p[i].latitude];
-         addMarker(coordinates);
+         visibility=p[i].visibility;
+         addMarker(coordinates, visibility);
       }
       
 
