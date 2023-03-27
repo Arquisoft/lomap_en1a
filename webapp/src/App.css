@@ -39,7 +39,7 @@ footer{
 
 .map-view{
   display: grid;
-  grid-template-rows: [first]10% [second]90%[last] ;
+  grid-template-rows: [first]10% [second]100%[last] ;
   grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC] ;
 }
 
