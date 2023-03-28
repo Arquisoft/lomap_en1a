@@ -16,11 +16,7 @@ export default function LoggedNavbar() {
         <img src={logo} alt="Logo" id="logo_img"></img>
       </Link>
       <ul>
-        <li>
-          <LogoutButton>
-            <CustomLink to="/logout">Logout</CustomLink>
-          </LogoutButton>
-        </li>
+        <li><Profile></Profile></li>
       </ul>
     </nav>
   )

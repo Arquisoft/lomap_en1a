@@ -146,11 +146,11 @@ footer{
 }
 
 
-.menu > li.active {
+.menu ul > li.active {
   background-color: #555;
 }
 
-.menu > li:hover {
+.menu ul > li:not(.noHover):hover {
   background-color: #777;
 }
 
@@ -295,7 +295,9 @@ a {
   font-size: 14px;
 }
 
-
+.menu-container:hover  {
+  background-color: #333;
+}
 
 .dropdown-menu.active {
   opacity: 1;
@@ -359,6 +361,10 @@ h3 span {
   margin-left: 10px;
   transition: var(--speed);
   color: var(--secondary-text-color);
+}
+
+.dropdownItem:hover {
+  background-color: #fff;
 }
 
 
