@@ -1,6 +1,5 @@
 import { Place } from "../../domain/Place";
 import { Score } from "../../domain/Score";
-import { User } from "../../domain/User";
 
 export interface ScoreRepository {
 

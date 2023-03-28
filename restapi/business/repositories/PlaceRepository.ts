@@ -1,6 +1,5 @@
 import { Place } from "../../domain/Place";
 import { PlaceVisibility } from "../../domain/Visibility";
-import { User } from "../../domain/User";
 
 export interface PlaceRepository {
 

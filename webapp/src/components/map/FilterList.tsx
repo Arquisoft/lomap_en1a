@@ -1,9 +1,7 @@
 import "../../App.css";
 import { ToggleButton } from "@mui/material";
 import {ToggleButtonGroup} from "@mui/material";
-import { createTheme } from '@mui/material/styles';
 import { useState } from "react";
-import { PlaceVisibility } from "../../domain/Visibility";
 
 export interface IVisibility{
   setVisibility:React.Dispatch<React.SetStateAction<{

@@ -7,7 +7,6 @@ import { v4 as generateUUID } from 'uuid';
 import { Score } from "../../domain/Score";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
 import { UserRepository } from "../repositories/UserRepository";
-import { User } from "../../domain/User";
 import { Place } from "../../domain/Place";
 import { PlaceRepository } from "../repositories/PlaceRepository";
 

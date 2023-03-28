@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import { UserRepository } from "../business/repositories/UserRepository";
 import { User } from "../domain/User";
 import { MySql } from "../src/persistence/db/MySql";

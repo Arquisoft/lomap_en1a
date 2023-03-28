@@ -1,9 +1,6 @@
 import { Place } from "../../domain/Place";
 import { PlaceVisibility } from "../../domain/Visibility";
-import { CommentDto } from "../../domain/dtos/CommentDto";
-import { PictureDto } from "../../domain/dtos/PictureDto";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { ScoreDto } from "../../domain/dtos/ScoreDto";
 import { UserDto } from "../../domain/dtos/UserDto";
 
 export interface PlaceService {

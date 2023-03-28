@@ -1,8 +1,6 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
 import { Place } from "../domain/Place";
-import { User } from "../domain/User";
 import { Picture } from "../domain/Picture";
-import { PlaceVisibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 

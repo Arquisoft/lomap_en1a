@@ -6,10 +6,8 @@ import { CommentService } from "./CommentService";
 import { v4 as generateUUID } from 'uuid';
 import { Comment } from "../../domain/Comment";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { UserRepository } from "../repositories/UserRepository";
 import { PlaceRepository } from "../repositories/PlaceRepository";
-import { Place } from "../../domain/Place";
-import { resolve } from "path";
+
 
 export class CommentServiceImpl implements CommentService {
 

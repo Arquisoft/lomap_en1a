@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import { NotificationType } from './CommentForm';
 import Alert from '@mui/material/Alert';
-import { User } from '../../domain/User';
 import { addPlace } from '../../api/api';
 import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';

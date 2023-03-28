@@ -1,5 +1,5 @@
 import { Repository } from "../Repository";
-import { User } from "../../domain/User";
+import { User } from "../../../domain/User";
 
 export class UserRepository implements Repository<User>{
     get(id: String): User {

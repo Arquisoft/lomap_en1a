@@ -1,8 +1,5 @@
 import { CommentRepository } from "../business/repositories/CommentRepository";
 import { Comment } from "../domain/Comment";
-import { Place } from "../domain/Place";
-import { User } from "../domain/User";
-import { PlaceVisibility } from "../domain/Visibility";
 import { MySql } from "../src/persistence/db/MySql";
 
 export class CommentRepositoryImpl implements CommentRepository {
