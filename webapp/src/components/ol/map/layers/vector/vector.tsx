@@ -238,12 +238,10 @@ function Vector(props:TVectorLayerComponentProps){
 }
 
 export const VectorLayerWithContext = (props: TVectorLayerProps) => {
- // console.log(props);
   return (
     <MapContext.Consumer>
       {(mapContext: IMapContext | void) => {
         if (mapContext) {
-          //console.log(mapContext);
           return <Vector {...props} map={mapContext.map} />;
         }
       }}

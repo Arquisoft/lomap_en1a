@@ -1,6 +1,4 @@
 import { BaseEntity } from "./BaseEntity";
-import { Place } from "./Place";
-import { User } from "./User";
 
 export abstract class Review extends BaseEntity {
 

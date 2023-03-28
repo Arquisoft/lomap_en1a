@@ -1,5 +1,4 @@
 import { BaseEntity } from "./BaseEntity";
-import { User } from "./User";
 import { GroupVisibility } from "./Visibility";
 
 export class Group extends BaseEntity {

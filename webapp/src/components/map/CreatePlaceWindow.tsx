@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import { NotificationType } from './CommentForm';
 import Alert from '@mui/material/Alert';
-import { User } from '../../domain/User';
 import { addPlace } from '../../api/api';
 import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
@@ -18,9 +17,10 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 export interface CreatePlaceWindowProps{
   latitude:number,
   longitude:number,
-  setNewPlace:React.Dispatch<React.SetStateAction<number>>
+  setNewPlace:React.Dispatch<React.SetStateAction<number>>,
   newPlace:number,
-  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>
+  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 
   
 }
@@ -59,8 +59,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             severity:'success',
             message:'You new place has been added!'
           });
-          //Notify the change to the parent component
-          props.setAddedPlace(true);
+          props.setAddedPlace(true); //A place was added
+          props.setIsOpen(false); //Close the create place window automatically
         }
         else{
           setNotificationStatus(true);

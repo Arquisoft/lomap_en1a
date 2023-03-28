@@ -1,5 +1,4 @@
 import { BaseEntity } from "./BaseEntity";
-import { User } from "./User";
 import { PlaceVisibility } from "./Visibility";
 
 export class Place extends BaseEntity {
