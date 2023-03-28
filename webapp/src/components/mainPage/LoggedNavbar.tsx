@@ -16,7 +16,6 @@ export default function LoggedNavbar() {
         <img src={logo} alt="Logo" id="logo_img"></img>
       </Link>
       <ul>
-        <CustomLink to="/map">TESTING PURPOSES</CustomLink>
         <LogoutButton>
           <Button style={{ marginTop: 20 }} variant="contained" color="primary">
             Logout
