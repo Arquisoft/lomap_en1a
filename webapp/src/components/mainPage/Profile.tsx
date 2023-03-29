@@ -37,20 +37,20 @@ export default function Profile(props: UserProps): JSX.Element {
 
 function DropdownItem(props: { img: string, text: string, linkTo: To }) {
     return (
-        <>
+        <ul>
             <li className="dropdownItem">
                 <img src={props.img} alt="icon"></img>
                 <div className="dropdown-links">
                     <CustomLink to={props.linkTo}>{props.text}</CustomLink>
                 </div>
             </li>
-        </>
+        </ul>
     )
 }
 
 function DropdownItemLogout() {
     return (
-        <>
+        <ul>
             <li className="dropdownItem">
                 <img src={log_out} alt="icon"></img>
                 <div className="dropdown-links">
@@ -59,6 +59,6 @@ function DropdownItemLogout() {
                     </LogoutButton>
                 </div>
             </li>
-        </>
+        </ul>
     )
 }

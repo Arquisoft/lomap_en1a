@@ -107,13 +107,26 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid>
 
            <Grid item xs={6}>
-           <Rating
-                name="simple-controlled"
-                value={value}
-                onChange={(event,value)=>{
-                  refreshScoresAfterAdding(value as number);
-                }}
-              />
+            <Box
+              sx={{
+                width: 200,
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                  <Rating
+                    precision={0.5}
+                    name="rating"
+                    size="large"
+                    value={value}
+                    onChange={(event,value)=>{
+                      setValue(value as number);
+                      refreshScoresAfterAdding(value as number);
+                    }}
+                  />
+                  {value !== null && (
+                      <Box sx={{ ml: 2 }}>{value+"/5"}</Box>
+                  )}
+              </Box>
             </Grid> 
 
             <Grid item xs={3}>
