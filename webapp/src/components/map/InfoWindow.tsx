@@ -13,6 +13,7 @@ import { Score } from '../../domain/Score';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
+import Rating from '@mui/material/Rating';
 
 type InfoWindowProps = {
   changePlace:number,
@@ -39,6 +40,10 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
   
   //For the comments
   const [comments,setComments] = useState<Comment[]>([]);
+
+
+  //For the rating
+  const [value,setValue] = useState(0);
 
 
 
@@ -102,6 +107,13 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid>
 
            <Grid item xs={6}>
+           <Rating
+                name="simple-controlled"
+                value={value}
+                onChange={(event,value)=>{
+                  refreshScoresAfterAdding(value as number);
+                }}
+              />
             </Grid> 
 
             <Grid item xs={3}>
