@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../images/new_Place.png";
-import "../../App.css";
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';

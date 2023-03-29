@@ -3,7 +3,6 @@ import { Link} from "react-router-dom";
 import React from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
-import { User } from "../../domain/User";
 
 
 export default function LoggedNavbar() {

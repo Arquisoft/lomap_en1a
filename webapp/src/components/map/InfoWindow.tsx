@@ -7,7 +7,6 @@ import { getComments} from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
-import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
 import { NotificationType } from './CommentForm';

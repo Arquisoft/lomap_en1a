@@ -3,13 +3,12 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
 import { useState, useEffect } from 'react';
-import "../../App.css";
 import { FilterList} from './FilterList';
 import CreatePlaceWindow  from './CreatePlaceWindow';
-import { MapComponent } from '../ol/map/map';
+import { MapComponent } from '../ol/map';
 import { getScores } from '../../api/api';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deleteMarker } from '../ol/map/layers/vector/vector';
+import { deleteMarker } from '../ol/vector';
 
 
 
