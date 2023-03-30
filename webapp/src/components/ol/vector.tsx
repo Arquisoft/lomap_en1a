@@ -21,6 +21,7 @@ var source: VectorSource=new VectorSource({
 
 var lastMarker = new Feature();
 var webId = "";
+var currentVisibility="";
 
 const getMarkers=async (visibilityLevel: string) =>{
   if (visibilityLevel === "") {
@@ -83,7 +84,6 @@ const addMarker= (coordinate: Coordinate, visibility: string)=>{
   });
   featureToAdd.setStyle(style);   
   source.addFeatures([featureToAdd]);
-  //featureToAdd.setId();
   lastMarker = featureToAdd;
 
 }
@@ -93,13 +93,13 @@ export function deleteMarker(){
   source.removeFeature(lastMarker);
 }
 
-export function refreshMarkers(visibility: string) {
-  while (source.getFeatures().length > 0) {
-    var pos = source.getFeatures().length - 1;
-    source.removeFeature(source.getFeatures()[pos]);
+export function refreshMarkers(visibility?: string) {
+  source.clear();
+  if (typeof visibility !== 'undefined') {
+    currentVisibility = visibility;
   }
-
-  getMarkers(visibility)
+  
+  getMarkers(currentVisibility)
 }
 
 function Vector(props:TVectorLayerComponentProps){
@@ -120,11 +120,6 @@ function Vector(props:TVectorLayerComponentProps){
     addMarker(event.coordinate, "USER");
   };
 
-
-
-
-  
-
   const onMarkerClick=async(feature:FeatureLike)=>{
                 
     let f =feature as Feature<Point>;
@@ -144,11 +139,6 @@ function Vector(props:TVectorLayerComponentProps){
 
   }
 
-  
-
-
-
-
   //When map is first rendered
   useEffect(()=>{
         webId = props.webId;   
@@ -162,19 +152,10 @@ function Vector(props:TVectorLayerComponentProps){
           })
         });
 
-      
         getMarkers(props.visibility);
-        
-
   },[])
 
-  
-
-
   return null;
-  
-
-  
 }
 
 export const VectorLayerWithContext = (props: TOpenLayersProps) => {

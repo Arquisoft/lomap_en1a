@@ -12,6 +12,7 @@ import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { useSession} from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { refreshMarkers } from '../ol/vector';
 
 export interface CreatePlaceWindowProps{
   latitude:number,
@@ -71,8 +72,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         }
     }
 
-
-    
+    refreshMarkers();    
   }
 
 
