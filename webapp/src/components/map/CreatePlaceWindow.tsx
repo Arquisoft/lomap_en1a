@@ -33,7 +33,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
   const [name, setName] = useState('');
-  const [visibility, setVisibility] = useState<PlaceVisibility>(PlaceVisibility.GROUP);
+  const [visibility, setVisibility] = useState<PlaceVisibility>(PlaceVisibility.FULL);
   const [showError, setShowError] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
