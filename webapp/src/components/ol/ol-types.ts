@@ -1,6 +1,7 @@
 import Map from "ol/Map";
+import Feature from "ol/Feature";
 
-export type TMapProps = {
+export type TOpenLayersProps = {
   webId:string;
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude:React.Dispatch<React.SetStateAction<number>>;
@@ -15,6 +16,13 @@ export type TMapProps = {
 }>>
 };
 
+export type TVectorLayerComponentProps = TOpenLayersProps & {
+  map: Map;
+  features?: Feature[];
+};
+
+
+
 export type TMapState = {
   mapContext?: IMapContext;
 };
@@ -22,3 +30,4 @@ export type TMapState = {
 export interface IMapContext {
   map: Map;
 }
+
