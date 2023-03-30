@@ -163,7 +163,7 @@ function Vector(props:TVectorLayerComponentProps){
         });
 
       
-        getMarkers(props.visibility.value);
+        getMarkers(props.visibility);
         
 
   },[])

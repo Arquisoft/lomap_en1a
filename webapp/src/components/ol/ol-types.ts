@@ -2,9 +2,7 @@ import Map from "ol/Map";
 import Feature from "ol/Feature";
 
 export type TOpenLayersProps = {
-  visibility: {
-    value: string;
-  }
+  visibility: string;
   webId:string;
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude:React.Dispatch<React.SetStateAction<number>>;
