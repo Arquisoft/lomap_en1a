@@ -42,6 +42,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
    getPlacesByUser(webId).then((places)=>setPlaces(places));
   }
 
+  const displayVisibility = (visibility:string) => {
+    if (visibility == null) {
+      return "";
+    } else {
+      return "Filtering by: " + visibility;
+    }
+  }
+
 
   //Update place list when a new place is added
   useEffect(()=>{
@@ -53,7 +61,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
     const { collapseSidebar } = useProSidebar();
     return (
-        <Sidebar style={{ height: "80vh" ,color:"black"}}> 
+        <Sidebar style={{ width: "15vw", height: "80vh" ,color:"black"}}> 
         <Menu 
         >
           <MenuItem
@@ -112,7 +120,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     props.setIsNew(false);
                     props.setIsOpen(true);
                   }}>PARA PRUEBAS</MenuItem>
-          <MenuItem>{props.visibility}</MenuItem>
+          <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
         </Menu>
       </Sidebar>
       
