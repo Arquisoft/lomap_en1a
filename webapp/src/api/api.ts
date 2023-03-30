@@ -2,7 +2,7 @@ import { Comment } from "../domain/Comment";
 import { Picture } from "../domain/Picture";
 import { Place } from "../domain/Place";
 import { Score } from "../domain/Score";
-import {CommentDto} from "../domain/dtos/CommentDto";
+
 
 
 //Comments----------------------------------------

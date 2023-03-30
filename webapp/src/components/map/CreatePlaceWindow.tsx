@@ -1,14 +1,12 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../images/new_Place.png";
-import "../../App.css";
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import { NotificationType } from './CommentForm';
 import Alert from '@mui/material/Alert';
-import { User } from '../../domain/User';
 import { addPlace } from '../../api/api';
 import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';

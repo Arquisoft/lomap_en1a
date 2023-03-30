@@ -7,7 +7,6 @@ import type { AlertColor } from '@mui/material/Alert';
 import { addComment } from '../../api/api';
 import Grid from '@mui/material/Grid';
 import { Comment } from '../../domain/Comment';
-import { useEffect } from 'react';
 
 type CommentFormProps = {
   OnCommentListChange: () => void;

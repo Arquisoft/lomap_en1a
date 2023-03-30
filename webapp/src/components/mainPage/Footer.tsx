@@ -1,4 +1,3 @@
-import { truncate } from "lodash";
 import { CustomLink } from "../CustomLink";
 
 

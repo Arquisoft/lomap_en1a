@@ -1,6 +1,5 @@
-import { Place } from "./Place";
+
 import { Review } from "./Review";
-import { User } from "./User";
 
 export class Score extends Review {
 

@@ -1,6 +1,5 @@
 import { Link, useMatch, useResolvedPath,To } from "react-router-dom";
 import React from 'react';
-import logo from '../../images/logo.png';
 
 interface Props {
     to:To;

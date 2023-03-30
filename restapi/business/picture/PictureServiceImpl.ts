@@ -6,8 +6,6 @@ import { PictureService } from "./PictureService";
 import { v4 as generateUUID } from 'uuid';
 import { Picture } from "../../domain/Picture";
 import { PlaceDto } from "../../domain/dtos/PlaceDto";
-import { User } from "../../domain/User";
-import { Place } from "../../domain/Place";
 import { UserRepository } from "../repositories/UserRepository";
 import { PlaceRepository } from "../repositories/PlaceRepository";
 

@@ -1,6 +1,7 @@
 import Map from "ol/Map";
+import Feature from "ol/Feature";
 
-export type TMapProps = {
+export type TOpenLayersProps = {
   visibility: {
     value: string;
   }
@@ -18,6 +19,13 @@ export type TMapProps = {
 }>>
 };
 
+export type TVectorLayerComponentProps = TOpenLayersProps & {
+  map: Map;
+  features?: Feature[];
+};
+
+
+
 export type TMapState = {
   mapContext?: IMapContext;
 };
@@ -25,3 +33,4 @@ export type TMapState = {
 export interface IMapContext {
   map: Map;
 }
+

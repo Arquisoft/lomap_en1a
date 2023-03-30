@@ -3,15 +3,12 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
 import { useState, useEffect } from 'react';
-import "../../App.css";
-import { FilterList, IVisibility } from './FilterList';
+import { FilterList} from './FilterList';
 import CreatePlaceWindow  from './CreatePlaceWindow';
-import { MapComponent } from '../ol/map/map';
-import { Score } from '../../domain/Score';
-import { getPlaces, getPlacesByUser, getScores } from '../../api/api';
-import { Place } from '../../domain/Place';
+import { MapComponent } from '../ol/map';
+import { getScores } from '../../api/api';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deleteMarker } from '../ol/map/layers/vector/vector';
+import { deleteMarker } from '../ol/vector';
 
 
 
@@ -19,7 +16,6 @@ export default function MapView():JSX.Element{
 
   const { session } = useSession();
   var webId = session.info.webId as string;
-  const[removeMarker, setRemoveMarker]=useState(false); //To control when to remove a marker from the map automatically
   const[addedPlace, setAddedPlace]=useState(false); //To control when to remove a marker from the map automatically
 
   //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
@@ -40,8 +36,6 @@ export default function MapView():JSX.Element{
     latitude: 0,
     longitude:0,
   });
-  var p:Place[] = []; //Initial value for hook
-  const [places, setPlaces]=useState<Place[]>(p);
 
   //For the computation of the avg score
   const [avg,setAvg] = useState(0);

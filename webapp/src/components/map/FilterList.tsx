@@ -1,10 +1,8 @@
-import "../../App.css";
 import { ToggleButton } from "@mui/material";
 import {ToggleButtonGroup} from "@mui/material";
-import { createTheme } from '@mui/material/styles';
 import { useState } from "react";
 import { PlaceVisibility } from "../../domain/Visibility";
-import { refreshMarkers } from "../ol/map/layers/vector/vector";
+import { refreshMarkers } from "../ol/vector";
 
 export interface IVisibility{
   setVisibility:React.Dispatch<React.SetStateAction<{

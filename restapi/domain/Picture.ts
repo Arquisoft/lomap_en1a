@@ -1,6 +1,4 @@
-import { Place } from "./Place";
 import { Review } from "./Review";
-import { User } from "./User";
 
 export class Picture extends Review {
 
