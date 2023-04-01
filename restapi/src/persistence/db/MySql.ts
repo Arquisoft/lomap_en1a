@@ -14,13 +14,13 @@ export class MySql {
     mysql = require('mysql');
     con = this.mysql.createConnection({
         //For docker
-        host: "mariadb",
-        user: "root",
-        password: "admin"
+        // host: "mariadb",
+        // user: "root",
+        // password: "admin"
         //For xampp
-        /*host: "localhost",
+        host: "localhost",
         user: "SA",
-        password: ""*/
+        password: ""
     });
 
 
