@@ -19,8 +19,6 @@ export default function MapView(): JSX.Element {
   const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
 
   //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
-  const [updateMap, setUpdateMap] = useState(0);
-  const [changePlace, setChangePlace] = useState(0);
   const [newPlace, setNewPlace] = useState(0);
 
   const [visibility, setVisibility] = useState("");
@@ -76,7 +74,6 @@ export default function MapView(): JSX.Element {
         isOpen={isOpen}
         onRequestClose={() => {
           setIsOpen(false);
-          setUpdateMap(updateMap + 1);//These will force the useEffect hook of vector.tsx to execute
           //If a place was not added, when closing setRemoveMarker(true)
           if (!addedPlace) {
             deleteMarker();
