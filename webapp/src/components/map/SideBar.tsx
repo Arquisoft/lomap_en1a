@@ -47,6 +47,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
     getPlacesByUser(webId).then((places) => setPlaces(places));
   }
 
+  const displayVisibility = (visibility:string) => {
+    if (visibility == null) {
+      return "";
+    } else {
+      return "Filtering by: " + visibility;
+    }
+  }
+
 
   //Update place list when a new place is added
   useEffect(() => {

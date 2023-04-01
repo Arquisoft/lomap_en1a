@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
-import { getScores } from '../../api/api';
 import { useSession } from '@inrupt/solid-ui-react';
 import { deleteMarker } from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
@@ -24,6 +23,7 @@ export default function MapView(): JSX.Element {
   const [changePlace, setChangePlace] = useState(0);
   const [newPlace, setNewPlace] = useState(0);
 
+  const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [visibility, setVisibility] = useState({
