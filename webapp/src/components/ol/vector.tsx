@@ -112,7 +112,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
-    props.setIsNew(true);
+    props.setIsNew(1);
     props.setIsOpen(true);
 
     props.setLatitude(event.coordinate[1]);

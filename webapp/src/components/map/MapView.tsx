@@ -26,9 +26,6 @@ export default function MapView(): JSX.Element {
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  const [visibility, setVisibility] = useState({
-    value: "FULL"
-  });
   const [isNew, setIsNew] = useState(0); //True if it is a new place to add, false if it is already a place in the map
   const [isOpen, setIsOpen] = useState(false);
   const [infoWindowData, setInfoWindowData] = useState({
@@ -43,36 +40,6 @@ export default function MapView(): JSX.Element {
     sharedSites: []
   });
 
-  //For the computation of the avg score
-  const [avg, setAvg] = useState(0);
-
-
-
-  const refreshScores = async (place: string) => {
-
-
-    getScores(place).then((s) => {
-      if (s.length > 0) {
-        let aux = 0;
-        for (let i = 0; i < s.length; i++) {
-
-          aux += s[i].score;
-        }
-        let avg = aux / s.length;
-        let a = avg.toFixed(1)
-        setAvg(parseFloat(a)); //Calculates the new average
-      } else {
-        setAvg(0)
-      }
-
-    });
-  }
-
-
-  //When th
-  useEffect(() => {
-
-  }, [newPlace])
 
 
 
@@ -87,8 +54,8 @@ export default function MapView(): JSX.Element {
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-            <MySideBar setFriendWindowData={setFriendWindowData} setInfoWindowData={setInfoWindowData} setIsNew={setIsNew} setChangePlace={setChangePlace} changePlace={changePlace}
-              visibility={visibility.value} setIsOpen={setIsOpen} refreshScores={refreshScores} newPlace={newPlace} />
+            <MySideBar setFriendWindowData={setFriendWindowData} setInfoWindowData={setInfoWindowData} setIsNew={setIsNew}
+              visibility={visibility} setIsOpen={setIsOpen} newPlace={newPlace} />
           </ProSidebarProvider>
         </div>
 
@@ -98,7 +65,7 @@ export default function MapView(): JSX.Element {
 
 
         <MapComponent setIsNew={setIsNew} setInfoWindowData={setInfoWindowData}
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId} />
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId} visibility={visibility} />
 
       </div>
 
@@ -124,9 +91,9 @@ export default function MapView(): JSX.Element {
         overlayClassName='info-window'
       >
         {
-          isNew == 1 ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
+          isNew == 1 ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
             setAddedPlace={setAddedPlace} setIsOpen={setIsOpen} /> :
-            isNew == 0 ? <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg} changePlace={changePlace} /> :
+            isNew == 0 ? <InfoWindow infoWindowData={infoWindowData} /> :
               isNew == 2 ? <FriendPanel friendName={friendWindowData.friendName} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
         }

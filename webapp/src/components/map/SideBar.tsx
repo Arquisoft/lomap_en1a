@@ -26,10 +26,7 @@ type SideBarProps = {
   setIsNew: React.Dispatch<React.SetStateAction<number>>,
   visibility: string,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  refreshScores: (place: string) => Promise<void>,
   newPlace: number,
-  changePlace: number,
-  setChangePlace: React.Dispatch<React.SetStateAction<number>>
 }
 
 
@@ -47,7 +44,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
     getPlacesByUser(webId).then((places) => setPlaces(places));
   }
 
-  const displayVisibility = (visibility:string) => {
+  const displayVisibility = (visibility: string) => {
     if (visibility == null) {
       return "";
     } else {
@@ -97,8 +94,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                 });
                 props.setIsNew(0);
                 props.setIsOpen(true);
-                props.refreshScores(place.id);
-                props.setChangePlace(props.changePlace + 1);
               }}
 
             >{place.name}</MenuItem>
@@ -140,7 +135,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           props.setIsNew(0);
           props.setIsOpen(true);
         }}>PARA PRUEBAS</MenuItem>
-        <MenuItem>{props.visibility}</MenuItem>
+        <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
       </Menu>
     </Sidebar>
 
