@@ -51,7 +51,6 @@ export class ScoreController {
 
         return new Promise((resolve, reject) => {
             this.scoreService.findByPlace(place).then(b => {
-                console.log(b[0])
                 resolve(res.send(b));
             });
 

@@ -12,7 +12,6 @@ type CommentFormProps = {
   OnCommentListChange: () => void;
   place:string;
   user:string;
-  changePlace:number;
 }
 
 export type NotificationType = {

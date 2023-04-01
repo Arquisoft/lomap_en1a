@@ -13,11 +13,9 @@ import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
 import Rating from '@mui/material/Rating';
+import { getScores } from '../../api/api';
 
 type InfoWindowProps = {
-  changePlace:number,
-  avg:number;
-  refreshScores:(place: string) => Promise<void>;
   infoWindowData:{
     id:string;
     title:string;
@@ -71,20 +69,45 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
     }
   }
 
+    //For the computation of the avg score
+    const [avg,setAvg] = useState(0);
+
+  const refreshScores = async () => {
+
+
+    getScores(props.infoWindowData.id).then((s)=>{
+      if(s.length>0){
+        let aux = 0;
+        for (let i = 0; i < s.length; i++) {
+        
+          aux+=s[i].score;
+        }
+        let avg = aux/s.length;
+        let a = avg.toFixed(1)
+        setAvg(parseFloat(a)); //Calculates the new average
+      }else{
+        setAvg(0)
+      }
+
+    });
+  }
+
+
 
   const refreshScoresAfterAdding = async (value:number) => {
     await handleAddScore(value); //Adds the new score
     
-    props.refreshScores(props.infoWindowData.id);
+    refreshScores();
   }
 
   
 
 
-  //Update comment list when a new place is added
+  //Update comment list and scores when the info window data changes
   useEffect(()=>{
-    refreshCommentList()
-  },[props.changePlace]);
+    refreshScores();
+    refreshCommentList();
+  },[props.infoWindowData]);
 
 
 
@@ -129,7 +152,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid> 
 
             <Grid item xs={3}>
-              <Box component="p" textAlign="right">{props.avg}</Box>
+              <Box component="p" textAlign="right">{avg}</Box>
             </Grid> 
 
             <Grid item xs={3}>
@@ -137,7 +160,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"} changePlace={props.changePlace}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>
