@@ -1,4 +1,3 @@
-import "../../App.css"
 import { useState, useEffect } from "react";
 import { LoginButton } from "@inrupt/solid-ui-react";
 import { Button, TextField, FormGroup} from "@material-ui/core";

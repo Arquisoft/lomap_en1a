@@ -1,1 +1,0 @@
-export { VectorLayer } from "./vector";

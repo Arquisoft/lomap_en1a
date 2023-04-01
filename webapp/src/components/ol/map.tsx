@@ -3,19 +3,19 @@ import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
 import XYZ from "ol/source/XYZ";
-import { VectorLayer } from "./layers";
-import { TMapProps, IMapContext, TMapState } from "./map-types";
+import { VectorLayerWithContext } from "./vector";
+import { TOpenLayersProps, IMapContext, TMapState } from "./ol-types";
 import "ol/ol.css";
-import "../../../App.css";
+import "../../App.css";
 import { defaults } from 'ol/interaction';
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
-export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
+export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapState> {
   private mapDivRef: React.RefObject<HTMLDivElement>;
   state: TMapState = {};
 
-  constructor(props: TMapProps) {
+  constructor(props: TOpenLayersProps) {
     super(props);
     this.mapDivRef = React.createRef<HTMLDivElement>();
   }
@@ -53,8 +53,8 @@ export class MapComponent extends React.PureComponent<TMapProps, TMapState> {
       <div  className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
-            <VectorLayer setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
-            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen} webId={this.props.webId}/>
+            <VectorLayerWithContext setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
+            setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen} webId={this.props.webId} visibility = {this.props.visibility}/>
           </MapContext.Provider>
         )}
       </div>

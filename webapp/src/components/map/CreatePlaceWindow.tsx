@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../images/new_Place.png";
-import "../../App.css";
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -13,12 +12,12 @@ import { PlaceVisibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { useSession} from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { refreshMarkers } from '../ol/vector';
 
 export interface CreatePlaceWindowProps{
   latitude:number,
   longitude:number,
   setNewPlace:React.Dispatch<React.SetStateAction<number>>,
-  newPlace:number,
   setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>,
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 
@@ -33,7 +32,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
   const [name, setName] = useState('');
-  const [visibility, setVisibility] = useState<PlaceVisibility>(PlaceVisibility.GROUP);
+  const [visibility, setVisibility] = useState<PlaceVisibility>(PlaceVisibility.FULL);
   const [showError, setShowError] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -53,7 +52,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         var place = new Place("",name,webId,visibility,props.latitude,props.longitude);
         let result:boolean = await addPlace(place);
         if (result){
-          props.setNewPlace(props.newPlace+1); //New place is increased when a place is added
+          props.setNewPlace(n=>n+1); //New place is increased when a place is added
           setNotificationStatus(true);
           setNotification({ 
             severity:'success',
@@ -72,8 +71,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         }
     }
 
-
-    
+    refreshMarkers();    
   }
 
 
@@ -145,7 +143,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
   
-          );
+      );
         
   
   }
