@@ -1,4 +1,4 @@
-import { Sidebar, Menu, MenuItem, useProSidebar,SubMenu } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from "react-pro-sidebar";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -12,34 +12,39 @@ import { getPlacesByUser } from "../../api/api";
 import { useSession } from "@inrupt/solid-ui-react";
 
 type SideBarProps = {
-  setInfoWindowData:React.Dispatch<React.SetStateAction<{
-    id:string; //The ID of the place to show
+  setInfoWindowData: React.Dispatch<React.SetStateAction<{
+    id: string; //The ID of the place to show
     title: string; //The name of the place to show
     latitude: number;
-    longitude:number;
+    longitude: number;
   }>>,
-  setIsNew:React.Dispatch<React.SetStateAction<boolean>>,
-  visibility:string,
-  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>,
+  setFriendWindowData: React.Dispatch<React.SetStateAction<{
+    friendName: string;
+    friendPhoto: string;
+    sharedSites: never[];
+  }>>,
+  setIsNew: React.Dispatch<React.SetStateAction<number>>,
+  visibility: string,
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
   newPlace: number,
 }
 
 
-const friends  =["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
+const friends = ["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the places
-  const [places,setPlaces] = useState<Place[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const { session } = useSession();
   var webId = session.info.webId as string;
 
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-   getPlacesByUser(webId).then((places)=>setPlaces(places));
+    getPlacesByUser(webId).then((places) => setPlaces(places));
   }
 
-  const displayVisibility = (visibility:string) => {
+  const displayVisibility = (visibility: string) => {
     if (visibility == null) {
       return "";
     } else {
@@ -49,77 +54,92 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
 
   //Update place list when a new place is added
-  useEffect(()=>{
+  useEffect(() => {
     refreshPlaceList()
-  },[props.newPlace]);
+  }, [props.newPlace]);
 
 
   //Style must be in-line; does not work otherwise
 
-    const { collapseSidebar } = useProSidebar();
-    return (
-        <Sidebar style={{ width: "15vw", height: "80vh" ,color:"black"}}> 
-        <Menu 
+  const { collapseSidebar } = useProSidebar();
+  return (
+    <Sidebar style={{ height: "80vh", color: "black" }}>
+      <Menu
+      >
+        <MenuItem
+          icon={<MenuOutlinedIcon />}
+          onClick={() => {
+            collapseSidebar();
+          }}
         >
-          <MenuItem
-            icon={<MenuOutlinedIcon />}
-            onClick={() => {
-              collapseSidebar();
-            }}
-          >
-            {" "}
-            <h2>LoMap</h2>
-          </MenuItem>
-          <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={()=>{refreshPlaceList();}
-          
-          }> 
+          {" "}
+          <h2>LoMap</h2>
+        </MenuItem>
+        <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={() => { refreshPlaceList(); }
 
-                {places.map((place, index,array) => (
-                  
+        }>
 
-                  <MenuItem icon={<ArrowRightIcon />}
-                  key={index}
-                  onClick={() => {
-                    props.setInfoWindowData({
-                      title:place.name,
-                      id:place.id,
-                      latitude:place.latitude,
-                      longitude:place.longitude
-                      
-                    });
-                    props.setIsNew(false);
-                    props.setIsOpen(true);
-                  }}
+          {places.map((place, index, array) => (
 
-                  >{place.name}</MenuItem>
-                   ))}
 
-          </SubMenu>
-          <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
-                  {friends.map((ti, index) => (
-                    <MenuItem icon={<PersonIcon />}
-                    key={index}
-                    >{ti}</MenuItem>
-                    ))}
-          </SubMenu>
-          <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
-          <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
-          <MenuItem  onClick={() => {
-                    props.setInfoWindowData({
-                      title:"TITLE",
-                      id:"",
-                      latitude:0,
-                      longitude:0
-                      
-                    });
-                    props.setIsNew(false);
-                    props.setIsOpen(true);
-                  }}>PARA PRUEBAS</MenuItem>
-          <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
-        </Menu>
-      </Sidebar>
-      
-      )
+            <MenuItem icon={<ArrowRightIcon />}
+              key={index}
+              onClick={() => {
+                props.setInfoWindowData({
+                  title: place.name,
+                  id: place.id,
+                  latitude: place.latitude,
+                  longitude: place.longitude
+
+                });
+                props.setIsNew(0);
+                props.setIsOpen(true);
+              }}
+
+            >{place.name}</MenuItem>
+          ))}
+
+        </SubMenu>
+        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
+          {friends.map((ti, index) => (
+            <MenuItem icon={<PersonIcon />}
+              key={index}
+              onClick={() => {
+
+                props.setFriendWindowData({
+                  friendName: ti,
+                  friendPhoto: "foto" + ti,
+                  sharedSites: []
+
+                });
+
+                props.setIsNew(2);
+                props.setIsOpen(true);
+
+              }}
+
+
+            >{ti}</MenuItem>
+          ))}
+        </SubMenu>
+        <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
+        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+        <MenuItem onClick={() => {
+          props.setInfoWindowData({
+            title: "TITLE",
+            id: "",
+            latitude: 0,
+            longitude: 0
+
+          });
+          props.setIsNew(0);
+          props.setIsOpen(true);
+        }}>PARA PRUEBAS</MenuItem>
+        <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
+      </Menu>
+    </Sidebar>
+
+  )
 
 }
 
