@@ -65,7 +65,7 @@ const addMarker= (coordinate: Coordinate, visibility: string)=>{
       break;
 
     case "FRIENDS":
-      color = 'rgb(0, 0, 255)';
+      color = 'rgb(230, 230, 230)';
       break;
     
     case "FULL":
