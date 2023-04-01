@@ -117,7 +117,7 @@ function Vector(props:TVectorLayerComponentProps){
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "USER");
+    addMarker(event.coordinate, "FULL");
   };
 
   const onMarkerClick=async(feature:FeatureLike)=>{
