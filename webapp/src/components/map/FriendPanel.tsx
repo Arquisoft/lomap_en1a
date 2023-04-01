@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import image from "../../icons/friend.icon.png";
 
 type Place = {
     id: string;
@@ -61,8 +62,8 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                 </Grid>
 
 
-                <Grid item xs={12}>
-                    <Box component="img" src={props.friendPhoto} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+                <Grid alignItems="center" item xs={12}>
+                    <Box justifySelf={"center"} component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
 
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
                     <PlacesOf sharedSites={list}></PlacesOf>
