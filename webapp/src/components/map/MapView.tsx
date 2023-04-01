@@ -2,7 +2,7 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { FilterList} from './FilterList';
 import CreatePlaceWindow  from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
@@ -15,13 +15,14 @@ export default function MapView():JSX.Element{
 
   const { session } = useSession();
   var webId = session.info.webId as string;
-  const[addedPlace, setAddedPlace]=useState(false); //To control when to remove a marker from the map automatically
+
 
   //These useState is used to monitor useEffect hooks; it just increments to detect change when needed
   //FIXME: I will try to replace this by another solution
   const[newPlace, setNewPlace]=useState(0);
 
   
+  const[addedPlace, setAddedPlace]=useState(false); //To control when to remove a marker from the map automatically
   const[latitude, setLatitude]=useState(0);
   const[longitude, setLongitude]=useState(0);
   const [visibility, setVisibility] = useState("");
@@ -36,7 +37,6 @@ export default function MapView():JSX.Element{
 
 
 
-  //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
 
     return (
 
@@ -79,7 +79,7 @@ export default function MapView():JSX.Element{
             className='info-window'
             overlayClassName='info-window'
             >
-          {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
+          {isNew ?  <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
           setAddedPlace={setAddedPlace} setIsOpen={setIsOpen}/>:
            <InfoWindow infoWindowData={infoWindowData}/>}
             
