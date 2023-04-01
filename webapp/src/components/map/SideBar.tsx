@@ -87,7 +87,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   longitude: place.longitude
 
                 });
-                props.setIsNew(1);
+                props.setIsNew(0);
                 props.setIsOpen(true);
                 props.refreshScores(place.id);
                 props.setChangePlace(props.changePlace + 1);

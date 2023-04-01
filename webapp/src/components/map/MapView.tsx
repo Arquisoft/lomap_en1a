@@ -3,12 +3,13 @@ import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
 import { useState, useEffect } from 'react';
-import { FilterList} from './FilterList';
-import CreatePlaceWindow  from './CreatePlaceWindow';
+import { FilterList } from './FilterList';
+import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
 import { getScores } from '../../api/api';
 import { useSession } from '@inrupt/solid-ui-react';
 import { deleteMarker } from '../ol/vector';
+import { FriendPanel } from './FriendPanel';
 
 
 
@@ -122,9 +123,13 @@ export default function MapView(): JSX.Element {
         className='info-window'
         overlayClassName='info-window'
       >
-        {isNew ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
-          setAddedPlace={setAddedPlace} setIsOpen={setIsOpen} /> :
-          <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg} changePlace={changePlace} />}
+        {
+          isNew == 1 ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace} newPlace={newPlace}
+            setAddedPlace={setAddedPlace} setIsOpen={setIsOpen} /> :
+            isNew == 0 ? <InfoWindow infoWindowData={infoWindowData} refreshScores={refreshScores} avg={avg} changePlace={changePlace} /> :
+              isNew == 2 ? <FriendPanel friendName={friendWindowData.friendName} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
+                <div></div>
+        }
 
 
       </SlidingPane>
