@@ -18,7 +18,6 @@ export interface CreatePlaceWindowProps{
   latitude:number,
   longitude:number,
   setNewPlace:React.Dispatch<React.SetStateAction<number>>,
-  newPlace:number,
   setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>,
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 
@@ -53,7 +52,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         var place = new Place("",name,webId,visibility,props.latitude,props.longitude);
         let result:boolean = await addPlace(place);
         if (result){
-          props.setNewPlace(props.newPlace+1); //New place is increased when a place is added
+          props.setNewPlace(n=>n+1); //New place is increased when a place is added
           setNotificationStatus(true);
           setNotification({ 
             severity:'success',
@@ -144,7 +143,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
   
-          );
+      );
         
   
   }

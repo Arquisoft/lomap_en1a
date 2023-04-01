@@ -21,10 +21,7 @@ type SideBarProps = {
   setIsNew:React.Dispatch<React.SetStateAction<boolean>>,
   visibility:string,
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>,
-  refreshScores:(place: string) => Promise<void>,
   newPlace: number,
-  changePlace:number,
-  setChangePlace:React.Dispatch<React.SetStateAction<number>>
 }
 
 
@@ -92,8 +89,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     });
                     props.setIsNew(false);
                     props.setIsOpen(true);
-                    props.refreshScores(place.id);
-                    props.setChangePlace(props.changePlace+1);
                   }}
 
                   >{place.name}</MenuItem>
