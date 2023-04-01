@@ -120,8 +120,11 @@ footer{
 }
 
 .centered-container{
-  margin-top:5em;
-  margin-bottom:5em;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   justify-content:space-evenly;
   text-align: justify;
   direction:row;
