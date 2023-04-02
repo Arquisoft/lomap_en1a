@@ -77,7 +77,7 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
     image: new Icon({
       color: color,
       src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
-      anchor: [0.5, 0]
+      anchor: [0.5, 1]
     })
 
 
