@@ -7,7 +7,7 @@ export type TOpenLayersProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude: React.Dispatch<React.SetStateAction<number>>;
   setLongitude: React.Dispatch<React.SetStateAction<number>>;
-  setIsNew: React.Dispatch<React.SetStateAction<number>>;
+  setSlidingPaneView: React.Dispatch<React.SetStateAction<number>>;
   setInfoWindowData: React.Dispatch<React.SetStateAction<{
     id: string; //The ID of the place to show
     title: string; //The name of the place to show

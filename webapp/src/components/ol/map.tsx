@@ -37,7 +37,7 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
       ],
       view: new View({
         center: [0, 0],
-        zoom: 3,
+        zoom: 3
       }),
     });
 
@@ -53,7 +53,7 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
       <div  className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
           <MapContext.Provider value={this.state.mapContext}>
-            <VectorLayerWithContext setIsNew={this.props.setIsNew} setInfoWindowData={this.props.setInfoWindowData}
+            <VectorLayerWithContext setSlidingPaneView={this.props.setSlidingPaneView} setInfoWindowData={this.props.setInfoWindowData}
             setLatitude={this.props.setLatitude} setLongitude={this.props.setLongitude} setIsOpen={this.props.setIsOpen} webId={this.props.webId} visibility = {this.props.visibility}/>
           </MapContext.Provider>
         )}

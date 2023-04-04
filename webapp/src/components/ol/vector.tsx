@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -13,6 +13,9 @@ import { Coordinate } from "ol/coordinate";
 import { getPlaces, getPlaceDetails, getPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
+import {useGeographic} from 'ol/proj';
+import { SlidingPaneView } from "../map/MapView";
+
 
 
 var source: VectorSource = new VectorSource({
@@ -77,7 +80,7 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
     image: new Icon({
       color: color,
       src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
-      anchor: [0.5, 0]
+      anchor: [0.5, 0.9]
     })
 
 
@@ -103,6 +106,7 @@ export function refreshMarkers(visibility?: string) {
 }
 
 function Vector(props: TVectorLayerComponentProps) {
+  useGeographic();
 
 
   let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
@@ -112,7 +116,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
-    props.setIsNew(1);
+    props.setSlidingPaneView(SlidingPaneView.CreatePlaceView);
     props.setIsOpen(true);
 
     props.setLatitude(event.coordinate[1]);
@@ -124,7 +128,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     let f = feature as Feature<Point>;
     props.setIsOpen(true);
-    props.setIsNew(0);
+    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
     let id = f.getId() as string;
 
     await getPlaceDetails(id).then((p) => {
