@@ -41,6 +41,7 @@ image::DeploymentView.svg[Deployment diagram]
 |Component|Description
 |Azure Server|Both the application and the database will be hosted from docker containers, both of them inside of an azure virtual machine.
 |Web application|The application itself, which will receive the users requests and will manage them.
+|Rest API|Manages the request from the web application (or any other application).
 |Database|A MySQL database, which will store the global information that the application needs, as well as the minimal information about the users.
 |Map API|An external API to get the maps for the aplication.
 |Users|The users of the aplication.
