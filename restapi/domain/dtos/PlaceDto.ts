@@ -1,4 +1,4 @@
-import { User } from "../User";
+
 import { PlaceVisibility } from "../Visibility";
 
 export class PlaceDto {

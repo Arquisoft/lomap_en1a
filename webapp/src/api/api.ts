@@ -2,7 +2,7 @@ import { Comment } from "../domain/Comment";
 import { Picture } from "../domain/Picture";
 import { Place } from "../domain/Place";
 import { Score } from "../domain/Score";
-import {CommentDto} from "../domain/dtos/CommentDto";
+
 
 
 //Comments----------------------------------------
@@ -73,9 +73,9 @@ export async function addPlace(place:Place):Promise<boolean>{
 }
 
 //List places by visibility
-export async function getPlaces(id:string):Promise<Place[]>{
+export async function getPlaces(id:string, visibility:string):Promise<Place[]>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint+'/place/list/visibility/'+id);
+  let response = await fetch(apiEndPoint+'/place/list/visibility/'+id.replaceAll("/","-").replaceAll("#","-")+'/'+visibility);
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }

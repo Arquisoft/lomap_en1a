@@ -1,5 +1,5 @@
 
-import { Link, useMatch, useResolvedPath,To } from "react-router-dom";
+import { Link} from "react-router-dom";
 import React from 'react';
 import logo from '../../images/logo.png';
 import { CustomLink } from "../CustomLink";
@@ -14,7 +14,6 @@ export default function NotLoggedNavbar() {
       <ul>
         <CustomLink to="/login" >Log in</CustomLink>
         <CustomLink to="/signup" >Sign up</CustomLink>
-        <CustomLink to="/map">TESTING PURPOSES</CustomLink>
       </ul>
     </nav>
   )

@@ -1,8 +1,6 @@
 import { ScoreRepository } from "../business/repositories/ScoreRepository";
 import { Place } from "../domain/Place";
 import { Score } from "../domain/Score";
-import { User } from "../domain/User";
-import { PlaceVisibility } from "../domain/Visibility";
 import { MySql } from "../src/persistence/db/MySql";
 
 export class ScoreRepositoryImpl implements ScoreRepository {

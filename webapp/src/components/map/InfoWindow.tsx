@@ -1,29 +1,21 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Button from "@mui/material/Button/Button";
 import image from "../../images/placeHolder.png";
-import { Rating } from 'react-simple-star-rating';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments, getScores } from '../../api/api';
+import { getComments} from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
-import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
-import { Place } from '../../domain/Place';
-import { PlaceVisibility } from '../../domain/Visibility';
-import { User } from '../../domain/User';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
 import { useSession} from "@inrupt/solid-ui-react";
-import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
+import Rating from '@mui/material/Rating';
+import { getScores } from '../../api/api';
 
 type InfoWindowProps = {
-  changePlace:number,
-  avg:number;
-  refreshScores:(place: string) => Promise<void>;
   infoWindowData:{
     id:string;
     title:string;
@@ -47,6 +39,10 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
   const [comments,setComments] = useState<Comment[]>([]);
 
 
+  //For the rating
+  const [value,setValue] = useState(0);
+
+
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
@@ -55,8 +51,6 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
 
 
   const handleAddScore = async (value:number) => {
-    //e.preventDefault();
-
     var score = new Score("",value,props.infoWindowData?.id,webId);
     let result:boolean = await addScore(score); //The score still has no ID
     if (result){
@@ -65,8 +59,6 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
         severity:'success',
         message:'You score has been posted!'
       });
-      //Notify the change to the parent component
-      //props.OnCommentListChange();
     }
     else{
       setNotificationStatus(true);
@@ -77,20 +69,45 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
     }
   }
 
+    //For the computation of the avg score
+    const [avg,setAvg] = useState(0);
+
+  const refreshScores = async () => {
+
+
+    getScores(props.infoWindowData.id).then((s)=>{
+      if(s.length>0){
+        let aux = 0;
+        for (let i = 0; i < s.length; i++) {
+        
+          aux+=s[i].score;
+        }
+        let avg = aux/s.length;
+        let a = avg.toFixed(1)
+        setAvg(parseFloat(a)); //Calculates the new average
+      }else{
+        setAvg(0)
+      }
+
+    });
+  }
+
+
 
   const refreshScoresAfterAdding = async (value:number) => {
     await handleAddScore(value); //Adds the new score
     
-    props.refreshScores(props.infoWindowData.id);
+    refreshScores();
   }
 
   
 
 
-  //Update comment list when a new place is added
+  //Update comment list and scores when the info window data changes
   useEffect(()=>{
-    refreshCommentList()
-  },[props.changePlace]);
+    refreshScores();
+    refreshCommentList();
+  },[props.infoWindowData]);
 
 
 
@@ -98,7 +115,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
 
       return (
   
-  
+
         <>
           <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
             
@@ -112,17 +129,30 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid>
 
            <Grid item xs={6}>
-              <Rating
-                transition
-                fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
-                allowFraction
-                onClick={(value)=>refreshScoresAfterAdding(value)}
-                
-                />
+            <Box
+              sx={{
+                width: 200,
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                  <Rating
+                    precision={0.5}
+                    name="rating"
+                    size="large"
+                    value={value}
+                    onChange={(event,value)=>{
+                      setValue(value as number);
+                      refreshScoresAfterAdding(value as number);
+                    }}
+                  />
+                  {value !== null && (
+                      <Box sx={{ ml: 2 }}>{value+"/5"}</Box>
+                  )}
+              </Box>
             </Grid> 
 
             <Grid item xs={3}>
-              <Box component="p" textAlign="right">{props.avg}</Box>
+              <Box component="p" textAlign="right">{avg}</Box>
             </Grid> 
 
             <Grid item xs={3}>
@@ -130,7 +160,7 @@ export default function InfoWindow(props: InfoWindowProps):JSX.Element {
             </Grid> 
 
             <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"} changePlace={props.changePlace}/>        
+              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"}/>        
             </Grid>
             <Grid item xs={12}>
               <CommentList comments={comments}/>

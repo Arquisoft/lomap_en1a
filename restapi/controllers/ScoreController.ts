@@ -5,8 +5,6 @@ import { check, ValidationChain } from 'express-validator';
 import { Factory } from "../Factory";
 import { ScoreService } from "../business/score/ScoreService";
 import { PlaceDto } from "../domain/dtos/PlaceDto";
-import { resolve } from "path";
-import { rejects } from "assert";
 
 export class ScoreController {
 
@@ -53,7 +51,6 @@ export class ScoreController {
 
         return new Promise((resolve, reject) => {
             this.scoreService.findByPlace(place).then(b => {
-                console.log(b[0])
                 resolve(res.send(b));
             });
 
