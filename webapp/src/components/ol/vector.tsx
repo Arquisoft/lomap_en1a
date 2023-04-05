@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -13,40 +13,43 @@ import { Coordinate } from "ol/coordinate";
 import { getPlaces, getPlaceDetails, getPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
+import {useGeographic} from 'ol/proj';
+import { SlidingPaneView } from "../map/MapView";
 
 
-var source: VectorSource=new VectorSource({
+
+var source: VectorSource = new VectorSource({
   features: undefined,
 });
 
 var lastMarker = new Feature();
 var webId = "";
-var currentVisibility="";
+var currentVisibility = "";
 
-const getMarkers=async (visibilityLevel: string) =>{
+const getMarkers = async (visibilityLevel: string) => {
   if (visibilityLevel === "") {
-    await getPlacesByUser(webId).then((p)=>{
-      var coordinates:number[];
-      for(let i = 0;i<p.length;i++){
-        coordinates= [p[i].longitude,p[i].latitude];
-        var visibility=p[i].visibility;
+    await getPlacesByUser(webId).then((p) => {
+      var coordinates: number[];
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
         addMarker(coordinates, visibility);
       }
     });
   } else {
-    await getPlaces(webId, visibilityLevel).then((p)=>{
-      var coordinates:number[];
+    await getPlaces(webId, visibilityLevel).then((p) => {
+      var coordinates: number[];
       var visibility = visibilityLevel;
-      for(let i = 0;i<p.length;i++){
-        coordinates= [p[i].longitude,p[i].latitude];
-        visibility=p[i].visibility;
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        visibility = p[i].visibility;
         addMarker(coordinates, visibility);
       }
     });
   }
 }
 
-const addMarker= (coordinate: Coordinate, visibility: string)=>{
+const addMarker = (coordinate: Coordinate, visibility: string) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -59,7 +62,7 @@ const addMarker= (coordinate: Coordinate, visibility: string)=>{
     case "USER":
       color = 'rgb(255, 0, 0)';
       break;
-    
+
     case "GROUP":
       color = 'rgb(0, 255, 0)';
       break;
@@ -67,7 +70,7 @@ const addMarker= (coordinate: Coordinate, visibility: string)=>{
     case "FRIENDS":
       color = 'rgb(230, 230, 230)';
       break;
-    
+
     case "FULL":
       color = 'rgb(127, 127, 127)';
       break;
@@ -76,20 +79,20 @@ const addMarker= (coordinate: Coordinate, visibility: string)=>{
   const style = new Style({
     image: new Icon({
       color: color,
-      src:"https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
-      anchor:[0.5,0]
+      src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+      anchor: [0.5, 0.9]
     })
-  
+
 
   });
-  featureToAdd.setStyle(style);   
+  featureToAdd.setStyle(style);
   source.addFeatures([featureToAdd]);
   lastMarker = featureToAdd;
 
 }
 
 
-export function deleteMarker(){
+export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
 
@@ -98,11 +101,12 @@ export function refreshMarkers(visibility?: string) {
   if (typeof visibility !== 'undefined') {
     currentVisibility = visibility;
   }
-  
+
   getMarkers(currentVisibility)
 }
 
-function Vector(props:TVectorLayerComponentProps){
+function Vector(props: TVectorLayerComponentProps) {
+  useGeographic();
 
 
   let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
@@ -112,7 +116,7 @@ function Vector(props:TVectorLayerComponentProps){
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
-    props.setIsNew(true);
+    props.setSlidingPaneView(SlidingPaneView.CreatePlaceView);
     props.setIsOpen(true);
 
     props.setLatitude(event.coordinate[1]);
@@ -120,40 +124,40 @@ function Vector(props:TVectorLayerComponentProps){
     addMarker(event.coordinate, "FULL");
   };
 
-  const onMarkerClick=async(feature:FeatureLike)=>{
-                
-    let f =feature as Feature<Point>;
+  const onMarkerClick = async (feature: FeatureLike) => {
+
+    let f = feature as Feature<Point>;
     props.setIsOpen(true);
-    props.setIsNew(false);
+    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
     let id = f.getId() as string;
 
-    await getPlaceDetails(id).then((p)=>{
+    await getPlaceDetails(id).then((p) => {
       let place = p[0];
       props.setInfoWindowData({
-        id:id,
-        title:place.name,
+        id: id,
+        title: place.name,
         latitude: place.latitude,
-        longitude:place.longitude
+        longitude: place.longitude
       });
     })
 
   }
 
   //When map is first rendered
-  useEffect(()=>{
-        webId = props.webId;   
-        props.map.addLayer(layer);
-        props.map.on("dblclick", onMapClick);
-        props.map.on('singleclick', function (e) {  
-          props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
-            //NO FUNCIONA AUN
-           // onMarkerClick(feature);
-            
-          })
-        });
+  useEffect(() => {
+    webId = props.webId;
+    props.map.addLayer(layer);
+    props.map.on("dblclick", onMapClick);
+    props.map.on('singleclick', function (e) {
+      props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+        //NO FUNCIONA AUN
+        // onMarkerClick(feature);
 
-        getMarkers(props.visibility);
-  },[])
+      })
+    });
+
+    getMarkers(props.visibility);
+  }, [])
 
   return null;
 }

@@ -120,8 +120,11 @@ footer{
 }
 
 .centered-container{
-  margin-top:5em;
-  margin-bottom:5em;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   justify-content:space-evenly;
   text-align: justify;
   direction:row;
@@ -329,17 +332,17 @@ h3 span {
   font-weight: 400;
 }
 
-.dropdown-menu ul li > li {
+.dropdown-menu ul li ul > li {
   padding: 10px 0;
   border-top: 3px solid rgba(0, 0, 0, 0.05);
 }
 
-.dropdown-menu ul li li:hover a {
+.dropdown-menu ul li ul li:hover a {
   color: rgb(212, 33, 9);
   cursor: pointer;
 }
 
-.dropdown-menu ul li li:hover img {
+.dropdown-menu ul li ul li:hover img {
   opacity: 1;
   cursor: pointer;
 }
