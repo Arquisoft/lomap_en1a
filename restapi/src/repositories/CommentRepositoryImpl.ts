@@ -1,4 +1,4 @@
-import { SolidDataset, Thing } from "@inrupt/solid-client";
+import { SolidDataset } from "@inrupt/solid-client";
 import { Comment } from "../../../domain/Comment";
 import { CommentRepository } from "../business/repositories/CommentRepository";
 import { PodManager } from "./pods/PodManager";
@@ -12,12 +12,15 @@ export class CommentRepositoryImpl implements CommentRepository {
 
         comment.setOwner(webId);
 
-        DatabaseConnection.add("comments",
-            {
-                comment: comment.getId(),
-                place: comment.getPlace(),
-                webId: webId
-            });
+        if (comment.getVisibility() != Visibility.PRIVATE) {
+            DatabaseConnection.add("comments",
+                {
+                    comment: comment.getId(),
+                    place: comment.getPlace(),
+                    webId: webId,
+                    visibility: comment.getVisibility()
+                });
+        }
 
         return PodManager.dataManager.writeData(sessionId, "comments", PodManager.rdfCreator.createComment(comment), webId, comment.getVisibility().toLowerCase());
     }

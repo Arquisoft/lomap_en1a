@@ -1,26 +1,26 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
 import { PodManager } from "./pods/PodManager";
-import { Place } from "../../../domain/Place";
 import { Picture } from "../../../domain/Picture";
-import { SolidDataset, Thing } from "@inrupt/solid-client";
+import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../../../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 
-
     async add(sessionId: string, picture: Picture): Promise<boolean> {
-
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
         picture.setOwner(webId);
 
-        DatabaseConnection.add("pictures",
-            {
-                picture: picture.getId(),
-                place: picture.getPlace(),
-                webId: webId
-            });
+        if (picture.getVisibility() != Visibility.PRIVATE) {
+            DatabaseConnection.add("pictures",
+                {
+                    picture: picture.getId(),
+                    place: picture.getPlace(),
+                    webId: webId,
+                    visibility: picture.getVisibility()
+                });
+        }
 
         return PodManager.dataManager.writeData(sessionId, "pictures", PodManager.rdfCreator.createPicture(picture), webId, picture.getVisibility().toLowerCase());
     }

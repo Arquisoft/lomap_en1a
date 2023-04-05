@@ -12,12 +12,15 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         score.setOwner(webId);
 
-        DatabaseConnection.add("scores",
-            {
-                score: score.getId(),
-                place: score.getPlace(),
-                webId: webId
-            });
+        if (score.getVisibility() != Visibility.PRIVATE) {
+            DatabaseConnection.add("scores",
+                {
+                    score: score.getId(),
+                    place: score.getPlace(),
+                    webId: webId,
+                    visibility: score.getVisibility()
+                });
+        }
 
         return PodManager.dataManager.writeData(sessionId, "scores", PodManager.rdfCreator.createScore(score), webId, score.getVisibility().toLowerCase());
     }
