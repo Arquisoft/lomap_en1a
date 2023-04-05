@@ -9,8 +9,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
-import { useSession } from "@inrupt/solid-ui-react";
 import { SlidingPaneView } from "./MapView";
+
 
 
 type SideBarProps = {
@@ -38,12 +38,12 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the places
   const [places, setPlaces] = useState<Place[]>([]);
-  const { session } = useSession();
+  /*const { session } = useSession();
   var webId = session.info.webId as string;
-
+*/
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    getPlacesByUser(webId).then((places) => setPlaces(places));
+    getPlacesByUser("test").then((places) => setPlaces(places));
   }
 
   const displayVisibility = (visibility: string) => {
@@ -85,6 +85,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
 
             <MenuItem icon={<ArrowRightIcon />}
+              
               key={index}
               onClick={() => {
                 props.setInfoWindowData({
