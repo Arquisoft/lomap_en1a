@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -13,6 +13,9 @@ import { Coordinate } from "ol/coordinate";
 import { getPlaces, getPlaceDetails, getPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
+import {useGeographic} from 'ol/proj';
+import { SlidingPaneView } from "../map/MapView";
+
 
 
 var source: VectorSource = new VectorSource({
@@ -65,7 +68,7 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
       break;
 
     case "FRIENDS":
-      color = 'rgb(230,230,250)';
+      color = 'rgb(230, 230, 230)';
       break;
 
     case "FULL":
@@ -95,7 +98,9 @@ export function deleteMarker() {
 
 export function refreshMarkers(visibility?: string) {
   source.clear();
+
   if (typeof visibility !== 'undefined') {
+    if (!visibility) visibility = ""
     currentVisibility = visibility;
   }
 
@@ -103,6 +108,7 @@ export function refreshMarkers(visibility?: string) {
 }
 
 function Vector(props: TVectorLayerComponentProps) {
+  useGeographic();
 
 
   let layer: VectorLayer<VectorSource<Geometry>> = new VectorLayer({
@@ -112,19 +118,19 @@ function Vector(props: TVectorLayerComponentProps) {
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
 
-    props.setIsNew(1);
+    props.setSlidingPaneView(SlidingPaneView.CreatePlaceView);
     props.setIsOpen(true);
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "USER");
+    addMarker(event.coordinate, "FULL");
   };
 
   const onMarkerClick = async (feature: FeatureLike) => {
 
     let f = feature as Feature<Point>;
     props.setIsOpen(true);
-    props.setIsNew(0);
+    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
     let id = f.getId() as string;
 
     await getPlaceDetails(id).then((p) => {
