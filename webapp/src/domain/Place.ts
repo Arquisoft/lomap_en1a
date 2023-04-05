@@ -1,24 +1,26 @@
 import { BaseEntity } from "./BaseEntity";
-import { PlaceVisibility } from "./Visibility";
+import { Visibility } from "./Visibility";
 
 export class Place extends BaseEntity {
 
     public name: string;
     public owner: string;
-    public visibility: PlaceVisibility;
+    public description: string;
+    public visibility: Visibility;
 
     public latitude: number;
     public longitude: number;
 
-    public constructor(id: string, name: string, owner: string, visibility: PlaceVisibility, latitude: number, longitude: number) {
+    public constructor(id: string, name: string, description: string, owner: string, latitude: number, longitude: number, visibility: Visibility) {
         super(id);
         this.name = name;
+        this.description = description;
         this.owner = owner;
         this.visibility = visibility;
+
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
 
     public setName(name: string) {
         this.name = name;
@@ -36,12 +38,12 @@ export class Place extends BaseEntity {
         return this.owner;
     }
 
-    public setVisibility(visibility: PlaceVisibility) {
-        this.visibility = visibility;
+    public setDescription(description: string) {
+        this.description = description;
     }
 
-    public getVisibility(): PlaceVisibility {
-        return this.visibility;
+    public getDescription(): string {
+        return this.description;
     }
 
     public getLatitude(): number {
@@ -51,6 +53,15 @@ export class Place extends BaseEntity {
     public getLongitude(): number {
         return this.longitude;
     }
+
+    public setVisibility(visibility: Visibility) {
+        this.visibility = visibility;
+    }
+
+    public getVisibility(): Visibility {
+        return this.visibility;
+    }
+
     public toString(): string {
         return this.getId() + ": " + this.getLatitude() + "-" + this.getLongitude();
     }

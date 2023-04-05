@@ -15,7 +15,7 @@ export class RDFCreator {
             .addStringNoLocale(SCHEMA_INRUPT.text, comment.getText())
             .addStringNoLocale(SCHEMA_INRUPT.Person, comment.getOwner())
             .addStringNoLocale(SCHEMA_INRUPT.address, comment.getPlace())
-            .addDate(SCHEMA_INRUPT.dateModified, comment.getDate())
+            .addDatetime(SCHEMA_INRUPT.dateModified, comment.getDate())
             .build();
     }
 
@@ -25,7 +25,7 @@ export class RDFCreator {
             .addStringNoLocale(SCHEMA_INRUPT.url, picture.getUrl())
             .addStringNoLocale(SCHEMA_INRUPT.Person, picture.getOwner())
             .addStringNoLocale(SCHEMA_INRUPT.address, picture.getPlace())
-            .addDate(SCHEMA_INRUPT.dateModified, picture.getDate())
+            .addDatetime(SCHEMA_INRUPT.dateModified, picture.getDate())
             .build();
     }
 
@@ -35,7 +35,7 @@ export class RDFCreator {
             .addDecimal(SCHEMA_INRUPT.value, score.getScore())
             .addStringNoLocale(SCHEMA_INRUPT.Person, score.getOwner())
             .addStringNoLocale(SCHEMA_INRUPT.address, score.getPlace())
-            .addDate(SCHEMA_INRUPT.dateModified, score.getDate())
+            .addDatetime(SCHEMA_INRUPT.dateModified, score.getDate())
             .build();
     }
 

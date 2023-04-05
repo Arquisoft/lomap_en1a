@@ -1,3 +1,5 @@
+import { Visibility } from "../Visibility";
+
 
 export class CommentDto {
 
@@ -5,4 +7,5 @@ export class CommentDto {
     public text: string | undefined;
     public place: string | undefined;
     public owner: string | undefined;
+    public visibility: Visibility | undefined;
 }

@@ -1,4 +1,4 @@
-import { SolidDataset, Thing, getDate, getDecimal, getStringNoLocale, getThing } from "@inrupt/solid-client";
+import { SolidDataset, Thing, getDate, getDatetime, getDecimal, getStringNoLocale, getThing } from "@inrupt/solid-client";
 import { Comment } from "../../../../domain/Comment";
 import { Place } from "../../../../domain/Place";
 import { Score } from "../../../../domain/Score";
@@ -49,7 +49,7 @@ export class EntityParser {
             place = "NO PLACE"
         }
 
-        let date = getDate(thing, SCHEMA_INRUPT.dateModified)
+        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
 
         if (date == null) {
             date = new Date();
@@ -158,7 +158,7 @@ export class EntityParser {
             place = "NO PLACE"
         }
 
-        let date = getDate(thing, SCHEMA_INRUPT.dateModified)
+        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
 
         if (date == null) {
             date = new Date();
@@ -209,7 +209,7 @@ export class EntityParser {
             place = "NO PLACE"
         }
 
-        let date = getDate(thing, SCHEMA_INRUPT.dateModified)
+        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
 
         if (date == null) {
             date = new Date();

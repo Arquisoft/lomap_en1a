@@ -1,11 +1,5 @@
-export enum PlaceVisibility {
-    USER = "USER",
-    GROUP = "GROUP",
+export enum Visibility {
+    PRIVATE = "PRIVATE",
     FRIENDS = "FRIENDS",
-    FULL = "FULL"
-}
-
-export enum GroupVisibility {
-    PRIVATE,
-    PUBLIC
+    PUBLIC = "PUBLIC"
 }
