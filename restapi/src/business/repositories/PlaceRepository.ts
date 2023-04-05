@@ -6,4 +6,5 @@ export interface PlaceRepository {
     findOwn(sessionId: string, user: string): Promise<Place[]>;
     findFriend(sessionId: string, user: string): Promise<Place[]>;
     findPublic(sessionId: string, user: string): Promise<Place[]>;
+    findSharedFriends(sessionId: string, user: string): Promise<Place[]>;
 }

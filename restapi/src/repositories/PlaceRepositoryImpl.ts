@@ -11,18 +11,30 @@ export class PlaceRepositoryImpl implements PlaceRepository {
 
         place.setOwner(webId);
 
-        return PodManager.dataManager.writeData(sessionId, "places", PodManager.ldJsonCreator.createPlace(place), webId, place.getVisibility().toLowerCase());
+        return PodManager.dataManager.writeData(sessionId, "places", PodManager.rdfCreator.createPlace(place), webId, place.getVisibility().toLowerCase());
     }
 
     async findOwn(sessionId: string, user: string): Promise<Place[]> {
-        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-
-        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "places", webId, "private");
-
-        return PodManager.entityParser.parsePlaces(dataset, webId + "lomap/private/places");
+        return this.find(sessionId, user, "private");
     }
 
     async findFriend(sessionId: string, user: string): Promise<Place[]> {
+        return this.find(sessionId, user, "friends");
+    }
+
+    async findPublic(sessionId: string, user: string): Promise<Place[]> {
+        return this.find(sessionId, user, "public");
+    }
+
+    private async find(sessionId: string, user: string, zone: string) {
+        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+
+        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "places", webId, zone);
+
+        return PodManager.entityParser.parsePlaces(dataset);
+    }
+
+    async findSharedFriends(sessionId: string, user: string): Promise<Place[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
         let places: Place[] = [];
@@ -33,16 +45,12 @@ export class PlaceRepositoryImpl implements PlaceRepository {
             let friend: User = friends[f];
             let thing: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "places", friend.getWebId(), "friends");
 
-            let ps: Place[] = PodManager.entityParser.parsePlaces(thing, friend.getWebId() + "friends/places");
+            let ps: Place[] = PodManager.entityParser.parsePlaces(thing);
             for (let place in ps) {
                 places.push(ps[place]);
             }
         }
 
         return places;
-    }
-
-    async findPublic(sessionId: string, user: string): Promise<Place[]> {
-        throw new Error("Method not implemented.");
     }
 }

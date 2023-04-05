@@ -4,12 +4,12 @@ import { Place } from "../../../domain/Place";
 import { Picture } from "../../../domain/Picture";
 import { SolidDataset, Thing } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
+import { Visibility } from "../../../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 
 
     async add(sessionId: string, picture: Picture): Promise<boolean> {
-        let c = PodManager.ldJsonCreator.createPicture(picture);
 
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
@@ -22,18 +22,50 @@ export class PictureRepositoryImpl implements PictureRepository {
                 webId: webId
             });
 
-        return PodManager.dataManager.writeData(sessionId, "pictures", PodManager.ldJsonCreator.createPicture(picture), webId, picture.getVisibility().toLowerCase());
+        return PodManager.dataManager.writeData(sessionId, "pictures", PodManager.rdfCreator.createPicture(picture), webId, picture.getVisibility().toLowerCase());
     }
 
     async findOwn(sessionId: string, user: string): Promise<Picture[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "comments", webId, "private");
+        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "private");
 
-        return PodManager.entityParser.parsePictures(dataset, webId + "lomap/private/pictures");
+        return PodManager.entityParser.parsePictures(dataset);
     }
 
     async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
-        throw new Error("Method not implemented.");
+        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+
+        let pictures = (await this.findOwn(sessionId, webId)).filter(c => c.getPlace() === place);
+
+        let friends: string[] = (await PodManager.dataManager.getFriends(sessionId, webId)).map(f => f.getWebId());
+
+        let webIds: string[] = [];
+
+        (await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+            if (!webIds.includes(d.webId)) {
+                webIds.push(d.webId)
+            }
+        });
+
+        for (let w in webIds) {
+            let webID = webIds[w];
+            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "public")).forEach(p => { pictures.push(p) });
+        }
+
+        webIds = [];
+
+        (await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
+            if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
+                webIds.push(d.webId)
+            }
+        });
+
+        for (let w in webIds) {
+            let webID = webIds[w];
+            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "friends")).forEach(p => { pictures.push(p) });
+        }
+
+        return pictures;
     }
 }

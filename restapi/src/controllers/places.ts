@@ -2,7 +2,6 @@
 import { Visibility } from "../../../domain/Visibility";
 
 //Dtos
-import { UserDto } from "../../../domain/dtos/UserDto";
 import { PlaceDto } from "../../../domain/dtos/PlaceDto";
 
 //Services
@@ -17,7 +16,7 @@ import { Assertion } from '../Assertion';
 module.exports = function (api: Router, service: PlaceService) {
 
     //List public places
-    api.get("/place/public/list",
+    api.get("/place/public/list/:user",
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.params.user, res);
@@ -35,7 +34,7 @@ module.exports = function (api: Router, service: PlaceService) {
     );
 
     //List public places
-    api.get("/place/friends/list",
+    api.get("/place/friends/list/:user",
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.params.user, res);
@@ -53,7 +52,7 @@ module.exports = function (api: Router, service: PlaceService) {
     );
 
     //List public places
-    api.get("/place/private/list",
+    api.get("/place/private/list/:user",
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.params.user, res);
@@ -70,12 +69,31 @@ module.exports = function (api: Router, service: PlaceService) {
         }
     );
 
+    //List public places
+    api.get("/place/shared/list/:user",
+        async (req: any, res: Response): Promise<Response> => {
+
+            Assertion.exists(req.params.user, res);
+            Assertion.exists(req.session.solidSessionId, res);
+
+            var sessionId: string = <string>req.session.solidSessionId;
+            var user: string = <string>req.params.user;
+
+            return new Promise((resolve, reject) => {
+                service.findSharedFriends(sessionId, user).then(b => {
+                    resolve(res.send(b));
+                });
+            });
+        }
+    );
+
     //Add a place
     api.post("/place/add",
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.body.name, res);
             Assertion.exists(req.body.visibility, res);
+            Assertion.exists(req.body.description, res);
             Assertion.exists(req.body.latitude, res);
             Assertion.exists(req.body.longitude, res);
             Assertion.exists(req.session.solidSessionId, res);

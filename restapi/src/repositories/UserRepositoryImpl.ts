@@ -10,6 +10,4 @@ export class UserRepositoryImpl implements UserRepository {
     getFriends(sessionId: string, webId: string): Promise<User[]> {
         return PodManager.dataManager.getFriends(sessionId, webId);
     }
-
-
 }

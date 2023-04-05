@@ -20,7 +20,7 @@ export class CommentServiceImpl implements CommentService {
 
     private commentRepository: CommentRepository = Factory.repositories.getCommentRepository();
 
-    async add(sessionId: string, comment: CommentDto): Promise<string> {
+    async add(sessionId: string, comment: CommentDto): Promise<boolean> {
         let id = generateUUID();
         let text = comment.text;
         let place = comment.place;
@@ -28,24 +28,20 @@ export class CommentServiceImpl implements CommentService {
         let visibility = comment.visibility;
 
         if (text == undefined || text == null) {
-            throw new Error();
+            return false;
         }
 
         if (place == undefined || place == null) {
-            throw new Error();
+            return false;
         }
 
         if (visibility == undefined || visibility == null) {
-            throw new Error();
+            return false;
         }
 
         let c = new Comment(id, text, place, "", date, visibility);
 
-        if (await this.commentRepository.add(sessionId, c)) {
-            return id;
-        }
-
-        return "";
+        return this.commentRepository.add(sessionId, c);
     }
 
     async findOwn(sessionId: string, user: string): Promise<Comment[]> {

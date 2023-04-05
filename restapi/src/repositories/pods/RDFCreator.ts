@@ -7,13 +7,14 @@ import { Score } from "../../../../domain/Score";
 import { Thing, buildThing, createThing } from "@inrupt/solid-client";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
 
-export class LDJsonCreator {
+export class RDFCreator {
 
     public createComment(comment: Comment): Thing {
         return buildThing(createThing({ name: comment.getId() }))
             .addStringNoLocale(SCHEMA_INRUPT.identifier, comment.getId())
             .addStringNoLocale(SCHEMA_INRUPT.text, comment.getText())
             .addStringNoLocale(SCHEMA_INRUPT.Person, comment.getOwner())
+            .addStringNoLocale(SCHEMA_INRUPT.address, comment.getPlace())
             .addDate(SCHEMA_INRUPT.dateModified, comment.getDate())
             .build();
     }
@@ -23,6 +24,7 @@ export class LDJsonCreator {
             .addStringNoLocale(SCHEMA_INRUPT.identifier, picture.getId())
             .addStringNoLocale(SCHEMA_INRUPT.url, picture.getUrl())
             .addStringNoLocale(SCHEMA_INRUPT.Person, picture.getOwner())
+            .addStringNoLocale(SCHEMA_INRUPT.address, picture.getPlace())
             .addDate(SCHEMA_INRUPT.dateModified, picture.getDate())
             .build();
     }
@@ -32,6 +34,7 @@ export class LDJsonCreator {
             .addStringNoLocale(SCHEMA_INRUPT.identifier, score.getId())
             .addDecimal(SCHEMA_INRUPT.value, score.getScore())
             .addStringNoLocale(SCHEMA_INRUPT.Person, score.getOwner())
+            .addStringNoLocale(SCHEMA_INRUPT.address, score.getPlace())
             .addDate(SCHEMA_INRUPT.dateModified, score.getDate())
             .build();
     }
@@ -39,7 +42,7 @@ export class LDJsonCreator {
     public createPlace(place: Place): Thing {
         return buildThing(createThing({ name: place.getId() }))
             .addStringNoLocale(SCHEMA_INRUPT.identifier, place.getId())
-            .addStringNoLocale(SCHEMA_INRUPT.description, place.getName())
+            .addStringNoLocale(SCHEMA_INRUPT.name, place.getName())
             .addStringNoLocale(SCHEMA_INRUPT.description, place.getDescription())
             .addStringNoLocale(SCHEMA_INRUPT.Person, place.getOwner())
             .addDecimal(SCHEMA_INRUPT.latitude, place.getLatitude())

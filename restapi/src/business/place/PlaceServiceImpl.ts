@@ -21,7 +21,7 @@ export class PlaceServiceImpl implements PlaceService {
 
     private placeRepository: PlaceRepository = Factory.repositories.getPlaceRepository();
 
-    async add(sessionId: string, place: PlaceDto): Promise<boolean> {
+    async add(sessionId: string, place: PlaceDto): Promise<string> {
         let id = generateUUID();
         let name = place.name;
         let description = place.description;
@@ -30,28 +30,32 @@ export class PlaceServiceImpl implements PlaceService {
         let visibility = place.visibility;
 
         if (name == undefined || name == null) {
-            return false;
+            throw new Error();
         }
 
         if (description == undefined || description == null) {
-            return false;
+            throw new Error();
         }
 
         if (latitude == undefined || latitude == null) {
-            return false;
+            throw new Error();
         }
 
         if (longitude == undefined || longitude == null) {
-            return false;
+            throw new Error();
         }
 
         if (visibility == undefined || visibility == null) {
-            return false;
+            throw new Error();
         }
 
         let p = new Place(id, name, description, "", latitude, longitude, visibility);
 
-        return this.placeRepository.add(sessionId, p);
+        if (await this.placeRepository.add(sessionId, p)) {
+            return id;
+        }
+
+        return "ERROR"
     }
 
     async findOwn(sessionId: string, user: string): Promise<Place[]> {
@@ -64,5 +68,9 @@ export class PlaceServiceImpl implements PlaceService {
 
     async findPublic(sessionId: string, user: string): Promise<Place[]> {
         return this.placeRepository.findPublic(sessionId, user);
+    }
+
+    async findSharedFriends(sessionId: string, user: string): Promise<Place[]> {
+        return this.placeRepository.findSharedFriends(sessionId, user);
     }
 }
