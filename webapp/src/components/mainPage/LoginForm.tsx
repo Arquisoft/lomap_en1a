@@ -1,8 +1,6 @@
-import "../../App.css"
-import Grid from '@mui/material/Grid';
 import { useState, useEffect } from "react";
 import { LoginButton } from "@inrupt/solid-ui-react";
-import { Button, TextField, FormGroup, Container } from "@material-ui/core";
+import { Button, TextField, FormGroup} from "@material-ui/core";
 import { SessionProvider } from "@inrupt/solid-ui-react";
 
 const LoginForm = () => {
