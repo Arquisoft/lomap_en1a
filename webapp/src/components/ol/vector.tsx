@@ -98,7 +98,9 @@ export function deleteMarker() {
 
 export function refreshMarkers(visibility?: string) {
   source.clear();
+
   if (typeof visibility !== 'undefined') {
+    if (!visibility) visibility = ""
     currentVisibility = visibility;
   }
 
