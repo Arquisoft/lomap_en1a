@@ -68,7 +68,7 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
       break;
 
     case "FRIENDS":
-      color = 'rgb(230,230,250)';
+      color = 'rgb(230, 230, 230)';
       break;
 
     case "FULL":
@@ -80,7 +80,7 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
     image: new Icon({
       color: color,
       src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
-      anchor: [0.5, 0.9]
+      anchor: [0.5, 1]
     })
 
 
@@ -98,7 +98,9 @@ export function deleteMarker() {
 
 export function refreshMarkers(visibility?: string) {
   source.clear();
+
   if (typeof visibility !== 'undefined') {
+    if (!visibility) visibility = ""
     currentVisibility = visibility;
   }
 
@@ -121,7 +123,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "USER");
+    addMarker(event.coordinate, "FULL");
   };
 
   const onMarkerClick = async (feature: FeatureLike) => {

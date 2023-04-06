@@ -71,7 +71,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         }
     }
 
-    refreshMarkers();    
+    refreshMarkers();
   }
 
 

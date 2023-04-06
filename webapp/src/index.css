@@ -5,6 +5,7 @@
   --secondary-text-color: #cecece;
   --border-radius: 8px;
   --speed: 500ms;
+  --block-text-color: #272727;
 }
 
 body {
@@ -47,6 +48,36 @@ footer{
 #toggle-button{
   margin-left: 2em;
 
+}
+
+/* About */
+.centered-block {
+  box-sizing: border-box;
+  position: relative;
+  top: 43%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  border: 3px solid green;
+  border-radius: 30px;
+  padding: 0em 1em;
+}
+
+.text-area {
+  background-color: #fff;
+  color: var(--block-text-color);
+}
+
+.text-area h1 {
+  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 0.3em;
+}
+
+.text-area p {
+  text-align: left;
 }
 
 .map-view{

@@ -21,7 +21,6 @@ export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
     newVisibility: string
   ) => {
     setVisibility(newVisibility);
-    //FIXME: refreshMarkers causing problems when logging in
     refreshMarkers(newVisibility);
   };
 
@@ -35,9 +34,6 @@ export const FilterList:React.FC<IVisibility>=({visibility, setVisibility}) =>{
         aria-label="filters"
         
       >
-        <ToggleButton value="" aria-label="filter full" style = {buttonStyle}>
-          Show all
-        </ToggleButton>
         <ToggleButton value="FULL" aria-label="filter full" style = {buttonStyle}>
           Filter by Full
         </ToggleButton>
