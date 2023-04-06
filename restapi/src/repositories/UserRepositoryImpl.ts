@@ -1,5 +1,5 @@
 import { UserRepository } from "../business/repositories/UserRepository";
-import { User } from "../../../domain/User";
+import { User } from "../domain/User";
 import { PodManager } from "./pods/PodManager";
 
 export class UserRepositoryImpl implements UserRepository {

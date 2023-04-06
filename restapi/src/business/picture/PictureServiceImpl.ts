@@ -2,10 +2,10 @@
 import { Factory } from "../../Factory";
 
 //Entities
-import { Picture } from "../../../../domain/Picture";
+import { Picture } from "../../domain/Picture";
 
 //Dtos
-import { PictureDto } from "../../../../domain/dtos/PictureDto";
+import { PictureDto } from "../../domain/dtos/PictureDto";
 //Services
 import { PictureService } from "./PictureService";
 

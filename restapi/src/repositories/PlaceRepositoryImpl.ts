@@ -1,8 +1,8 @@
 import { PlaceRepository } from "../business/repositories/PlaceRepository";
-import { Place } from "../../../domain/Place";
+import { Place } from "../domain/Place";
 import { PodManager } from "./pods/PodManager";
-import { SolidDataset, Thing } from "@inrupt/solid-client";
-import { User } from "../../../domain/User";
+import { SolidDataset } from "@inrupt/solid-client";
+import { User } from "../domain/User";
 
 export class PlaceRepositoryImpl implements PlaceRepository {
 
@@ -14,7 +14,8 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         return PodManager.dataManager.writeData(sessionId, "places", PodManager.rdfCreator.createPlace(place), webId, place.getVisibility().toLowerCase());
     }
 
-    async findOwn(sessionId: string, user: string): Promise<Place[]> {
+    async findOwn(sessionId: string): Promise<Place[]> {
+        let user: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
         return this.find(sessionId, user, "private");
     }
 
@@ -22,7 +23,8 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         return this.find(sessionId, user, "friends");
     }
 
-    async findPublic(sessionId: string, user: string): Promise<Place[]> {
+    async findPublic(sessionId: string): Promise<Place[]> {
+        let user: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
         return this.find(sessionId, user, "public");
     }
 
@@ -34,7 +36,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         return PodManager.entityParser.parsePlaces(dataset);
     }
 
-    async findSharedFriends(sessionId: string, user: string): Promise<Place[]> {
+    async findSharedFriends(sessionId: string): Promise<Place[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
         let places: Place[] = [];

@@ -1,4 +1,3 @@
-import { User } from "../User";
 import { Visibility } from "../Visibility";
 
 export class PlaceDto {

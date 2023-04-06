@@ -1,4 +1,3 @@
-
 export class GroupDto {
 
     public id: string | undefined;

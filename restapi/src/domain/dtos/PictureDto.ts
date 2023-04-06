@@ -1,11 +1,9 @@
-import { Place } from "../Place";
-import { User } from "../User";
 import { Visibility } from "../Visibility";
 
-export class ScoreDto {
+export class PictureDto {
 
     public id: string | undefined;
-    public score: number | undefined;
+    public url: string | undefined;
     public place: string | undefined;
     public owner: string | undefined;
     public visibility: Visibility | undefined;

@@ -1,5 +1,5 @@
-import { ScoreDto } from "../../../../domain/dtos/ScoreDto";
-import { Score } from "../../../../domain/Score";
+import { ScoreDto } from "../../domain/dtos/ScoreDto";
+import { Score } from "../../domain/Score";
 
 export interface ScoreService {
 

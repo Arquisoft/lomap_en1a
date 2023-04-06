@@ -1,10 +1,9 @@
 import { Visibility } from "../Visibility";
 
-
-export class CommentDto {
+export class ScoreDto {
 
     public id: string | undefined;
-    public text: string | undefined;
+    public score: number | undefined;
     public place: string | undefined;
     public owner: string | undefined;
     public visibility: Visibility | undefined;

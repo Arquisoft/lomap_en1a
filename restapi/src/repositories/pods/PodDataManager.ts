@@ -10,14 +10,13 @@ import {
     Thing,
     getStringNoLocale,
     getUrlAll,
-    getUrl,
     SolidDataset,
     createSolidDataset
 } from "@inrupt/solid-client";
 
 //Configuration
 import configuration from '../../configuration.json';
-import { User } from "../../../../domain/User";
+import { User } from "../../domain/User";
 import { FOAF } from "@inrupt/vocab-common-rdf";
 
 export class PodDataManager {
@@ -36,6 +35,8 @@ export class PodDataManager {
         if (webId == undefined) {
             throw new Error();
         }
+
+        webId = decodeURIComponent(webId);
 
         let dataset = createSolidDataset();
 
@@ -60,6 +61,12 @@ export class PodDataManager {
             throw Error();
         }
 
+        if (webId == undefined) {
+            throw new Error();
+        }
+
+        webId = decodeURIComponent(webId);
+
         let dataset = await this.fetchData(sessionId, resource, webId, zone)
 
         dataset = setThing(dataset, thing);
@@ -81,6 +88,8 @@ export class PodDataManager {
             throw new Error();
         }
 
+        webId = decodeURIComponent(webId);
+
         let myDataset = await getSolidDataset(webId + this.profilePodZone + "#me", { fetch: session.fetch });
 
         const profile = getThing(myDataset, webId + this.profilePodZone + "#me") as Thing;
@@ -91,6 +100,8 @@ export class PodDataManager {
     public async getFriends(sessionId: string, webId: string): Promise<User[]> {
 
         let profile: Thing = await this.getProfile(sessionId, webId);
+
+        webId = decodeURIComponent(webId);
 
         let webIds: string[] = getUrlAll(profile, FOAF.knows);
 
@@ -106,6 +117,10 @@ export class PodDataManager {
 
     public async getUser(sessionId: string, webId: string): Promise<User> {
 
+        if (webId == undefined) {
+            throw new Error();
+        }
+
         let profile = await this.getProfile(sessionId, webId);
 
         let name: string | null = getStringNoLocale(profile, FOAF.name);
@@ -113,6 +128,8 @@ export class PodDataManager {
         if (name == null) {
             throw new Error();
         }
+
+        webId = encodeURIComponent(webId)
 
         return new User(name, webId);
     }

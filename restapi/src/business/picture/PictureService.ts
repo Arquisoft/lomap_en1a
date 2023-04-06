@@ -1,5 +1,5 @@
-import { PictureDto } from "../../../../domain/dtos/PictureDto";
-import { Picture } from "../../../../domain/Picture";
+import { PictureDto } from "../../domain/dtos/PictureDto";
+import { Picture } from "../../domain/Picture";
 
 export interface PictureService {
 

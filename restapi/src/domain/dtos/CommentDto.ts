@@ -1,11 +1,9 @@
-import { Place } from "../Place";
-import { User } from "../User";
 import { Visibility } from "../Visibility";
 
-export class PictureDto {
+export class CommentDto {
 
     public id: string | undefined;
-    public url: string | undefined;
+    public text: string | undefined;
     public place: string | undefined;
     public owner: string | undefined;
     public visibility: Visibility | undefined;

@@ -1,4 +1,4 @@
-import { Comment } from "../../../../domain/Comment";
+import { Comment } from "../../domain/Comment";
 
 export interface CommentRepository {
 

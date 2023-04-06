@@ -1,9 +1,9 @@
 import { ScoreRepository } from "../business/repositories/ScoreRepository";
-import { Score } from "../../../domain/Score";
+import { Score } from "../domain/Score";
 import { PodManager } from "./pods/PodManager";
-import { SolidDataset, Thing } from "@inrupt/solid-client";
+import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 export class ScoreRepositoryImpl implements ScoreRepository {
 
@@ -50,7 +50,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parseScores(await PodManager.dataManager.fetchData(sessionId, "scores", webID, "public")).forEach(s => { scores.push(s) });
+            PodManager.entityParser.parseScores(await PodManager.dataManager.fetchData(sessionId, "scores", webID, "public")).filter(s => s.getPlace() == place).forEach(s => { scores.push(s) });
         }
 
         webIds = [];
@@ -63,7 +63,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parseScores(await PodManager.dataManager.fetchData(sessionId, "scores", webID, "friends")).forEach(s => { scores.push(s) });
+            PodManager.entityParser.parseScores(await PodManager.dataManager.fetchData(sessionId, "scores", webID, "friends")).filter(s => s.getPlace() == place).forEach(s => { scores.push(s) });
         }
 
         return scores;

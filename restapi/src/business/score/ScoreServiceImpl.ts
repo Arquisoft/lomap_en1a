@@ -2,10 +2,10 @@
 import { Factory } from "../../Factory";
 
 //Entities
-import { Score } from "../../../../domain/Score";
+import { Score } from "../../domain/Score";
 
 //Dtos
-import { ScoreDto } from "../../../../domain/dtos/ScoreDto";
+import { ScoreDto } from "../../domain/dtos/ScoreDto";
 
 //Services
 import { ScoreService } from "./ScoreService";

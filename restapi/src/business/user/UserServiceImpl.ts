@@ -1,4 +1,4 @@
-import { User } from "../../../../domain/User";
+import { User } from "../../domain/User";
 import { Factory } from "../../Factory";
 import { PodManager } from "../../repositories/pods/PodManager";
 import { UserRepository } from "../repositories/UserRepository";
@@ -11,7 +11,8 @@ export class UserServiceImpl implements UserService {
     async getProfile(sessionId: string, webId: string): Promise<User> {
 
         if (webId == "OWN") {
-            let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+            webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+            webId = encodeURIComponent(webId)
         }
 
         return this.userRepository.getProfile(sessionId, webId);

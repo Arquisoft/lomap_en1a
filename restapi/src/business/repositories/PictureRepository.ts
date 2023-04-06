@@ -1,4 +1,4 @@
-import { Picture } from "../../../../domain/Picture";
+import { Picture } from "../../domain/Picture";
 
 export interface PictureRepository {
 

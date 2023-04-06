@@ -1,9 +1,9 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
 import { PodManager } from "./pods/PodManager";
-import { Picture } from "../../../domain/Picture";
+import { Picture } from "../domain/Picture";
 import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
 
@@ -50,7 +50,7 @@ export class PictureRepositoryImpl implements PictureRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "public")).forEach(p => { pictures.push(p) });
+            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "public")).filter(p => p.getPlace() == place).forEach(p => { pictures.push(p) });
         }
 
         webIds = [];
@@ -63,7 +63,7 @@ export class PictureRepositoryImpl implements PictureRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "friends")).forEach(p => { pictures.push(p) });
+            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "friends")).filter(p => p.getPlace() == place).forEach(p => { pictures.push(p) });
         }
 
         return pictures;

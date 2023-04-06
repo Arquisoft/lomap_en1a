@@ -1,21 +1,19 @@
 //Dtos
-import { PictureDto } from "../../../domain/dtos/PictureDto";
-import { UserDto } from "../../../domain/dtos/UserDto";
-import { PlaceDto } from "../../../domain/dtos/PlaceDto";
+import { PictureDto } from "../domain/dtos/PictureDto";
 
 //Services
 import { PictureService } from '../business/picture/PictureService';
 
 //Express
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 
 //Assertion
 import { Assertion } from '../Assertion';
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 module.exports = function (api: Router, service: PictureService) {
 
-    //List all scores
+    //List all the pictures for a given place
     api.get("/picture/list/:place",
         async (req: any, res: Response): Promise<Response> => {
 

@@ -2,10 +2,10 @@
 import { Factory } from "../../Factory";
 
 //Entities
-import { Comment } from "../../../../domain/Comment";
+import { Comment } from "../../domain/Comment";
 
 //Dtos
-import { CommentDto } from "../../../../domain/dtos/CommentDto";
+import { CommentDto } from "../../domain/dtos/CommentDto";
 
 //Services
 import { CommentService } from "./CommentService";

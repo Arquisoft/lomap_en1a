@@ -1,5 +1,5 @@
-import { CommentDto } from "../../../../domain/dtos/CommentDto";
-import { Comment } from "../../../../domain/Comment";
+import { CommentDto } from "../../domain/dtos/CommentDto";
+import { Comment } from "../../domain/Comment";
 
 export interface CommentService {
 

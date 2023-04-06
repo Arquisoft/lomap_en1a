@@ -1,5 +1,3 @@
-import { BaseEntity } from "./BaseEntity";
-
 export class User {
 
     private username: string;

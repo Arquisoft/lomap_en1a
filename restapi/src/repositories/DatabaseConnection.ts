@@ -1,5 +1,4 @@
 import { Db, MongoClient } from "mongodb";
-import configuration from '../configuration.json';
 
 export class DatabaseConnection {
 

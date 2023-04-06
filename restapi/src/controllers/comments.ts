@@ -1,22 +1,20 @@
 //Dtos
-import { UserDto } from "../../../domain/dtos/UserDto";
-import { PlaceDto } from "../../../domain/dtos/PlaceDto";
-import { CommentDto } from "../../../domain/dtos/CommentDto";
+import { CommentDto } from "../domain/dtos/CommentDto";
 
 //Services
 import { CommentService } from "../business/comment/CommentService";
 
 //Express
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 
 //Assertion
 import { Assertion } from '../Assertion';
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 module.exports = function (api: Router, service: CommentService) {
 
-    //List all comments
-    api.get("/comment/details/:comment",
+    //List all the comments for a given place
+    api.get("/comment/list/:place",
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.params.place, res);

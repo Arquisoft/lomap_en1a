@@ -1,8 +1,8 @@
 //Entities
-import { Place } from "../../../../domain/Place";
-import { Comment } from "../../../../domain/Comment";
-import { Picture } from "../../../../domain/Picture";
-import { Score } from "../../../../domain/Score";
+import { Place } from "../../domain/Place";
+import { Comment } from "../../domain/Comment";
+import { Picture } from "../../domain/Picture";
+import { Score } from "../../domain/Score";
 
 import { Thing, buildThing, createThing } from "@inrupt/solid-client";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";

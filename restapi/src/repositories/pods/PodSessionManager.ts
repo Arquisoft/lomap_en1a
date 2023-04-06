@@ -20,9 +20,11 @@ export class PodSessionManager {
     public async login(req: any, res: Response): Promise<void> {
 
         let provider = req.param.provider;
+        provider = decodeURIComponent(provider);
         provider = "https://inrupt.net";
 
         let redirect = req.param.redirect;
+        redirect = decodeURIComponent(redirect);
         redirect = "http://localhost:5000/api/login/success";
 
         const session = new Session();
@@ -43,15 +45,15 @@ export class PodSessionManager {
 
         await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
 
-        return res.send(solidSession?.info.webId);
+        return res.send(solidSession?.info.webId + " has logged in successfully");
     }
 
-    public static async logout(req: any, res: Response): Promise<Response> {
+    public async logout(req: any, res: Response): Promise<Response> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
 
         await solidSession?.logout();
 
-        return res.send(solidSession?.info.webId);
+        return res.send("Logged out");
     }
 
     public async getCurrentWebId(sessionId: string): Promise<string> {

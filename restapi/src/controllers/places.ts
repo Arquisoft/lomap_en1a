@@ -1,44 +1,42 @@
 //Entities
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 //Dtos
-import { PlaceDto } from "../../../domain/dtos/PlaceDto";
+import { PlaceDto } from "../domain/dtos/PlaceDto";
 
 //Services
 import { PlaceService } from "../business/place/PlaceService";
 
 //Express
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 
 //Assertion
 import { Assertion } from '../Assertion';
 
 module.exports = function (api: Router, service: PlaceService) {
 
-    //List public places
-    api.get("/place/public/list/:user",
+    //List all public places
+    api.get("/place/public/list",
         async (req: any, res: Response): Promise<Response> => {
 
-            Assertion.exists(req.params.user, res);
             Assertion.exists(req.session.solidSessionId, res);
 
             var sessionId: string = <string>req.session.solidSessionId;
-            var user: string = <string>req.params.user;
 
             return new Promise((resolve, reject) => {
-                service.findPublic(sessionId, user).then(b => {
+                service.findPublic(sessionId).then(b => {
                     resolve(res.send(b));
                 });
             });
         }
     );
 
-    //List public places
+    //List all places shared with friends created by the given user
     api.get("/place/friends/list/:user",
         async (req: any, res: Response): Promise<Response> => {
 
-            Assertion.exists(req.params.user, res);
             Assertion.exists(req.session.solidSessionId, res);
+            Assertion.exists(req.params.user, res);
 
             var sessionId: string = <string>req.session.solidSessionId;
             var user: string = <string>req.params.user;
@@ -51,36 +49,32 @@ module.exports = function (api: Router, service: PlaceService) {
         }
     );
 
-    //List public places
-    api.get("/place/private/list/:user",
+    //List all private places created by the logged user
+    api.get("/place/private/list",
         async (req: any, res: Response): Promise<Response> => {
 
-            Assertion.exists(req.params.user, res);
             Assertion.exists(req.session.solidSessionId, res);
 
             var sessionId: string = <string>req.session.solidSessionId;
-            var user: string = <string>req.params.user;
 
             return new Promise((resolve, reject) => {
-                service.findOwn(sessionId, user).then(b => {
+                service.findOwn(sessionId).then(b => {
                     resolve(res.send(b));
                 });
             });
         }
     );
 
-    //List public places
-    api.get("/place/shared/list/:user",
+    //List all places shared with the logged user
+    api.get("/place/shared/list",
         async (req: any, res: Response): Promise<Response> => {
 
-            Assertion.exists(req.params.user, res);
             Assertion.exists(req.session.solidSessionId, res);
 
             var sessionId: string = <string>req.session.solidSessionId;
-            var user: string = <string>req.params.user;
 
             return new Promise((resolve, reject) => {
-                service.findSharedFriends(sessionId, user).then(b => {
+                service.findSharedFriends(sessionId).then(b => {
                     resolve(res.send(b));
                 });
             });

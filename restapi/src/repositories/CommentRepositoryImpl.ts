@@ -1,9 +1,9 @@
 import { SolidDataset } from "@inrupt/solid-client";
-import { Comment } from "../../../domain/Comment";
+import { Comment } from "../domain/Comment";
 import { CommentRepository } from "../business/repositories/CommentRepository";
 import { PodManager } from "./pods/PodManager";
 import { DatabaseConnection } from "./DatabaseConnection";
-import { Visibility } from "../../../domain/Visibility";
+import { Visibility } from "../domain/Visibility";
 
 export class CommentRepositoryImpl implements CommentRepository {
 
@@ -50,7 +50,7 @@ export class CommentRepositoryImpl implements CommentRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "public")).forEach(c => { comments.push(c) });
+            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "public")).filter(c => c.getPlace() == place).forEach(c => { comments.push(c) });
         }
 
         webIds = [];
@@ -63,7 +63,7 @@ export class CommentRepositoryImpl implements CommentRepository {
 
         for (let w in webIds) {
             let webID = webIds[w];
-            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "friends")).forEach(c => { comments.push(c) });
+            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "friends")).filter(c => c.getPlace() == place).forEach(c => { comments.push(c) });
         }
 
         return comments;

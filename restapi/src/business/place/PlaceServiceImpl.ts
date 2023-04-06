@@ -2,10 +2,10 @@
 import { Factory } from "../../Factory";
 
 //Entities
-import { Place } from "../../../../domain/Place";
+import { Place } from "../../domain/Place";
 
 //Dtos
-import { PlaceDto } from "../../../../domain/dtos/PlaceDto";
+import { PlaceDto } from "../../domain/dtos/PlaceDto";
 
 //Services
 import { PlaceService } from "./PlaceService";
@@ -58,19 +58,19 @@ export class PlaceServiceImpl implements PlaceService {
         return "ERROR"
     }
 
-    async findOwn(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findOwn(sessionId, user);
+    async findOwn(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findOwn(sessionId);
     }
 
     async findFriend(sessionId: string, user: string): Promise<Place[]> {
         return this.placeRepository.findFriend(sessionId, user);
     }
 
-    async findPublic(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findPublic(sessionId, user);
+    async findPublic(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findPublic(sessionId);
     }
 
-    async findSharedFriends(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findSharedFriends(sessionId, user);
+    async findSharedFriends(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findSharedFriends(sessionId);
     }
 }

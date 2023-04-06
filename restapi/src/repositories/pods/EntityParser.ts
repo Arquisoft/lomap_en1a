@@ -1,10 +1,10 @@
-import { SolidDataset, Thing, getDate, getDatetime, getDecimal, getStringNoLocale, getThing } from "@inrupt/solid-client";
-import { Comment } from "../../../../domain/Comment";
-import { Place } from "../../../../domain/Place";
-import { Score } from "../../../../domain/Score";
-import { Picture } from "../../../../domain/Picture";
+import { SolidDataset, Thing, getDatetime, getDecimal, getStringNoLocale, getThing } from "@inrupt/solid-client";
+import { Comment } from "../../domain/Comment";
+import { Place } from "../../domain/Place";
+import { Score } from "../../domain/Score";
+import { Picture } from "../../domain/Picture";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
-import { Visibility } from "../../../../domain/Visibility";
+import { Visibility } from "../../domain/Visibility";
 
 export class EntityParser {
 
