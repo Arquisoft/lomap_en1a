@@ -30,6 +30,7 @@ export class PodSessionManager {
         const session = new Session();
         req.session.solidSessionId = session.info.sessionId;
 
+        console.log(session.info.sessionId)
         await session.login({
             redirectUrl: redirect,
             oidcIssuer: <string>provider,

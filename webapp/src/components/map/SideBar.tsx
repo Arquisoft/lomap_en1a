@@ -8,8 +8,9 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getPlacesByUser } from "../../api/api";
+import { getFriendsForUser, getPlacesByUser, getProfile } from "../../api/api";
 import { SlidingPaneView } from "./MapView";
+import { User } from "../../domain/User";
 
 
 
@@ -21,7 +22,7 @@ type SideBarProps = {
     longitude: number;
   }>>,
   setFriendWindowData: React.Dispatch<React.SetStateAction<{
-    friendName: string;
+    friend: User;
     friendPhoto: string;
     sharedSites: never[];
   }>>,
@@ -32,7 +33,7 @@ type SideBarProps = {
 }
 
 
-const friends = ["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
+
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
 
@@ -44,6 +45,15 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
     getPlacesByUser("test").then((places) => setPlaces(places));
+  }
+
+  const [friends, setFriends] = useState<User[]>([]);
+  /*const { session } = useSession();
+  var webId = session.info.webId as string;
+*/
+  //Get the list of places for the current user
+  const refreshFriendList = async () => {
+    getProfile().then((user) => getFriendsForUser(user.getWebId()).then((friends) => setFriends(friends)));
   }
 
   const displayVisibility = (visibility: string) => {
@@ -59,6 +69,10 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   useEffect(() => {
     refreshPlaceList()
   }, [props.newPlace]);
+
+  useEffect(() => {
+    refreshFriendList()
+  }, []);
 
 
   //Style must be in-line; does not work otherwise
@@ -85,7 +99,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
 
             <MenuItem icon={<ArrowRightIcon />}
-              
+
               key={index}
               onClick={() => {
                 props.setInfoWindowData({
@@ -95,7 +109,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   longitude: place.longitude
 
                 });
-                props. setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
                 props.setIsOpen(true);
               }}
 
@@ -104,26 +118,28 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
         </SubMenu>
         <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
-          {friends.map((ti, index) => (
-            <MenuItem icon={<PersonIcon />}
-              key={index}
-              onClick={() => {
+          <MenuItem>
+            {friends.map((ti, index) => (
+              <MenuItem icon={<PersonIcon />}
+                key={index}
+                onClick={() => {
+                  alert(ti.getUsername());
+                  props.setFriendWindowData({
+                    friend: ti,
+                    friendPhoto: "foto",
+                    sharedSites: []
 
-                props.setFriendWindowData({
-                  friendName: ti,
-                  friendPhoto: "foto" + ti,
-                  sharedSites: []
+                  });
 
-                });
+                  props.setSlidingPaneView(SlidingPaneView.FriendsView);
+                  props.setIsOpen(true);
 
-                props. setSlidingPaneView(SlidingPaneView.FriendsView);
-                props.setIsOpen(true);
+                }
+                }
+              >{ti.getUsername()}</MenuItem>
+            ))}
+          </MenuItem>
 
-              }}
-
-
-            >{ti}</MenuItem>
-          ))}
         </SubMenu>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>

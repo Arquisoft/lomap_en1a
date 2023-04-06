@@ -14,12 +14,13 @@ import { useSession } from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { refreshMarkers } from '../ol/vector';
 
-export interface CreatePlaceWindowProps{
-  latitude:number,
-  longitude:number,
-  setNewPlace:React.Dispatch<React.SetStateAction<number>>,
-  deleteMarker:React.MutableRefObject<boolean>,
-  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
+export interface CreatePlaceWindowProps {
+  latitude: number,
+  longitude: number,
+  setNewPlace: React.Dispatch<React.SetStateAction<number>>,
+  deleteMarker: React.MutableRefObject<boolean>,
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+
 
 }
 
@@ -47,27 +48,27 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(validateText()){
-      var place = new Place("", name, "descripción", webId, props.latitude, props.longitude, visibility);
-        let result:boolean = await addPlace(place);
-        if (result){
-          props.setNewPlace(n=>n+1); //New place is increased when a place is added
-          setNotificationStatus(true);
-          setNotification({ 
-            severity:'success',
-            message:'Your new place has been added!'
-          });
-          props.deleteMarker.current=false;
-          props.setIsOpen(false); //Close the create place window automatically
-        }
-        else{
-          setNotificationStatus(true);
-          setNotification({ 
-            severity:'error',
-            message:'There\'s been an error adding your place.'
-          });
-          props.deleteMarker.current=true;
-        }
+    if (validateText()) {
+      var place = new Place("", name, "", webId, props.latitude, props.longitude, visibility);
+      let result: boolean = await addPlace(place);
+      if (result) {
+        props.setNewPlace(n => n + 1); //New place is increased when a place is added
+        setNotificationStatus(true);
+        setNotification({
+          severity: 'success',
+          message: 'Your new place has been added!'
+        });
+        props.deleteMarker.current = false;
+        props.setIsOpen(false); //Close the create place window automatically
+      }
+      else {
+        setNotificationStatus(true);
+        setNotification({
+          severity: 'error',
+          message: 'There\'s been an error adding your place.'
+        });
+        props.deleteMarker.current = true;
+      }
     }
 
     refreshMarkers();

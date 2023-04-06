@@ -79,7 +79,7 @@ export class PodDataManager {
     public async getProfile(sessionId: string, webId: string) {
 
         let session = await getSessionFromStorage(sessionId);
-
+        console.log(sessionId)
         if (session == null) {
             throw new Error();
         }

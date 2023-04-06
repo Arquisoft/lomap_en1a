@@ -2,6 +2,7 @@ import React from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../icons/friend.icon.png";
+import { User } from "../../domain/User";
 
 type Place = {
     id: string;
@@ -11,7 +12,7 @@ type Place = {
 }
 
 type FriendPanelProps = {
-    friendName: string,
+    friend: User,
     friendPhoto: string,
     sharedSites: Place[]
 }
@@ -58,7 +59,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
             <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
 
                 <Grid item xs={6} textAlign="center">
-                    <Box component="h1" ><>{props.friendName}</></Box>
+                    <Box component="h1" ><>{props.friend.getUsername()}</></Box>
                 </Grid>
 
 

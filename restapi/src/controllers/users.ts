@@ -10,7 +10,6 @@ module.exports = function (api: Router) {
     //Log in into the pod
     api.get("/login/:provider/:redirect",
         async (req: Request, res: Response): Promise<void> => {
-
             Assertion.exists(req.params.provider, res);
             Assertion.exists(req.params.redirect, res);
 
@@ -51,7 +50,6 @@ module.exports = function (api: Router) {
 
     //Profile
     api.get("/profile", async (req: any, res: Response): Promise<Response> => {
-
         Assertion.exists(req.session.solidSessionId, res);
 
         let sessionId: string = <string>req.session.solidSessionId;
