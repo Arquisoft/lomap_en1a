@@ -20,12 +20,13 @@ export class PodSessionManager {
     public async login(req: any, res: Response): Promise<void> {
 
         let provider = req.params.provider;
-        //provider = decodeURIComponent(provider);
-        //provider = "https://inrupt.net";
+        console.log(provider);
+        // provider = decodeURIComponent(provider);
+        provider = "https://inrupt.net";
 
         let redirect = req.params.redirect;
-        //redirect = decodeURIComponent(redirect);
-        //redirect = "http://localhost:5000/api/login/success";
+        // redirect = decodeURIComponent(redirect);
+        redirect = "http://localhost:3000/map";
 
 
         const session = new Session();
@@ -37,7 +38,7 @@ export class PodSessionManager {
             oidcIssuer: <string>provider,
             clientName: this.clientName,
             handleRedirect: (url: string) => {
-                console.log(url);
+
                 res.redirect(url)
             }
         });

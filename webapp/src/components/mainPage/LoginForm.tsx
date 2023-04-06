@@ -4,11 +4,18 @@ import { getProfile, login } from "../../api/api";
 
 const LoginForm = () => {
   const [idp, setIdp] = useState("https://inrupt.net");
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
   useEffect(() => {
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
+
+  const handleLogin = () => {
+    {
+      login(idp, currentUrl);
+      // getProfile().then(user => alert(user.username))
+    }
+  };
 
   return (
     <div className="login-div">
@@ -21,11 +28,7 @@ const LoginForm = () => {
           onChange={(e) => setIdp(e.target.value)}
           InputProps={{
             endAdornment: (
-              <Button className="login-button" variant="contained" color="primary" onClick={() => {
-                {
-                  login(idp, currentUrl);
-                }
-              }}>
+              <Button className="login-button" variant="contained" color="primary" onClick={handleLogin}>
                 Login
               </Button>
             ),

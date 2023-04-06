@@ -21,7 +21,6 @@ module.exports = function (api: Router) {
     //Login redirect enpoint
     api.get("/login/success",
         async (req: Request, res: Response): Promise<any> => {
-
             return PodManager.sessionManager.successfulLogin(req, res);
         }
     );
@@ -54,6 +53,7 @@ module.exports = function (api: Router) {
         Assertion.exists(req.session.solidSessionId, res);
 
         let sessionId: string = <string>req.session.solidSessionId;
+        console.log(sessionId);
         let webId: string = "OWN";
 
         let userService: UserService = Factory.services.getUserService();

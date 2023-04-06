@@ -89,7 +89,7 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
 export async function getPlacesByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/place/list/' + id.replaceAll("/", "-").replaceAll("#", "-"));
+  let response = await fetch(apiEndPoint + '/place/public/list');
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -147,7 +147,10 @@ export async function login(oidcIssuer: string, redirectUrl: string): Promise<vo
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);
 
-  let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
+  let url = apiEndPoint + '/login/' + provider + '/' + redirect;
+  window.open(url);
+
+  // let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
   //The objects returned by the api are directly convertible to Comment objects
-  return response.json();
+  // return response.json();
 }
