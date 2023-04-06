@@ -13,7 +13,6 @@ import { Place } from '../../domain/Place';
 import { useSession} from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { refreshMarkers } from '../ol/vector';
-import { deleteMarker } from '../ol/vector';
 
 export interface CreatePlaceWindowProps{
   latitude:number,
@@ -57,7 +56,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           setNotificationStatus(true);
           setNotification({ 
             severity:'success',
-            message:'You new place has been added!'
+            message:'Your new place has been added!'
           });
           props.deleteMarker.current=false;
           props.setIsOpen(false); //Close the create place window automatically
