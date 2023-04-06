@@ -2,13 +2,14 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState, useEffect } from 'react';
+import { useState, useRef} from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deleteMarker } from '../ol/vector';
+import { deleteMarker} from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
+
 
 
 export enum SlidingPaneView {
@@ -21,7 +22,8 @@ export default function MapView(): JSX.Element {
 
   const { session } = useSession();
   var webId = session.info.webId as string;
-  const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
+ // const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
+  const deleteLastMarker = useRef(false);
 
   //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
   const [newPlace, setNewPlace] = useState(0);
@@ -80,11 +82,11 @@ export default function MapView(): JSX.Element {
         onRequestClose={() => {
           setIsOpen(false);
           //If a place was not added, when closing setRemoveMarker(true)
-          if (!addedPlace && slidingPaneView == SlidingPaneView.CreatePlaceView) {
+          if (deleteLastMarker && slidingPaneView==SlidingPaneView.CreatePlaceView) {
             deleteMarker();
           }
 
-          setAddedPlace(false);
+          deleteLastMarker.current = false;
 
 
         }}
@@ -94,7 +96,7 @@ export default function MapView(): JSX.Element {
       >
         {
           slidingPaneView == SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
-            setAddedPlace={setAddedPlace} setIsOpen={setIsOpen} /> :
+            deleteMarker={deleteLastMarker} setIsOpen={setIsOpen} /> :
             slidingPaneView == SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
             slidingPaneView == SlidingPaneView.FriendsView ? <FriendPanel friendName={friendWindowData.friendName} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
