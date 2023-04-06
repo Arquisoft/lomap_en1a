@@ -1,13 +1,18 @@
+/* Variables --------------------------------------------------------------------------- */
 :root {
   --primary-bg: #242526;
   --secondary-bg: #fff;
-  --primary-text-color: #555;
-  --secondary-text-color: #cecece;
+  --primary-profile-text-color: #555;
+  --secondary-profile-text-color: #cecece;
   --border-radius: 8px;
   --speed: 500ms;
   --block-text-color: #272727;
+  --main-text-color: white;
+  --alternative-text-color: black;
 }
+/* -------------------------------------------------------------------------------------- */
 
+/* General styles ----------------------------------------------------------------------- */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,6 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--primary-bg);
+  color: var(--main-text-color);
 }
 
 code {
@@ -23,19 +29,20 @@ code {
     monospace;
 }
 
-
-h1{
+h1 {
   font-size: 2em;
 }
 
-h3{
-  color:black;
+ul {
+  list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: var(--main-text-color);
+}
 
-
-
-footer{
+footer {
   z-index: 3;
   position: fixed;
   bottom: 0;
@@ -43,14 +50,26 @@ footer{
   margin-top: 5em;
 }
 
-
-
-#toggle-button{
-  margin-left: 2em;
-
+/* General classes---------------------------------------------------- */
+.container {
+  margin: 0;
+  border: 0;
+  text-align: center;
+  width: 100%; height: 100%;
+  position: absolute; top: 0; left: 0;
 }
 
-/* About */
+.centered-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  justify-content: space-evenly;
+  text-align: justify;
+  direction: row;
+}
+
 .centered-block {
   box-sizing: border-box;
   position: relative;
@@ -67,7 +86,7 @@ footer{
 }
 
 .text-area {
-  background-color: #fff;
+  background-color: var(--secondary-bg);
   color: var(--block-text-color);
 }
 
@@ -79,115 +98,6 @@ footer{
 .text-area p {
   text-align: left;
 }
-
-.map-view{
-  display: grid;
-  grid-template-rows: [first]10% [second]100%[last] ;
-  grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC] ;
-}
-
-.filter-list{
-  z-index : 1;
-  grid-row-start: first;
-  grid-row-end:second;
-  grid-column-start:secondC ;
-  grid-column-end: thirdC;
-}
-
-.toggle-button-group{
-  display: flex;
-  gap:5%;
-  margin-top: 0.5em;
-  
-}
-
-
-.side-bar{
-  z-index: 2;
-  grid-row-start: first;
-  grid-row-end:last;
-  grid-column-start:firstC ;
-  grid-column-end: secondC;
-}
-
-.map{
-  grid-row-start: first;
-  grid-row-end:last;
-  grid-column-start:firstC ;
-  grid-column-end: lastC;
-}
-
-.map .ol-zoom {
-  top: 10px;
-  left: auto;
-  right: 10px;
-}
-
-.info-window{
-  color:black;
-  z-index: 3;
-}
-
-.background-image {
-  background-image: url(images/map.jpg);
-  background-position: center;
-  background-size: cover;
-  background-repeat:no-repeat ;
-  max-width: 100vw;
-  max-height: 100vh;
-  background-color: #464646;
-}
-
-.menu {
-  background-color: #333;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  gap: 2em;
-  width: 100%;
-  font-size: 1em;
-
-}
-
-.centered-container{
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  justify-content:space-evenly;
-  text-align: justify;
-  direction:row;
-}
-
-
-.menu > ul {
-  padding: 0;
-  margin: 0;
-  margin-right:1em;
-  list-style: none;
-  display: flex;
-  gap: 1rem;
-}
-
-.menu a {
-  text-decoration: none;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  color: #fff;
-}
-
-
-.menu ul > li.active {
-  background-color: #555;
-}
-
-.menu ul > li:not(.noHover):hover {
-  background-color: #777;
-}
-
 
 .fade-in {
   animation: fadeInAnimation ease 3s;
@@ -203,9 +113,122 @@ footer{
       opacity: 1;
   }
 }
+/* ------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------- */
 
-/* Slideshow */
+.background-image {
+  background-image: url(images/map.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat ;
+  max-width: 100vw;
+  max-height: 100vh;
+  background-color: #464646;
+}
 
+/* Map ---------------------------------------------------------------------------------- */
+.map-view {
+  display: grid;
+  grid-template-rows: [first]10% [second]100%[last] ;
+  grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC] ;
+}
+
+.map {
+  grid-row-start: first;
+  grid-row-end: last;
+  grid-column-start: firstC ;
+  grid-column-end: lastC;
+}
+
+.map .ol-zoom {
+  top: 10px;
+  left: auto;
+  right: 10px;
+}
+
+/* Filters ----------------------------------------------------------- */
+.filter-list {
+  z-index: 1;
+  grid-row-start: first;
+  grid-row-end: second;
+  grid-column-start: secondC ;
+  grid-column-end: thirdC;
+}
+
+.toggle-button-group{
+  display: flex;
+  gap: 5%;
+  margin-top: 0.5em;
+}
+/* ------------------------------------------------------------------- */
+
+/* Side bars --------------------------------------------------------- */
+.info-window{
+  color:black;
+  z-index: 3;
+}
+
+.side-bar {
+  z-index: 2;
+  grid-row-start: first;
+  grid-row-end:last;
+  grid-column-start:firstC ;
+  grid-column-end: secondC;
+}
+/* ------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------------------- */
+
+/* Header ------------------------------------------------------------------------------- */
+#logo_img {
+  max-height: 2em;
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  padding: .25rem;
+}
+
+.menu {
+  background-color: #333;
+  color: var(--main-text-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2em;
+  width: 100%;
+  font-size: 1em;
+}
+
+.menu ul {
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+}
+
+.menu ul:not(.profile-dropdown ul) {
+  display: flex;
+  margin-right: 1em;
+  padding: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+
+.menu ul li.active {
+  background-color: #555;
+}
+
+.menu ul li:not(.noHover li):hover {
+  background-color: #777;
+}
+/* -------------------------------------------------------------------------------------- */
+
+
+/* Slideshow ---------------------------------------------------------------------------- */
 .slideshow {
   margin: 0 auto;
   overflow: hidden;
@@ -220,15 +243,10 @@ footer{
 
 .slide {
   display: inline-block;
-
   height: 400px;
   width: 100%;
   border-radius: 4em;
-  
-
 }
-
-/* Buttons */
 
 .slideshowDots {
   text-align: center;
@@ -249,17 +267,9 @@ footer{
 .slideshowDot.active {
   background-color: blue;
 }
+/* -------------------------------------------------------------------------------------- */
 
-/* Container */
-
-.container {
-  margin: 0;
-  border: 0;
-  text-align: center;
-  width: 100%; height: 100%;
-  position: absolute; top: 0; left: 0;
-}
-
+/* Login -------------------------------------------------------------------------------- */
 .login-div {
   display: grid;
   justify-content: center;
@@ -279,34 +289,10 @@ footer{
   position: absolute;
   height: inherit;
 }
+/* -------------------------------------------------------------------------------------- */
 
-
-#logo_img {
-  max-height: 2em;
-  max-width: 100%;
-  height: auto;
-  width: auto;
-  padding: .25rem;
-}
-
-/*#user-icon {
-  max-height: 2.5em;
-  top: 50%;
-}*/
-
-#user-icon:hover {
-  background-color: #555;
-}
-
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-.menu-trigger img {
+/* Profile ------------------------------------------------------------------------------ */
+#user-icon {
   z-index : 4;
   top: 20px;
   right: 20px;
@@ -317,88 +303,85 @@ a {
   cursor: pointer;
 }
 
-.dropdown-menu {
+#user-icon:hover {
+  background-color: #acacac;
+}
+
+.profile-dropdown {
   z-index : 4;
   position: absolute;
   top: 12%;
   right: 20px;
-  background-color: #fff;
+  background-color: var(--secondary-bg);
   border-radius: var(--border-radius);
   padding: 10px 20px;
   width: 200px;
   font-size: 14px;
 }
 
-.menu-container:hover  {
-  background-color: #333;
-}
-
-.dropdown-menu.active {
+.profile-dropdown.profile-active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: var(--speed) ease;
 }
 
-.dropdown-menu.inactive {
+.profile-dropdown.profile-inactive {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-20px);
   transition: var(--speed) ease;
 }
 
-h3 {
+.profile-menu h3 {
   width: 100%;
   text-align: center;
   font-size: 18px;
   padding: 20px 0;
   font-weight: 500;
-  color: var(--primary-text-color);
+  color: var(--primary-profile-text-color);
   line-height: 1.2rem;
 }
 
-h3 span {
+.profile-menu h3 span {
   font-size: 14px;
-  color: var(--secondary-text-color);
+  color: var(--secondary-profile-text-color);
   font-weight: 400;
 }
 
-.dropdown-menu ul li ul > li {
+.dropdown-items {
+  padding: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  margin: 10px auto;
   padding: 10px 0;
+  /* margin-right: 35px; /* Uncomment to center lines separating elements */
   border-top: 3px solid rgba(0, 0, 0, 0.05);
 }
 
-.dropdown-menu ul li ul li:hover a {
-  color: rgb(212, 33, 9);
-  cursor: pointer;
+.dropdown-item a {
+  max-width: 100px;
+  margin-left: 10px;
+  transition: var(--speed);
+  color: var(--secondary-profile-text-color);
 }
 
-.dropdown-menu ul li ul li:hover img {
-  opacity: 1;
-  cursor: pointer;
-}
-
-.dropdownItem {
-  display: flex;
-  margin: 10px auto;
-}
-
-.dropdownItem img {
+.dropdown-item img {
   max-width: 20px;
   margin-right: 10px;
   opacity: 0.5;
   transition: var(--speed);
 }
 
-.dropdownItem a {
-  max-width: 100px;
-  margin-left: 10px;
-  transition: var(--speed);
-  color: var(--secondary-text-color);
+.dropdown-item:hover a {
+  color: rgb(212, 33, 9);
+  cursor: pointer;
 }
 
-.dropdownItem:hover {
-  background-color: #fff;
+.dropdown-item:hover img {
+  opacity: 1;
+  cursor: pointer;
 }
-
-
+/* -------------------------------------------------------------------------------------- */

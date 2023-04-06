@@ -27,7 +27,7 @@ function LoggedNavbar() {
   return (
       <ul>
         <CustomLink to="/map" >Map</CustomLink>
-        <li><Profile></Profile></li>
+        <Profile></Profile>
       </ul>
     
   )
