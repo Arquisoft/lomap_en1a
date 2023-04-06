@@ -36,13 +36,13 @@ export default function Profile(props: UserProps): JSX.Element {
     //TODO: Add user data.
     return (
         <>
-            <div className="menu-container" ref={menuRef}>
-                <div className="menu-trigger" onClick={() => {setOpen(!open)}}>
+            <div className="profile-menu" ref={menuRef}>
+                <div onClick={() => {setOpen(!open)}}>
                     <img id="user-icon" src={placeholderImage} alt="User icon"></img> 
                 </div>
-                <div className={`dropdown-menu ${open? 'active' : 'inactive'}`}>
+                <div className={`profile-dropdown ${open? 'profile-active' : 'profile-inactive'} noHover`}>
                     <h3>Username<br/><span>User information</span></h3>
-                    <ul>
+                    <ul className="dropdown-items">
                         <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/"}/></li> 
                         <li><DropdownItemLogout/></li>
                     </ul>
@@ -55,7 +55,7 @@ export default function Profile(props: UserProps): JSX.Element {
 function DropdownItem(props: { img: string, text: string, linkTo: To }) {
     return (
         <ul>
-            <li className="dropdownItem">
+            <li className="dropdown-item">
                 <img src={props.img} alt="icon"></img>
                 <div className="dropdown-links">
                     <CustomLink to={props.linkTo}>{props.text}</CustomLink>
@@ -68,7 +68,7 @@ function DropdownItem(props: { img: string, text: string, linkTo: To }) {
 function DropdownItemLogout() {
     return (
         <ul>
-            <li className="dropdownItem">
+            <li className="dropdown-item">
                 <img src={log_out} alt="icon"></img>
                 <div className="dropdown-links">
                     <LogoutButton>
