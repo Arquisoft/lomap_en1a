@@ -1,9 +1,8 @@
-import { render, fireEvent, act, findByText } from "@testing-library/react";
+import { render, act} from "@testing-library/react";
 import MySideBar from "./SideBar";
 import * as api from '../../api/api'
 import { Place } from "../../domain/Place";
 import { useState } from "react";
-import { PlaceVisibility } from "../../domain/Visibility";
 
 jest.mock('../../api/api');
 
