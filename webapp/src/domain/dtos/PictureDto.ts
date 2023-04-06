@@ -1,10 +1,12 @@
 import { Place } from "../Place";
 import { User } from "../User";
+import { Visibility } from "../Visibility";
 
 export class PictureDto {
 
     public id: string | undefined;
     public url: string | undefined;
-    public place: Place | undefined;
-    public owner: User | undefined;
+    public place: string | undefined;
+    public owner: string | undefined;
+    public visibility: Visibility | undefined;
 }
