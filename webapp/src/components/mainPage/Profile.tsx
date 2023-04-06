@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef, Ref, Component} from "react";
 import { User } from "../../domain/User";
 import placeholderImage from '../../images/user_icon.png';
 import log_out from '../../icons/log-out.png';
@@ -16,16 +16,33 @@ export default function Profile(props: UserProps): JSX.Element {
     
     const [open, setOpen] = useState(false);
     
+    let menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        let handler = (e : Event) => {
+            if ((menuRef) != null && menuRef.current != null) {
+                if (!menuRef.current.contains(e.target as Node)) {
+                    setOpen(false);
+                }
+            }
+        };
+        document.addEventListener("mousedown", handler);
+
+        return() => {
+            document.removeEventListener("mousedown", handler);
+        }
+    })
+
     //TODO: Add user data.
     return (
         <>
-            <div className="menu-container">
+            <div className="menu-container" ref={menuRef}>
                 <div className="menu-trigger" onClick={() => {setOpen(!open)}}>
                     <img id="user-icon" src={placeholderImage} alt="User icon"></img> 
                 </div>
                 <div className={`dropdown-menu ${open? 'active' : 'inactive'}`}>
                     <h3>Username<br/><span>User information</span></h3>
-                    <ul onClick={() => {setOpen(!open)}}>
+                    <ul>
                         <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/"}/></li> 
                         <li><DropdownItemLogout/></li>
                     </ul>

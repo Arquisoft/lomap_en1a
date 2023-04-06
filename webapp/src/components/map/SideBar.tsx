@@ -9,7 +9,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
 import { getPlacesByUser } from "../../api/api";
-import { useSession } from "@inrupt/solid-ui-react";
+import { SlidingPaneView } from "./MapView";
+
+
 
 type SideBarProps = {
   setInfoWindowData: React.Dispatch<React.SetStateAction<{
@@ -23,7 +25,7 @@ type SideBarProps = {
     friendPhoto: string;
     sharedSites: never[];
   }>>,
-  setIsNew: React.Dispatch<React.SetStateAction<number>>,
+  setSlidingPaneView: React.Dispatch<React.SetStateAction<number>>,
   visibility: string,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
   newPlace: number,
@@ -36,12 +38,12 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the places
   const [places, setPlaces] = useState<Place[]>([]);
-  const { session } = useSession();
+  /*const { session } = useSession();
   var webId = session.info.webId as string;
-
+*/
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
-    getPlacesByUser(webId).then((places) => setPlaces(places));
+    getPlacesByUser("test").then((places) => setPlaces(places));
   }
 
   const displayVisibility = (visibility: string) => {
@@ -83,6 +85,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
 
             <MenuItem icon={<ArrowRightIcon />}
+              
               key={index}
               onClick={() => {
                 props.setInfoWindowData({
@@ -92,7 +95,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   longitude: place.longitude
 
                 });
-                props.setIsNew(0);
+                props. setSlidingPaneView(SlidingPaneView.InfoWindowView);
                 props.setIsOpen(true);
               }}
 
@@ -113,7 +116,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
                 });
 
-                props.setIsNew(2);
+                props. setSlidingPaneView(SlidingPaneView.FriendsView);
                 props.setIsOpen(true);
 
               }}
@@ -124,17 +127,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         </SubMenu>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
-        <MenuItem onClick={() => {
-          props.setInfoWindowData({
-            title: "TITLE",
-            id: "",
-            latitude: 0,
-            longitude: 0
-
-          });
-          props.setIsNew(0);
-          props.setIsOpen(true);
-        }}>PARA PRUEBAS</MenuItem>
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
       </Menu>
     </Sidebar>

@@ -5,6 +5,7 @@
   --secondary-text-color: #cecece;
   --border-radius: 8px;
   --speed: 500ms;
+  --block-text-color: #272727;
 }
 
 body {
@@ -47,6 +48,36 @@ footer{
 #toggle-button{
   margin-left: 2em;
 
+}
+
+/* About */
+.centered-block {
+  box-sizing: border-box;
+  position: relative;
+  top: 43%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  border: 3px solid green;
+  border-radius: 30px;
+  padding: 0em 1em;
+}
+
+.text-area {
+  background-color: #fff;
+  color: var(--block-text-color);
+}
+
+.text-area h1 {
+  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 0.3em;
+}
+
+.text-area p {
+  text-align: left;
 }
 
 .map-view{
@@ -120,8 +151,11 @@ footer{
 }
 
 .centered-container{
-  margin-top:5em;
-  margin-bottom:5em;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
   justify-content:space-evenly;
   text-align: justify;
   direction:row;
@@ -329,17 +363,17 @@ h3 span {
   font-weight: 400;
 }
 
-.dropdown-menu ul li > li {
+.dropdown-menu ul li ul > li {
   padding: 10px 0;
   border-top: 3px solid rgba(0, 0, 0, 0.05);
 }
 
-.dropdown-menu ul li li:hover a {
+.dropdown-menu ul li ul li:hover a {
   color: rgb(212, 33, 9);
   cursor: pointer;
 }
 
-.dropdown-menu ul li li:hover img {
+.dropdown-menu ul li ul li:hover img {
   opacity: 1;
   cursor: pointer;
 }
