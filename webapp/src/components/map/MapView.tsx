@@ -2,13 +2,14 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState, useRef} from 'react';
+import { useState, useRef } from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
 import { useSession } from '@inrupt/solid-ui-react';
-import { deleteMarker} from '../ol/vector';
+import { deleteMarker } from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
+import { User } from '../../domain/User';
 
 
 
@@ -22,7 +23,7 @@ export default function MapView(): JSX.Element {
 
   const { session } = useSession();
   var webId = session.info.webId as string;
- // const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
+  // const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
   const deleteLastMarker = useRef(false);
 
   //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
@@ -31,7 +32,7 @@ export default function MapView(): JSX.Element {
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
-  const [slidingPaneView, setSlidingPaneView] = useState(0); 
+  const [slidingPaneView, setSlidingPaneView] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [infoWindowData, setInfoWindowData] = useState({
     title: "",
@@ -40,7 +41,7 @@ export default function MapView(): JSX.Element {
     longitude: 0,
   });
   const [friendWindowData, setFriendWindowData] = useState({
-    friendName: "",
+    friend: new User("", ""),
     friendPhoto: "",
     sharedSites: []
   });
@@ -59,7 +60,7 @@ export default function MapView(): JSX.Element {
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-            <MySideBar setFriendWindowData={setFriendWindowData} setInfoWindowData={setInfoWindowData}  setSlidingPaneView={ setSlidingPaneView}
+            <MySideBar setFriendWindowData={setFriendWindowData} setInfoWindowData={setInfoWindowData} setSlidingPaneView={setSlidingPaneView}
               visibility={visibility} setIsOpen={setIsOpen} newPlace={newPlace} />
           </ProSidebarProvider>
         </div>
@@ -82,7 +83,7 @@ export default function MapView(): JSX.Element {
         onRequestClose={() => {
           setIsOpen(false);
           //If a place was not added, when closing setRemoveMarker(true)
-          if (deleteLastMarker && slidingPaneView==SlidingPaneView.CreatePlaceView) {
+          if (deleteLastMarker && slidingPaneView == SlidingPaneView.CreatePlaceView) {
             deleteMarker();
           }
 
@@ -98,7 +99,7 @@ export default function MapView(): JSX.Element {
           slidingPaneView == SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
             deleteMarker={deleteLastMarker} setIsOpen={setIsOpen} /> :
             slidingPaneView == SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
-            slidingPaneView == SlidingPaneView.FriendsView ? <FriendPanel friendName={friendWindowData.friendName} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
+              slidingPaneView == SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
         }
 

@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bp.json());
 
 app.use("/api", api)
-DatabaseConnection.setDatabase("" as string);
+DatabaseConnection.setDatabase("mongodb+srv://admin:admin@lomap.aux4co1.mongodb.net/?retryWrites=true&w=majority" as string);
 
 
 app.listen(port, (): void => {
