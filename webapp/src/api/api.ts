@@ -143,6 +143,7 @@ export async function getProfile(): Promise<User> {
 //Log in
 export async function login(oidcIssuer: string, redirectUrl: string): Promise<void> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);
 

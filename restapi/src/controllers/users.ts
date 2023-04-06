@@ -13,6 +13,7 @@ module.exports = function (api: Router) {
             Assertion.exists(req.params.provider, res);
             Assertion.exists(req.params.redirect, res);
 
+
             return PodManager.sessionManager.login(req, res);
         }
     );
