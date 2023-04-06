@@ -88,6 +88,8 @@ footer {
 .text-area {
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
+  max-height: 80%;
+  font-size: 0.8em;
 }
 
 .text-area h1 {
@@ -97,6 +99,10 @@ footer {
 
 .text-area p {
   text-align: left;
+}
+
+.text-area ul {
+  list-style-type: circle;
 }
 
 .fade-in {
@@ -112,6 +118,11 @@ footer {
   100% {
       opacity: 1;
   }
+}
+
+.email div {
+  text-decoration: underline;
+  display: inline;
 }
 /* ------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------- */
