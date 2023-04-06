@@ -11,6 +11,7 @@ import { useState } from "react"
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { useSession } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
+import UserProfile from "./components/mainPage/UserProfile"
 
 
 
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/map" element={<MapView/>} />
+                <Route path="/profile" element={<UserProfile/>} />
               </Routes>
 
         

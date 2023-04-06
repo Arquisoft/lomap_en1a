@@ -14,7 +14,7 @@ export default function Contact(){
                 <li>Vanesa Alonso Ramos: <div>uo281801@uniovi.es</div></li>
                 <li>Álvaro González Erigoyen: <div>uo282790@uniovi.es</div></li>
                 <li>Diego Moragón Merallo: <div>uo284016@uniovi.es</div></li>
-                <li>Rubén del Rey Álvarez: <div>uo282497@uniovi.es</div></li> {/* TODO: Change email */}
+                <li>Rubén del Rey Álvarez: <div>uo282476@uniovi.es</div></li>
                 <li>Sergio del Rey Álvarez: <div>uo282497@uniovi.es</div></li>
                 <li>Pablo Valdés Fernández: <div>uo282655@uniovi.es</div></li>
               </ul>
