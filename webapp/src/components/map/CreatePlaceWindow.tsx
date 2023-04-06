@@ -18,7 +18,7 @@ export interface CreatePlaceWindowProps{
   latitude:number,
   longitude:number,
   setNewPlace:React.Dispatch<React.SetStateAction<number>>,
-  setAddedPlace:React.Dispatch<React.SetStateAction<boolean>>,
+  deleteMarker:React.MutableRefObject<boolean>,
   setIsOpen:React.Dispatch<React.SetStateAction<boolean>>
 
   
@@ -56,9 +56,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           setNotificationStatus(true);
           setNotification({ 
             severity:'success',
-            message:'You new place has been added!'
+            message:'Your new place has been added!'
           });
-          props.setAddedPlace(true); //A place was added
+          props.deleteMarker.current=false;
           props.setIsOpen(false); //Close the create place window automatically
         }
         else{
@@ -67,7 +67,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             severity:'error',
             message:'There\'s been an error adding your place.'
           });
-          props.setAddedPlace(false);
+          props.deleteMarker.current=true;
         }
     }
 
