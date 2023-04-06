@@ -138,3 +138,15 @@ export async function getProfile(): Promise<User> {
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
+
+//User---------------------------------------------------------
+//Log in
+export async function login(oidcIssuer: string, redirectUrl: string): Promise<void> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let provider = encodeURIComponent(oidcIssuer);
+  let redirect = encodeURIComponent(redirectUrl);
+
+  let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
