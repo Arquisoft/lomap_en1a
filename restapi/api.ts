@@ -1,109 +1,56 @@
 import express, { Request, Response, Router } from 'express';
-import { CommentController } from './controllers/CommentController';
-import { PictureController } from './controllers/PictureController';
-import { PlaceController } from './controllers/PlaceController';
-import { ScoreController } from './controllers/ScoreController';
+import { Factory } from './src/Factory';
+import { PlaceService } from './src/business/place/PlaceService';
+import { CommentService } from './src/business/comment/CommentService';
+import { ScoreService } from './src/business/score/ScoreService';
+import { PictureService } from './src/business/picture/PictureService';
 
 const api: Router = express.Router();
 
+let factory: Factory = new Factory();
+
+const bodyParser = require("body-parser");
+const cookieSession = require('cookie-session');
+api.use(bodyParser.json());
+api.use(
+  cookieSession({
+    name: "session",
+    // These keys are required by cookie-session to sign the cookies.
+    keys: [
+      "Required, but value not relevant for this demo - key1",
+      "Required, but value not relevant for this demo - key2",
+    ],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
+
 //Place
 
-//List all places
-api.get("/place/list/:user", PlaceController.listChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.list(req, res);
-  }
-);
+let placeService: PlaceService = Factory.services.getPlaceService();
 
-//List places by visibility
-api.get("/place/list/visibility/:user/:visibility", PlaceController.listByVisibilityChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.listByVisibility(req, res);
-  }
-);
-
-//Get a place
-api.get("/place/details/:place", PlaceController.detailsChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.details(req, res);
-  }
-);
-
-//Add a place
-api.post("/place/add", PlaceController.addChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PlaceController.add(req, res);
-  }
-);
-
-//Score
-
-//List all scores
-api.get("/score/list/:place", ScoreController.listChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return ScoreController.list(req, res);
-  }
-);
-
-//Get a score
-api.get("/score/details/:score", ScoreController.detailsChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return ScoreController.details(req, res);
-  }
-);
-
-//Add a score
-api.post("/score/add", ScoreController.addChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return ScoreController.add(req, res);
-  }
-);
+require("./src/controllers/places.ts")(api, placeService);
 
 //Comment
 
-//List all comments
-api.get("/comment/list/:place", CommentController.listChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return CommentController.list(req, res);
-  }
-);
+let commentService: CommentService = Factory.services.getCommentService();
 
-//Get a comment
-api.get("/comment/details/:comment", CommentController.detailsChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return CommentController.details(req, res);
-  }
-);
+require("./src/controllers/comments.ts")(api, commentService);
 
-//Add a comment
-api.post("/comment/add", CommentController.addChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return CommentController.add(req, res);
-  }
-);
+//Score
+
+let scoreService: ScoreService = Factory.services.getScoreService();
+
+require("./src/controllers/scores.ts")(api, scoreService);
 
 //Picture
 
-//List all pictures
-api.get("/picture/list/:user", PictureController.listChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PictureController.list(req, res);
-  }
-);
+let pictureService: PictureService = Factory.services.getPictureService();
 
-//Get a picture
-api.get("/picture/details/:picture", PictureController.detailsChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PictureController.details(req, res);
-  }
-);
+require("./src/controllers/pictures.ts")(api, scoreService);
 
-//Add a picture
-api.post("/picture/add", PictureController.addChecks(),
-  async (req: Request, res: Response): Promise<Response> => {
-    return PictureController.add(req, res);
-  }
-);
+//User
+
+require("./src/controllers/users.ts")(api);
 
 api.get("/",
   async (req: Request, res: Response): Promise<Response> => {

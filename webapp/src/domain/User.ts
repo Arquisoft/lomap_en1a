@@ -1,14 +1,13 @@
 import { BaseEntity } from "./BaseEntity";
 
-export class User extends BaseEntity {
+export class User {
 
-    private username: string;
-    private podId: string;
+    public username: string;
+    public webId: string;
 
-    public constructor(id: string, username: string, podId: string) {
-        super(id);
+    public constructor(username: string, webId: string) {
         this.username = username;
-        this.podId = podId;
+        this.webId = webId;
     }
 
     public setUsername(username: string) {
@@ -19,12 +18,12 @@ export class User extends BaseEntity {
         return this.username;
     }
 
-    public getPodId(): string {
-        return this.podId;
+    public getWebId(): string {
+        return this.webId;
     }
 
-    public setPodId(podId: string) {
-        this.podId = podId;
+    public setWebId(webId: string) {
+        this.webId = webId;
     }
 }
 
