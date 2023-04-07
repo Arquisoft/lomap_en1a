@@ -6,7 +6,6 @@ import { useState, useRef } from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
-import { useSession } from '@inrupt/solid-ui-react';
 import { deleteMarker } from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
 import { User } from '../../domain/User';
@@ -21,8 +20,6 @@ export enum SlidingPaneView {
 
 export default function MapView(): JSX.Element {
 
-  const { session } = useSession();
-  var webId = session.info.webId as string;
   // const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
   const deleteLastMarker = useRef(false);
 
@@ -71,7 +68,7 @@ export default function MapView(): JSX.Element {
 
 
         <MapComponent setSlidingPaneView={setSlidingPaneView} setInfoWindowData={setInfoWindowData}
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={webId} visibility={visibility} />
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={"webId"} visibility={visibility} />
 
       </div>
 

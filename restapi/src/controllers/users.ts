@@ -13,6 +13,7 @@ module.exports = function (api: Router) {
             Assertion.exists(req.params.provider, res);
             Assertion.exists(req.params.redirect, res);
 
+
             return PodManager.sessionManager.login(req, res);
         }
     );
@@ -20,7 +21,6 @@ module.exports = function (api: Router) {
     //Login redirect enpoint
     api.get("/login/success",
         async (req: Request, res: Response): Promise<any> => {
-
             return PodManager.sessionManager.successfulLogin(req, res);
         }
     );

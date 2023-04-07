@@ -4,6 +4,7 @@ import { PlaceService } from './src/business/place/PlaceService';
 import { CommentService } from './src/business/comment/CommentService';
 import { ScoreService } from './src/business/score/ScoreService';
 import { PictureService } from './src/business/picture/PictureService';
+import cors from "cors";
 
 const api: Router = express.Router();
 
@@ -22,6 +23,13 @@ api.use(
     ],
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   })
+);
+
+api.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+  }),
 );
 
 //Place

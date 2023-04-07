@@ -10,7 +10,6 @@ import Alert from '@mui/material/Alert';
 import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
-import { useSession } from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { refreshMarkers } from '../ol/vector';
 
@@ -26,10 +25,6 @@ export interface CreatePlaceWindowProps {
 
 
 export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.Element {
-
-  const { session } = useSession();
-  var webId = session.info.webId as string;
-
 
   const [name, setName] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
@@ -49,7 +44,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateText()) {
-      var place = new Place("", name, "", webId, props.latitude, props.longitude, visibility);
+      var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
       let result: boolean = await addPlace(place);
       if (result) {
         props.setNewPlace(n => n + 1); //New place is increased when a place is added

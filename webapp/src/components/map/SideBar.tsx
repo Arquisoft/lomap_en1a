@@ -53,7 +53,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 */
   //Get the list of places for the current user
   const refreshFriendList = async () => {
-    getProfile().then((user) => getFriendsForUser(user.getWebId()).then((friends) => setFriends(friends)));
+    getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
   }
 
   const displayVisibility = (visibility: string) => {

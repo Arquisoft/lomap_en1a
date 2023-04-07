@@ -1,39 +1,41 @@
 import { useState, useEffect } from "react";
-import { LoginButton } from "@inrupt/solid-ui-react";
-import { Button, TextField, FormGroup} from "@material-ui/core";
-import { SessionProvider } from "@inrupt/solid-ui-react";
+import { Button, TextField, FormGroup } from "@material-ui/core";
+import { getProfile, login } from "../../api/api";
 
 const LoginForm = () => {
   const [idp, setIdp] = useState("https://inrupt.net");
-  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
   useEffect(() => {
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
 
+  const handleLogin = () => {
+    {
+      login(idp, currentUrl);
+      // getProfile().then(user => alert(user.username))
+    }
+  };
+
   return (
     <div className="login-div">
-      <SessionProvider sessionId="log-in-example">
-        <FormGroup className="login-form">
-            <TextField
-              label="Identity Provider"
-              placeholder="Identity Provider"
-              type="url"
-              value={idp}
-              onChange={(e) => setIdp(e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
-                    <Button className="login-button" variant="contained" color="primary">
-                      Login
-                      </Button>
-                  </LoginButton>
-                ),
-              }}
-            />
-        </FormGroup>
-      </SessionProvider>
-    </div>
+      <FormGroup className="login-form">
+        <TextField
+          label="Identity Provider"
+          placeholder="Identity Provider"
+          type="url"
+          value={idp}
+          onChange={(e) => setIdp(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <Button className="login-button" variant="contained" color="primary" onClick={handleLogin}>
+                Login
+              </Button>
+            ),
+          }}
+        />
+      </FormGroup>
+    </div >
   );
 }
 

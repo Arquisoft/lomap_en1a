@@ -9,7 +9,6 @@ import LoginForm from "./components/mainPage/LoginForm"
 import MapView from "./components/map/MapView"
 import { useState } from "react"
 import "react-sliding-pane/dist/react-sliding-pane.css";
-import { useSession } from "@inrupt/solid-ui-react";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "./components/mainPage/UserProfile"
 
@@ -18,20 +17,7 @@ import UserProfile from "./components/mainPage/UserProfile"
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const { session } = useSession();
-
   const nav = useNavigate();
-
-  session.onLogin(()=>{
-    setIsLoggedIn(true)
-    nav("/map")
-  })
-  
-  session.onLogout(()=>{
-    setIsLoggedIn(false)
-    nav("/")
-  })
-
 
   
   return (
