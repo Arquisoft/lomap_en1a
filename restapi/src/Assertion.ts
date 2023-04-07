@@ -2,8 +2,8 @@ import { Response } from 'express';
 
 export class Assertion {
 
-    public static exists(param: any, res: Response): void {
+    public static exists(param: any, message: string): void {
         if (param == undefined || param == null)
-            res.send("Invalid request");
+            throw new Error(message);
     }
 }

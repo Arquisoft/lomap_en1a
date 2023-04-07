@@ -12,7 +12,6 @@ export class UserServiceImpl implements UserService {
 
         if (webId == "OWN") {
             webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-            webId = encodeURIComponent(webId)
         }
 
         return this.userRepository.getProfile(sessionId, webId);
