@@ -89,7 +89,10 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
 export async function getPlacesByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/place/public/list');
+  let response = await fetch(apiEndPoint + '/place/public/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -134,6 +137,8 @@ export async function getFriendsForUser(id: String): Promise<User[]> {
 export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
+  let url = apiEndPoint + "/profile"
+  console.log(url)
   let response = await fetch(apiEndPoint + '/profile'); //Sacar string de aqui
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();

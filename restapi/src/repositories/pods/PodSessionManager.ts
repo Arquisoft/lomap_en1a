@@ -26,7 +26,7 @@ export class PodSessionManager {
 
         let redirect = req.params.redirect;
         // redirect = decodeURIComponent(redirect);
-        redirect = "http://localhost:3000/map";
+        redirect = "http://localhost:5000/api/login/success";
 
 
         const session = new Session();
@@ -38,19 +38,19 @@ export class PodSessionManager {
             oidcIssuer: <string>provider,
             clientName: this.clientName,
             handleRedirect: (url: string) => {
-
                 res.redirect(url)
             }
         });
 
     }
 
-    public async successfulLogin(req: any, res: Response): Promise<Response> {
+    public async successfulLogin(req: any, res: Response): Promise<any> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
+        // console.log(solidSession)
 
         await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
 
-        return res.send(solidSession?.info.webId + " has logged in successfully");
+        return res.redirect("http://localhost:3000/map")
     }
 
     public async logout(req: any, res: Response): Promise<Response> {
