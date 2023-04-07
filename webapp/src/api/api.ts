@@ -26,7 +26,10 @@ export async function addComment(comment: Comment): Promise<boolean> {
 export async function getComments(id: string): Promise<Comment[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/comment/list/' + id);
+  let response = await fetch(apiEndPoint + '/comment/list/' + id, {
+    credentials: 'include',
+    mode: 'cors'
+  });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -82,15 +85,29 @@ export async function addPlace(place: Place): Promise<boolean> {
 //List places by visibility
 export async function getPlaces(id: string, visibility: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/place/list/visibility/' + id.replaceAll("/", "-").replaceAll("#", "-") + '/' + visibility);
+
+  alert(apiEndPoint + '/place/' + visibility + '/list');
+
+  let response = await fetch(apiEndPoint + '/place/' + visibility + '/list', {
+    credentials: 'include',
+    mode: 'cors'
+  }
+  );
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
+export async function getPlacesByUser(id: string): Promise<Place[]> {
+  var a = await getPrivatePlacesByUser(id);
+  var b = await getPublicPlacesByUser(id);
+  var c = await getSharedPlacesByUser(id);
 
+  console.log((a.concat(b)).concat(c))
+  return (a.concat(b)).concat(c);
+}
 
 //List places by user
-export async function getPlacesByUser(id: string): Promise<Place[]> {
+export async function getPublicPlacesByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/public/list', {
     credentials: 'include',
@@ -99,6 +116,26 @@ export async function getPlacesByUser(id: string): Promise<Place[]> {
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
+
+export async function getPrivatePlacesByUser(id: string): Promise<Place[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/place/private/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
+export async function getSharedPlacesByUser(id: string): Promise<Place[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/place/shared/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
+
 
 //Get a place
 export async function getPlaceDetails(id: string): Promise<Place[]> {
@@ -134,7 +171,6 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
 
   let userId = encodeURIComponent(id);
   //alert(apiEndPoint + "/friends/" + userId)
-  alert(apiEndPoint + '/friends/' + userId)
   let response = await fetch(apiEndPoint + '/friends/' + userId, {
     credentials: 'include',
     mode: 'cors'

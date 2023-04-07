@@ -10,10 +10,10 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaces, getPlaceDetails, getPlacesByUser } from "../../api/api";
+import { getPlaces, getPlaceDetails, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
-import {useGeographic} from 'ol/proj';
+import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 
 
@@ -28,7 +28,7 @@ var currentVisibility = "";
 
 const getMarkers = async (visibilityLevel: string) => {
   if (visibilityLevel === "") {
-    await getPlacesByUser(webId).then((p) => {
+    await getPublicPlacesByUser(webId).then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -36,14 +36,47 @@ const getMarkers = async (visibilityLevel: string) => {
         addMarker(coordinates, visibility);
       }
     });
-  } else {
+    await getPrivatePlacesByUser(webId).then((p) => {
+      var coordinates: number[];
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        addMarker(coordinates, visibility);
+      }
+    });
+    await getSharedPlacesByUser(webId).then((p) => {
+      var coordinates: number[];
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        addMarker(coordinates, visibility);
+      }
+    });
+
+  } else {/*
     await getPlaces(webId, visibilityLevel).then((p) => {
       var coordinates: number[];
       var visibility = visibilityLevel;
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
         visibility = p[i].visibility;
-        addMarker(coordinates, visibility);
+        addMarker(coordinates, visibility.toLocaleLowerCase());
+        
+
+
+      }
+    });*/
+    alert("tira");
+    await getPlacesByUser(webId).then((p) => {
+      var coordinates: number[];
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        alert(p[i].getName() + " =>" + visibility.toLocaleLowerCase())
+        if (visibility.toLocaleLowerCase() === visibilityLevel.toLocaleLowerCase()) {
+          addMarker(coordinates, visibility);
+          alert(visibility)
+        }
       }
     });
   }

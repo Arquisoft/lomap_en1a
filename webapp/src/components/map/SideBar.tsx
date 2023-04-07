@@ -8,7 +8,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getFriendsForUser, getPlacesByUser, getProfile } from "../../api/api";
+import { getFriendsForUser, getPlacesByUser, getPrivatePlacesByUser, getProfile, getPublicPlacesByUser } from "../../api/api";
 import { SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 
@@ -45,6 +45,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //Get the list of places for the current user
   const refreshPlaceList = async () => {
     getPlacesByUser("test").then((places) => setPlaces(places));
+
   }
 
   const [friends, setFriends] = useState<User[]>([]);
@@ -54,7 +55,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //Get the list of places for the current user
   const refreshFriendList = async () => {
     getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
-    friends.forEach((f) => alert(f.username))
+
   }
 
   const displayVisibility = (visibility: string) => {
@@ -96,7 +97,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
         }>
 
-          {places.map((place, index, array) => (
+          {places.map((place, index) => (
 
 
             <MenuItem icon={<ArrowRightIcon />}
@@ -119,27 +120,25 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
         </SubMenu>
         <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
-          <MenuItem>
-            {friends.map((ti, index) => (
-              <MenuItem icon={<PersonIcon />}
-                key={index}
-                onClick={() => {
-                  props.setFriendWindowData({
-                    friend: ti,
-                    friendPhoto: "foto",
-                    sharedSites: []
+          {friends.map((ti, index) => (
+            <MenuItem icon={<PersonIcon />}
+              key={index}
+              onClick={() => {
+                props.setFriendWindowData({
+                  friend: ti,
+                  friendPhoto: "foto",
+                  sharedSites: []
 
-                  });
+                });
 
-                  props.setSlidingPaneView(SlidingPaneView.FriendsView);
-                  props.setIsOpen(true);
+                props.setSlidingPaneView(SlidingPaneView.FriendsView);
+                props.setIsOpen(true);
 
 
-                }
-                }
-              >{ti.username}</MenuItem>
-            ))}
-          </MenuItem>
+              }
+              }
+            >{ti.username}</MenuItem>
+          ))}
 
         </SubMenu>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
