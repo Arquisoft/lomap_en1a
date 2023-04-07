@@ -7,12 +7,7 @@ export class UserRepositoryImpl implements UserRepository {
     getProfile(sessionId: string, webId: string): Promise<User> {
         return PodManager.dataManager.getUser(sessionId, webId);
     }
-
     getFriends(sessionId: string, webId: string): Promise<User[]> {
         return PodManager.dataManager.getFriends(sessionId, webId);
-    }
-
-    isLoggedIn(sessionId: string): Promise<boolean> {
-        return PodManager.sessionManager.isLoggedIn(sessionId);
     }
 }

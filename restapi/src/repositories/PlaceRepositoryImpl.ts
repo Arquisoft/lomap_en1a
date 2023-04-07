@@ -46,6 +46,10 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         for (let f in friends) {
             let friend: User = friends[f];
             let thing: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "places", friend.getWebId(), "friends");
+            console.log("-------------------------------------------")
+            console.log(friend)
+            console.log(thing)
+            console.log("-------------------------------------------")
 
             let ps: Place[] = PodManager.entityParser.parsePlaces(thing);
             for (let place in ps) {

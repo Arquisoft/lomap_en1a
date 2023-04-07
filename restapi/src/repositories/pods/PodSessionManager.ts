@@ -72,14 +72,4 @@ export class PodSessionManager {
 
         return webId;
     }
-
-    public async isLoggedIn(sessionId: string): Promise<boolean> {
-        let isLoggedIn = (await getSessionFromStorage(sessionId))?.info.isLoggedIn;
-
-        if (isLoggedIn == undefined) {
-            return false;
-        }
-
-        return isLoggedIn;
-    }
 }

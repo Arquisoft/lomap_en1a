@@ -19,15 +19,8 @@ export class UserServiceImpl implements UserService {
         return this.userRepository.getProfile(sessionId, webId);
     }
 
-    async getFriends(sessionId: string, webId: string): Promise<User[]> {
+    getFriends(sessionId: string, webId: string): Promise<User[]> {
         return this.userRepository.getFriends(sessionId, webId);
     }
 
-    async isLoggedIn(sessionId: string): Promise<boolean> {
-        if (sessionId == undefined) {
-            return false;
-        }
-
-        return this.userRepository.isLoggedIn(sessionId);
-    }
 }
