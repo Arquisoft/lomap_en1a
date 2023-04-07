@@ -98,12 +98,13 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
 }
 
 export async function getPlacesByUser(id: string): Promise<Place[]> {
-  var a = await getPrivatePlacesByUser(id);
+  //var a = await getPrivatePlacesByUser(id);
   var b = await getPublicPlacesByUser(id);
   var c = await getSharedPlacesByUser(id);
 
-  console.log((a.concat(b)).concat(c))
-  return (a.concat(b)).concat(c);
+  //console.log((a.concat(b)).concat(c))
+  //return (a.concat(b)).concat(c);
+  return b.concat(c)
 }
 
 //List places by user
