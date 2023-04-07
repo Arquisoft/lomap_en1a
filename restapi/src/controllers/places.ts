@@ -22,107 +22,106 @@ module.exports = function (api: Router, service: PlaceService) {
     //List all public places
     api.get("/place/public/list",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            Assertion.exists(req.session.solidSessionId, res);
-            //console.log(req.session.solidSessionId)
+                var sessionId: string = <string>req.session.solidSessionId;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-
-            return new Promise((resolve, reject) => {
-                service.findPublic(sessionId).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.findPublic(sessionId));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
         }
     );
 
     //List all places shared with friends created by the given user
     api.get("/place/friends/list/:user",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
+                Assertion.exists(req.params.user, "A user must be provided.");
 
-            Assertion.exists(req.session.solidSessionId, res);
-            Assertion.exists(req.params.user, res);
+                var sessionId: string = <string>req.session.solidSessionId;
+                var user: string = <string>req.params.user;
+                user = decodeURIComponent(user);
 
-            var sessionId: string = <string>req.session.solidSessionId;
-            var user: string = <string>req.params.user;
-            user = decodeURIComponent(user)
-            return new Promise((resolve, reject) => {
-                service.findFriend(sessionId, user).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.findFriend(sessionId, user));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
         }
     );
 
     //List all private places created by the logged user
     api.get("/place/private/list",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            Assertion.exists(req.session.solidSessionId, res);
+                var sessionId: string = <string>req.session.solidSessionId;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-
-            return new Promise((resolve, reject) => {
-                service.findOwn(sessionId).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.findOwn(sessionId));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
         }
     );
 
     //List all places shared with the logged user
     api.get("/place/shared/list",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            Assertion.exists(req.session.solidSessionId, res);
+                var sessionId: string = <string>req.session.solidSessionId;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-
-            return new Promise((resolve, reject) => {
-                service.findSharedFriends(sessionId).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.findSharedFriends(sessionId));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
         }
     );
 
     //Add a place
     api.post("/place/add",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.body.name, "A name must be provided.");
+                Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                Assertion.exists(req.body.description, "A description must be provided.");
+                Assertion.exists(req.body.latitude, "A latitude must be provided.");
+                Assertion.exists(req.body.longitude, "A longitude must be provided.");
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            //Assertion.exists(req.body.name, res);
-            //Assertion.exists(req.body.visibility, res);
-            //Assertion.exists(req.body.description, res);
-            //Assertion.exists(req.body.latitude, res);
-            //Assertion.exists(req.body.longitude, res);
-            //Assertion.exists(req.session.solidSessionId, res);
+                var sessionId: string = <string>req.session.solidSessionId;
+                var name: string = <string>req.body.name;
+                var description: string = <string>req.body.description;
+                var visibility: Visibility = <Visibility>req.body.visibility;
+                var latitude: number = <number>req.body.latitude;
+                var longitude: number = <number>req.body.longitude;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-            var name: string = <string>req.body.name;
-            var description: string = <string>req.body.description;
-            var visibility: Visibility = <Visibility>req.body.visibility;
-            var latitude: number = <number>req.body.latitude;
-            var longitude: number = <number>req.body.longitude;
-
-            var place: PlaceDto = new PlaceDto();
-            place.name = name;
-            place.latitude = latitude;
-            place.longitude = longitude;
-            place.visibility = visibility;
-            place.description = "description";
-            console.log(place.name)
-            console.log(place.latitude)
-            console.log(place.longitude)
-            console.log(place.visibility)
-            console.log(place.description)
+                var place: PlaceDto = new PlaceDto();
+                place.name = name;
+                place.latitude = latitude;
+                place.longitude = longitude;
+                place.visibility = visibility;
+                place.description = description;
 
 
-
-            return new Promise((resolve, reject) => {
-                service.add(sessionId, place).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.add(sessionId, place));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("The place could not be added.");
+            }
         }
     );
 }

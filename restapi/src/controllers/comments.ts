@@ -16,46 +16,47 @@ module.exports = function (api: Router, service: CommentService) {
     //List all the comments for a given place
     api.get("/comment/list/:place",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.params.place, "A place must be provided.");
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            Assertion.exists(req.params.place, res);
-            Assertion.exists(req.session.solidSessionId, res);
+                var sessionId: string = <string>req.session.solidSessionId;
+                var place: string = <string>req.params.place;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-            var place: string = <string>req.params.place;
-
-            return new Promise((resolve, reject) => {
-                service.findByPlace(sessionId, place).then(b => {
-                    //console.log(b[0])
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.findByPlace(sessionId, place));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Comments could not be fetched.");
+            }
         }
     );
 
     //Add a comment
     api.post("/comment/add",
         async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                Assertion.exists(req.body.comment, "A comment must be provided.");
+                Assertion.exists(req.body.place, "A place must be provided.");
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
-            Assertion.exists(req.body.visibility, res);
-            Assertion.exists(req.body.comment, res);
-            Assertion.exists(req.body.place, res);
-            Assertion.exists(req.session.solidSessionId, res);
+                var sessionId: string = <string>req.session.solidSessionId;
+                var text: string = <string>req.body.comment;
+                var placeId: string = <string>req.body.place;
+                var visibility: Visibility = <Visibility>req.params.visibility;
 
-            var sessionId: string = <string>req.session.solidSessionId;
-            var text: string = <string>req.body.comment;
-            var placeId: string = <string>req.body.place;
-            var visibility: Visibility = <Visibility>req.params.visibility;
+                var comment = new CommentDto();
+                comment.place = placeId;
+                comment.text = text;
+                comment.visibility = visibility;
 
-            var comment = new CommentDto();
-            comment.place = placeId;
-            comment.text = text;
-            comment.visibility = visibility;
-
-            return new Promise((resolve, reject) => {
-                service.add(sessionId, comment).then(b => {
-                    resolve(res.send(b));
-                });
-            });
+                return res.send(await service.add(sessionId, comment));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("The comment could not be added.");
+            }
         }
     );
 }

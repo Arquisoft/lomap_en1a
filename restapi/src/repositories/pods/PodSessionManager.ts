@@ -9,6 +9,7 @@ import {
 
 //Configuration
 import configuration from '../../configuration.json';
+import { Assertion } from "../../Assertion";
 
 export class PodSessionManager {
 
@@ -20,19 +21,18 @@ export class PodSessionManager {
     public async login(req: any, res: Response): Promise<void> {
 
         let provider = req.params.provider;
-        //console.log(provider);
-        // provider = decodeURIComponent(provider);
+        //Assertion.exists(provider, "A provider must be given.");
+        //provider = decodeURIComponent(provider);
         provider = "https://inrupt.net";
 
         let redirect = req.params.redirect;
-        // redirect = decodeURIComponent(redirect);
+        //Assertion.exists(redirect, "A redirect url must be given.");
+        //redirect = decodeURIComponent(redirect);
         redirect = "http://localhost:5000/api/login/success";
-
 
         const session = new Session();
         req.session.solidSessionId = session.info.sessionId;
 
-        //console.log(session.info.sessionId)
         await session.login({
             redirectUrl: redirect,
             oidcIssuer: <string>provider,
@@ -46,29 +46,30 @@ export class PodSessionManager {
 
     public async successfulLogin(req: any, res: Response): Promise<any> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
-        // console.log(solidSession)
 
         await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
 
-        return res.redirect("http://localhost:3000/map")
+        return res.redirect("http://localhost:3000/map");
     }
 
-    public async logout(req: any, res: Response): Promise<Response> {
+    public async logout(req: any, res: Response): Promise<any> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
 
         await solidSession?.logout();
 
-        return res.send("Logged out");
+        return "Logged out.";
     }
 
     public async getCurrentWebId(sessionId: string): Promise<string> {
+
+        Assertion.exists(sessionId, "The user must be logged in.");
+
         let webId: string | undefined = (await getSessionFromStorage(sessionId))?.info.webId?.split("profile")[0];
 
         if (webId == undefined) {
-            webId = "";
+            throw new Error("The user must be logged in.");
         }
-        webId = decodeURIComponent(webId)
-        //console.log("webid: " + webId);
+
         return webId;
     }
 }
