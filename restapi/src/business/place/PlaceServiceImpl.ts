@@ -62,8 +62,12 @@ export class PlaceServiceImpl implements PlaceService {
         return this.placeRepository.findOwn(sessionId);
     }
 
-    async findFriend(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findFriend(sessionId, user);
+    async findFriendForUser(sessionId: string, user: string): Promise<Place[]> {
+        return this.placeRepository.findFriendForUser(sessionId, user);
+    }
+
+    async findFriend(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findFriend(sessionId);
     }
 
     async findPublic(sessionId: string): Promise<Place[]> {

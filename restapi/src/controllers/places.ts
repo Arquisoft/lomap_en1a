@@ -47,7 +47,24 @@ module.exports = function (api: Router, service: PlaceService) {
                 var user: string = <string>req.params.user;
                 user = decodeURIComponent(user);
 
-                return res.send(await service.findFriend(sessionId, user));
+                return res.send(await service.findFriendForUser(sessionId, user));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
+        }
+    );
+
+    //List all places shared with friends created by the given user
+    api.get("/place/friends/list",
+        async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
+
+                var sessionId: string = <string>req.session.solidSessionId;
+
+                return res.send(await service.findFriend(sessionId));
             }
             catch (error) {
                 console.log(error.message);
@@ -96,7 +113,7 @@ module.exports = function (api: Router, service: PlaceService) {
             try {
                 Assertion.exists(req.body.name, "A name must be provided.");
                 Assertion.exists(req.body.visibility, "A visibility must be provided.");
-               // Assertion.exists(req.body.description, "A description must be provided.");
+                // Assertion.exists(req.body.description, "A description must be provided.");
                 Assertion.exists(req.body.latitude, "A latitude must be provided.");
                 Assertion.exists(req.body.longitude, "A longitude must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
@@ -113,9 +130,9 @@ module.exports = function (api: Router, service: PlaceService) {
                 place.latitude = latitude;
                 place.longitude = longitude;
                 place.visibility = visibility;
-               // place.description = description;
-               //FIXME
-               place.description="DESCRIPTION"
+                // place.description = description;
+                //FIXME
+                place.description = "DESCRIPTION"
 
 
                 return res.send(await service.add(sessionId, place));
