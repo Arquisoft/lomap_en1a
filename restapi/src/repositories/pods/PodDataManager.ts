@@ -31,17 +31,10 @@ export class PodDataManager {
         Assertion.exists(webId, "A web id must be provided.");
 
         let session = await getSessionFromStorage(sessionId);
-        //console.log(sessionId)
 
         if (session == null) {
             throw new Error("The user must be logged in.");
         }
-
-        if (webId == undefined) {
-            throw new Error();
-        }
-
-        webId = (webId);
 
         let dataset = createSolidDataset();
 
@@ -69,12 +62,6 @@ export class PodDataManager {
             throw Error("The user must be logged in.");
         }
 
-        if (webId == undefined) {
-            throw new Error();
-        }
-
-        webId = (webId);
-
         let dataset = await this.fetchData(sessionId, resource, webId, zone)
 
         dataset = setThing(dataset, thing);
@@ -86,7 +73,6 @@ export class PodDataManager {
 
     public async getProfile(sessionId: string, webId: string) {
         let session = await getSessionFromStorage(sessionId);
-        //console.log(sessionId)
         if (session == null) {
             throw new Error();
         }
@@ -95,7 +81,6 @@ export class PodDataManager {
             throw new Error();
         }
         var a = (webId.split("profile")[0])
-        //console.log(a);
         let url = a + this.profilePodZone + "#me"
         let myDataset = await getSolidDataset(url, { fetch: session.fetch });
 
@@ -114,9 +99,7 @@ export class PodDataManager {
         let friends: User[] = [];
 
         for (let f in webIds) {
-
             let user: User = await this.getUser(sessionId, webIds[f]);
-
             friends.push(user)
         }
 
@@ -130,14 +113,11 @@ export class PodDataManager {
 
         let profile = await this.getProfile(sessionId, webId);
 
-        //console.log(profile + " perfil");
         let name: string | null = getStringNoLocale(profile, FOAF.name);
 
         if (name == null) {
             throw new Error("The name of the user whose web id is " + webId + ", is null");
         }
-
-        webId = (webId)
 
         return new User(name, webId);
     }
