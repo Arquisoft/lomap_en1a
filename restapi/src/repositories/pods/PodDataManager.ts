@@ -18,6 +18,7 @@ import {
 import configuration from '../../configuration.json';
 import { User } from "../../domain/User";
 import { FOAF } from "@inrupt/vocab-common-rdf";
+import { Assertion } from "../../Assertion";
 
 export class PodDataManager {
 
@@ -26,17 +27,14 @@ export class PodDataManager {
 
     public async fetchData(sessionId: string, resource: string, webId: string, zone: string): Promise<SolidDataset> {
 
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
+
         let session = await getSessionFromStorage(sessionId);
 
         if (session == null) {
-            throw new Error();
+            throw new Error("The user must be logged in.");
         }
-
-        if (webId == undefined) {
-            throw new Error();
-        }
-
-        webId = decodeURIComponent(webId);
 
         let dataset = createSolidDataset();
 
@@ -55,17 +53,14 @@ export class PodDataManager {
 
     public async writeData(sessionId: string, resource: string, thing: Thing, webId: string, zone: string): Promise<boolean> {
 
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
+
         let session = await getSessionFromStorage(sessionId);
 
         if (session == null) {
-            throw Error();
+            throw Error("The user must be logged in.");
         }
-
-        if (webId == undefined) {
-            throw new Error();
-        }
-
-        webId = decodeURIComponent(webId);
 
         let dataset = await this.fetchData(sessionId, resource, webId, zone)
 
@@ -78,17 +73,14 @@ export class PodDataManager {
 
     public async getProfile(sessionId: string, webId: string) {
 
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
+
         let session = await getSessionFromStorage(sessionId);
 
-        if (session == null) {
-            throw new Error();
+        if (session == undefined) {
+            throw new Error("The user must be logged in.");
         }
-
-        if (webId == undefined) {
-            throw new Error();
-        }
-
-        webId = decodeURIComponent(webId);
 
         let myDataset = await getSolidDataset(webId + this.profilePodZone + "#me", { fetch: session.fetch });
 
@@ -99,9 +91,10 @@ export class PodDataManager {
 
     public async getFriends(sessionId: string, webId: string): Promise<User[]> {
 
-        let profile: Thing = await this.getProfile(sessionId, webId);
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
 
-        webId = decodeURIComponent(webId);
+        let profile: Thing = await this.getProfile(sessionId, webId);
 
         let webIds: string[] = getUrlAll(profile, FOAF.knows);
 
@@ -117,19 +110,16 @@ export class PodDataManager {
 
     public async getUser(sessionId: string, webId: string): Promise<User> {
 
-        if (webId == undefined) {
-            throw new Error();
-        }
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
 
         let profile = await this.getProfile(sessionId, webId);
 
         let name: string | null = getStringNoLocale(profile, FOAF.name);
 
         if (name == null) {
-            throw new Error();
+            throw new Error("The name of the user whose web id is " + webId + ", is null");
         }
-
-        webId = encodeURIComponent(webId)
 
         return new User(name, webId);
     }

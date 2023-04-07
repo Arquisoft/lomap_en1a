@@ -9,6 +9,7 @@ import {
 
 //Configuration
 import configuration from '../../configuration.json';
+import { Assertion } from "../../Assertion";
 
 export class PodSessionManager {
 
@@ -19,11 +20,13 @@ export class PodSessionManager {
 
     public async login(req: any, res: Response): Promise<void> {
 
-        let provider = req.param.provider;
+        let provider = req.params.provider;
+        Assertion.exists(provider, "A provider must be given.");
         provider = decodeURIComponent(provider);
         provider = "https://inrupt.net";
 
-        let redirect = req.param.redirect;
+        let redirect = req.params.redirect;
+        Assertion.exists(redirect, "A redirect url must be given.");
         redirect = decodeURIComponent(redirect);
         redirect = "http://localhost:5000/api/login/success";
 
@@ -40,27 +43,30 @@ export class PodSessionManager {
         });
     }
 
-    public async successfulLogin(req: any, res: Response): Promise<Response> {
+    public async successfulLogin(req: any, res: Response): Promise<any> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
 
         await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
 
-        return res.send(solidSession?.info.webId + " has logged in successfully");
+        return solidSession?.info.webId + " has logged in successfully.";
     }
 
-    public async logout(req: any, res: Response): Promise<Response> {
+    public async logout(req: any, res: Response): Promise<any> {
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
 
         await solidSession?.logout();
 
-        return res.send("Logged out");
+        return "Logged out.";
     }
 
     public async getCurrentWebId(sessionId: string): Promise<string> {
+
+        Assertion.exists(sessionId, "The user must be logged in.");
+
         let webId: string | undefined = (await getSessionFromStorage(sessionId))?.info.webId?.split("profile")[0];
 
         if (webId == undefined) {
-            webId = "";
+            throw new Error("The user must be logged in.");
         }
 
         return webId;

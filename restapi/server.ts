@@ -17,6 +17,14 @@ app.use(bp.json());
 app.use("/api", api)
 DatabaseConnection.setDatabase("" as string);
 
+app.use(
+    cors({
+        credentials: true,
+        origin: 'http://localhost:3000/',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        preflightContinue: true
+    }),
+);
 
 app.listen(port, (): void => {
     console.log('Restapi listening on ' + port);
