@@ -42,7 +42,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         let webIds: string[] = [];
 
-        (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
             if (!webIds.includes(d.webId)) {
                 webIds.push(d.webId)
             }
@@ -55,7 +55,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         webIds = [];
 
-        (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
+        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
             if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
                 webIds.push(d.webId)
             }

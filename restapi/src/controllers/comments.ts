@@ -17,6 +17,7 @@ module.exports = function (api: Router, service: CommentService) {
     api.get("/comment/list/:place",
         async (req: any, res: Response): Promise<Response> => {
             try {
+            
                 Assertion.exists(req.params.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
