@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser } from "../../api/api";
+import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser, getSharedPlacesByFriends } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -44,6 +44,15 @@ const getMarkers = async (visibilityLevel: string) => {
       }
     });
     await getSharedPlacesByUser().then((p) => {
+      var coordinates: number[];
+      for (let i = 0; i < p.length; i++) {
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        addMarker(coordinates, visibility);
+      }
+    });
+
+    await getSharedPlacesByFriends().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
