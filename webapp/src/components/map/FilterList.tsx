@@ -34,6 +34,9 @@ export const FilterList: React.FC<IVisibility> = ({ visibility, setVisibility })
       aria-label="filters"
 
     >
+      <ToggleButton value="" aria-label="filter friends" style={buttonStyle}>
+        Show all
+      </ToggleButton>
       <ToggleButton value="PUBLIC" aria-label="filter full" style={buttonStyle}>
         Filter by Public
       </ToggleButton>

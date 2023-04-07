@@ -190,6 +190,10 @@ export async function refreshMarkers(visibility: string) {
         }
       });
       break;
+
+      default:
+        getMarkers();
+        break;
   }
 
 
