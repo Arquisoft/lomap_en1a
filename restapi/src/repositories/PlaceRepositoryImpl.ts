@@ -19,7 +19,12 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         return this.find(sessionId, user, "private");
     }
 
-    async findFriend(sessionId: string, user: string): Promise<Place[]> {
+    async findFriend(sessionId: string): Promise<Place[]> {
+        let user: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
+        return this.find(sessionId, user, "friends");
+    }
+
+    async findFriendForUser(sessionId: string, user: string): Promise<Place[]> {
         return this.find(sessionId, user, "friends");
     }
 
@@ -44,13 +49,10 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         let friends: User[] = await PodManager.dataManager.getFriends(sessionId, webId);
 
         for (let f in friends) {
+            
             let friend: User = friends[f];
             let thing: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "places", friend.getWebId(), "friends");
-            console.log("-------------------------------------------")
-            console.log(friend)
             console.log(thing)
-            console.log("-------------------------------------------")
-
             let ps: Place[] = PodManager.entityParser.parsePlaces(thing);
             for (let place in ps) {
                 places.push(ps[place]);

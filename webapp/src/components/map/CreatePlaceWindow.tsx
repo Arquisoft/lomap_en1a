@@ -11,7 +11,7 @@ import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { refreshMarkers } from '../ol/vector';
+import { changeMarkerColour, refreshMarkers } from '../ol/vector';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -44,6 +44,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateText()) {
+      
       var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
       let result: boolean = await addPlace(place);
       if (result) {
@@ -55,6 +56,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         });
         props.deleteMarker.current = false;
         props.setIsOpen(false); //Close the create place window automatically
+
+        var v = Visibility[visibility].toLowerCase();
+        changeMarkerColour(v);
       }
       else {
         setNotificationStatus(true);
@@ -66,7 +70,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
       }
     }
 
-    //refreshMarkers();
+    
   }
 
 

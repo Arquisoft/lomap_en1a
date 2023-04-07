@@ -10,11 +10,12 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser } from "../../api/api";
+import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser, getSharedPlacesByFriends } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
+import { Place } from "../../domain/Place";
 
 
 
@@ -23,10 +24,10 @@ var source: VectorSource = new VectorSource({
 });
 
 var lastMarker = new Feature();
-var currentVisibility = "";
 
-const getMarkers = async (visibilityLevel: string) => {
-  if (visibilityLevel === "") {
+
+
+const getMarkers = async () => {
     await getPublicPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
@@ -36,6 +37,7 @@ const getMarkers = async (visibilityLevel: string) => {
       }
     });
     await getPrivatePlacesByUser().then((p) => {
+
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -52,31 +54,16 @@ const getMarkers = async (visibilityLevel: string) => {
       }
     });
 
-  } else {/*
-    await getPlaces(webId, visibilityLevel).then((p) => {
-      var coordinates: number[];
-      var visibility = visibilityLevel;
-      for (let i = 0; i < p.length; i++) {
-        coordinates = [p[i].longitude, p[i].latitude];
-        visibility = p[i].visibility;
-        addMarker(coordinates, visibility.toLocaleLowerCase());
-        
-
-
-      }
-    });*/
-    await getPlacesByUser().then((p) => {
+    await getSharedPlacesByFriends().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        if (visibility.toLocaleLowerCase() === visibilityLevel.toLocaleLowerCase()) {
-          addMarker(coordinates, visibility);
-          alert(visibility)
-        }
+        addMarker(coordinates, visibility);
       }
     });
-  }
+
+
 }
 
 const addMarker = (coordinate: Coordinate, visibility: string) => {
@@ -89,19 +76,16 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
   var color;
 
   switch (visibility) {
-    case "USER":
+    case "public":
       color = 'rgb(255, 0, 0)';
       break;
 
-    case "GROUP":
-      color = 'rgb(0, 255, 0)';
+
+    case "friends":
+      color = 'rgb(230, 120, 110)';
       break;
 
-    case "FRIENDS":
-      color = 'rgb(230, 230, 230)';
-      break;
-
-    case "FULL":
+    case "private":
       color = 'rgb(127, 127, 127)';
       break;
   }
@@ -125,16 +109,94 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
 export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
+export function changeMarkerColour(visibility:string){
+ 
 
-export function refreshMarkers(visibility?: string) {
-  source.clear();
+  var color;
 
-  if (typeof visibility !== 'undefined') {
-    if (!visibility) visibility = ""
-    currentVisibility = visibility;
+  switch (visibility) {
+    case "public":
+      color = 'rgb(255, 0, 0)';
+      break;
+
+
+    case "friends":
+      color = 'rgb(230, 120, 110)';
+      break;
+
+    case "private":
+      color = 'rgb(127, 127, 127)';
+      break;
   }
 
-  getMarkers(currentVisibility)
+  const style = new Style({
+    image: new Icon({
+      color: color,
+      src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
+      anchor: [0.5, 1]
+    })
+
+
+  });
+  lastMarker.setStyle(style);
+
+
+}
+
+export async function refreshMarkers(visibility: string) {
+  source.clear();
+
+  switch (visibility) {
+    case "PUBLIC":
+      await getPublicPlacesByUser().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
+
+
+    case "FRIENDS":
+      await getSharedPlacesByUser().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+  
+      await getSharedPlacesByFriends().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
+
+    case "PRIVATE":
+      await getPrivatePlacesByUser().then((p) => {
+
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
+
+      default:
+        getMarkers();
+        break;
+  }
+
+
 }
 
 function Vector(props: TVectorLayerComponentProps) {
@@ -153,7 +215,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "FULL");
+    addMarker(event.coordinate, "public");
   };
 
   const onMarkerClick = async (feature: FeatureLike) => {
@@ -179,7 +241,7 @@ function Vector(props: TVectorLayerComponentProps) {
       })
     });
 
-    getMarkers(props.visibility);
+    getMarkers();
   }, [])
 
   return null;
