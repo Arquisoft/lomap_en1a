@@ -1,21 +1,33 @@
-import { Link} from "react-router-dom";
-import React from 'react';
+import { Link, useLocation} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
 
 
-interface NavBarProps{
-    isLoggedIn: boolean
-}
 
-export default function NavBar(props: NavBarProps): JSX.Element {
+
+export default function NavBar(): JSX.Element {
+
+  var url = useLocation();
+  const [show,setShow] = useState(false);
+
+
+  //FIXME
+  useEffect(() => {
+    if(url.pathname==="/map"){
+      setShow(true)
+    }else{
+      setShow(false)
+    }
+  }, [url]);
+
     return (
         <nav className="menu">
             <Link to="/" className="site-title">
                 <img src={logo} alt="Logo" id="logo_img"></img>
             </Link>
-            {props.isLoggedIn?<LoggedNavbar/> : <NotLoggedNavbar/>}
+            {show?<LoggedNavbar/> : <NotLoggedNavbar/>}
         </nav>
        
     )

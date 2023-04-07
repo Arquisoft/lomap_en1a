@@ -212,12 +212,24 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
 export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let url = apiEndPoint + "/profile"
-  //console.log(url)
+
   let response = await fetch(apiEndPoint + '/profile', {
     credentials: 'include',
     mode: 'cors'
-  }); //Sacar string de aqui
+  }); 
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
+
+
+
+export async function isLoggedIn(): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/isLogged', {
+    credentials: 'include',
+    mode: 'cors'
+  }); 
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
