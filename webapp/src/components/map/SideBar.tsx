@@ -8,7 +8,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getFriendsForUser, getPlacesByUser, getPrivatePlacesByUser, getProfile, getPublicPlacesByUser } from "../../api/api";
+import { getFriendsForUser, getPlacesByUser, getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 
@@ -37,13 +37,30 @@ type SideBarProps = {
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
 
-  //For the places
-  const [places, setPlaces] = useState<Place[]>([]);
-  //Get the list of places for the current user
+  //For the public places
+  const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
 
-  //FIXME
-  const refreshPlaceList = async () => {
-    getPublicPlacesByUser().then((places) => setPlaces(places));
+  //For the  private places
+  const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
+
+
+  //For the friend places
+  const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
+
+
+  const refreshPublicPlaceList = async () => {
+    getPublicPlacesByUser().then((places) => setPublicPlaces(places));
+
+  }
+
+  const refreshPrivatePlaceList = async () => {
+    getPrivatePlacesByUser().then((places) => setPrivatePlaces(places));
+
+  }
+
+
+  const refreshSharedPlaceList = async () => {
+    getSharedPlacesByUser().then((places) => setSharedPlaces(places));
 
   }
 
@@ -68,12 +85,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //Update place list when a new place is added
   useEffect(() => {
-    refreshPlaceList()
+    refreshPublicPlaceList()
+    refreshPrivatePlaceList()
+    refreshSharedPlaceList()
   }, [props.newPlace]);
 
-  useEffect(() => {
-    refreshFriendList()
-  }, []);
 
 
   //Style must be in-line; does not work otherwise
@@ -92,11 +108,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           {" "}
           <h2>LoMap</h2>
         </MenuItem>
-        <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={() => { refreshPlaceList(); }
+        <SubMenu label="Public sites" icon={<AddLocationIcon />} onClick={() => { refreshPublicPlaceList(); }
 
         }>
 
-          {places.map((place, index) => (
+          {publicPlaces.map((place, index) => (
 
 
             <MenuItem icon={<ArrowRightIcon />}
@@ -118,7 +134,58 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
+        <SubMenu label="Private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
+
+              {privatePlaces.map((place, index) => (
+
+
+                <MenuItem icon={<ArrowRightIcon />}
+
+                  key={index}
+                  onClick={() => {
+                    props.setInfoWindowData({
+                      title: place.name,
+                      id: place.id,
+                      latitude: place.latitude,
+                      longitude: place.longitude
+
+                    });
+                    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                    props.setIsOpen(true);
+                  }}
+
+                >{place.name}</MenuItem>
+              ))}
+
+          </SubMenu>
+
+          <SubMenu label="Shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }
+
+          }>
+
+            {sharedPlaces.map((place, index) => (
+
+
+              <MenuItem icon={<ArrowRightIcon />}
+
+                key={index}
+                onClick={() => {
+                  props.setInfoWindowData({
+                    title: place.name,
+                    id: place.id,
+                    latitude: place.latitude,
+                    longitude: place.longitude
+
+                  });
+                  props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                  props.setIsOpen(true);
+                }}
+
+              >{place.name}</MenuItem>
+            ))}
+
+          </SubMenu>
+        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } onClick={()=>{refreshFriendList()}}>
           {friends.map((ti, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}
