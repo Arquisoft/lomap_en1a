@@ -25,7 +25,7 @@ module.exports = function (api: Router, service: PictureService) {
 
             return new Promise((resolve, reject) => {
                 service.findByPlace(sessionId, place).then(b => {
-                    console.log(b[0])
+                    //console.log(b[0])
                     resolve(res.send(b));
                 });
             });

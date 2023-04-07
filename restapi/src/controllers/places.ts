@@ -20,7 +20,7 @@ module.exports = function (api: Router, service: PlaceService) {
         async (req: any, res: Response): Promise<Response> => {
 
             Assertion.exists(req.session.solidSessionId, res);
-            console.log(req.session.solidSessionId)
+            //console.log(req.session.solidSessionId)
 
             var sessionId: string = <string>req.session.solidSessionId;
 

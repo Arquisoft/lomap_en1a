@@ -27,7 +27,7 @@ export class PodDataManager {
     public async fetchData(sessionId: string, resource: string, webId: string, zone: string): Promise<SolidDataset> {
 
         let session = await getSessionFromStorage(sessionId);
-        console.log(sessionId)
+        //console.log(sessionId)
 
         if (session == null) {
             throw new Error();
@@ -47,7 +47,7 @@ export class PodDataManager {
             });
         }
         catch (e) {
-            console.log("Not found");
+            //console.log("Not found");
         }
 
         return dataset;
@@ -78,9 +78,8 @@ export class PodDataManager {
     }
 
     public async getProfile(sessionId: string, webId: string) {
-
         let session = await getSessionFromStorage(sessionId);
-        console.log(sessionId)
+        //console.log(sessionId)
         if (session == null) {
             throw new Error();
         }
@@ -88,19 +87,21 @@ export class PodDataManager {
         if (webId == undefined) {
             throw new Error();
         }
+        var a = decodeURIComponent(webId)
 
-        webId = decodeURIComponent(webId);
+        let url = a + this.profilePodZone + "#me"
+        let myDataset = await getSolidDataset(url, { fetch: session.fetch });
 
-        let myDataset = await getSolidDataset(webId + this.profilePodZone + "#me", { fetch: session.fetch });
-
-        const profile = getThing(myDataset, webId + this.profilePodZone + "#me") as Thing;
+        const profile = getThing(myDataset, a + this.profilePodZone + "#me") as Thing;
 
         return profile;
     }
 
     public async getFriends(sessionId: string, webId: string): Promise<User[]> {
 
-        let profile: Thing = await this.getProfile(sessionId, webId);
+        //console.log(webId + "CACA")
+        let profile: Thing = await this.getProfile(sessionId, decodeURIComponent(webId));
+
 
         webId = decodeURIComponent(webId);
 
@@ -123,7 +124,7 @@ export class PodDataManager {
         }
 
         let profile = await this.getProfile(sessionId, webId);
-
+        console.log(profile);
         let name: string | null = getStringNoLocale(profile, FOAF.name);
 
         if (name == null) {

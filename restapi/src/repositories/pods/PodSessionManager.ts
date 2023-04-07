@@ -20,7 +20,7 @@ export class PodSessionManager {
     public async login(req: any, res: Response): Promise<void> {
 
         let provider = req.params.provider;
-        console.log(provider);
+        //console.log(provider);
         // provider = decodeURIComponent(provider);
         provider = "https://inrupt.net";
 
@@ -32,7 +32,7 @@ export class PodSessionManager {
         const session = new Session();
         req.session.solidSessionId = session.info.sessionId;
 
-        console.log(session.info.sessionId)
+        //console.log(session.info.sessionId)
         await session.login({
             redirectUrl: redirect,
             oidcIssuer: <string>provider,

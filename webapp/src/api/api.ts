@@ -88,7 +88,6 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
 //List places by user
 export async function getPlacesByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-
   let response = await fetch(apiEndPoint + '/place/public/list', {
     credentials: 'include',
     mode: 'cors'
@@ -130,6 +129,7 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
   let userId = encodeURIComponent(id);
+  alert(apiEndPoint + "/friends/" + userId)
 
   let response = await fetch(apiEndPoint + '/friends/' + userId, {
     credentials: 'include',
@@ -143,7 +143,7 @@ export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
   let url = apiEndPoint + "/profile"
-  console.log(url)
+  //console.log(url)
   let response = await fetch(apiEndPoint + '/profile', {
     credentials: 'include',
     mode: 'cors'
