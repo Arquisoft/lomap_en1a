@@ -139,7 +139,10 @@ export async function getProfile(): Promise<User> {
 
   let url = apiEndPoint + "/profile"
   console.log(url)
-  let response = await fetch(apiEndPoint + '/profile'); //Sacar string de aqui
+  let response = await fetch(apiEndPoint + '/profile', {
+    credentials: 'include',
+    mode: 'cors'
+  }); //Sacar string de aqui
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
