@@ -36,7 +36,6 @@ export async function getComments(id: string): Promise<Comment[]> {
   return response.json();
 }
 
-
 //Scores--------------------------------------------
 
 //Add a score
@@ -149,6 +148,16 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
 
 
 //Pictures----------------------------------------------
+export async function getPictures(id: string): Promise<Picture[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/picture/list/' + id, {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Picture objects
+  return response.json();
+}
 
 //Add a picture
 export async function addPicture(picture: Picture): Promise<boolean> {

@@ -1,7 +1,10 @@
 import Slideshow from "./SlideShow"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-
+import image1 from "../../images/placeHolder.png";
+import image2 from "../../images/placeHolder.png";
+import image3 from "../../images/placeHolder.png";
+const images = [image1, image2, image3];
 
 
 export default function Home(): JSX.Element {
@@ -13,7 +16,7 @@ export default function Home(): JSX.Element {
       <Box component="p" className="fade-in">{text}</Box>
     </Grid>
     <Grid item xs={6}>
-      <Slideshow/>
+      <Slideshow images={images}/>
     </Grid>
 
     </Grid>

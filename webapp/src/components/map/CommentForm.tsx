@@ -41,7 +41,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       setNotificationStatus(true);
       setNotification({
         severity: 'success',
-        message: 'You comment has been posted!'
+        message: 'Your comment has been posted!'
       });
       //Notify the change to the parent component
       props.OnCommentListChange();

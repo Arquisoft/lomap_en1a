@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import image from "../../images/placeHolder.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments } from '../../api/api';
+import { getComments, getPictures } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
@@ -14,6 +14,8 @@ import { addScore } from '../../api/api';
 import Rating from '@mui/material/Rating';
 import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
+import PictureSelector from '../mainPage/PictureSelector';
+import Slideshow from '../mainPage/SlideShow';
 
 type InfoWindowProps = {
   infoWindowData: {
@@ -26,20 +28,27 @@ type InfoWindowProps = {
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
-
-
-
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
   //For the comments
   const [comments, setComments] = useState<Comment[]>([]);
 
-
   //For the rating
   const [value, setValue] = useState(0);
 
+  //For the pictures
+  const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  
+
+  const refreshPicturesSlide = async () => {
+    getPictures(props.infoWindowData?.id).then((pics) => {
+      let picURLs: string[] = pics.map(pic => pic.url);
+      setPictureURLs(picURLs);
+    });   
+    
+  }
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
@@ -119,11 +128,18 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={6} textAlign="center">
           <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
         </Grid>
-
+    
+        <Grid item xs={12}>
+            <Slideshow images={pictureURLs} />
+        </Grid>
 
         <Grid item xs={12}>
           <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
         </Grid>
+
+        <Grid item xs={12}>
+            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
+        </Grid>  
 
         <Grid item xs={6}>
           <Box
