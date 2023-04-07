@@ -34,13 +34,13 @@ export const FilterList: React.FC<IVisibility> = ({ visibility, setVisibility })
       aria-label="filters"
 
     >
-      <ToggleButton value="public" aria-label="filter full" style={buttonStyle}>
+      <ToggleButton value="PUBLIC" aria-label="filter full" style={buttonStyle}>
         Filter by Public
       </ToggleButton>
-      <ToggleButton value="private" aria-label="filter group" style={buttonStyle}>
+      <ToggleButton value="PRIVATE" aria-label="filter group" style={buttonStyle}>
         Filter by Private
       </ToggleButton>
-      <ToggleButton value="shared" aria-label="filter friends" style={buttonStyle}>
+      <ToggleButton value="FRIENDS" aria-label="filter friends" style={buttonStyle}>
         Filter by Friends
       </ToggleButton>
 

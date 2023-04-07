@@ -57,7 +57,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.deleteMarker.current = false;
         props.setIsOpen(false); //Close the create place window automatically
 
-        var v = visibility.toLowerCase();
+        var v = Visibility[visibility].toLowerCase();
         changeMarkerColour(v);
       }
       else {
@@ -123,7 +123,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
               }}
             >
               <MenuItem value={'PRIVATE'}>Private</MenuItem>
-              <MenuItem value={'SHARED'}>Friends</MenuItem>
+              <MenuItem value={'FRIENDS'}>Friends</MenuItem>
               <MenuItem value={'PUBLIC'}>Public</MenuItem>
             </Select>
           </FormControl>

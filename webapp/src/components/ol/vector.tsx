@@ -81,8 +81,8 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
       break;
 
 
-    case "shared":
-      color = 'rgb(230, 230, 230)';
+    case "friends":
+      color = 'rgb(230, 120, 110)';
       break;
 
     case "private":
@@ -113,7 +113,6 @@ export function changeMarkerColour(visibility:string){
  
 
   var color;
-  console.log(visibility)
 
   switch (visibility) {
     case "public":
@@ -121,8 +120,8 @@ export function changeMarkerColour(visibility:string){
       break;
 
 
-    case "shared":
-      color = 'rgb(230, 230, 230)';
+    case "friends":
+      color = 'rgb(230, 120, 110)';
       break;
 
     case "private":
