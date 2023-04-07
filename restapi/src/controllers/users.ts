@@ -42,6 +42,7 @@ module.exports = function (api: Router) {
         let sessionId: string = <string>req.session.solidSessionId;
 
         let webId = <string>req.params.webId;
+        webId = decodeURIComponent(webId)
 
         let userService: UserService = Factory.services.getUserService();
 
@@ -67,7 +68,7 @@ module.exports = function (api: Router) {
 
         let sessionId: string = <string>req.session.solidSessionId;
         let webId: string = <string>req.params.webId;
-
+        webId = decodeURIComponent(webId)
         let userService: UserService = Factory.services.getUserService();
 
         return res.send(await userService.getFriends(sessionId, webId));

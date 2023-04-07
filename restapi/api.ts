@@ -29,8 +29,11 @@ api.use(
   cors({
     credentials: true,
     origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: true
   }),
 );
+
 
 //Place
 

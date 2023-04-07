@@ -13,7 +13,11 @@ import { Response, Router } from 'express';
 //Assertion
 import { Assertion } from '../Assertion';
 
+
+
 module.exports = function (api: Router, service: PlaceService) {
+
+
 
     //List all public places
     api.get("/place/public/list",
@@ -41,7 +45,7 @@ module.exports = function (api: Router, service: PlaceService) {
 
             var sessionId: string = <string>req.session.solidSessionId;
             var user: string = <string>req.params.user;
-
+            user = decodeURIComponent(user)
             return new Promise((resolve, reject) => {
                 service.findFriend(sessionId, user).then(b => {
                     resolve(res.send(b));
@@ -86,12 +90,12 @@ module.exports = function (api: Router, service: PlaceService) {
     api.post("/place/add",
         async (req: any, res: Response): Promise<Response> => {
 
-            Assertion.exists(req.body.name, res);
-            Assertion.exists(req.body.visibility, res);
-            Assertion.exists(req.body.description, res);
-            Assertion.exists(req.body.latitude, res);
-            Assertion.exists(req.body.longitude, res);
-            Assertion.exists(req.session.solidSessionId, res);
+            //Assertion.exists(req.body.name, res);
+            //Assertion.exists(req.body.visibility, res);
+            //Assertion.exists(req.body.description, res);
+            //Assertion.exists(req.body.latitude, res);
+            //Assertion.exists(req.body.longitude, res);
+            //Assertion.exists(req.session.solidSessionId, res);
 
             var sessionId: string = <string>req.session.solidSessionId;
             var name: string = <string>req.body.name;
@@ -105,7 +109,13 @@ module.exports = function (api: Router, service: PlaceService) {
             place.latitude = latitude;
             place.longitude = longitude;
             place.visibility = visibility;
-            place.description = description;
+            place.description = "description";
+            console.log(place.name)
+            console.log(place.latitude)
+            console.log(place.longitude)
+            console.log(place.visibility)
+            console.log(place.description)
+
 
 
             return new Promise((resolve, reject) => {

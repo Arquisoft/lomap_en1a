@@ -118,10 +118,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
                 handleChange(e.target.value as string);
               }}
             >
-              <MenuItem value={'USER'}>User</MenuItem>
+              <MenuItem value={'PRIVATE'}>Private</MenuItem>
               <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-              <MenuItem value={'GROUP'}>Group</MenuItem>
-              <MenuItem value={'FULL'}>Full</MenuItem>
+              <MenuItem value={'PUBLIC'}>Public</MenuItem>
             </Select>
           </FormControl>
 

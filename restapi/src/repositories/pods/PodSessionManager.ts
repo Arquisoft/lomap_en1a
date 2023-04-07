@@ -67,7 +67,8 @@ export class PodSessionManager {
         if (webId == undefined) {
             webId = "";
         }
-
+        webId = decodeURIComponent(webId)
+        //console.log("webid: " + webId);
         return webId;
     }
 }

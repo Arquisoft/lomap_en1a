@@ -67,8 +67,12 @@ export async function addPlace(place: Place): Promise<boolean> {
     body: JSON.stringify({
       'name': place.getName(), 'user': place.getOwner().replaceAll("/", "-").replaceAll("#", "-"),
       'visibility': place.getVisibility(), 'latitude': place.getLatitude(), 'longitude': place.getLongitude()
-    })
+    }),
+
+    credentials: 'include',
+    mode: 'cors'
   });
+
   if (response.status === 200)
     return true;
   else
@@ -129,8 +133,8 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
   let userId = encodeURIComponent(id);
-  alert(apiEndPoint + "/friends/" + userId)
-
+  //alert(apiEndPoint + "/friends/" + userId)
+  alert(apiEndPoint + '/friends/' + userId)
   let response = await fetch(apiEndPoint + '/friends/' + userId, {
     credentials: 'include',
     mode: 'cors'

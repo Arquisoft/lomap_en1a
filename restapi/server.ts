@@ -11,7 +11,15 @@ const port: number = 5000;
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
-app.use(cors());
+api.use(
+    cors({
+        credentials: true,
+        origin: 'http://localhost:3000',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        preflightContinue: true
+    }),
+);
+
 app.use(bp.json());
 
 app.use("/api", api)

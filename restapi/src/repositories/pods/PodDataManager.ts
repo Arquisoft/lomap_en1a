@@ -37,7 +37,7 @@ export class PodDataManager {
             throw new Error();
         }
 
-        webId = decodeURIComponent(webId);
+        webId = (webId);
 
         let dataset = createSolidDataset();
 
@@ -66,7 +66,7 @@ export class PodDataManager {
             throw new Error();
         }
 
-        webId = decodeURIComponent(webId);
+        webId = (webId);
 
         let dataset = await this.fetchData(sessionId, resource, webId, zone)
 
@@ -87,8 +87,8 @@ export class PodDataManager {
         if (webId == undefined) {
             throw new Error();
         }
-        var a = decodeURIComponent(webId)
-
+        var a = (webId.split("profile")[0])
+        //console.log(a);
         let url = a + this.profilePodZone + "#me"
         let myDataset = await getSolidDataset(url, { fetch: session.fetch });
 
@@ -100,7 +100,7 @@ export class PodDataManager {
     public async getFriends(sessionId: string, webId: string): Promise<User[]> {
 
         //console.log(webId + "CACA")
-        let profile: Thing = await this.getProfile(sessionId, decodeURIComponent(webId));
+        let profile: Thing = await this.getProfile(sessionId, (webId));
 
 
         webId = decodeURIComponent(webId);
@@ -110,7 +110,9 @@ export class PodDataManager {
         let friends: User[] = [];
 
         for (let f in webIds) {
+
             let user: User = await this.getUser(sessionId, webIds[f]);
+
             friends.push(user)
         }
 
@@ -124,14 +126,15 @@ export class PodDataManager {
         }
 
         let profile = await this.getProfile(sessionId, webId);
-        console.log(profile);
+
+        //console.log(profile + " perfil");
         let name: string | null = getStringNoLocale(profile, FOAF.name);
 
         if (name == null) {
             throw new Error();
         }
 
-        webId = encodeURIComponent(webId)
+        webId = (webId)
 
         return new User(name, webId);
     }

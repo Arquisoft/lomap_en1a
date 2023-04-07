@@ -54,6 +54,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //Get the list of places for the current user
   const refreshFriendList = async () => {
     getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
+    friends.forEach((f) => alert(f.username))
   }
 
   const displayVisibility = (visibility: string) => {
@@ -123,7 +124,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
               <MenuItem icon={<PersonIcon />}
                 key={index}
                 onClick={() => {
-                  alert(ti.getUsername());
                   props.setFriendWindowData({
                     friend: ti,
                     friendPhoto: "foto",
@@ -134,9 +134,10 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   props.setSlidingPaneView(SlidingPaneView.FriendsView);
                   props.setIsOpen(true);
 
+
                 }
                 }
-              >{ti.getUsername()}</MenuItem>
+              >{ti.username}</MenuItem>
             ))}
           </MenuItem>
 

@@ -59,7 +59,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
             <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
 
                 <Grid item xs={6} textAlign="center">
-                    <Box component="h1" ><>{props.friend.getUsername()}</></Box>
+                    <Box component="h1" ><>{props.friend.username}</></Box>
                 </Grid>
 
 
