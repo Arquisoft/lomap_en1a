@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaces, getPlaceDetails, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser } from "../../api/api";
+import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -23,12 +23,11 @@ var source: VectorSource = new VectorSource({
 });
 
 var lastMarker = new Feature();
-var webId = "";
 var currentVisibility = "";
 
 const getMarkers = async (visibilityLevel: string) => {
   if (visibilityLevel === "") {
-    await getPublicPlacesByUser(webId).then((p) => {
+    await getPublicPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -36,7 +35,7 @@ const getMarkers = async (visibilityLevel: string) => {
         addMarker(coordinates, visibility);
       }
     });
-    await getPrivatePlacesByUser(webId).then((p) => {
+    await getPrivatePlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -44,7 +43,7 @@ const getMarkers = async (visibilityLevel: string) => {
         addMarker(coordinates, visibility);
       }
     });
-    await getSharedPlacesByUser(webId).then((p) => {
+    await getSharedPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -66,13 +65,11 @@ const getMarkers = async (visibilityLevel: string) => {
 
       }
     });*/
-    alert("tira");
-    await getPlacesByUser(webId).then((p) => {
+    await getPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        alert(p[i].getName() + " =>" + visibility.toLocaleLowerCase())
         if (visibility.toLocaleLowerCase() === visibilityLevel.toLocaleLowerCase()) {
           addMarker(coordinates, visibility);
           alert(visibility)
@@ -166,21 +163,12 @@ function Vector(props: TVectorLayerComponentProps) {
     props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
     let id = f.getId() as string;
 
-    await getPlaceDetails(id).then((p) => {
-      let place = p[0];
-      props.setInfoWindowData({
-        id: id,
-        title: place.name,
-        latitude: place.latitude,
-        longitude: place.longitude
-      });
-    })
+
 
   }
 
   //When map is first rendered
   useEffect(() => {
-    webId = props.webId;
     props.map.addLayer(layer);
     props.map.on("dblclick", onMapClick);
     props.map.on('singleclick', function (e) {

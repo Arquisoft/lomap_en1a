@@ -96,14 +96,14 @@ module.exports = function (api: Router, service: PlaceService) {
             try {
                 Assertion.exists(req.body.name, "A name must be provided.");
                 Assertion.exists(req.body.visibility, "A visibility must be provided.");
-                Assertion.exists(req.body.description, "A description must be provided.");
+               // Assertion.exists(req.body.description, "A description must be provided.");
                 Assertion.exists(req.body.latitude, "A latitude must be provided.");
                 Assertion.exists(req.body.longitude, "A longitude must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var name: string = <string>req.body.name;
-                var description: string = <string>req.body.description;
+                //var description: string = <string>req.body.description;
                 var visibility: Visibility = <Visibility>req.body.visibility;
                 var latitude: number = <number>req.body.latitude;
                 var longitude: number = <number>req.body.longitude;
@@ -113,7 +113,9 @@ module.exports = function (api: Router, service: PlaceService) {
                 place.latitude = latitude;
                 place.longitude = longitude;
                 place.visibility = visibility;
-                place.description = description;
+               // place.description = description;
+               //FIXME
+               place.description="DESCRIPTION"
 
 
                 return res.send(await service.add(sessionId, place));

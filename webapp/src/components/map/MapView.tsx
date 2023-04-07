@@ -48,9 +48,6 @@ export default function MapView(): JSX.Element {
 
 
 
-
-  //NOTA: en el sliding pane parece que no funciona el class para añadir estilo???????
-
   return (
 
     <>
@@ -68,7 +65,7 @@ export default function MapView(): JSX.Element {
 
 
         <MapComponent setSlidingPaneView={setSlidingPaneView} setInfoWindowData={setInfoWindowData}
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} webId={"webId"} visibility={visibility} />
+          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} visibility={visibility} />
 
       </div>
 

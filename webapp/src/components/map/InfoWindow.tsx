@@ -102,7 +102,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //Update comment list and scores when the info window data changes
   useEffect(() => {
-    refreshScores();
+    //refreshScores();
     refreshCommentList();
   }, [props.infoWindowData]);
 

@@ -13,6 +13,8 @@ export async function addComment(comment: Comment): Promise<boolean> {
 
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/comment/add', {
+    credentials: 'include',
+    mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 'comment': comment.getText(), 'place': comment.getPlace(), 'user': comment.getOwner().replaceAll("/", "-").replaceAll("#", "-") })
@@ -41,6 +43,8 @@ export async function getComments(id: string): Promise<Comment[]> {
 export async function addScore(score: Score): Promise<boolean> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/score/add', {
+    credentials: 'include',
+    mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 'score': score.getScore(), 'place': score.getPlace(), 'user': score.getOwner().replaceAll("/", "-").replaceAll("#", "-") })
@@ -54,7 +58,10 @@ export async function addScore(score: Score): Promise<boolean> {
 //Get scores for a place
 export async function getScores(id: String): Promise<Score[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/score/list/' + id);
+  let response = await fetch(apiEndPoint + '/score/list/' + id,{
+    credentials: 'include',
+    mode: 'cors'
+  });
   return response.json();
 }
 
@@ -97,10 +104,12 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
   return response.json();
 }
 
-export async function getPlacesByUser(id: string): Promise<Place[]> {
+
+//FIXME
+export async function getPlacesByUser(): Promise<Place[]> {
   //var a = await getPrivatePlacesByUser(id);
-  var b = await getPublicPlacesByUser(id);
-  var c = await getSharedPlacesByUser(id);
+  var b = await getPublicPlacesByUser();
+  var c = await getSharedPlacesByUser();
 
   //console.log((a.concat(b)).concat(c))
   //return (a.concat(b)).concat(c);
@@ -108,7 +117,7 @@ export async function getPlacesByUser(id: string): Promise<Place[]> {
 }
 
 //List places by user
-export async function getPublicPlacesByUser(id: string): Promise<Place[]> {
+export async function getPublicPlacesByUser(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/public/list', {
     credentials: 'include',
@@ -118,7 +127,7 @@ export async function getPublicPlacesByUser(id: string): Promise<Place[]> {
   return response.json();
 }
 
-export async function getPrivatePlacesByUser(id: string): Promise<Place[]> {
+export async function getPrivatePlacesByUser(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/private/list', {
     credentials: 'include',
@@ -127,7 +136,7 @@ export async function getPrivatePlacesByUser(id: string): Promise<Place[]> {
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
-export async function getSharedPlacesByUser(id: string): Promise<Place[]> {
+export async function getSharedPlacesByUser(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/shared/list', {
     credentials: 'include',
@@ -138,14 +147,6 @@ export async function getSharedPlacesByUser(id: string): Promise<Place[]> {
 }
 
 
-//Get a place
-export async function getPlaceDetails(id: string): Promise<Place[]> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/place/details/' + id);
-  //The objects returned by the api are directly convertible to Comment objects
-  return response.json();
-}
-
 
 //Pictures----------------------------------------------
 
@@ -153,6 +154,8 @@ export async function getPlaceDetails(id: string): Promise<Place[]> {
 export async function addPicture(picture: Picture): Promise<boolean> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/picture/add', {
+    credentials: 'include',
+    mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

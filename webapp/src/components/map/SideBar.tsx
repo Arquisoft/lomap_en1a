@@ -39,12 +39,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the places
   const [places, setPlaces] = useState<Place[]>([]);
-  /*const { session } = useSession();
-  var webId = session.info.webId as string;
-*/
   //Get the list of places for the current user
+
+  //FIXME
   const refreshPlaceList = async () => {
-    getPlacesByUser("test").then((places) => setPlaces(places));
+    getPublicPlacesByUser().then((places) => setPlaces(places));
 
   }
 

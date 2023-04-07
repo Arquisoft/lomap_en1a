@@ -36,7 +36,7 @@ module.exports = function (api: Router, service: CommentService) {
     api.post("/comment/add",
         async (req: any, res: Response): Promise<Response> => {
             try {
-                Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                //Assertion.exists(req.body.visibility, "A visibility must be provided.");
                 Assertion.exists(req.body.comment, "A comment must be provided.");
                 Assertion.exists(req.body.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
@@ -44,12 +44,14 @@ module.exports = function (api: Router, service: CommentService) {
                 var sessionId: string = <string>req.session.solidSessionId;
                 var text: string = <string>req.body.comment;
                 var placeId: string = <string>req.body.place;
-                var visibility: Visibility = <Visibility>req.params.visibility;
+                //var visibility: Visibility = <Visibility>req.params.visibility;
 
                 var comment = new CommentDto();
                 comment.place = placeId;
                 comment.text = text;
-                comment.visibility = visibility;
+                //comment.visibility = visibility;
+                //FIXME
+                comment.visibility=Visibility.PUBLIC
 
                 return res.send(await service.add(sessionId, comment));
             }
