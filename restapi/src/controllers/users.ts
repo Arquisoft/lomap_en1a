@@ -104,4 +104,18 @@ module.exports = function (api: Router) {
             return res.send("Friends could not be fetched");
         }
     })
+
+    api.get("/isLogged", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.isLoggedIn(sessionId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.send("There was an error while checking if the user is logged in");
+        }
+    })
 }

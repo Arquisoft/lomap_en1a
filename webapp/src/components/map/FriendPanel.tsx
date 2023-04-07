@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../icons/friend.icon.png";
 import { User } from "../../domain/User";
+import { getPlacesToShareByUser, getSharedPlacesByUser } from "../../api/api";
+import { Place } from "../../domain/Place";
 
-type Place = {
-    id: string;
-    title: string;
-    latitude: number;
-    longitude: number;
-}
+
 
 type FriendPanelProps = {
     friend: User,
@@ -20,34 +17,19 @@ type PlaceOfProps = {
     sharedSites: Place[]
 }
 
-var list: Place[] = [
-    {
-        id: "Sitio1",
-        title: "Sitio1",
-        latitude: 1,
-        longitude: 1
-    },
-    {
-        id: "Sitio2",
-        title: "Sitio2",
-        latitude: 1,
-        longitude: 1
-    },
-    {
-        id: "Sitio3",
-        title: "Sitio3",
-        latitude: 1,
-        longitude: 1
-    },
-    {
-        id: "Sitio4",
-        title: "Sitio4",
-        latitude: 1,
-        longitude: 1
+export function FriendPanel(props: FriendPanelProps): JSX.Element {
+
+    const [friendPlaces, setFriendPlaces] = useState<Place[]>([]);
+
+    const refreshFriendPlaceList = async () => {
+        getPlacesToShareByUser(props.friend.webId).then((places) => setFriendPlaces(places));
+
     }
 
-];
-export function FriendPanel(props: FriendPanelProps): JSX.Element {
+    useEffect(() => {
+        refreshFriendPlaceList()
+    }, []);
+
 
 
     //TODO: cambiar lista de places por la de la llamada desde InfoWindow
@@ -67,7 +49,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                     <Box justifySelf={"center"} component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
 
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
-                    <PlacesOf sharedSites={list}></PlacesOf>
+                    <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
 
 
@@ -85,9 +67,9 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
     return (
         <>
             {
-                list.map((place) => (
+                props.sharedSites.map((place) => (
 
-                    <Box component="p" textAlign="left">{place.title + ": " + place.latitude + "," + place.longitude}</Box>
+                    <Box component="p" textAlign="left">{place.name + ": " + place.latitude + "," + place.longitude}</Box>
 
                 ))
             }

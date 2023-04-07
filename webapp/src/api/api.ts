@@ -57,7 +57,7 @@ export async function addScore(score: Score): Promise<boolean> {
 //Get scores for a place
 export async function getScores(id: String): Promise<Score[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/score/list/' + id,{
+  let response = await fetch(apiEndPoint + '/score/list/' + id, {
     credentials: 'include',
     mode: 'cors'
   });
@@ -115,10 +115,22 @@ export async function getPlacesByUser(): Promise<Place[]> {
   return b.concat(c)
 }
 
-//List places by user
+//List public places by user
 export async function getPublicPlacesByUser(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/public/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
+
+export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let newId = encodeURIComponent(id);
+  alert(apiEndPoint + '/place/friends/list/' + newId);
+  let response = await fetch(apiEndPoint + '/place/friends/list/' + newId, {
     credentials: 'include',
     mode: 'cors'
   });
@@ -135,7 +147,21 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
+
+//List shared places by user
 export async function getSharedPlacesByUser(): Promise<Place[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/place/friends/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Comment objects
+  return response.json();
+}
+
+
+//List shared places by friends
+export async function getSharedPlacesByFriends(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/shared/list', {
     credentials: 'include',
