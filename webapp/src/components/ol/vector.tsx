@@ -143,20 +143,56 @@ export function changeMarkerColour(visibility:string){
 
 }
 
-export function refreshMarkers(visibility?: string) {
-
-  
-
-
+export async function refreshMarkers(visibility: string) {
   source.clear();
 
+  switch (visibility) {
+    case "PUBLIC":
+      await getPublicPlacesByUser().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
 
- /* if (typeof visibility !== 'undefined') {
-    if (!visibility) visibility = ""
-    currentVisibility = visibility;
+
+    case "FRIENDS":
+      await getSharedPlacesByUser().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+  
+      await getSharedPlacesByFriends().then((p) => {
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
+
+    case "PRIVATE":
+      await getPrivatePlacesByUser().then((p) => {
+
+        var coordinates: number[];
+        for (let i = 0; i < p.length; i++) {
+          coordinates = [p[i].longitude, p[i].latitude];
+          var visibility = p[i].visibility;
+          addMarker(coordinates, visibility);
+        }
+      });
+      break;
   }
 
-  getMarkers()*/
+
 }
 
 function Vector(props: TVectorLayerComponentProps) {
