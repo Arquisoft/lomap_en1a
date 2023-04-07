@@ -126,10 +126,15 @@ export async function addPicture(picture: Picture): Promise<boolean> {
 }
 
 
-export async function getFriendsForUser(id: String): Promise<User[]> {
+export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/friends/' + id.replaceAll("/", "-").replaceAll("#", "-"));
+  let userId = encodeURIComponent(id);
+
+  let response = await fetch(apiEndPoint + '/friends/' + userId, {
+    credentials: 'include',
+    mode: 'cors'
+  });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }

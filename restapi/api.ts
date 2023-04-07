@@ -28,7 +28,7 @@ api.use(
 api.use(
   cors({
     credentials: true,
-    origin: 'https://localhost:3000',
+    origin: 'http://localhost:3000',
   }),
 );
 
