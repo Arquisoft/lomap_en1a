@@ -9,6 +9,7 @@
   --block-text-color: #272727;
   --main-text-color: white;
   --alternative-text-color: black;
+  --active-bg-color: #555;
 }
 /* -------------------------------------------------------------------------------------- */
 
@@ -80,7 +81,7 @@ footer {
   margin-left: auto;
   margin-right: auto;
   width: 75%;
-  border: 3px solid green;
+  border: 3px solid #388fe6;
   border-radius: 30px;
   padding: 0em 1em;
 }
@@ -88,6 +89,8 @@ footer {
 .text-area {
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
+  max-height: 80%;
+  font-size: 0.8em;
 }
 
 .text-area h1 {
@@ -97,6 +100,10 @@ footer {
 
 .text-area p {
   text-align: left;
+}
+
+.text-area ul {
+  list-style-type: circle;
 }
 
 .fade-in {
@@ -112,6 +119,11 @@ footer {
   100% {
       opacity: 1;
   }
+}
+
+.email div {
+  text-decoration: underline;
+  display: inline;
 }
 /* ------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------- */
@@ -218,8 +230,8 @@ footer {
 }
 
 
-.menu ul li.active {
-  background-color: #555;
+.menu ul li:not(.dropdown-links li).active {
+  background-color: var(--active-bg-color);
 }
 
 .menu ul li:not(.noHover li):hover {
@@ -291,7 +303,7 @@ footer {
 }
 /* -------------------------------------------------------------------------------------- */
 
-/* Profile ------------------------------------------------------------------------------ */
+/* Profile dropdown --------------------------------------------------------------------- */
 #user-icon {
   z-index : 4;
   top: 20px;
@@ -368,6 +380,10 @@ footer {
   color: var(--secondary-profile-text-color);
 }
 
+.dropdown-links li.active {
+  font-weight: bold;
+}
+
 .dropdown-item img {
   max-width: 20px;
   margin-right: 10px;
@@ -384,4 +400,44 @@ footer {
   opacity: 1;
   cursor: pointer;
 }
+/* -------------------------------------------------------------------------------------- */
+
+/* Profile ------------------------------------------------------------------------------ */
+
+#profile-pic {
+  justify-content: center;
+  max-height: 30%;
+  height: 10em;
+  width: auto;
+}
+
+.profile-view {
+  padding-top: 1em;
+  padding-bottom: 2em;
+}
+
+#profile-pic-div {
+  padding-bottom: 0.7em;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.4);
+  margin: 0em 4em 2em 4em;
+}
+
+.profile-attribute {
+  text-align: left;
+  margin: 0em 4em 1em 4em;
+}
+
+.profile-attribute label {
+  font-style: italic;
+  color: var(--primary-profile-text-color);
+  font-size: 0.8em;
+  margin-bottom: 0.2em;
+}
+
+.profile-attribute div {
+  border-top: 2px solid rgba(0, 0, 0, 0.2);
+  padding-top: 0.1em;
+  font-size: 1.5em;
+}
+
 /* -------------------------------------------------------------------------------------- */

@@ -42,8 +42,8 @@ export default function Profile(props: UserProps): JSX.Element {
                 </div>
                 <div className={`profile-dropdown ${open? 'profile-active' : 'profile-inactive'} noHover`}>
                     <h3>Username<br/><span>User information</span></h3>
-                    <ul className="dropdown-items">
-                        <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/"}/></li> 
+                    <ul className="dropdown-items" onClick={() => {setOpen(!open)}}>
+                        <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/profile"}/></li> 
                         <li><DropdownItemLogout/></li>
                     </ul>
                 </div>

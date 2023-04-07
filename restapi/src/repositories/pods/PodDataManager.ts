@@ -27,6 +27,7 @@ export class PodDataManager {
     public async fetchData(sessionId: string, resource: string, webId: string, zone: string): Promise<SolidDataset> {
 
         let session = await getSessionFromStorage(sessionId);
+        console.log(sessionId)
 
         if (session == null) {
             throw new Error();

@@ -11,7 +11,6 @@ import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
-import { useSession } from "@inrupt/solid-ui-react";
 import Rating from '@mui/material/Rating';
 import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
@@ -26,9 +25,6 @@ type InfoWindowProps = {
 }
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
-
-  const { session } = useSession();
-  var webId = session.info.webId as string;
 
 
 
@@ -52,7 +48,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
   const handleAddScore = async (value: number) => {
-    var score = new Score("", value, props.infoWindowData?.id, webId, new Date(), Visibility.PUBLIC);
+    var score = new Score("", value, props.infoWindowData?.id, "webId", new Date(), Visibility.PUBLIC);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);

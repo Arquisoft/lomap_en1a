@@ -89,7 +89,10 @@ export async function getPlaces(id: string, visibility: string): Promise<Place[]
 export async function getPlacesByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/place/list/' + id.replaceAll("/", "-").replaceAll("#", "-"));
+  let response = await fetch(apiEndPoint + '/place/public/list', {
+    credentials: 'include',
+    mode: 'cors'
+  });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -123,10 +126,15 @@ export async function addPicture(picture: Picture): Promise<boolean> {
 }
 
 
-export async function getFriendsForUser(id: String): Promise<User[]> {
+export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/friends/' + id.replaceAll("/", "-").replaceAll("#", "-"));
+  let userId = encodeURIComponent(id);
+
+  let response = await fetch(apiEndPoint + '/friends/' + userId, {
+    credentials: 'include',
+    mode: 'cors'
+  });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
@@ -134,7 +142,28 @@ export async function getFriendsForUser(id: String): Promise<User[]> {
 export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  let response = await fetch(apiEndPoint + '/profile'); //Sacar string de aqui
+  let url = apiEndPoint + "/profile"
+  console.log(url)
+  let response = await fetch(apiEndPoint + '/profile', {
+    credentials: 'include',
+    mode: 'cors'
+  }); //Sacar string de aqui
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
+}
+
+//User---------------------------------------------------------
+//Log in
+export async function login(oidcIssuer: string, redirectUrl: string): Promise<void> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let provider = encodeURIComponent(oidcIssuer);
+  let redirect = encodeURIComponent(redirectUrl);
+
+  let url = apiEndPoint + '/login/' + provider + '/' + redirect;
+  window.location.href = url;
+
+  // let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
+  //The objects returned by the api are directly convertible to Comment objects
+  // return response.json();
 }
