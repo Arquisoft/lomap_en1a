@@ -156,7 +156,7 @@ export async function login(oidcIssuer: string, redirectUrl: string): Promise<vo
   let redirect = encodeURIComponent(redirectUrl);
 
   let url = apiEndPoint + '/login/' + provider + '/' + redirect;
-  window.open(url);
+  window.location.href = url;
 
   // let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
   //The objects returned by the api are directly convertible to Comment objects
