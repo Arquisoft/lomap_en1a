@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import placeHolder from "../../images/placeHolder.png";
+import noPic from "../../images/No_pictures_img.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getComments, getPictures } from '../../api/api';
@@ -14,7 +14,7 @@ import { addScore } from '../../api/api';
 import Rating from '@mui/material/Rating';
 import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
-import PictureSelector from '../mainPage/PictureSelector';
+import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
 
 type InfoWindowProps = {
@@ -133,7 +133,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12}>
           {
             pictureURLs.length == 0 ?
-              <Box component="img" src={placeHolder} alt="Uploaded picture" sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+              <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
               :
               <Slideshow images={pictureURLs} />
           }

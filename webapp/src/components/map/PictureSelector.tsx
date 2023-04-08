@@ -6,7 +6,7 @@ import type { AlertColor } from '@mui/material/Alert';
 import { addPicture } from '../../api/api';
 import { Picture } from "../../domain/Picture";
 import Grid from '@mui/material/Grid';
-import btnImage from "../../images/Add_image.png";
+import btnImage from "../../icons/Add_image.png";
 import Snackbar from '@mui/material/Snackbar';
 import { Visibility } from "../../domain/Visibility";
 
