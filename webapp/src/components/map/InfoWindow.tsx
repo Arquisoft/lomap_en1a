@@ -113,6 +113,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   useEffect(() => {
     refreshScores();
     refreshCommentList();
+    refreshPicturesSlide();
   }, [props.infoWindowData]);
 
 
