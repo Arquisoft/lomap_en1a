@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react";
 import { Button, TextField, FormGroup } from "@material-ui/core";
-import { login } from "../../api/api";
+import { isLoggedIn, login } from "../../api/api";
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -11,7 +11,11 @@ export type NotificationType = {
   message: string;
 }
 
-export default function LoginForm():JSX.Element{
+/*export interface LoginProps {
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}*/
+
+export default function LoginForm(/*props: LoginProps*/):JSX.Element{
   const [idp, setIdp] = useState("https://inrupt.net");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
@@ -34,9 +38,9 @@ export default function LoginForm():JSX.Element{
         });
       } else {
         await login(idp, currentUrl);
-      /*await isLoggedIn().then(b => {
-        props.setIsLoggedIn(b);
-      });*/
+        /*isLoggedIn().then(b => {
+          props.setIsLoggedIn(b);
+        });*/
       }
     }
   };

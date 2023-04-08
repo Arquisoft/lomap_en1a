@@ -5,18 +5,19 @@ import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
 
 
+/*export interface NavBarProps {
+  isLoggedIn: boolean;
+}*/
 
-
-export default function NavBar(): JSX.Element {
+export default function NavBar(/*props: NavBarProps*/): JSX.Element {
 
   //FIXME: temporal
   var url = useLocation();
   const [show,setShow] = useState(false);
 
-
   //FIXME:temporal
   useEffect(() => {
-    if(url.pathname==="/map"){
+    if(url.pathname!=="/" && url.pathname!=="/login"){
       setShow(true)
     }else{
       setShow(false)
@@ -28,7 +29,7 @@ export default function NavBar(): JSX.Element {
             <Link to="/" className="site-title">
                 <img src={logo} alt="Logo" id="logo_img"></img>
             </Link>
-            {show?<LoggedNavbar/> : <NotLoggedNavbar/>}
+            {/*props.isLoggedIn*/ show?<LoggedNavbar/> : <NotLoggedNavbar/>}
         </nav>
        
     )

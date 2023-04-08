@@ -25,6 +25,7 @@ export default function UserProfile(props: UserProps): JSX.Element {
         <div className="centered-block text-area profile-view">
           <div id="profile-pic-div"><img id="profile-pic" src={placeholderImage}></img></div>
           <ProfileAttribute label="Username" text={profile?.username}></ProfileAttribute>
+          <ProfileAttribute label="WebID" text={profile?.webId}></ProfileAttribute>
         </div>
       </>
     )

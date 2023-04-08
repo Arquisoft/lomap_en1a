@@ -99,7 +99,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         <Grid container spacing={2} justifyContent="space-around">
 
           <Grid item xs={12}>
-            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
           </Grid>
           <TextField
             error={showError}
