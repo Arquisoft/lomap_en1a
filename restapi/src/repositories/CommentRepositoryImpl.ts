@@ -5,6 +5,9 @@ import { PodManager } from "./pods/PodManager";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
 
+/**
+ * Implements the CommentRepository interface.
+ */
 export class CommentRepositoryImpl implements CommentRepository {
 
     async add(sessionId: string, comment: Comment): Promise<boolean> {

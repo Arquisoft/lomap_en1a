@@ -1,21 +1,19 @@
 //Factory
 import { Factory } from "../../Factory";
-
 //Entities
 import { Comment } from "../../domain/Comment";
-
 //Dtos
 import { CommentDto } from "../../domain/dtos/CommentDto";
-
 //Services
 import { CommentService } from "./CommentService";
-
 //Repositories
 import { CommentRepository } from "../repositories/CommentRepository";
-
 //Others
 import { v4 as generateUUID } from 'uuid';
 
+/**
+ * Implements the CommentService interface.
+ */
 export class CommentServiceImpl implements CommentService {
 
     private commentRepository: CommentRepository = Factory.repositories.getCommentRepository();
