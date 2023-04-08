@@ -19,51 +19,70 @@ import { Place } from "../../domain/Place";
 
 
 
-
+//Global variables---------------------------------
 var source: VectorSource = new VectorSource({
   features: undefined,
 });
-
 export var displayMap = new Map();
-
 var lastMarker = new Feature();
-
 var currVisibility = "";
 
+//List of all places added to the map
 var places:Place[];
 places = [];
+//-------------------------------------------------
 
-const getMarkers = async () => {
-    getPublicPlacesByUser().then((p) => {
-      var coordinates: number[];
-      for (let i = 0; i < p.length; i++) {
-        places.push(p[i])
-        coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
-      }
-    });
-    getPrivatePlacesByUser().then((p) => {
-      var coordinates: number[];
-      for (let i = 0; i < p.length; i++) {
-        places.push(p[i])
-        coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
-      }
-    });
-    getSharedPlacesByUser().then((p) => {
-      var coordinates: number[];
-      for (let i = 0; i < p.length; i++) {
-        places.push(p[i])
-        coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
-      }
-    });
 
+
+//Adds all the places given in the array to the map
+const addAllMarkers=(p:Place[], myOwn: boolean)=>{
+  var coordinates: number[];
+  for (let i = 0; i < p.length; i++) {
+    places.push(p[i])
+    coordinates = [p[i].longitude, p[i].latitude];
+    var visibility = p[i].visibility;
+    if (myOwn || displayMap.get(p[i].id))
+      addMarker(coordinates, visibility,p[i].id);
+  }
 }
 
+//Adds all public places to the map
+const addPublicPlaces = async()=>{
+  getPublicPlacesByUser().then((p) => {
+    addAllMarkers(p, true);
+  });
+}
+
+//Adds all private places to the map
+const addPrivatePlaces = async()=>{
+  getPrivatePlacesByUser().then((p) => {
+    addAllMarkers(p, true);
+  });
+}
+
+//Adds all shared places to the map
+const addSharedPlaces = async()=>{
+  getSharedPlacesByUser().then((p) => {
+    addAllMarkers(p, true);
+  });
+}
+
+//Adds all friends places to the map
+export const addFriendPlaces = async()=>{
+  getSharedPlacesByFriends().then((p) => {
+    addAllMarkers(p, false);
+  });
+}
+
+//Adds all places to the map
+const getMarkers = async () => {
+    addPublicPlaces();
+    addPrivatePlaces();
+    addSharedPlaces();
+    addFriendPlaces();
+}
+
+//Adds a marker to the map
 const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
@@ -77,25 +96,19 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
-
-
     case "friends":
       color = 'rgb(230, 120, 110)';
       break;
-
     case "private":
       color = 'rgb(127, 127, 127)';
       break;
   }
-
   const style = new Style({
     image: new Icon({
       color: color,
       src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
       anchor: [0.5, 1]
     })
-
-
   });
   featureToAdd.setStyle(style);
   featureToAdd.setId(id);
@@ -114,6 +127,7 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
     }
   }
 }
+
 
 const checkVisibility = (visibility:string) => {
 
@@ -140,26 +154,28 @@ export function addFriendMarkerById(id: string) {
   });
 }
 
+//Deletes a marker given its ID
 export function deleteMarkerById(id: string) {
   var sourceFeatures = source.getFeatures()
-
-  for (let i = 0; i < source.getFeatures().length; i++) {
-    var marker = sourceFeatures[i]
-    if (marker.getId() === id) {
-      source.removeFeature(marker);
-    }
+  var markerToDelete=sourceFeatures.find(marker=>marker.getId()===id)
+  if(markerToDelete !== undefined){
+    source.removeFeature(markerToDelete);
   }
+
 }
 
+//Updates the map list 
 export function updateMapList(place:Place){
   lastMarker.setId(place.id)//The id for the last marker is added
   places.push(place);
 }
 
+//Deletes the last marker
 export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
 
+//Changes the colour of the last marker given its visibility
 export function changeMarkerColour(visibility:string){
  
   var color;
@@ -168,25 +184,19 @@ export function changeMarkerColour(visibility:string){
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
-
-
     case "friends":
       color = 'rgb(230, 120, 110)';
       break;
-
     case "private":
       color = 'rgb(127, 127, 127)';
       break;
   }
-
   const style = new Style({
     image: new Icon({
       color: color,
       src: "https://docs.maptiler.com/openlayers/default-marker/marker-icon.png",
       anchor: [0.5, 1]
     })
-
-
   });
   lastMarker.setStyle(style);
 
@@ -195,50 +205,26 @@ export function changeMarkerColour(visibility:string){
 
 export async function refreshMarkers(visibility: string) {
   source.clear();
-
   currVisibility = visibility;
 
   switch (visibility) {
     case "PUBLIC":
-      getPublicPlacesByUser().then((p) => {
-        var coordinates: number[];
-        for (let i = 0; i < p.length; i++) {
-          coordinates = [p[i].longitude, p[i].latitude];
-          var visibility = p[i].visibility;
-          addMarker(coordinates, visibility,p[i].id);
-        }
-      });
+      addPublicPlaces();
       break;
 
-
     case "FRIENDS":
-      getSharedPlacesByUser().then((p) => {
-        var coordinates: number[];
-        for (let i = 0; i < p.length; i++) {
-          coordinates = [p[i].longitude, p[i].latitude];
-          var visibility = p[i].visibility;
-          addMarker(coordinates, visibility,p[i].id);
-        }
-      });
+      addSharedPlaces();
+      addFriendPlaces();
       break;
 
     case "PRIVATE":
-      getPrivatePlacesByUser().then((p) => {
-
-        var coordinates: number[];
-        for (let i = 0; i < p.length; i++) {
-          coordinates = [p[i].longitude, p[i].latitude];
-          var visibility = p[i].visibility;
-          addMarker(coordinates, visibility,p[i].id);
-        }
-      });
+      addPrivatePlaces();
       break;
 
-      default:
-        getMarkers();
-        break;
+     default:
+      getMarkers();
+      break;
   }
-
 
 }
 
