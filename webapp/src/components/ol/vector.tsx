@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
+import { Visibility } from "../../domain/Visibility";
 
 
 
@@ -24,7 +25,7 @@ var source: VectorSource = new VectorSource({
 
 var lastMarker = new Feature();
 
-
+var currVisibility = ""
 
 const getMarkers = async () => {
     getPublicPlacesByUser().then((p) => {
@@ -99,9 +100,22 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
 
   });
   featureToAdd.setStyle(style);
-  source.addFeatures([featureToAdd]);
-  lastMarker = featureToAdd;
 
+  if (checkVisibility(visibility.toUpperCase())) {
+    source.addFeatures([featureToAdd]);
+    lastMarker = featureToAdd;
+  }
+}
+
+const checkVisibility = (visibility:string) => {
+
+  if (typeof currVisibility !== undefined) {
+    if (currVisibility && visibility !== currVisibility) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 
@@ -144,6 +158,8 @@ export function changeMarkerColour(visibility:string){
 
 export async function refreshMarkers(visibility: string) {
   source.clear();
+
+  currVisibility = visibility;
 
   switch (visibility) {
     case "PUBLIC":
