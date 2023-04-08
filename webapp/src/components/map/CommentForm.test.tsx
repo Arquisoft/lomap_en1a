@@ -15,7 +15,7 @@ test('check comment is added', async () => {
       const button = getByText("Post");
       fireEvent.click(button);
       expect(jest.spyOn(api,'addComment')).toHaveBeenCalled() 
-      expect(await findByText(container,"You comment has been posted!")).toBeInTheDocument();
+      expect(await findByText(container,"Your comment has been posted!")).toBeInTheDocument();
     });
   })
 
