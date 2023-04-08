@@ -66,7 +66,7 @@ const getMarkers = async () => {
 
 }
 
-const addMarker = (coordinate: Coordinate, visibility: string) => {
+const addMarker = (coordinate: Coordinate, visibility: string, isNew?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -101,7 +101,9 @@ const addMarker = (coordinate: Coordinate, visibility: string) => {
   });
   featureToAdd.setStyle(style);
 
-  if (checkVisibility(visibility.toUpperCase())) {
+  var markerVisibility = visibility.toUpperCase()
+
+  if (isNew || checkVisibility(markerVisibility)) {
     source.addFeatures([featureToAdd]);
     lastMarker = featureToAdd;
   }
@@ -224,13 +226,12 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
-
     props.setSlidingPaneView(SlidingPaneView.CreatePlaceView);
     props.setIsOpen(true);
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public");
+    addMarker(event.coordinate, "public", true);
   };
 
   const onMarkerClick = async (feature: FeatureLike) => {
