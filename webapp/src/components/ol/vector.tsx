@@ -60,15 +60,15 @@ const getMarkers = async () => {
       }
     });
 
-    getSharedPlacesByFriends().then((p) => {
-      var coordinates: number[];
-      for (let i = 0; i < p.length; i++) {
-        places.push(p[i])
-        coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
-      }
-    });
+    // getSharedPlacesByFriends().then((p) => {
+    //   var coordinates: number[];
+    //   for (let i = 0; i < p.length; i++) {
+    //     places.push(p[i])
+    //     coordinates = [p[i].longitude, p[i].latitude];
+    //     var visibility = p[i].visibility;
+    //     addMarker(coordinates, visibility,p[i].id);
+    //   }
+    // });
 
 
 }
@@ -128,6 +128,31 @@ const checkVisibility = (visibility:string) => {
   return true;
 }
 
+export function addFriendMarkerById(id: string) {
+  getSharedPlacesByFriends().then((p) => {
+    var coordinates: number[];
+    for (let i = 0; i < p.length; i++) {
+      if (p[i].id === id) {
+        places.push(p[i])
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        addMarker(coordinates, visibility,p[i].id);
+      }
+    }
+  });
+}
+
+export function deleteMarkerById(id: string) {
+  var sourceFeatures = source.getFeatures()
+
+  for (let i = 0; i < source.getFeatures().length; i++) {
+    var marker = sourceFeatures[i]
+    if (marker.getId() === id) {
+      source.removeFeature(marker);
+    }
+  }
+}
+
 export function updateMapList(place:Place){
   lastMarker.setId(place.id)//The id for the last marker is added
   places.push(place);
@@ -136,6 +161,7 @@ export function updateMapList(place:Place){
 export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
+
 export function changeMarkerColour(visibility:string){
  
   var color;
@@ -197,14 +223,14 @@ export async function refreshMarkers(visibility: string) {
         }
       });
   
-     getSharedPlacesByFriends().then((p) => {
-        var coordinates: number[];
-        for (let i = 0; i < p.length; i++) {
-          coordinates = [p[i].longitude, p[i].latitude];
-          var visibility = p[i].visibility;
-          addMarker(coordinates, visibility,p[i].id);
-        }
-      });
+    //  getSharedPlacesByFriends().then((p) => {
+    //     var coordinates: number[];
+    //     for (let i = 0; i < p.length; i++) {
+    //       coordinates = [p[i].longitude, p[i].latitude];
+    //       var visibility = p[i].visibility;
+    //       addMarker(coordinates, visibility,p[i].id);
+    //     }
+    //   });
       break;
 
     case "PRIVATE":

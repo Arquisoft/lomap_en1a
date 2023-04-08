@@ -5,6 +5,8 @@ import image from "../../icons/friend.icon.png";
 import { User } from "../../domain/User";
 import { getPlacesToShareByUser} from "../../api/api";
 import { Place } from "../../domain/Place";
+import { Button } from "@mui/material";
+import { addFriendMarkerById, deleteMarkerById } from "../ol/vector";
 
 
 
@@ -56,12 +58,28 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 //Returns a list of p elements with data from the places
 function PlacesOf(props: PlaceOfProps): JSX.Element {
 
+    const handleAdditionButton = (id: string) => {
+        addFriendMarkerById(id);
+    }
+
+    const handleRemovalButton = (id: string) => {
+        deleteMarkerById(id);
+    }
+
     return (
         <>
             {
                 props.sharedSites.map((place) => (
 
-                    <Box component="p" textAlign="left">{place.name + ": " + place.latitude + "," + place.longitude}</Box>
+                    <Box component="p" textAlign="left">
+                        {place.name + ": " + place.latitude + "," + place.longitude}
+                        <Button variant="contained" color="primary" onClick={() => handleAdditionButton(place.id)}>
+                            Add to map
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={() => handleRemovalButton(place.id)}>
+                            Remove from map
+                        </Button>
+                    </Box>
 
                 ))
             }
