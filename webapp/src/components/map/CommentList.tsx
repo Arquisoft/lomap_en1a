@@ -12,6 +12,14 @@ type CommentListProps = {
 }
 
 export default function CommentList(props: CommentListProps): JSX.Element {
+  const getPrimaryText = (comment: Comment) => {
+    let aux = comment.owner;
+    aux = aux.concat(" at ")
+    let date = new Date(comment.date)
+    aux = aux.concat(date.toDateString())
+
+    return aux
+  }
   return (
     <>
       <List>
@@ -21,7 +29,7 @@ export default function CommentList(props: CommentListProps): JSX.Element {
             <ListItemIcon>
               <ContactPageIcon/>
             </ListItemIcon>
-            <ListItemText primary={comment.owner} secondary={comment.text}/>
+            <ListItemText primary={getPrimaryText(comment)} secondary={comment.text} />
           </ListItem>
         )
       })}
