@@ -11,7 +11,7 @@ import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { changeMarkerColour} from '../ol/vector';
+import { changeMarkerColour, updateMapList} from '../ol/vector';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -48,8 +48,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     if (validateText()) {//If the name of the place is valid
 
       var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
-      let result: boolean = await addPlace(place);
-      if (result) {
+      let result = await addPlace(place);
+      
+      if (result.id!="ERR") {
         props.setNewPlace(n => n + 1); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
@@ -61,6 +62,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
         var v = Visibility[visibility].toLowerCase();
         changeMarkerColour(v); //Changes the last marker colour
+
+        updateMapList(result);
       }
       else {
         setNotificationStatus(true);

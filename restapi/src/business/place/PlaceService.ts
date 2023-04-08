@@ -3,7 +3,7 @@ import { PlaceDto } from "../../domain/dtos/PlaceDto";
 
 export interface PlaceService {
 
-    add(sessionId: string, place: PlaceDto): Promise<string>;
+    add(sessionId: string, place: PlaceDto): Promise<Place>;
     findOwn(sessionId: string): Promise<Place[]>;
     findFriend(sessionId: string): Promise<Place[]>;
     findFriendForUser(sessionId: string, user: string): Promise<Place[]>;

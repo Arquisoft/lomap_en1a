@@ -67,7 +67,7 @@ export async function getScores(id: String): Promise<Score[]> {
 //Places----------------------------------------------
 
 //Add a place
-export async function addPlace(place: Place): Promise<boolean> {
+export async function addPlace(place: Place): Promise<Place> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/add', {
     method: 'POST',
@@ -81,10 +81,8 @@ export async function addPlace(place: Place): Promise<boolean> {
     mode: 'cors'
   });
 
-  if (response.status === 200)
-    return true;
-  else
-    return false;
+  return response.json();
+
 }
 
 //Pictures----------------------------------------------

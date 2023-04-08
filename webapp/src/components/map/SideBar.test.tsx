@@ -4,12 +4,13 @@ import * as api from '../../api/api'
 import { Place } from "../../domain/Place";
 import { useState } from "react";
 import { User } from "../../domain/User";
+import { Visibility } from "../../domain/Visibility";
 
 jest.mock('../../api/api');
 
 
 test('check update side bar place added', async () => {
-  jest.spyOn(api, 'addPlace').mockImplementation((p: Place): Promise<boolean> => Promise.resolve(true))
+  jest.spyOn(api, 'addPlace').mockImplementation((p: Place): Promise<Place> => Promise.resolve(new Place("ID","","","",0,0,Visibility.FRIENDS)))
   const [infoWindowData, setInfoWindowData] = useState({
     title: "",
     id: "",

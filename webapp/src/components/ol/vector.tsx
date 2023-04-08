@@ -15,7 +15,8 @@ import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
-import { Visibility } from "../../domain/Visibility";
+import { Place } from "../../domain/Place";
+
 
 
 
@@ -25,48 +26,54 @@ var source: VectorSource = new VectorSource({
 
 var lastMarker = new Feature();
 
-var currVisibility = ""
+var currVisibility = "";
+
+var places:Place[];
+places = [];
 
 const getMarkers = async () => {
     getPublicPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
+        places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility);
+        addMarker(coordinates, visibility,p[i].id);
       }
     });
     getPrivatePlacesByUser().then((p) => {
-
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
+        places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility);
+        addMarker(coordinates, visibility,p[i].id);
       }
     });
     getSharedPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
+        places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility);
+        addMarker(coordinates, visibility,p[i].id);
       }
     });
 
     getSharedPlacesByFriends().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
+        places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility);
+        addMarker(coordinates, visibility,p[i].id);
       }
     });
 
 
 }
 
-const addMarker = (coordinate: Coordinate, visibility: string, isNew?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -100,6 +107,7 @@ const addMarker = (coordinate: Coordinate, visibility: string, isNew?: boolean) 
 
   });
   featureToAdd.setStyle(style);
+  featureToAdd.setId(id);
 
   var markerVisibility = visibility.toUpperCase()
 
@@ -120,13 +128,16 @@ const checkVisibility = (visibility:string) => {
   return true;
 }
 
+export function updateMapList(place:Place){
+  lastMarker.setId(place.id)//The id for the last marker is added
+  places.push(place);
+}
 
 export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
 export function changeMarkerColour(visibility:string){
  
-
   var color;
 
   switch (visibility) {
@@ -170,7 +181,7 @@ export async function refreshMarkers(visibility: string) {
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
           var visibility = p[i].visibility;
-          addMarker(coordinates, visibility);
+          addMarker(coordinates, visibility,p[i].id);
         }
       });
       break;
@@ -182,7 +193,7 @@ export async function refreshMarkers(visibility: string) {
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
           var visibility = p[i].visibility;
-          addMarker(coordinates, visibility);
+          addMarker(coordinates, visibility,p[i].id);
         }
       });
   
@@ -191,7 +202,7 @@ export async function refreshMarkers(visibility: string) {
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
           var visibility = p[i].visibility;
-          addMarker(coordinates, visibility);
+          addMarker(coordinates, visibility,p[i].id);
         }
       });
       break;
@@ -203,7 +214,7 @@ export async function refreshMarkers(visibility: string) {
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
           var visibility = p[i].visibility;
-          addMarker(coordinates, visibility);
+          addMarker(coordinates, visibility,p[i].id);
         }
       });
       break;
@@ -231,15 +242,28 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.setLatitude(event.coordinate[1]);
     props.setLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public", true);
+    addMarker(event.coordinate, "public", "",true); //The new marker still has no id
   };
+
+  const findPlace=(id:String)=>{
+    return places.find(p => p.id===id);
+  }
 
   const onMarkerClick = async (feature: FeatureLike) => {
 
     let f = feature as Feature<Point>;
+    let id = f.getId() as string;
+    var place = findPlace(id);
+    place = place as Place;
+    props.setInfoWindowData({
+      title: place.name,
+      id: place.id,
+      latitude: place.latitude,
+      longitude: place.longitude
+    });
     props.setIsOpen(true);
     props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
-    let id = f.getId() as string;
+
 
 
 
@@ -251,8 +275,7 @@ function Vector(props: TVectorLayerComponentProps) {
     props.map.on("dblclick", onMapClick);
     props.map.on('singleclick', function (e) {
       props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
-        //NO FUNCIONA AUN
-        // onMarkerClick(feature);
+        onMarkerClick(feature);
 
       })
     });
