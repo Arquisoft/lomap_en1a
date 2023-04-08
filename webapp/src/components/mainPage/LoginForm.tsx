@@ -24,7 +24,8 @@ export default function LoginForm():JSX.Element{
   };
 
   return (
-    <div className="login-div">
+    <div className="centered-block text-area">
+      <h1>Log in</h1>
       <FormGroup className="login-form">
         <TextField
           label="Identity Provider"
