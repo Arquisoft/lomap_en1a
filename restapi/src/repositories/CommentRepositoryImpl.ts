@@ -41,21 +41,24 @@ export class CommentRepositoryImpl implements CommentRepository {
         let friends: string[] = (await PodManager.dataManager.getFriends(sessionId, webId)).map(f => f.getWebId());
 
         let webIds: string[] = [];
-
-        (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+        
+    
+        await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+        
             if (!webIds.includes(d.webId)) {
                 webIds.push(d.webId)
             }
         });
-
+        
         for (let w in webIds) {
+            
             let webID = webIds[w];
             PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "public")).filter(c => c.getPlace() == place).forEach(c => { comments.push(c) });
         }
 
         webIds = [];
 
-        (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
+        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
             if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
                 webIds.push(d.webId)
             }

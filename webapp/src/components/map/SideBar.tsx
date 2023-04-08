@@ -8,9 +8,10 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getPlacesByUser } from "../../api/api";
-import { useSession } from "@inrupt/solid-ui-react";
+import { getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { SlidingPaneView } from "./MapView";
+import { User } from "../../domain/User";
+
 
 
 type SideBarProps = {
@@ -21,7 +22,7 @@ type SideBarProps = {
     longitude: number;
   }>>,
   setFriendWindowData: React.Dispatch<React.SetStateAction<{
-    friendName: string;
+    friend: User;
     friendPhoto: string;
     sharedSites: never[];
   }>>,
@@ -32,20 +33,39 @@ type SideBarProps = {
 }
 
 
-const friends = ["Friend 1", "Friend 2", "Friend 3"]; //This will be loaded from other layern
+
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
 
-  //For the places
-  const [places, setPlaces] = useState<Place[]>([]);
-  const { session } = useSession();
-  var webId = session.info.webId as string;
+  //For the public places
+  const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
+  const refreshPublicPlaceList = async () => {
+    getPublicPlacesByUser().then((places) => setPublicPlaces(places));
 
-  //Get the list of places for the current user
-  const refreshPlaceList = async () => {
-    getPlacesByUser(webId).then((places) => setPlaces(places));
   }
 
+  //For the  private places
+  const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
+  const refreshPrivatePlaceList = async () => {
+    getPrivatePlacesByUser().then((places) => setPrivatePlaces(places));
+
+  }
+
+  //For the friend places
+  const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
+  const refreshSharedPlaceList = async () => {
+    getSharedPlacesByUser().then((places) => setSharedPlaces(places));
+
+  }
+
+ //Get the list of places for the current user
+  const [friends, setFriends] = useState<User[]>([]);
+  const refreshFriendList = async () => {
+    getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
+
+  }
+
+  //For the visibility
   const displayVisibility = (visibility: string) => {
     if (visibility == null) {
       return "";
@@ -57,13 +77,20 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //Update place list when a new place is added
   useEffect(() => {
-    refreshPlaceList()
+    refreshPublicPlaceList()
+    refreshPrivatePlaceList()
+    refreshSharedPlaceList()
   }, [props.newPlace]);
 
 
-  //Style must be in-line; does not work otherwise
+  //Get friend list
+  useEffect(() => {
+    refreshFriendList();
+  }, []);
 
+  //For the sidebar
   const { collapseSidebar } = useProSidebar();
+
   return (
     <Sidebar style={{ height: "80vh", color: "black" }}>
       <Menu
@@ -77,14 +104,15 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           {" "}
           <h2>LoMap</h2>
         </MenuItem>
-        <SubMenu label="My sites" icon={<AddLocationIcon />} onClick={() => { refreshPlaceList(); }
+        <SubMenu label="Public sites" icon={<AddLocationIcon />} onClick={() => { refreshPublicPlaceList(); }
 
         }>
 
-          {places.map((place, index, array) => (
+          {publicPlaces.map((place, index) => (
 
 
             <MenuItem icon={<ArrowRightIcon />}
+
               key={index}
               onClick={() => {
                 props.setInfoWindowData({
@@ -94,7 +122,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   longitude: place.longitude
 
                 });
-                props. setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
                 props.setIsOpen(true);
               }}
 
@@ -102,27 +130,78 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />}>
+        <SubMenu label="Private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
+
+              {privatePlaces.map((place, index) => (
+
+
+                <MenuItem icon={<ArrowRightIcon />}
+
+                  key={index}
+                  onClick={() => {
+                    props.setInfoWindowData({
+                      title: place.name,
+                      id: place.id,
+                      latitude: place.latitude,
+                      longitude: place.longitude
+
+                    });
+                    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                    props.setIsOpen(true);
+                  }}
+
+                >{place.name}</MenuItem>
+              ))}
+
+          </SubMenu>
+
+          <SubMenu label="Shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }
+
+          }>
+
+            {sharedPlaces.map((place, index) => (
+
+
+              <MenuItem icon={<ArrowRightIcon />}
+
+                key={index}
+                onClick={() => {
+                  props.setInfoWindowData({
+                    title: place.name,
+                    id: place.id,
+                    latitude: place.latitude,
+                    longitude: place.longitude
+
+                  });
+                  props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
+                  props.setIsOpen(true);
+                }}
+
+              >{place.name}</MenuItem>
+            ))}
+
+          </SubMenu>
+        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } >
           {friends.map((ti, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}
               onClick={() => {
-
                 props.setFriendWindowData({
-                  friendName: ti,
-                  friendPhoto: "foto" + ti,
+                  friend: ti,
+                  friendPhoto: "foto",
                   sharedSites: []
 
                 });
 
-                props. setSlidingPaneView(SlidingPaneView.FriendsView);
+                props.setSlidingPaneView(SlidingPaneView.FriendsView);
                 props.setIsOpen(true);
 
-              }}
 
-
-            >{ti}</MenuItem>
+              }
+              }
+            >{ti.username}</MenuItem>
           ))}
+
         </SubMenu>
         <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>

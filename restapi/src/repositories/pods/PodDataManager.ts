@@ -44,7 +44,7 @@ export class PodDataManager {
             });
         }
         catch (e) {
-            console.log("Not found");
+            //console.log("Not found");
         }
 
         return dataset;
@@ -72,27 +72,25 @@ export class PodDataManager {
     }
 
     public async getProfile(sessionId: string, webId: string) {
-
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
-
         let session = await getSessionFromStorage(sessionId);
-
-        if (session == undefined) {
-            throw new Error("The user must be logged in.");
+        if (session == null) {
+            throw new Error();
         }
 
-        let myDataset = await getSolidDataset(webId + this.profilePodZone + "#me", { fetch: session.fetch });
+        if (webId == undefined) {
+            throw new Error();
+        }
+        var a = (webId.split("profile")[0])
+        let url = a + this.profilePodZone + "#me"
+        let myDataset = await getSolidDataset(url, { fetch: session.fetch });
 
-        const profile = getThing(myDataset, webId + this.profilePodZone + "#me") as Thing;
+        const profile = getThing(myDataset, a + this.profilePodZone + "#me") as Thing;
 
         return profile;
     }
 
     public async getFriends(sessionId: string, webId: string): Promise<User[]> {
 
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
 
         let profile: Thing = await this.getProfile(sessionId, webId);
 

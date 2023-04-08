@@ -10,15 +10,14 @@ import Alert from '@mui/material/Alert';
 import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
-import { useSession } from "@inrupt/solid-ui-react";
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { refreshMarkers } from '../ol/vector';
+import { changeMarkerColour, updateMapList} from '../ol/vector';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
   longitude: number,
   setNewPlace: React.Dispatch<React.SetStateAction<number>>,
-  setAddedPlace: React.Dispatch<React.SetStateAction<boolean>>,
+  deleteMarker: React.MutableRefObject<boolean>,
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 
 
@@ -26,10 +25,6 @@ export interface CreatePlaceWindowProps {
 
 
 export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.Element {
-
-  const { session } = useSession();
-  var webId = session.info.webId as string;
-
 
   const [name, setName] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
@@ -39,6 +34,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
 
+
   const handleChange = (value: string) => {
     var newVisibility = (Visibility as any)[value]
 
@@ -46,20 +42,28 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   }
 
 
+  //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateText()) {
-      var place = new Place("", name, "descripción", webId, props.latitude, props.longitude, visibility);
-      let result: boolean = await addPlace(place);
-      if (result) {
+    if (validateText()) {//If the name of the place is valid
+
+      var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
+      let result = await addPlace(place);
+      
+      if (result.id!="ERR") {
         props.setNewPlace(n => n + 1); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
           severity: 'success',
-          message: 'You new place has been added!'
+          message: 'Your new place has been added!'
         });
-        props.setAddedPlace(true); //A place was added
+        props.deleteMarker.current = false;
         props.setIsOpen(false); //Close the create place window automatically
+
+        var v = Visibility[visibility].toLowerCase();
+        changeMarkerColour(v); //Changes the last marker colour
+
+        updateMapList(result);
       }
       else {
         setNotificationStatus(true);
@@ -67,14 +71,14 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           severity: 'error',
           message: 'There\'s been an error adding your place.'
         });
-        props.setAddedPlace(false);
+        props.deleteMarker.current = true;
       }
     }
-
-    refreshMarkers();
+    
   }
 
 
+  //Checks the name of the new place
   const validateText = () => {
     if (name.trim().length === 0) {
       setShowError(true);
@@ -95,7 +99,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         <Grid container spacing={2} justifyContent="space-around">
 
           <Grid item xs={12}>
-            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
           </Grid>
           <TextField
             error={showError}
@@ -123,10 +127,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
                 handleChange(e.target.value as string);
               }}
             >
-              <MenuItem value={'USER'}>User</MenuItem>
+              <MenuItem value={'PRIVATE'}>Private</MenuItem>
               <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-              <MenuItem value={'GROUP'}>Group</MenuItem>
-              <MenuItem value={'FULL'}>Full</MenuItem>
+              <MenuItem value={'PUBLIC'}>Public</MenuItem>
             </Select>
           </FormControl>
 

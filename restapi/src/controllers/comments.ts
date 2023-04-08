@@ -17,18 +17,14 @@ module.exports = function (api: Router, service: CommentService) {
     api.get("/comment/list/:place",
         async (req: any, res: Response): Promise<Response> => {
             try {
+            
                 Assertion.exists(req.params.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var place: string = <string>req.params.place;
 
-                return new Promise((resolve, reject) => {
-                    service.findByPlace(sessionId, place).then(b => {
-                        console.log(b[0])
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findByPlace(sessionId, place));
             }
             catch (error) {
                 console.log(error.message);
@@ -41,7 +37,7 @@ module.exports = function (api: Router, service: CommentService) {
     api.post("/comment/add",
         async (req: any, res: Response): Promise<Response> => {
             try {
-                Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                //Assertion.exists(req.body.visibility, "A visibility must be provided.");
                 Assertion.exists(req.body.comment, "A comment must be provided.");
                 Assertion.exists(req.body.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
@@ -49,18 +45,16 @@ module.exports = function (api: Router, service: CommentService) {
                 var sessionId: string = <string>req.session.solidSessionId;
                 var text: string = <string>req.body.comment;
                 var placeId: string = <string>req.body.place;
-                var visibility: Visibility = <Visibility>req.params.visibility;
+                //var visibility: Visibility = <Visibility>req.params.visibility;
 
                 var comment = new CommentDto();
                 comment.place = placeId;
                 comment.text = text;
-                comment.visibility = visibility;
+                //comment.visibility = visibility;
+                //FIXME
+                comment.visibility=Visibility.PUBLIC
 
-                return new Promise((resolve, reject) => {
-                    service.add(sessionId, comment).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.add(sessionId, comment));
             }
             catch (error) {
                 console.log(error.message);

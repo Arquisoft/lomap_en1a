@@ -13,7 +13,11 @@ import { Response, Router } from 'express';
 //Assertion
 import { Assertion } from '../Assertion';
 
+
+
 module.exports = function (api: Router, service: PlaceService) {
+
+
 
     //List all public places
     api.get("/place/public/list",
@@ -23,11 +27,7 @@ module.exports = function (api: Router, service: PlaceService) {
 
                 var sessionId: string = <string>req.session.solidSessionId;
 
-                return new Promise((resolve, reject) => {
-                    service.findPublic(sessionId).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findPublic(sessionId));
             }
             catch (error) {
                 console.log(error.message);
@@ -47,11 +47,24 @@ module.exports = function (api: Router, service: PlaceService) {
                 var user: string = <string>req.params.user;
                 user = decodeURIComponent(user);
 
-                return new Promise((resolve, reject) => {
-                    service.findFriend(sessionId, user).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findFriendForUser(sessionId, user));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
+        }
+    );
+
+    //List all places shared with friends created by the given user
+    api.get("/place/friends/list",
+        async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
+
+                var sessionId: string = <string>req.session.solidSessionId;
+
+                return res.send(await service.findFriend(sessionId));
             }
             catch (error) {
                 console.log(error.message);
@@ -68,11 +81,7 @@ module.exports = function (api: Router, service: PlaceService) {
 
                 var sessionId: string = <string>req.session.solidSessionId;
 
-                return new Promise((resolve, reject) => {
-                    service.findOwn(sessionId).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findOwn(sessionId));
             }
             catch (error) {
                 console.log(error.message);
@@ -89,11 +98,7 @@ module.exports = function (api: Router, service: PlaceService) {
 
                 var sessionId: string = <string>req.session.solidSessionId;
 
-                return new Promise((resolve, reject) => {
-                    service.findSharedFriends(sessionId).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findSharedFriends(sessionId));
             }
             catch (error) {
                 console.log(error.message);
@@ -108,14 +113,14 @@ module.exports = function (api: Router, service: PlaceService) {
             try {
                 Assertion.exists(req.body.name, "A name must be provided.");
                 Assertion.exists(req.body.visibility, "A visibility must be provided.");
-                Assertion.exists(req.body.description, "A description must be provided.");
+                // Assertion.exists(req.body.description, "A description must be provided.");
                 Assertion.exists(req.body.latitude, "A latitude must be provided.");
                 Assertion.exists(req.body.longitude, "A longitude must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var name: string = <string>req.body.name;
-                var description: string = <string>req.body.description;
+                //var description: string = <string>req.body.description;
                 var visibility: Visibility = <Visibility>req.body.visibility;
                 var latitude: number = <number>req.body.latitude;
                 var longitude: number = <number>req.body.longitude;
@@ -125,14 +130,12 @@ module.exports = function (api: Router, service: PlaceService) {
                 place.latitude = latitude;
                 place.longitude = longitude;
                 place.visibility = visibility;
-                place.description = description;
+                // place.description = description;
+                //FIXME
+                place.description = "DESCRIPTION"
 
 
-                return new Promise((resolve, reject) => {
-                    service.add(sessionId, place).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.add(sessionId, place));
             }
             catch (error) {
                 console.log(error.message);

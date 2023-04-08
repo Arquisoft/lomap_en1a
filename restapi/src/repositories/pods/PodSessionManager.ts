@@ -23,11 +23,11 @@ export class PodSessionManager {
         let provider = req.params.provider;
         Assertion.exists(provider, "A provider must be given.");
         provider = decodeURIComponent(provider);
-        provider = "https://inrupt.net";
+        //provider = "https://inrupt.net";
 
         let redirect = req.params.redirect;
-        Assertion.exists(redirect, "A redirect url must be given.");
-        redirect = decodeURIComponent(redirect);
+        //Assertion.exists(redirect, "A redirect url must be given.");
+        //redirect = decodeURIComponent(redirect);
         redirect = "http://localhost:5000/api/login/success";
 
         const session = new Session();
@@ -41,6 +41,7 @@ export class PodSessionManager {
                 res.redirect(url)
             }
         });
+
     }
 
     public async successfulLogin(req: any, res: Response): Promise<any> {
@@ -48,7 +49,7 @@ export class PodSessionManager {
 
         await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
 
-        return solidSession?.info.webId + " has logged in successfully.";
+        return res.redirect("http://localhost:3000/map");
     }
 
     public async logout(req: any, res: Response): Promise<any> {
@@ -70,5 +71,15 @@ export class PodSessionManager {
         }
 
         return webId;
+    }
+
+    public async isLoggedIn(sessionId: string): Promise<boolean> {
+        let isLoggedIn = (await getSessionFromStorage(sessionId))?.info.isLoggedIn;
+
+        if (isLoggedIn == undefined) {
+            return false;
+        }
+
+        return isLoggedIn;
     }
 }

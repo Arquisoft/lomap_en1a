@@ -11,6 +11,7 @@ export class Place extends BaseEntity {
     private latitude: number;
     private longitude: number;
 
+
     public constructor(id: string, name: string, description: string, owner: string, latitude: number, longitude: number, visibility: Visibility) {
         super(id);
         this.name = name;

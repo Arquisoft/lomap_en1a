@@ -4,6 +4,7 @@ import { PlaceService } from './src/business/place/PlaceService';
 import { CommentService } from './src/business/comment/CommentService';
 import { ScoreService } from './src/business/score/ScoreService';
 import { PictureService } from './src/business/picture/PictureService';
+import cors from "cors";
 
 const api: Router = express.Router();
 
@@ -23,6 +24,16 @@ api.use(
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   })
 );
+
+api.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: true
+  }),
+);
+
 
 //Place
 
@@ -46,7 +57,7 @@ require("./src/controllers/scores.ts")(api, scoreService);
 
 let pictureService: PictureService = Factory.services.getPictureService();
 
-require("./src/controllers/pictures.ts")(api, scoreService);
+require("./src/controllers/pictures.ts")(api, pictureService);
 
 //User
 

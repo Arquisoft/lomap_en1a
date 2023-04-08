@@ -3,7 +3,6 @@ import Feature from "ol/Feature";
 
 export type TOpenLayersProps = {
   visibility: string;
-  webId: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setLatitude: React.Dispatch<React.SetStateAction<number>>;
   setLongitude: React.Dispatch<React.SetStateAction<number>>;

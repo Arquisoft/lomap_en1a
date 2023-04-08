@@ -5,7 +5,7 @@ export class User {
 
     public constructor(username: string, webId: string) {
         this.username = username;
-        this.webId = webId;
+        this.webId = webId.split("profile")[0];
     }
 
     public setUsername(username: string) {
@@ -21,7 +21,7 @@ export class User {
     }
 
     public setWebId(webId: string) {
-        this.webId = webId;
+        this.webId = webId.split("profile")[0];
     }
 }
 

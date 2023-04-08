@@ -23,12 +23,7 @@ module.exports = function (api: Router, service: ScoreService) {
                 var sessionId: string = <string>req.session.solidSessionId;
                 var place: string = <string>req.params.place;
 
-                return new Promise((resolve, reject) => {
-                    service.findByPlace(sessionId, place).then(b => {
-                        console.log(b[0])
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.findByPlace(sessionId, place));
             }
             catch (error) {
                 console.log(error.message);
@@ -44,24 +39,22 @@ module.exports = function (api: Router, service: ScoreService) {
                 Assertion.exists(req.body.user, "A user must be provided.");
                 Assertion.exists(req.body.score, "An score must be provided.");
                 Assertion.exists(req.body.place, "A place must be provided.");
-                Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                //Assertion.exists(req.body.visibility, "A visibility must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var punt: number = <number>req.body.score;
                 var placeId: string = <string>req.body.place;
-                var visibility: Visibility = <Visibility>req.params.visibility;
+                //var visibility: Visibility = <Visibility>req.params.visibility;
 
                 var score: ScoreDto = new ScoreDto();
                 score.score = punt;
                 score.place = placeId;
-                score.visibility = visibility;
+                //score.visibility = visibility;
+                //FIXME
+                score.visibility = Visibility.PUBLIC;
 
-                return new Promise((resolve, reject) => {
-                    service.add(sessionId, score).then(b => {
-                        resolve(res.send(b));
-                    });
-                });
+                return res.send(await service.add(sessionId, score));
             }
             catch (error) {
                 console.log(error.message);

@@ -21,7 +21,7 @@ export class PlaceServiceImpl implements PlaceService {
 
     private placeRepository: PlaceRepository = Factory.repositories.getPlaceRepository();
 
-    async add(sessionId: string, place: PlaceDto): Promise<string> {
+    async add(sessionId: string, place: PlaceDto): Promise<Place> {
         let id = generateUUID();
         let name = place.name;
         let description = place.description;
@@ -52,18 +52,23 @@ export class PlaceServiceImpl implements PlaceService {
         let p = new Place(id, name, description, "", latitude, longitude, visibility);
 
         if (await this.placeRepository.add(sessionId, p)) {
-            return id;
+            return p;
         }
 
-        return "ERROR"
+        //FIXME
+        return new Place("ERR","","","",0,0,visibility);
     }
 
     async findOwn(sessionId: string): Promise<Place[]> {
         return this.placeRepository.findOwn(sessionId);
     }
 
-    async findFriend(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findFriend(sessionId, user);
+    async findFriendForUser(sessionId: string, user: string): Promise<Place[]> {
+        return this.placeRepository.findFriendForUser(sessionId, user);
+    }
+
+    async findFriend(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findFriend(sessionId);
     }
 
     async findPublic(sessionId: string): Promise<Place[]> {

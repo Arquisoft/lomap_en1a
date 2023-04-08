@@ -8,14 +8,14 @@ module.exports = function (api: Router) {
 
     //Log in into the pod
     api.get("/login/:provider/:redirect",
-        async (req: Request, res: Response): Promise<void> => {
+        async (req: any, res: Response): Promise<void> => {
             try {
                 Assertion.exists(req.params.provider, "A provider must be given");
                 Assertion.exists(req.params.redirect, "A redirect url must be given");
                 await PodManager.sessionManager.login(req, res);
             }
             catch (error) {
-                res.send("There was an error while logging in.");
+                console.log(error.message)
             }
         }
     );
@@ -48,10 +48,6 @@ module.exports = function (api: Router) {
 
     //Profile
     api.get("/profile/:webId", async (req: any, res: Response): Promise<Response> => {
-
-
-
-        let response: any = "Profile could not be fetched"
 
         try {
             Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
@@ -106,6 +102,20 @@ module.exports = function (api: Router) {
         catch (error) {
             console.log(error.message);
             return res.send("Friends could not be fetched");
+        }
+    })
+
+    api.get("/isLogged", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.isLoggedIn(sessionId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.send("There was an error while checking if the user is logged in");
         }
     })
 }
