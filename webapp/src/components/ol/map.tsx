@@ -8,6 +8,7 @@ import { TOpenLayersProps, IMapContext, TMapState } from "./ol-types";
 import "ol/ol.css";
 import "../../App.css";
 import { defaults } from 'ol/interaction';
+import { transform } from "ol/proj";
 
 export const MapContext = React.createContext<IMapContext | void>(undefined);
 
@@ -36,8 +37,8 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
         }),
       ],
       view: new View({
-        center: [0, 0],
-        zoom: 3
+        center: transform([-5.85, 43.354], 'EPSG:4326', 'EPSG:3857'),
+        zoom: 17
       }),
     });
 
