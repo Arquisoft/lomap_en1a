@@ -45,10 +45,8 @@ export class CommentRepositoryImpl implements CommentRepository {
     
         await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
         
-            console.log(!webIds.includes(d.webId))
             if (!webIds.includes(d.webId)) {
-                console.log(webIds.push(d.webId))
-                console.log(webIds)
+                webIds.push(d.webId)
             }
         });
         

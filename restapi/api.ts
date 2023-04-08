@@ -57,7 +57,7 @@ require("./src/controllers/scores.ts")(api, scoreService);
 
 let pictureService: PictureService = Factory.services.getPictureService();
 
-require("./src/controllers/pictures.ts")(api, scoreService);
+require("./src/controllers/pictures.ts")(api, pictureService);
 
 //User
 

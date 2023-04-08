@@ -34,7 +34,6 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
 
     const handleAddPicture = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      
       let result: boolean = await addPicture(new Picture("", url, props.place, props.user, new Date(), Visibility.PUBLIC));
       if (result) {
         setNotificationStatus(true);

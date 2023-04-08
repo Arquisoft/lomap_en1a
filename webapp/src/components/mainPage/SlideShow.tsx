@@ -43,7 +43,7 @@ export default function Slideshow(props: SlideshowProps): JSX.Element {
             className="slide"
             key={index}
             style={{ 
-                backgroundImage: `url(${image})`  //AQUI ALGO HACE QUE SALTE AVISO EN EL NAVEGADOR
+                backgroundImage: `url(${image})`
               }}
           ></div>
         ))}

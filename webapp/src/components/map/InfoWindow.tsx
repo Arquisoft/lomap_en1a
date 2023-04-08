@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import image from "../../images/placeHolder.png";
+import placeHolder from "../../images/placeHolder.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getComments, getPictures } from '../../api/api';
@@ -44,7 +44,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   const refreshPicturesSlide = async () => {
     getPictures(props.infoWindowData?.id).then((pics) => {
-      let picURLs: string[] = pics.map(pic => pic.url);
+      let picURLs: string[] = pics.map((pic, i) => pic.url);
       setPictureURLs(picURLs);
     });   
     
@@ -130,15 +130,20 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
     
         <Grid item xs={12}>
-            <Slideshow images={pictureURLs} />
+          {
+            pictureURLs.length == 0 ?
+              <Box component="img" src={placeHolder} alt="Uploaded picture" sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+              :
+              <Slideshow images={pictureURLs} />
+          }
         </Grid>
 
         <Grid item xs={12}>
-          <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+          
         </Grid>
 
         <Grid item xs={12}>
-            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
+           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
         </Grid>  
 
         <Grid item xs={6}>

@@ -88,6 +88,36 @@ export async function addPlace(place: Place): Promise<boolean> {
     return false;
 }
 
+//Pictures----------------------------------------------
+export async function getPictures(id: string): Promise<Picture[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/picture/list/' + id, {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  //The objects returned by the api are directly convertible to Picture objects
+  return response.json();
+}
+
+export async function addPicture(picture: Picture): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/picture/add', {
+    credentials: 'include',
+    mode: 'cors',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      'picture': picture, 'place': picture.getPlace(), 'visibility': picture.getVisibility(),
+      'url': picture.getUrl()
+    })
+  });
+  if (response.status === 200)
+    return true;
+  else
+    return false;
+}
+
 //List places by visibility
 export async function getPlaces(id: string, visibility: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
@@ -169,39 +199,6 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
   });
   //The objects returned by the api are directly convertible to Comment objects
   return response.json();
-}
-
-
-
-//Pictures----------------------------------------------
-export async function getPictures(id: string): Promise<Picture[]> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-
-  let response = await fetch(apiEndPoint + '/picture/list/' + id, {
-    credentials: 'include',
-    mode: 'cors'
-  });
-  //The objects returned by the api are directly convertible to Picture objects
-  return response.json();
-}
-
-//Add a picture
-export async function addPicture(picture: Picture): Promise<boolean> {
-  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/picture/add', {
-    credentials: 'include',
-    mode: 'cors',
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      'url': picture.getUrl(), 'place': picture.getPlace(),
-      'owner': picture.getOwner()
-    })
-  });
-  if (response.status === 200)
-    return true;
-  else
-    return false;
 }
 
 

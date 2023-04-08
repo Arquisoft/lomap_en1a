@@ -36,21 +36,22 @@ module.exports = function (api: Router, service: PictureService) {
     api.post("/picture/add",
         async (req: any, res: Response): Promise<Response> => {
             try {
+
                 Assertion.exists(req.body.place, "A place must be provided.");
                 Assertion.exists(req.body.picture, "A picture must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
                 Assertion.exists(req.body.visibility, "A visibility must be provided.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
-                var url: string = <string>req.body.picture;
+                var url: string = <string>req.body.url;
                 var placeId: string = <string>req.body.place;
-                var visibility: Visibility = <Visibility>req.params.visibility;
+                var visibility: Visibility = <Visibility>req.body.visibility;
 
                 var picture: PictureDto = new PictureDto();
                 picture.url = url;
                 picture.place = placeId;
                 picture.visibility = visibility;
-
+                
                 return res.send(await service.add(sessionId, picture));
             }
             catch (error) {

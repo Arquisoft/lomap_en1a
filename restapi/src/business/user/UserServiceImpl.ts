@@ -12,7 +12,6 @@ export class UserServiceImpl implements UserService {
 
         if (webId == "OWN") {
             webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-            // console.log(webId);
             webId = (webId)
         }
 
