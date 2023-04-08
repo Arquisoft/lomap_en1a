@@ -64,7 +64,7 @@ const getMarkers = async () => {
 
 }
 
-const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -102,9 +102,16 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
 
   var markerVisibility = visibility.toUpperCase()
 
-  if (isNew || checkVisibility(markerVisibility)) {
-    source.addFeatures([featureToAdd]);
-    lastMarker = featureToAdd;
+  if (!isFriend) {
+    if (isNew || checkVisibility(markerVisibility)) {
+      source.addFeatures([featureToAdd]);
+      lastMarker = featureToAdd;
+    }
+  } else {
+    if (displayMap.get(id) && checkVisibility(markerVisibility)) {
+      source.addFeatures([featureToAdd]);
+      lastMarker = featureToAdd;
+    }
   }
 }
 
@@ -127,7 +134,7 @@ export function addFriendMarkerById(id: string) {
         places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
+        addMarker(coordinates, visibility,p[i].id, false, true);
       }
     }
   });

@@ -58,23 +58,19 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 //Returns a list of p elements with data from the places
 function PlacesOf(props: PlaceOfProps): JSX.Element {
 
+
     const changePlaceDisplayStatus = (id: string) => {
         if (!displayMap.has(id)) {
-            alert("Initial addition")
             displayMap.set(id, true);
-            alert(displayMap.get(id))
             addFriendMarkerById(id);
         } else {
             if (displayMap.get(id)) {
-                alert("Deletion")
                 deleteMarkerById(id)
             } else {
-                alert("Next addition")
                 addFriendMarkerById(id);
             }
 
             displayMap.set(id, !displayMap.get(id));
-            alert(displayMap.get(id))
         }
     }
 
@@ -84,7 +80,7 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                 props.sharedSites.map((place) => (
 
                     <Box component="p" textAlign="left">
-                        <Button variant="contained" color="primary" onClick={() => changePlaceDisplayStatus(place.id)}>
+                        <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
                             {place.name}
                         </Button>
                         {place.latitude + "," + place.longitude}
