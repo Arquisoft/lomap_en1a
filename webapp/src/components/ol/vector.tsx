@@ -150,7 +150,7 @@ export function addFriendMarkerById(id: string) {
 export function deleteMarkerById(id: string) {
   var sourceFeatures = source.getFeatures()
   var markerToDelete=sourceFeatures.find(marker=>marker.getId()===id)
-  if(markerToDelete!=undefined){
+  if(markerToDelete !== undefined){
     source.removeFeature(markerToDelete);
   }
 

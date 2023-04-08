@@ -72,6 +72,26 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
 
             displayMap.set(id, !displayMap.get(id));
         }
+
+        updateLabel(id);
+    }
+
+    const getPlaceDisplayStatus = (id: string) => {
+        if (displayMap.get(id)) {
+            return "Status: Displayed"
+        } else {
+            return "Status: Hidden"
+        }
+    }
+
+    const updateLabel = (id: string) => {
+        let label = document.getElementById(id);
+              
+        let newText = getPlaceDisplayStatus(id);
+
+        if (label) {
+            label.innerText = newText
+        }
     }
 
     return (
@@ -84,6 +104,10 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                             {place.name}
                         </Button>
                         {place.latitude + "," + place.longitude}
+                        <br></br>
+                        <label id={place.id}>
+                            {getPlaceDisplayStatus(place.id)}
+                        </label>
                     </Box>
 
                 ))
