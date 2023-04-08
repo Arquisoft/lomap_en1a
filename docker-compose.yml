@@ -3,23 +3,11 @@ version: '3.5'
 #     prometheus_data: {}
 #     grafana_data: {}
 services:
-  mariadb:
-      image: mariadb:10.4.21
-      ports:
-        - "3306:3306"
-      environment:
-        MARIADB_USER: SA
-        MARIADB_PASSWORD: test
-        MARIADB_ROOT_PASSWORD: admin
-        MARIADB_DATABASE: LOMAP
-      volumes:
-        - ./restapi/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
   restapi:
     build: ./restapi
     ports:
       - "5000:5000"
-    depends_on: 
-      - mariadb
+
   webapp:
     build: ./webapp
     ports:

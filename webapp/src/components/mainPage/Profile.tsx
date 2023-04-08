@@ -43,7 +43,7 @@ export default function Profile(props: UserProps): JSX.Element {
                     <h3>Username<br/><span>User information</span></h3>
                     <ul className="dropdown-items" onClick={() => {setOpen(!open)}}>
                         <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/profile"}/></li> 
-                        <li><DropdownItemLogout/></li>
+                        <li><DropdownItem img={log_out} text={"Log out"} linkTo={"/"}/></li>
                     </ul>
                 </div>
             </div>
@@ -58,20 +58,6 @@ function DropdownItem(props: { img: string, text: string, linkTo: To }) {
                 <img src={props.img} alt="icon"></img>
                 <div className="dropdown-links">
                     <CustomLink to={props.linkTo}>{props.text}</CustomLink>
-                </div>
-            </li>
-        </ul>
-    )
-}
-
-//FIXME
-function DropdownItemLogout() {
-    return (
-        <ul>
-            <li className="dropdown-item">
-                <img src={log_out} alt="icon"></img>
-                <div className="dropdown-links">
-                        <CustomLink to={"/logout"}>Log out</CustomLink>
                 </div>
             </li>
         </ul>
