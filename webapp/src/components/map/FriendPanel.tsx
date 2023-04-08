@@ -6,7 +6,7 @@ import { User } from "../../domain/User";
 import { getPlacesToShareByUser} from "../../api/api";
 import { Place } from "../../domain/Place";
 import { Button } from "@mui/material";
-import { addFriendMarkerById, deleteMarkerById } from "../ol/vector";
+import { addFriendMarkerById, deleteMarkerById, displayMap } from "../ol/vector";
 
 
 
@@ -58,12 +58,24 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 //Returns a list of p elements with data from the places
 function PlacesOf(props: PlaceOfProps): JSX.Element {
 
-    const handleAdditionButton = (id: string) => {
-        addFriendMarkerById(id);
-    }
+    const changePlaceDisplayStatus = (id: string) => {
+        if (!displayMap.has(id)) {
+            alert("Initial addition")
+            displayMap.set(id, true);
+            alert(displayMap.get(id))
+            addFriendMarkerById(id);
+        } else {
+            if (displayMap.get(id)) {
+                alert("Deletion")
+                deleteMarkerById(id)
+            } else {
+                alert("Next addition")
+                addFriendMarkerById(id);
+            }
 
-    const handleRemovalButton = (id: string) => {
-        deleteMarkerById(id);
+            displayMap.set(id, !displayMap.get(id));
+            alert(displayMap.get(id))
+        }
     }
 
     return (
@@ -72,13 +84,10 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                 props.sharedSites.map((place) => (
 
                     <Box component="p" textAlign="left">
-                        {place.name + ": " + place.latitude + "," + place.longitude}
-                        <Button variant="contained" color="primary" onClick={() => handleAdditionButton(place.id)}>
-                            Add to map
+                        <Button variant="contained" color="primary" onClick={() => changePlaceDisplayStatus(place.id)}>
+                            {place.name}
                         </Button>
-                        <Button variant="contained" color="primary" onClick={() => handleRemovalButton(place.id)}>
-                            Remove from map
-                        </Button>
+                        {place.latitude + "," + place.longitude}
                     </Box>
 
                 ))

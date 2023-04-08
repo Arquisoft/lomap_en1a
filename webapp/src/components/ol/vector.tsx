@@ -24,6 +24,8 @@ var source: VectorSource = new VectorSource({
   features: undefined,
 });
 
+export var displayMap = new Map();
+
 var lastMarker = new Feature();
 
 var currVisibility = "";
@@ -59,17 +61,6 @@ const getMarkers = async () => {
         addMarker(coordinates, visibility,p[i].id);
       }
     });
-
-    // getSharedPlacesByFriends().then((p) => {
-    //   var coordinates: number[];
-    //   for (let i = 0; i < p.length; i++) {
-    //     places.push(p[i])
-    //     coordinates = [p[i].longitude, p[i].latitude];
-    //     var visibility = p[i].visibility;
-    //     addMarker(coordinates, visibility,p[i].id);
-    //   }
-    // });
-
 
 }
 
@@ -222,15 +213,6 @@ export async function refreshMarkers(visibility: string) {
           addMarker(coordinates, visibility,p[i].id);
         }
       });
-  
-    //  getSharedPlacesByFriends().then((p) => {
-    //     var coordinates: number[];
-    //     for (let i = 0; i < p.length; i++) {
-    //       coordinates = [p[i].longitude, p[i].latitude];
-    //       var visibility = p[i].visibility;
-    //       addMarker(coordinates, visibility,p[i].id);
-    //     }
-    //   });
       break;
 
     case "PRIVATE":
