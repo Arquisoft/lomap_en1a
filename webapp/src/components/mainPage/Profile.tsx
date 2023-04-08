@@ -5,7 +5,7 @@ import log_out from '../../icons/log-out.png';
 import userIcon from '../../icons/user.png';
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
-import { getProfile } from "../../api/api";
+import { getProfile,logout } from "../../api/api";
 
 
 export interface UserProps {
@@ -25,6 +25,11 @@ export default function Profile(props: UserProps): JSX.Element {
 
   }
 
+  const handleLogout = async () => {
+    await logout();
+
+  }
+
     useEffect(() => {
         let handler = (e : Event) => {
             if ((menuRef) != null && menuRef.current != null) {
@@ -39,6 +44,8 @@ export default function Profile(props: UserProps): JSX.Element {
             document.removeEventListener("mousedown", handler);
         }
     })
+
+
 
     useEffect(()=>{
         refreshProfile();
@@ -55,7 +62,7 @@ export default function Profile(props: UserProps): JSX.Element {
                     <h3>{profile?.username}<br/><span>{profile?.webId}</span></h3>
                     <ul className="dropdown-items" onClick={() => {setOpen(!open)}}>
                         <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/profile"}/></li> 
-                        <li><DropdownItem img={log_out} text={"Log out"} linkTo={"/"}/></li>
+                        <li><DropdownItem img={log_out} text={"Log out"} linkTo={"/"} onClick={handleLogout}/></li>
                     </ul>
                 </div>
             </div>
@@ -63,13 +70,13 @@ export default function Profile(props: UserProps): JSX.Element {
     )
 }
 
-function DropdownItem(props: { img: string, text: string, linkTo: To }) {
+function DropdownItem(props: { img: string, text: string, linkTo: To, onClick?: React.MouseEventHandler<HTMLAnchorElement> | undefined }) {
     return (
         <ul>
             <li className="dropdown-item">
                 <img src={props.img} alt="icon"></img>
                 <div className="dropdown-links">
-                    <CustomLink to={props.linkTo}>{props.text}</CustomLink>
+                    <CustomLink to={props.linkTo} onClick={props.onClick}>{props.text}</CustomLink>
                 </div>
             </li>
         </ul>

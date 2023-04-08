@@ -232,3 +232,15 @@ export async function login(oidcIssuer: string, redirectUrl: string): Promise<vo
   window.location.href = url;
 
 }
+
+//Logout
+export async function logout(): Promise<void> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  await fetch(apiEndPoint + '/logout', {
+    credentials: 'include',
+    mode: 'cors'
+  }); 
+
+
+}
