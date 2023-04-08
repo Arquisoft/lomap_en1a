@@ -24,6 +24,8 @@ var source: VectorSource = new VectorSource({
   features: undefined,
 });
 
+export var displayMap = new Map();
+
 var lastMarker = new Feature();
 
 var currVisibility = "";
@@ -60,20 +62,9 @@ const getMarkers = async () => {
       }
     });
 
-    getSharedPlacesByFriends().then((p) => {
-      var coordinates: number[];
-      for (let i = 0; i < p.length; i++) {
-        places.push(p[i])
-        coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id);
-      }
-    });
-
-
 }
 
-const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -111,9 +102,16 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
 
   var markerVisibility = visibility.toUpperCase()
 
-  if (isNew || checkVisibility(markerVisibility)) {
-    source.addFeatures([featureToAdd]);
-    lastMarker = featureToAdd;
+  if (!isFriend) {
+    if (isNew || checkVisibility(markerVisibility)) {
+      source.addFeatures([featureToAdd]);
+      lastMarker = featureToAdd;
+    }
+  } else {
+    if (displayMap.get(id) && checkVisibility(markerVisibility)) {
+      source.addFeatures([featureToAdd]);
+      lastMarker = featureToAdd;
+    }
   }
 }
 
@@ -128,6 +126,31 @@ const checkVisibility = (visibility:string) => {
   return true;
 }
 
+export function addFriendMarkerById(id: string) {
+  getSharedPlacesByFriends().then((p) => {
+    var coordinates: number[];
+    for (let i = 0; i < p.length; i++) {
+      if (p[i].id === id) {
+        places.push(p[i])
+        coordinates = [p[i].longitude, p[i].latitude];
+        var visibility = p[i].visibility;
+        addMarker(coordinates, visibility,p[i].id, false, true);
+      }
+    }
+  });
+}
+
+export function deleteMarkerById(id: string) {
+  var sourceFeatures = source.getFeatures()
+
+  for (let i = 0; i < source.getFeatures().length; i++) {
+    var marker = sourceFeatures[i]
+    if (marker.getId() === id) {
+      source.removeFeature(marker);
+    }
+  }
+}
+
 export function updateMapList(place:Place){
   lastMarker.setId(place.id)//The id for the last marker is added
   places.push(place);
@@ -136,6 +159,7 @@ export function updateMapList(place:Place){
 export function deleteMarker() {
   source.removeFeature(lastMarker);
 }
+
 export function changeMarkerColour(visibility:string){
  
   var color;
@@ -189,15 +213,6 @@ export async function refreshMarkers(visibility: string) {
 
     case "FRIENDS":
       getSharedPlacesByUser().then((p) => {
-        var coordinates: number[];
-        for (let i = 0; i < p.length; i++) {
-          coordinates = [p[i].longitude, p[i].latitude];
-          var visibility = p[i].visibility;
-          addMarker(coordinates, visibility,p[i].id);
-        }
-      });
-  
-     getSharedPlacesByFriends().then((p) => {
         var coordinates: number[];
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
