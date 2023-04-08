@@ -7,8 +7,8 @@ import { Route, Routes} from "react-router-dom"
 import "./App.css";
 import LoginForm from "./components/mainPage/LoginForm"
 import MapView from "./components/map/MapView"
-import "react-sliding-pane/dist/react-sliding-pane.css";
 import UserProfile from "./components/mainPage/UserProfile"
+import "react-sliding-pane/dist/react-sliding-pane.css";
 
 
 

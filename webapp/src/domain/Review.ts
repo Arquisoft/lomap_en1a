@@ -16,35 +16,4 @@ export abstract class Review extends BaseEntity {
         this.visibility = visibility;
     }
 
-    public setPlace(place: string) {
-        this.place = place;
-    }
-
-    public getPlace(): string {
-        return this.place;
-    }
-
-    public setOwner(owner: string) {
-        this.owner = owner;
-    }
-
-    public getOwner(): string {
-        return this.owner;
-    }
-
-    public setDate(date: Date) {
-        this.date = date;
-    }
-
-    public getDate(): Date {
-        return this.date;
-    }
-
-    public getVisibility(): Visibility {
-        return this.visibility;
-    }
-
-    public setVisibility(visibility: Visibility) {
-        this.visibility = visibility;
-    }
 }

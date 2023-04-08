@@ -8,7 +8,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getFriendsForUser, getPlacesByUser, getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
+import { getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 
@@ -39,41 +39,33 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the public places
   const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
-
-  //For the  private places
-  const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
-
-
-  //For the friend places
-  const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
-
-
   const refreshPublicPlaceList = async () => {
     getPublicPlacesByUser().then((places) => setPublicPlaces(places));
 
   }
 
+  //For the  private places
+  const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
   const refreshPrivatePlaceList = async () => {
     getPrivatePlacesByUser().then((places) => setPrivatePlaces(places));
 
   }
 
-
+  //For the friend places
+  const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
   const refreshSharedPlaceList = async () => {
     getSharedPlacesByUser().then((places) => setSharedPlaces(places));
 
   }
 
+ //Get the list of places for the current user
   const [friends, setFriends] = useState<User[]>([]);
-  /*const { session } = useSession();
-  var webId = session.info.webId as string;
-*/
-  //Get the list of places for the current user
   const refreshFriendList = async () => {
     getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
 
   }
 
+  //For the visibility
   const displayVisibility = (visibility: string) => {
     if (visibility == null) {
       return "";
@@ -91,10 +83,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   }, [props.newPlace]);
 
 
+  //Get friend list
+  useEffect(() => {
+    refreshFriendList();
+  }, []);
 
-  //Style must be in-line; does not work otherwise
-
+  //For the sidebar
   const { collapseSidebar } = useProSidebar();
+
   return (
     <Sidebar style={{ height: "80vh", color: "black" }}>
       <Menu
@@ -185,7 +181,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
             ))}
 
           </SubMenu>
-        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } onClick={()=>{refreshFriendList()}}>
+        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } >
           {friends.map((ti, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}

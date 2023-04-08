@@ -9,11 +9,12 @@ import { CustomLink } from "../CustomLink";
 
 export default function NavBar(): JSX.Element {
 
+  //FIXME: temporal
   var url = useLocation();
   const [show,setShow] = useState(false);
 
 
-  //FIXME
+  //FIXME:temporal
   useEffect(() => {
     if(url.pathname==="/map"){
       setShow(true)

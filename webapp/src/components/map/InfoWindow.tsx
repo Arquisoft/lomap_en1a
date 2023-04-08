@@ -138,9 +138,6 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
           }
         </Grid>
 
-        <Grid item xs={12}>
-          
-        </Grid>
 
         <Grid item xs={12}>
            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>

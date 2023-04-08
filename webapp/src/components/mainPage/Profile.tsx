@@ -1,11 +1,10 @@
-import React, {useState, useEffect, useRef, Ref, Component} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { User } from "../../domain/User";
 import placeholderImage from '../../images/user_icon.png';
 import log_out from '../../icons/log-out.png';
 import userIcon from '../../icons/user.png';
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
-import { LogoutButton } from "@inrupt/solid-ui-react";
 
 
 export interface UserProps {
@@ -65,15 +64,14 @@ function DropdownItem(props: { img: string, text: string, linkTo: To }) {
     )
 }
 
+//FIXME
 function DropdownItemLogout() {
     return (
         <ul>
             <li className="dropdown-item">
                 <img src={log_out} alt="icon"></img>
                 <div className="dropdown-links">
-                    <LogoutButton>
                         <CustomLink to={"/logout"}>Log out</CustomLink>
-                    </LogoutButton>
                 </div>
             </li>
         </ul>

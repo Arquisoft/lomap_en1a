@@ -20,17 +20,18 @@ export enum SlidingPaneView {
 
 export default function MapView(): JSX.Element {
 
-  // const [addedPlace, setAddedPlace] = useState(false); //To control when to remove a marker from the map automatically
-  const deleteLastMarker = useRef(false);
+  const deleteLastMarker = useRef(false);//To control when to remove a marker from the map automatically
+  const [isOpen, setIsOpen] = useState(false);
 
-  //These 3 useStates are used to monitor useEffect hooks; they just increment to detect change when needed
+  //These useState is used to monitor useEffect hooks; they just increment to detect change when needed
+  //FIXME
   const [newPlace, setNewPlace] = useState(0);
+
 
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [slidingPaneView, setSlidingPaneView] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
   const [infoWindowData, setInfoWindowData] = useState({
     title: "",
     id: "",
@@ -90,10 +91,10 @@ export default function MapView(): JSX.Element {
         overlayClassName='info-window'
       >
         {
-          slidingPaneView == SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
+          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
             deleteMarker={deleteLastMarker} setIsOpen={setIsOpen} /> :
-            slidingPaneView == SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
-              slidingPaneView == SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
+            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
+              slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
         }
 

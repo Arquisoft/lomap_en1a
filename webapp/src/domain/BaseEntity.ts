@@ -6,11 +6,4 @@ export abstract class BaseEntity {
         this.id = id;
     }
 
-    public getId(): string {
-        return this.id;
-    }
-
-    public setId(id: string) {
-        this.id = id;
-    }
 }

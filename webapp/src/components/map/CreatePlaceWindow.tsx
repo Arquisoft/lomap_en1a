@@ -11,7 +11,7 @@ import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { changeMarkerColour, refreshMarkers } from '../ol/vector';
+import { changeMarkerColour} from '../ol/vector';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -34,6 +34,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
 
+
   const handleChange = (value: string) => {
     var newVisibility = (Visibility as any)[value]
 
@@ -41,10 +42,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   }
 
 
+  //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateText()) {
-      
+    if (validateText()) {//If the name of the place is valid
+
       var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
       let result: boolean = await addPlace(place);
       if (result) {
@@ -58,7 +60,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.setIsOpen(false); //Close the create place window automatically
 
         var v = Visibility[visibility].toLowerCase();
-        changeMarkerColour(v);
+        changeMarkerColour(v); //Changes the last marker colour
       }
       else {
         setNotificationStatus(true);
@@ -69,11 +71,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.deleteMarker.current = true;
       }
     }
-
     
   }
 
 
+  //Checks the name of the new place
   const validateText = () => {
     if (name.trim().length === 0) {
       setShowError(true);

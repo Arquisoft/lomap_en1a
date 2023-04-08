@@ -10,12 +10,11 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPlaces, getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getPlacesByUser, getSharedPlacesByFriends } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
-import { Place } from "../../domain/Place";
 
 
 
@@ -28,7 +27,7 @@ var lastMarker = new Feature();
 
 
 const getMarkers = async () => {
-    await getPublicPlacesByUser().then((p) => {
+    getPublicPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -36,7 +35,7 @@ const getMarkers = async () => {
         addMarker(coordinates, visibility);
       }
     });
-    await getPrivatePlacesByUser().then((p) => {
+    getPrivatePlacesByUser().then((p) => {
 
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
@@ -45,7 +44,7 @@ const getMarkers = async () => {
         addMarker(coordinates, visibility);
       }
     });
-    await getSharedPlacesByUser().then((p) => {
+    getSharedPlacesByUser().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -54,7 +53,7 @@ const getMarkers = async () => {
       }
     });
 
-    await getSharedPlacesByFriends().then((p) => {
+    getSharedPlacesByFriends().then((p) => {
       var coordinates: number[];
       for (let i = 0; i < p.length; i++) {
         coordinates = [p[i].longitude, p[i].latitude];
@@ -148,7 +147,7 @@ export async function refreshMarkers(visibility: string) {
 
   switch (visibility) {
     case "PUBLIC":
-      await getPublicPlacesByUser().then((p) => {
+      getPublicPlacesByUser().then((p) => {
         var coordinates: number[];
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
@@ -160,7 +159,7 @@ export async function refreshMarkers(visibility: string) {
 
 
     case "FRIENDS":
-      await getSharedPlacesByUser().then((p) => {
+      getSharedPlacesByUser().then((p) => {
         var coordinates: number[];
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
@@ -169,7 +168,7 @@ export async function refreshMarkers(visibility: string) {
         }
       });
   
-      await getSharedPlacesByFriends().then((p) => {
+     getSharedPlacesByFriends().then((p) => {
         var coordinates: number[];
         for (let i = 0; i < p.length; i++) {
           coordinates = [p[i].longitude, p[i].latitude];
@@ -180,7 +179,7 @@ export async function refreshMarkers(visibility: string) {
       break;
 
     case "PRIVATE":
-      await getPrivatePlacesByUser().then((p) => {
+      getPrivatePlacesByUser().then((p) => {
 
         var coordinates: number[];
         for (let i = 0; i < p.length; i++) {

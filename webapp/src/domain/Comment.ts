@@ -10,11 +10,5 @@ export class Comment extends Review {
         this.text = text;
     }
 
-    public setText(text: string) {
-        this.text = text;
-    }
 
-    public getText(): string {
-        return this.text;
-    }
 }

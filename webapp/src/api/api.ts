@@ -17,7 +17,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'comment': comment.getText(), 'place': comment.getPlace(), 'user': comment.getOwner().replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'comment': comment.text, 'place': comment.place, 'user': comment.owner.replaceAll("/", "-").replaceAll("#", "-") })
   });
   if (response.status === 200)
     return true;
@@ -32,7 +32,6 @@ export async function getComments(id: string): Promise<Comment[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
@@ -46,7 +45,7 @@ export async function addScore(score: Score): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'score': score.getScore(), 'place': score.getPlace(), 'user': score.getOwner().replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'score': score.score, 'place': score.place, 'user': score.owner.replaceAll("/", "-").replaceAll("#", "-") })
   });
   if (response.status === 200)
     return true;
@@ -74,8 +73,8 @@ export async function addPlace(place: Place): Promise<boolean> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'name': place.getName(), 'user': place.getOwner().replaceAll("/", "-").replaceAll("#", "-"),
-      'visibility': place.getVisibility(), 'latitude': place.getLatitude(), 'longitude': place.getLongitude()
+      'name': place.name, 'user': place.owner.replaceAll("/", "-").replaceAll("#", "-"),
+      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude
     }),
 
     credentials: 'include',
@@ -96,7 +95,6 @@ export async function getPictures(id: string): Promise<Picture[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Picture objects
   return response.json();
 }
 
@@ -108,8 +106,8 @@ export async function addPicture(picture: Picture): Promise<boolean> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'picture': picture, 'place': picture.getPlace(), 'visibility': picture.getVisibility(),
-      'url': picture.getUrl()
+      'picture': picture, 'place': picture.place, 'visibility': picture.visibility,
+      'url': picture.url
     })
   });
   if (response.status === 200)
@@ -118,32 +116,23 @@ export async function addPicture(picture: Picture): Promise<boolean> {
     return false;
 }
 
+//Places----------------------------------------------
+
 //List places by visibility
-export async function getPlaces(id: string, visibility: string): Promise<Place[]> {
+export async function getPlaces(visibility: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
-  alert(apiEndPoint + '/place/' + visibility + '/list');
 
   let response = await fetch(apiEndPoint + '/place/' + visibility + '/list', {
     credentials: 'include',
     mode: 'cors'
   }
   );
-  //The objects returned by the api are directly convertible to Comment objects
+
   return response.json();
 }
 
 
-//FIXME
-export async function getPlacesByUser(): Promise<Place[]> {
-  //var a = await getPrivatePlacesByUser(id);
-  var b = await getPublicPlacesByUser();
-  var c = await getSharedPlacesByUser();
-
-  //console.log((a.concat(b)).concat(c))
-  //return (a.concat(b)).concat(c);
-  return b.concat(c)
-}
 
 //List public places by user
 export async function getPublicPlacesByUser(): Promise<Place[]> {
@@ -152,19 +141,18 @@ export async function getPublicPlacesByUser(): Promise<Place[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
+
   return response.json();
 }
 
 export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let newId = encodeURIComponent(id);
-  alert(apiEndPoint + '/place/friends/list/' + newId);
   let response = await fetch(apiEndPoint + '/place/friends/list/' + newId, {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
+
   return response.json();
 }
 
@@ -174,7 +162,6 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
@@ -185,7 +172,6 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
@@ -197,7 +183,6 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
@@ -206,24 +191,22 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
   let userId = encodeURIComponent(id);
-  //alert(apiEndPoint + "/friends/" + userId)
   let response = await fetch(apiEndPoint + '/friends/' + userId, {
     credentials: 'include',
     mode: 'cors'
   });
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
+//User---------------------------------------------------------
+
 export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-
 
   let response = await fetch(apiEndPoint + '/profile', {
     credentials: 'include',
     mode: 'cors'
   }); 
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
@@ -236,11 +219,10 @@ export async function isLoggedIn(): Promise<boolean> {
     credentials: 'include',
     mode: 'cors'
   }); 
-  //The objects returned by the api are directly convertible to Comment objects
   return response.json();
 }
 
-//User---------------------------------------------------------
+
 //Log in
 export async function login(oidcIssuer: string, redirectUrl: string): Promise<void> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
@@ -251,7 +233,4 @@ export async function login(oidcIssuer: string, redirectUrl: string): Promise<vo
   let url = apiEndPoint + '/login/' + provider + '/' + redirect;
   window.location.href = url;
 
-  // let response = await fetch(apiEndPoint + '/login/' + provider + '/' + redirect); //Sacar string de aqui
-  //The objects returned by the api are directly convertible to Comment objects
-  // return response.json();
 }
