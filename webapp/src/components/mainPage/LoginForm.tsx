@@ -1,19 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { Button, TextField, FormGroup } from "@material-ui/core";
-import { getProfile, login } from "../../api/api";
+import { login } from "../../api/api";
 
-const LoginForm = () => {
+
+
+export default function LoginForm():JSX.Element{
   const [idp, setIdp] = useState("https://inrupt.net");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
+
+
 
   useEffect(() => {
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
 
-  const handleLogin = () => {
+  const handleLogin =async () => {
     {
-      login(idp, currentUrl);
-      // getProfile().then(user => alert(user.username))
+      await login(idp, currentUrl);
+      /*await isLoggedIn().then(b => {
+        props.setIsLoggedIn(b);
+      });*/
     }
   };
 
@@ -39,4 +45,3 @@ const LoginForm = () => {
   );
 }
 
-export default LoginForm;
