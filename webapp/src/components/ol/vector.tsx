@@ -35,34 +35,42 @@ places = [];
 
 
 //Adds all the places given in the array to the map
-const addAllMarkers=(p:Place[])=>{
+const addAllMarkers=(p:Place[], myOwn: boolean)=>{
   var coordinates: number[];
   for (let i = 0; i < p.length; i++) {
     places.push(p[i])
     coordinates = [p[i].longitude, p[i].latitude];
     var visibility = p[i].visibility;
-    addMarker(coordinates, visibility,p[i].id);
+    if (myOwn || displayMap.get(p[i].id))
+      addMarker(coordinates, visibility,p[i].id);
   }
 }
 
 //Adds all public places to the map
 const addPublicPlaces = async()=>{
   getPublicPlacesByUser().then((p) => {
-    addAllMarkers(p);
+    addAllMarkers(p, true);
   });
 }
 
 //Adds all private places to the map
 const addPrivatePlaces = async()=>{
   getPrivatePlacesByUser().then((p) => {
-    addAllMarkers(p);
+    addAllMarkers(p, true);
   });
 }
 
 //Adds all shared places to the map
 const addSharedPlaces = async()=>{
   getSharedPlacesByUser().then((p) => {
-    addAllMarkers(p);
+    addAllMarkers(p, true);
+  });
+}
+
+//Adds all friends places to the map
+export const addFriendPlaces = async()=>{
+  getSharedPlacesByFriends().then((p) => {
+    addAllMarkers(p, false);
   });
 }
 
@@ -71,7 +79,7 @@ const getMarkers = async () => {
     addPublicPlaces();
     addPrivatePlaces();
     addSharedPlaces();
-
+    addFriendPlaces();
 }
 
 //Adds a marker to the map
@@ -206,6 +214,7 @@ export async function refreshMarkers(visibility: string) {
 
     case "FRIENDS":
       addSharedPlaces();
+      addFriendPlaces();
       break;
 
     case "PRIVATE":
