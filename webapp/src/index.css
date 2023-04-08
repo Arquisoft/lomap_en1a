@@ -305,6 +305,41 @@ footer {
 /* -------------------------------------------------------------------------------------- */
 
 /* Login -------------------------------------------------------------------------------- */
+#btn-Go {
+  border-width: 0px;
+  color: var(--main-text-color);
+  font-size: 1em;
+  opacity: 0.6;
+  background-color: #388fe6;
+}
+
+#btn-Go:hover {
+  border-width: 1px;
+  border-radius: 5px;
+  opacity: 1;
+}
+
+.btn-login {
+  width: 90vh;
+  padding: 0.7em;
+  margin-bottom: 0.4em;
+  font-size: 1em;
+  border-radius: 12px;
+  border-width: 1px;
+}
+
+.btn-login:hover {
+  background-color: #c4c4c4;
+}
+
+.btn-group {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 90vh;
+  margin-bottom: 1em;
+}
+
 .login-div {
   display: grid;
   justify-content: center;
@@ -314,10 +349,14 @@ footer {
 }
 
 .login-form {
+  margin-left: auto;
+  margin-right: auto;
   background-color: #eeeeee;
   width: 90vh;
   height: inherit;
-  padding-left: 10px;
+  padding: 1.2em 0 0.4em 0;
+  margin-bottom: 1em;
+  border-radius: 12px;
 }
 
 .login-button {

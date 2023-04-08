@@ -7,12 +7,7 @@ import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
 
-
-export interface UserProps {
-    user?: User;
-}
-
-export default function Profile(props: UserProps): JSX.Element {
+export default function Profile(): JSX.Element {
     
     const [open, setOpen] = useState(false);
     
