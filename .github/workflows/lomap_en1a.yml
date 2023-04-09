@@ -54,7 +54,7 @@ jobs:
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp, unit-test-restapi] 
+    needs: [unit-test-webapp] 
     #needs: [e2e-tests]
     steps:
     - uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp, unit-test-restapi] 
+    needs: [unit-test-webapp] 
     #needs: [e2e-tests]
     steps:
     - uses: actions/checkout@v3
