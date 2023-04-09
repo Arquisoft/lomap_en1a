@@ -14,7 +14,7 @@ app.use(metricsMiddleware);
 api.use(
     cors({
         credentials: true,
-        origin: 'http://localhost:3000',
+        origin: 'http://alvaroglezeri.ddns.net:3000',
         allowedHeaders: ['Content-Type', 'Authorization'],
         preflightContinue: true
     }),
@@ -28,7 +28,7 @@ DatabaseConnection.setDatabase("mongodb+srv://admin:admin@lomap.aux4co1.mongodb.
 app.use(
     cors({
         credentials: true,
-        origin: 'http://localhost:3000/',
+        origin: 'http://alvaroglezeri.ddns.net:3000/',
         allowedHeaders: ['Content-Type', 'Authorization'],
         preflightContinue: true
     }),

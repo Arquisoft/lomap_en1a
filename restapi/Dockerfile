@@ -4,4 +4,8 @@ COPY . /app
 WORKDIR /app
 #Install the dependencies
 RUN npm install
+
+ARG API_URI="alvaroglezeri.ddns.net"
+ENV host=$API_URI
+
 CMD [ "npm", "start" ]

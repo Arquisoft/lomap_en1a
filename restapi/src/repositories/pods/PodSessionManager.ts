@@ -20,6 +20,8 @@ export class PodSessionManager {
 
     public async login(req: any, res: Response): Promise<void> {
 
+        let host: string = process.env.host || "localhost";
+
         let provider = req.params.provider;
         Assertion.exists(provider, "A provider must be given.");
         provider = decodeURIComponent(provider);
@@ -28,7 +30,7 @@ export class PodSessionManager {
         let redirect = req.params.redirect;
         //Assertion.exists(redirect, "A redirect url must be given.");
         //redirect = decodeURIComponent(redirect);
-        redirect = "http://localhost:5000/api/login/success";
+        redirect = "http://" + host + ":5000/api/login/success";
 
         const session = new Session();
         req.session.solidSessionId = session.info.sessionId;
@@ -45,11 +47,14 @@ export class PodSessionManager {
     }
 
     public async successfulLogin(req: any, res: Response): Promise<any> {
+
+        let host: string = process.env.host || "localhost";
+
         let solidSession = await getSessionFromStorage(req.session.solidSessionId);
 
-        await solidSession?.handleIncomingRedirect(`${this.appUrl}${this.port}${this.handle}${req.url}`);
+        await solidSession?.handleIncomingRedirect(`http://${host}${this.port}${this.handle}${req.url}`);
 
-        return res.redirect("http://localhost:3000/map");
+        return res.redirect("http://" + host + ":3000/map");
     }
 
     public async logout(req: any, res: Response): Promise<any> {
