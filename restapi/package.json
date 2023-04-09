@@ -5,7 +5,7 @@
     "start": "ts-node-dev ./server.ts",
     "sergio": "ts-node-dev ./src/persistence/db/main.ts",
     "ruben": "ts-node-dev ./src/persistence/Main.ts",
-    "test": "cd tests && jest --runInBand  --passWithNoTests"
+    "test": "cd tests && jest --runInBand"
   },
   "keywords": [],
   "author": "",
