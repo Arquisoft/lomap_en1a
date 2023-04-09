@@ -1,43 +1,43 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
-In this chapter we will give a brief description of what will the scope of the project be, as well as for which context it is being created for.
+In this chapter we will give a brief description of what will be the scope of the project, as well as for which context it is being created for.
 
-The project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. The application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
+As stated in the introduction, the project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. As such, the application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
 
 === Business Context
-The system is related with several parters, shown in the following diagram:
+The system is related with several partners, shown in the following diagram:
 
-image::businessDiagram.svg[Business Diagram]
+image::3-businessContext-0.png[Business Diagram]
 
-The elements shown in the diagram are explained here:
+The elements shown in the diagram and their functions are explained here:
 
-[options="header,footer"]
+[options="header", cols = "2, 4, 4"]
 |=======================
-|Partner          |Input             |Output
-|User             |Application services |User data
-|POD              |User data/request |User data
-|LoMap            |User input        |Service to user
-|(DataBase)       |User data request |User data
-|(Image service)  |Image request     |Images
-|(Map service)    |Map data request  |Map data 
+|Partner          |Description             |Output
+|User             |Uses the application to manage its markers, reviews and other content |User data that will be stored in its POD and shown to other users, according to the level of privacy desired
+|POD              |Holds user data, in control of its owner | Provides access to the data the user wants to share
+|LoMap            |The application that provides the services to the user      |Interacts with the user, its POD and the Map provider to provide the desired service
+|Database       |Holds user link data, to compartmentalize and link separate pieces of data |Link information that allows data to be fetched from the correct places
+|Map provider    |Provides the map the user sees when it uses the application  | The map, and the coordinate information needed to create new markers
 |=======================
 
 === Technical Context
 
-The system's structure consists in the following components:
+The technical system's structure consists in the following components:
 
-image::technicalDiagram.svg[Technical Diagram]
+image::3-technicalContext-0.png[Technical Diagram]
 
 Each component will be explained in more detail:
 
-[options="header,footer"]
+[options="header", cols = "2, 5"]
 |=======================
 |Technical component   |Description
 |GitHub Repository     |Repository storing the code and documentation of the project
-|Documentation         |Text files explaining the system's architecture following the arc42 template
-|Frontend              |System parts that handle the interaction with the user through the user interface
-|Backend               |System parts that handle the data processing logic
-|DataBase              |Persistent storage system to store the system's data
+|Documentation         |Files explaining the system's architecture following the arc42 template
+|Frontend              |System components that handle the interaction with the user through the user interface
+|Backend               |System components that handle the data processing logic
+|Database              |Persistent storage system to store the link data
+|Map provider          |Company that provides map information to display in the application
 |SOLID                 |Architecture providing a way to store the user data in a decentralized and remote way
-|POD                   |Each different, decentralized data repositories used by SOLID to store a single user's information
+|POD                   |Decentralized server in which a single user's information is stored
 |=======================

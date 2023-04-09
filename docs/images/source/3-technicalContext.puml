@@ -1,0 +1,26 @@
+@startuml
+' Technical Context Diagram v1.0
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+
+database GitHubRepo as "GitHub repository" {
+    component Frontend
+    component Backend
+    file Documentation
+}
+cloud MapService as "Map Provider"
+database Database
+frame SOLID {
+    database POD
+}
+
+'-----------------------
+'Definition of relations
+'-----------------------
+Backend -> POD
+Backend -u-> MapService
+Backend -d-> Database
+Frontend <-> Backend
+@enduml
