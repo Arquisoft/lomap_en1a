@@ -18,7 +18,7 @@ There and more requirements can be found in the link:https://arquisoft.github.io
 === Quality Goals
 These are some quality goals this application must fulfill:
 
-[options="header",cols="1,1,1,1,1"]
+[options="header", cols = "1,2,5,2,2"]
 |===
 |Ref|Quality attribute|Scenario|Priority|Implementation complexity
 |3|Understandability|A new user should be able to find or add a place with the app in less than 5 minutes|High|Medium
@@ -29,7 +29,7 @@ These are some quality goals this application must fulfill:
 
 === Stakeholders
 These are some stakeholders the application has to interact with:
-[options="header",cols="1,2,2"]
+[options="header", cols= "1,3,3"]
 |===
 |Role/Name|Contact|Expectations
 | _Developers_ | _Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
