@@ -1,0 +1,47 @@
+@startuml
+' Building Block View Diagram v1.0
+' Level 2: Webapp
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+component Webapp as Frontend{
+    interface Api
+    frame App {
+        frame MapView as "MapView.tsx" {
+            frame Mav as "map.tsx"
+            frame SlidingPanel {
+                frame FriendP as "FriendPanel.tsx"
+                frame CommentForm as "CommentForm.tsx"
+                frame CommentList as "CommentList.tsx"
+                frame InfoWindow as "InfoWindow.tsx"
+            }
+        }
+        frame NavBar as "NavBar.tsx"{
+            card Login as "Log in"
+            card Signup as "Sign up"
+        }
+        frame LoginForm as "LoginForm.tsx" {
+            card Provider
+        }
+        frame UserProfile as "UserProfile.tsx" {
+            card username
+            card webid
+        }
+        frame About as "About.tsx"
+        frame Contact as "Contact.tsx"
+    }
+}
+
+component RestAPI
+
+'-----------------------
+'Definition of relations
+'-----------------------
+App <-> Api
+Api <-l-> RestAPI
+webid -[hidden]- username
+Signup -[hidden]- Login
+
+
+@enduml

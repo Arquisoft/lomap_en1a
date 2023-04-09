@@ -20,7 +20,7 @@ frame SOLID {
 'Definition of relations
 '-----------------------
 Backend -> POD
-Backend -u-> MapService
 Backend -d-> Database
 Frontend <-> Backend
+Frontend -d-> MapService
 @enduml

@@ -1,6 +1,5 @@
 [[section-building-block-view]]
 
-
 == Building Block View
 
 === Level 1: Whitebox Overall System
@@ -15,65 +14,68 @@ This diagram is divided based on data ownership. Three main groups are considere
 - LoMap: groups all application-specific blocks.
 - External Services: groups all other blocks that are not directly related to the user nor to the application.
 
-image::BuildingBlockView-Level1.svg[Building Block View (Level 1)]
+image::5-buildingBlock-L1-0.svg[Building Block View (Level 1)]
 
 ==== Contained BlackBoxes
-[options="header"]
+[options="header", cols = "1, 5"]
 |===========================================================================================================
 | Name            | Description                                                                                      
 | User            | External user that provides its data through a POD and that makes use of the application services
 | POD             | Privately holds all user data. The application asks for permission to access this information    
-| Webapp          | Provides an user-friendly interface to access all application services                           
+| Webapp          | Provides a user-friendly interface to access all application services
 | LoMapCore       | Provides the services that the application offers. Connects to data sources to provide those services
 | Database        | Holds all common data that the application needs to run
 | Map Provider    | External service that provides map data to the application
-| Image Provider  | External service that provides image data to the application
 |===========================================================================================================
 
 DISCLAIMER::
-The following sections have been intentionally left partially completed. This is because the application is yet to be builded, so a lower level of abstraction is, as of now, speculation. Nevertheless, the general structure of the section is presented for guidance.
+The following sections will be further developed in higher-level diagrams. Some things not mentioned here will be explained later
 
 === Level 2: Webapp
-The Webapp encompasses all UI-related components of the application. ...
+The Webapp encompasses all UI-related components of the application. It is built with React, and follows a typical React structure.
 
-(insert diagram)
+image::5-buildingBlock-L2-Webapp-0.svg[Building Block View (Level 2: WebApp)]
 
 ==== Contained BlackBoxes
-[options="header"]
+[options="header", cols = "2, 5"]
 |===
 | Name            | Responsibility
-| Comp1   | Component 1 of the Webapp
-| Comp2   | Component 2 of the Webapp
-| Comp3   | Component 3 of the Webapp
-| ... | ...
+| Api | Interacts with the RestAPI through HTTP requests
+| App | Main component of the application, that is the only component that the index shows
+| Contact.tsx | Redirects to the contact information page
+| About.tsx | Redirects to the about page
+| UserProfile.tsx | Shows the name and webId of the current user logged in
+| LoginForm.tsx | Offers the option to log in with an Identity Provider
+| NavBar.tsx | Tops the main view of the page, and offers log in and logout options
+| MapView.tsx | Main component of the page itself. Contains the most important components of the frontend
 |===
 
 ==== Level 2: LoMapCore
-The LoMapCore block encompasses all business-logic components, as well as data-source management and interaction with other services. ...
+The LoMapCore block, also called RestAPI, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.
 
-(insert diagram)
+image::5-buildingBlock-L2-Restapi-0.svg[Building Block View (Level 2: RestAPI)]
 
 ==== Contained BlackBoxes
 [options="header"]
 |===
 | Name            | Responsibility
-| RestAPI   | API that allows all the other parts of the application to connect to the LoMapCore
-| Comp2   | Component 2 of the RestAPI
-| Comp3   | Component 3 of the RestAPI
-| ... | ...
+| WebApp   | Frontend of the application
+| Domain   | Holds all entities and DTOs used across the application to communicate modules
+| Controllers   | Declare the endpoints of the RestAPI and make use of the services to provide the functionality
+| Services   | Manage all business rules of the application, and use the repositories to persist said data
+| Repositories   | Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess
+| PodAccess   | In charge of handling POD accesses, authentication and data fetching.
 |===
 
 ==== Database
-The Database holds all common information that the application needs to run, such as cached data, ???, ...
+The Database holds linked data for the application. This data is in charge of linking entities with each other, to avoid repeated access to PODs to search for these pieces of metadata. An example of a piece of data stored in the DB could be as simple as a pair of internal IDs, that link a comment with its corresponding place.
 
-TODO: Is it necessary to include a diagram for the Database?
+Then, you could search for the ID of a place to retrieve all associated comments without going through several PODs to discover if they hold any useful information.
+
+(insert DB schema diagram)
 
 ==== MapService
-The MapService is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user.
+The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information.
 
-(insert API overview)
+In order to receive the service of the Map provider, an API key was obtained that authenticates all requests done through the WebApp.
 
-==== ImageService
-The ImageService is an external service, planned to provide access to marker images. Its usage is, as of now, uncertain, as there is not yet clear whether this service will be needed. 
-
-(insert API overview)

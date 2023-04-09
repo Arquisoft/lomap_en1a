@@ -7,7 +7,7 @@ skinparam actorStyle awesome
 '-----------------------
 card LoMap {
     component Webapp as Frontend
-    component LoMapCore as Backend
+    component RestAPI as Backend
     database Database
 }
 
@@ -19,14 +19,11 @@ card "User" as UserDat {
 
 rectangle "External Services" {
     cloud "Map Provider" as MapService
-    cloud "Image Provider" as ImgService
 }
-
 
 '-----------------------
 'Definition of relations
 '-----------------------
-
 User -r-> Frontend : interacts
 ' Hidden relations help with spacing
 User -[hidden]--- Frontend
@@ -35,8 +32,6 @@ Frontend --> Backend
 POD -l- Backend
 Backend -d-> Database
 Backend -r-> MapService
-Backend -r-> ImgService
-MapService -[hidden]- ImgService
 
 
 @enduml
