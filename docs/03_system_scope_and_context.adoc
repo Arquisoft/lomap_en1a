@@ -7,7 +7,7 @@ As stated in the introduction, the project is aimed at creating a software syste
 === Business Context
 The system is related with several partners, shown in the following diagram:
 
-image::3-businessContext-0.png[Business Diagram]
+image::3-businessContext-0.svg[Business Diagram]
 
 The elements shown in the diagram and their functions are explained here:
 
@@ -25,7 +25,7 @@ The elements shown in the diagram and their functions are explained here:
 
 The technical system's structure consists in the following components:
 
-image::3-technicalContext-0.png[Technical Diagram]
+image::3-technicalContext-0.svg[Technical Diagram]
 
 Each component will be explained in more detail:
 
