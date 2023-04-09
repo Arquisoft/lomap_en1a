@@ -28,7 +28,7 @@ api.use(
 api.use(
   cors({
     credentials: true,
-    origin: 'http://alvaroglezeri.ddns.net:3000',
+    origin: 'http://40.81.128.219:3000',
     allowedHeaders: ['Content-Type', 'Authorization'],
     preflightContinue: true
   }),
