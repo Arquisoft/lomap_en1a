@@ -11,7 +11,7 @@ const port: number = 5000;
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
-let host = process.env.host;
+let host = process.env.host || 'localhost';
 api.use(
     cors({
         credentials: true,
