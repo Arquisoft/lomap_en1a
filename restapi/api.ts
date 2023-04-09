@@ -25,10 +25,11 @@ api.use(
   })
 );
 
+let host = process.env.host;
 api.use(
   cors({
     credentials: true,
-    origin: 'http://alvaroglezeri.ddns.net:3000',
+    origin: 'http://'+host+':3000',
     allowedHeaders: ['Content-Type', 'Authorization'],
     preflightContinue: true
   }),

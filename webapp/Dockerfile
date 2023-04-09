@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="http://alvaroglezeri.ddns.net:5000/api"
+ARG API_URI="http://40.81.128.219:5000/api"
 ENV REACT_APP_API_URI=$API_URI
 
 #Create an optimized version of the webapp
