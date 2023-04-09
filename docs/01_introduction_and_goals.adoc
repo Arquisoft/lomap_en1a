@@ -40,5 +40,4 @@ project's skeleton._
 usage of SOLID regarding user data._
 | _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to
 find problems, and test things like usability or UX_
-
 |===
