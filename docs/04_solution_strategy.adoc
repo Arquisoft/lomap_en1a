@@ -1,20 +1,49 @@
 [[section-solution-strategy]]
 == Solution Strategy
+The solution strategy is complex, as many decisions had to be taken, but it can be broken down into several sections:
 
-Our language of choice is TypeScript, due to to the need of it for the next decisions involving libraries, which were taken. Also, the majority of the team was familiar with JavaScript,
-which has similarities with TypeScript.
+=== Language
+Our language of choice is TypeScript, due to several reasons:
 
-Regarding libraries, we are going to use React, for the front-end of the application, and Node.js for the back end, due to that we were recommended in the lectures to use React, and after 
-investigating a bit, we found that Node.js works surprisingly well with React.
+* It comes bundled with our base project, so as the starting point of the application is implemented in this language, it does not make much sense to change it and discard all progress.
+* As the majority of the team is familiar with JavaScript, adapting to TypeScript does not pose any significant problem, even though it is technically a new language.
+* It offers several features to make the code more robust and easy to read. Although that constraints the freedom of code in some occasions, it makes the code less prone to runtime errors and mistakes, as they can be detected at development time.
 
-When it comes to storing information, we decided that we will use json files, because we were quite familiar with it and we think it will represent the information better than the other proposed
-ones such as XML. And having a look to persiting the information, we will use a relational database, and PODS to store sensitive user data. When discussing about the possible databases,
- we found that the model we were trying to represent was easily mapped with a relationa approach, and from there, MariaDB and MySQL were proposed. From which we picked the second option
- since most of us were quite familiar with it.
+=== Libraries
+The libraries used are a key part of the project, and they can be divided by their intended use:
 
-Taking a quick peek at the general structure of the application, the usage of some patterns was debated, those being:
-    -Command pattern: When accessing the database in CRUD operations.
-    -Façade pattern: When dividing responsabilities among the layers.
-    -MVC pattern: When assigning roles to the parts of the applications.
-But these patterns were just taken into consideration since the application design phase has still not started.
+. Frontend and UI:
+
+* We are going to use `React` for the UI of the application, as it is fairly simple, allows a great range of customization and integrates perfectly with the language of choice.
+* To give the application a bit of style, libraries such as `@emotion`, `@mui`, and `@material-ui` are used. They include style elements integrated into React components to simplify the UI design.
+
+. Backend:
+
+* `Node.js` is being used for the backbone of the backend. It is the main building block of the backend of the application, and will hold all endpoints of the API. It is the obvious choice when searching for a TypeScript-JavaScript runtime environment.
+* To run the code in a development scenario, `ts-node-dev` is used, as it translates TypeScript files on-the-fly and allows for fast development cycles.
+* Regarding all server functions, `Express` is the library of choice. It works out-of-the-box with Node.js, so no extra configuration is needed on our part.
+* For SOLID data access, a suite of libraries from Inrupt are used:
+** `@inrupt/solid-client` for data fetching and session management.
+** `@inrupt/solid-client-authn-node` for authentication and permission management.
+** `@inrupt/vocab-common-rdf` for compatibility with RDF schemas.
+
+=== Data storage
+
+When talking about data persistence, two distinct scenarios appear:
+
+* Data itself:
+The actual data about the user's activities are solely stored in the user's POD. This means that if a user creates a comment, that comment will live in that user's POD, rather than in the system database or in another user's POD. This is done to maximize data privacy and control.
+* Metadata:
+In order to speed up data fetching and access, the system is fitted with a JSON-based documental database, that stores link information. This information is used to relate entities in our data model, and exists to avoid repeated POD accesses that could slow down the application runtime.
+
+=== Code structure
+
+Taking a quick peek at the general structure of the application, the usage of some patterns and techniques was debated, those being:
+
+* MVC pattern: In the backend of the application, the code is divided following this pattern, as an effort to improve standarization, and code readability and mantainability. This improves the components' cohesion and coupling characteristics, and makes for an overall better code.
+* OOP: Although JavaScript was not meant for Object Orientation, the use of TypeScript leads nicely to the inclusion of some OOP concepts, ideas and patterns. Because of this, most of the code of the RestAPI follows a class-based structure and tries to contain code into its appropriate functions.
+* Script-based code: Most of the code closely related to Express is meant to be used in scripts, so that is how it is implemented. Not only is it simpler to develop, but a wide variety of documentation and examples exist to complement its development.
+* React components: The WebApp is almost entirely built on components. Both custom and library-provided components are implemented and used, that wrap plain HTML into easily-usable and interchangeable bits.
+* States: React is a technology that heavily relies on the `useState` pattern. They provide a bundled equivalent of properties, setters and getters; as taken from the OO paradigm. They ease up the access to shared information, and were found to work nicely with different types of data.
+
 
