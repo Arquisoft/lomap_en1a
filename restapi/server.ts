@@ -11,10 +11,11 @@ const port: number = 5000;
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
+let host = process.env.host;
 api.use(
     cors({
         credentials: true,
-        origin: 'http://40.81.128.219:3000',
+        origin: 'http://'+host+':3000',
         allowedHeaders: ['Content-Type', 'Authorization'],
         preflightContinue: true
     }),
@@ -28,7 +29,7 @@ DatabaseConnection.setDatabase("mongodb+srv://admin:admin@lomap.aux4co1.mongodb.
 app.use(
     cors({
         credentials: true,
-        origin: 'http://40.81.128.219:3000/',
+        origin: 'http://'+host+':3000',
         allowedHeaders: ['Content-Type', 'Authorization'],
         preflightContinue: true
     }),
