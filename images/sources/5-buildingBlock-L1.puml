@@ -1,32 +1,30 @@
 @startuml
 ' Building Block View Diagram v1.0
-skinparam actorStyle awesome  
-'----------------------- 
-'Definition of actors 
-'----------------------- 
+' Level 1
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
 card LoMap {
     component Webapp as Frontend
-    component LoMapCore as Backend
-    database Database 
+    component RestAPI as Backend
+    database Database
 }
 
 
 card "User" as UserDat {
     actor User
-    database POD     
+    database POD
 }
- 
+
 rectangle "External Services" {
     cloud "Map Provider" as MapService
-    cloud "Image Provider" as ImgService
 }
 
-
-'----------------------- 
-'Definition of relations 
 '-----------------------
-
-User -r-> Frontend : interacts 
+'Definition of relations
+'-----------------------
+User -r-> Frontend : interacts
 ' Hidden relations help with spacing
 User -[hidden]--- Frontend
 User -d-> POD : manages
@@ -34,8 +32,6 @@ Frontend --> Backend
 POD -l- Backend
 Backend -d-> Database
 Backend -r-> MapService
-Backend -r-> ImgService
-MapService -[hidden]- ImgService
 
 
 @enduml
