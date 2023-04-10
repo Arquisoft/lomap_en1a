@@ -16,9 +16,10 @@
 [options="header",cols="1,2"]
 |===
 |Technical debt|Explanation
-| _MySQL_ | _For now, we will use MySQL database as it is the one we are more familiar with, and we still are not sure how to save the data_ 
+| _MySQL_ | _We used MySQL database for the first prototype as it is the one we are more familiar with, and we still are not sure how to save the data_ 
 | _Creating the tests at the end of development_ | _Usually, tests should be created before starting the development, but for a lack of time,
 we will create them at the end_ 
+| _POD permissions_ | _The permissions of the directories inside the PODs are not configured properly, now everybody can see everything inside the folder_ 
 |===
 
 

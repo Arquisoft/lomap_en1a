@@ -11,8 +11,8 @@ image::QualityTree.svg[Business Diagram]
 |===
 |Ref|Quality attribute|Scenario|Priority|Implementation complexity
 |1|Availability|The application must be available the 99% of the time|Low|High
-|2|Performance|40 concurrent users request the map of a given city in less than 2 seconds|Medium|High
+|2|Performance|25 concurrent users request the map of a given city in less than 10 seconds|Medium|High
 |3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
 |4|Security|Sensible user data will not be accessible for anyone but the user|High|High
-|5|Usability|The application should be either usable on a computer and on mobile devices|High|Medium
+|5|Usability|The application should be usable on a computer|High|Medium
 |===
