@@ -1,147 +1,194 @@
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Button from "@mui/material/Button/Button";
-import image from "../../images/placeHolder.png";
-import { Rating } from 'react-simple-star-rating';
+import noPic from "../../images/No_pictures_img.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments, getScores } from '../../api/api';
+import { getComments, getPictures } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
-import "../../App.css";
 import StarIcon from '@mui/icons-material/Star';
 import { Score } from '../../domain/Score';
-import { Place } from '../../domain/Place';
-import { PlaceVisibility } from '../../domain/Visibility';
-import { User } from '../../domain/User';
 import { NotificationType } from './CommentForm';
 import { addScore } from '../../api/api';
-import { useSession} from "@inrupt/solid-ui-react";
-import { FOAF, VCARD } from "@inrupt/lit-generated-vocab-common";
+import Rating from '@mui/material/Rating';
+import { getScores } from '../../api/api';
+import { Visibility } from '../../domain/Visibility';
+import PictureSelector from './PictureSelector';
+import Slideshow from '../mainPage/SlideShow';
 
 type InfoWindowProps = {
-  avg:number;
-  refreshScores:(place: string) => Promise<void>;
-  infoWindowData:{
-    id:string;
-    title:string;
+  infoWindowData: {
+    id: string;
+    title: string;
     latitude: number;
-    longitude:number;
+    longitude: number;
   }
 }
 
-export default function InfoWindow(props: InfoWindowProps):JSX.Element {
+export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
- const { session } = useSession();
-  var webId = session.info.webId as string;
-  
-  
-
-  
   const [notificationStatus, setNotificationStatus] = useState(false);
-  const [notification, setNotification] = useState<NotificationType>({severity:'success',message:''});
-  
+  const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
+
   //For the comments
-  const [comments,setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
+  //For the rating
+  const [value, setValue] = useState(0);
 
+  //For the pictures
+  const [pictureURLs, setPictureURLs] = useState<string[]>([])
+
+  
+
+  const refreshPicturesSlide = async () => {
+    getPictures(props.infoWindowData?.id).then((pics) => {
+      let picURLs: string[] = pics.map((pic, i) => pic.url);
+      setPictureURLs(picURLs);
+    });   
+    
+  }
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    getComments(props.infoWindowData?.id).then((s)=>setComments(s));
+    getComments(props.infoWindowData?.id).then((s) => setComments(s));
   }
 
 
-  const handleAddScore = async (value:number) => {
-    //e.preventDefault();
-
-    var score = new Score("",value,props.infoWindowData?.id,webId);
-    let result:boolean = await addScore(score); //The score still has no ID
-    if (result){
+  const handleAddScore = async (value: number) => {
+    var score = new Score("", value, props.infoWindowData?.id, "webId", new Date(), Visibility.PUBLIC);
+    let result: boolean = await addScore(score); //The score still has no ID
+    if (result) {
       setNotificationStatus(true);
-      setNotification({ 
-        severity:'success',
-        message:'You score has been posted!'
+      setNotification({
+        severity: 'success',
+        message: 'You score has been posted!'
       });
-      //Notify the change to the parent component
-      //props.OnCommentListChange();
     }
-    else{
+    else {
       setNotificationStatus(true);
-      setNotification({ 
-        severity:'error',
-        message:'There\'s been an error posting your score.'
+      setNotification({
+        severity: 'error',
+        message: 'There\'s been an error posting your score.'
       });
     }
   }
 
+  //For the computation of the avg score
+  const [avg, setAvg] = useState(0);
 
-  const refreshScoresAfterAdding = async (value:number) => {
+  const refreshScores = async () => {
+
+
+    getScores(props.infoWindowData.id).then((s) => {
+      if (s.length > 0) {
+        let aux = 0;
+        for (let i = 0; i < s.length; i++) {
+
+          aux += s[i].score;
+        }
+        let avg = aux / s.length;
+        let a = avg.toFixed(1)
+        setAvg(parseFloat(a)); //Calculates the new average
+      } else {
+        setAvg(0)
+      }
+
+    });
+  }
+
+
+
+  const refreshScoresAfterAdding = async (value: number) => {
     await handleAddScore(value); //Adds the new score
-    
-    props.refreshScores(props.infoWindowData.id);
+
+    refreshScores();
   }
 
 
 
 
-
-
-  
-
-  useEffect(()=>{
+  //Update comment list and scores when the info window data changes
+  useEffect(() => {
+    refreshScores();
     refreshCommentList();
-  },[]);
+    refreshPicturesSlide();
+  }, [props.infoWindowData]);
 
 
-      return (
-  
-  
-        <>
-          <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
-            
-            <Grid item xs={6} textAlign="center">
-                <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
-            </Grid>
 
 
-            <Grid item xs={12}>
-                <Box component="img" src={image} sx={{maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
-            </Grid>
 
-           <Grid item xs={6}>
-              <Rating
-                transition
-                fillColorArray={['#f17a45', '#f19745', '#f1a545', '#f1b345', '#f1d045']}
-                allowFraction
-                onClick={(value)=>refreshScoresAfterAdding(value)}
-                
-                />
-            </Grid> 
-
-            <Grid item xs={3}>
-              <Box component="p" textAlign="right">{props.avg}</Box>
-            </Grid> 
-
-            <Grid item xs={3}>
-              <StarIcon htmlColor='orange' fontSize='large'/>
-            </Grid> 
-
-            <Grid item xs={12}>
-              <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"}/>        
-            </Grid>
-            <Grid item xs={12}>
-              <CommentList comments={comments}/>
-            </Grid>
-            
-
-            </Grid>
-        </>
+  return (
 
 
-  
-          );
-        
-  
-  }
+    <>
+      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
+
+        <Grid item xs={6} textAlign="center">
+          <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+        </Grid>
+    
+        <Grid item xs={12}>
+          {
+            pictureURLs.length == 0 ?
+              <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
+              :
+              <Slideshow images={pictureURLs} />
+          }
+        </Grid>
+
+
+        <Grid item xs={12}>
+           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
+        </Grid>  
+
+        <Grid item xs={6}>
+          <Box
+            sx={{
+              width: 200,
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            <Rating
+              precision={0.5}
+              name="rating"
+              size="large"
+              value={value}
+              onChange={(event, value) => {
+                setValue(value as number);
+                refreshScoresAfterAdding(value as number);
+              }}
+            />
+            {value !== null && (
+              <Box sx={{ ml: 2 }}>{value + "/5"}</Box>
+            )}
+          </Box>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Box component="p" textAlign="right">{avg}</Box>
+        </Grid>
+
+        <Grid item xs={3}>
+          <StarIcon htmlColor='orange' fontSize='large' />
+        </Grid>
+
+        <Grid item xs={12}>
+          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"} />
+        </Grid>
+        <Grid item xs={12}>
+          <CommentList comments={comments} />
+        </Grid>
+
+
+      </Grid>
+    </>
+
+
+
+  );
+
+
+}

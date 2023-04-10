@@ -1,97 +1,111 @@
 [[section-runtime-view]]
 == Runtime View
-
-
-[role="arc42help"]
-****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
-
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
-
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
-
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
-
-.Form
-There are many notations for describing scenarios, e.g.
-
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
-* ...
-
-****
+The runtime view offers a different perspective of the structure of the application, revealing the process each request makes throughout the whole scope of the system.
 
 === Login scenario
 
-The user must be logged in to see and modify their personal data.
+This scenario describes a high-level overview of the process a user takes to log into the application, from the .
 
-[plantuml,"Login scenario",png]
+[plantuml,"Login scenario",svg]
 ----
 @startuml
 actor User as "Alice"
 participant Frontend
 participant Backend
+participant IDP
 database Pod as "User's Pod"
-Alice-> Frontend: Send credentials
-Frontend-> Backend: Authentication Request
-Backend-> Pod: Match credentials
-Pod --> Backend: Return comparison results
-Backend--> Frontend: Authentication response
-Frontend-> Frontend: Response-based redirection
-Frontend--> User: Result presentation
+
+User -> Frontend: Login Request
+Frontend -> Backend: Login Request
+Backend -> IDP: Authentication Redirect
+IDP --> User: Login form
+IDP <-- User
+IDP <-> Pod: Match credentials
+IDP -> Backend: Redirect return with token
+Backend -> Frontend: Authentication response
+Frontend -> User: Result presentation
 @enduml
 ----
 === Add location scenarios
-[plantuml,"Add location scenario",png]
+This scenario describes the steps taken for a user to save a location to the system. This assumes the user is already logged in.
+
+[plantuml,"Add location scenario",svg]
 ----
 @startuml
 actor User as "Alice"
 participant Frontend
 participant Backend
 database DB as "General Purpose DB"
+database POD
+
 User-> Frontend: Send location data
 Frontend-> Backend: Location data addition request
-Backend-> DB: Insert location data
-DB-> DB: Data insertion
-DB--> Backend: Insertion results
+Backend-> DB: Insert location metadata
+Backend-> POD: Insert location metadata
+
+DB --> Backend: Insertion results
+POD --> Backend: Insertion results
 Backend--> Frontend: Send feedback
-Frontend-> Frontend: Feedback-based redirection
 Frontend--> User: Feedback presentation
+@enduml
+----
+
+=== View location details scenario
+This scenario describes the process taken when a user requests to see the information of a given location. Like the last scenario, this one assumes the user is already logged in.
+
+In this case, several PODs are accessed, as the comments, reviews and scores are stored in each poster's POD.
+
+[plantuml,"View location details scenario",svg]
+----
+@startuml
+actor User as "Alice"
+participant Frontend
+participant Backend
+database DB as "General Purpose DB"
+database PODs
+
+User-> Frontend: Fetch location request
+Frontend-> Backend: Send location identifier
+Backend-> DB: Link data request
+DB-> DB: Get link data
+DB--> Backend: Process results
+Backend -> Backend: Prepare requests
+Backend -> PODs: Request data
+Backend -> PODs
+Backend -> PODs
+
+PODs --> Backend: Return data
+PODs --> Backend
+PODs --> Backend
+
+Backend--> Frontend: Location data
+
+Frontend--> User: Result presentation
+
 @enduml
 ----
 
 === Review location scenario
-[plantuml,"Review location scenario",png]
+This scenario describes the process taken when a user wants to leave a review. This scenario follows from the last one.
+
+[plantuml,"Review location scenario",svg]
 ----
 @startuml
 actor User as "Alice"
 participant Frontend
 participant Backend
 database DB as "General Purpose DB"
-User-> Frontend: Input location
-Frontend-> Backend: Send location identifier
-Backend-> DB: Location data request
-DB-> DB: Get location data
-DB--> Backend: Query results
-Backend--> Frontend: Location data
-Frontend-> Frontend: Redirection to result presentation
-Frontend--> User: Result presentation
-User-> Frontend: Review
-Frontend-> Backend: Review contents
-Backend-> DB: Review data insertion
-DB-> DB: Insert review
-DB--> Backend: Insertion results
-Backend--> Frontend: Send feedback
-Frontend-> Frontend: Feedback-based redirection
-Frontend--> User: Feedback presentation
+database PODs
+
+User -> Frontend: Review
+Frontend -> Backend: Review contents
+Backend -> DB: Review link data insertion
+Backend -> PODs: Review data insertion
+
+DB --> Backend: Insertion results
+PODs --> Backend: Insertion results
+
+Backend --> Frontend: Send feedback
+Frontend --> User: Feedback presentation
 @enduml
 ----

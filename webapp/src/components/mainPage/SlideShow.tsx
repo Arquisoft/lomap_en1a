@@ -1,14 +1,12 @@
 import React from "react";
-import image1 from "../../images/placeHolder.png";
-import image2 from "../../images/placeHolder.png";
-import image3 from "../../images/placeHolder.png";
-const colors = [image1, image2, image3];
 
 const delay = 2500;
 
+interface SlideshowProps {
+  images: string[];
+}
 
-
-export default function Slideshow() {
+export default function Slideshow(props: SlideshowProps): JSX.Element {
   const [index, setIndex] = React.useState(0);
   const timer: ReturnType<typeof setTimeout> = setTimeout(() => '', 0);
   const timeoutRef = React.useRef(timer);
@@ -24,7 +22,7 @@ export default function Slideshow() {
     timeoutRef.current = setTimeout(
       () =>
         setIndex((prevIndex) =>
-          prevIndex === colors.length - 1 ? 0 : prevIndex + 1
+          prevIndex === props.images.length - 1 ? 0 : prevIndex + 1
         ),
       delay
     );
@@ -40,19 +38,19 @@ export default function Slideshow() {
         className="slideshowSlider"
         style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
       >
-        {colors.map((image, index) => (
+        {props.images.map((image, index) => (
           <div
             className="slide"
             key={index}
             style={{ 
-                backgroundImage: `url(${image})`  //AQUI ALGO HACE QUE SALTE AVISO EN EL NAVEGADOR
+                backgroundImage: `url(${image})`
               }}
           ></div>
         ))}
       </div>
 
       <div className="slideshowDots">
-        {colors.map((_, idx) => (
+        {props.images.map((_, idx) => (
           <div
             key={idx}
             className={`slideshowDot${index === idx ? " active" : ""}`}

@@ -1,45 +1,39 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-
-[role="arc42help"]
-****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
-
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
-
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-****
+This application, and the whole system that follows behind, must adhere to some architectural constraints that have been set at the project definition; and thus cannot be changed.
 
 .Technical constraints
-[options="header",cols="1,2"]
+These constraints relate to the technologies that must be used to successfully complete the application:
+
+[options="header",cols = "1,2,5"]
 |===
-|Constraint|Explanation
-| _SOLID project_ | _The shared information of the users will be stored in a personal POD according to the SOLID project.
- It is a specification that stores data securely in decentralized data stores called PODs_
-| _GIT_ | _We will use GIT with github_  
+|Code |Constraint|Explanation
+| TC1 | _SOLID project_ | _The shared information of the users will be stored in a personal POD according to the SOLID project.
+It is a specification that stores data securely in decentralized data stores called PODs_
+| TC2 | _GIT_ | _Git must be used to track, manage and store code versions and branches. For this, GitHub will be used, as it also provides extra tools for issue tracking, continuous integration, and work assignment_
+| TC3 | _Web Interface_ | _The application should allow users to access its services through a web application_
+| TC4 | _Deployable_ | _The application should be deployable in the cloud, and being able to deploy both halves of the application in different containers or even machines_
 |===
 
 .Organizational constraints
-[options="header",cols="1,2"]
+These constraints relate to how the project will be developed:
+[options="header",cols="1,2,5"]
 |===
-|Constraint|Explanation
-| _Time_ | _Documentation 0.1 must be delivered in week 4; prototype 0.1 in week 7; prototype 1.0 and documentation 1.0 in week 10; prototype 1.1 and documentation 1.1 in week 13_ 
-| _Team members_ | _The project will be done in teams of 5-8 students_ 
+|Code|Constraint|Explanation
+|OC1| _Time schedule_ | _The project must follow a specific delivery schedule: Documentation 0.1 must be delivered in week 4; prototype 0.1 in week 7; prototype 1.0 and documentation 1.0 in week 10; prototype 1.1 and finally documentation 1.1 in week 13_
+|OC2| _Team_ | _The project will be done in a team composed of 6 students, so work must be assigned accordingly_
+|OC3| _Git-based development_ | _The project will be built around the Git workflow, so all tools used must be able to closely interact with this system_
+|OC4| _Testing_ | _The project must be tested thoroughly, and a high test coverage must be reached_
 |===
 
 .Political constraints
-[options="header",cols="1,2"]
+These constraints relate to what conventions does the project follow:
+[options="header",cols="1,2,5"]
 |===
-|Constraint|Explanation
-| _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
-| _Language_ | _The documentation and application will be developed in English_ 
+|Code|Constraint|Explanation
+|PC1| _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
+|PC2| _Language_ | _The documentation and application will be developed in English_
+|PC3| _RDF Schemas_ | _The project aims to follow RDF schemas in its data models, to favour interoperability between different providers of the service_
 |===
 

@@ -1,30 +1,6 @@
 [[section-design-decisions]]
 == Design Decisions
-
-
-[role="arc42help"]
-****
-.Contents
-Important, expensive, large scale or risky architecture decisions including rationals.
-With "decisions" we mean selecting one alternative based on given criteria.
-
-Please use your judgement to decide whether an architectural decision should be documented
-here in this central section or whether you better document it locally
-(e.g. within the white box template of one building block).
-
-Avoid redundancy. Refer to section 4, where you already captured the most important decisions of your architecture.
-
-.Motivation
-Stakeholders of your system should be able to comprehend and retrace your decisions.
-
-.Form
-Various options:
-
-* List or table, ordered by importance and consequences or:
-* more detailed in form of separate sections per decision
-* ADR (architecture decision record) for every important decision
-****
-The following table contains the design decisions we have taken, ordered by importance:
+The following table contains some of the design decisions we have taken:
 
 .Decisions
 [options="header",cols="1,2,3"]
@@ -32,7 +8,7 @@ The following table contains the design decisions we have taken, ordered by impo
 |Decision|Advantages|Disadvantages
 | _TypeScript_ | _Similar to JavaScript, but with types._|_We have never used it before_
 | _React.js_ | _Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web_|_We have never used it before_
-| _MySQL_ | _We already have experience with MySQL. Quite popular in the market_|_Does not support a very large database size_
+| _MongoDB_ | _We are quite new with MongoDB. It does not need to be started manually._|_Since our Mongo database is not stored locally, queries can take some time to be performed_
 | _Node.js_ | _Easy escalability, easy to learn, high performance for real-time applications_|_We have never used it before_ 
 | _Docker_ | _Fast deployment, ease of moving/maintaining your applications_|_We do not have much experience using Docker_ 
 | _PlantUML_ | _Allows drawing diagrams very easily, with a simple syntax._|_Does not allow as much control over the exact layout of the elements in the diagram as other tools._

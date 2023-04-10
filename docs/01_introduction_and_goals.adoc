@@ -1,100 +1,43 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
-The main goal of the activity is to develop a software system that allows users to create personalized maps about any place they want in their city. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
-
-* underlying business goals, essential features and functional requirements for the system
-* quality goals for the architecture
-* relevant stakeholders and their expectations
-****
+The main goal of the project is to develop a software system that allows users to create personalized maps holding any place they want. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
 
 === Requirements Overview
-The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, finding or promoting different places of it, etc.
+The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, saving interesting places for them, finding or promoting different places of it, etc.
 
-The software must include features to provide some services. It has to:
+The software is planned to include several features to provide some services. It must:
 
 * Allow the users to add and store any location they want to include in their maps.
-* Include features that allow to add reviews, comments, pics, etc. about the places.
-* Include a way of managing the information that is accesible with other users.
-* Filter the map by category, friends, etc.
+* Customize said locations with images and names.
+* Allow to add and see their and other person's reviews, comments, pics, etc. about some place.
+* Include a way of managing the information that is accesible with other users, i.e. the level of privacy desired for each piece of information.
+* Filter the map's markers by category, friends, etc.
 
-All these requirements can be found in link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
-
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
-
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
-
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-****
+There and more requirements can be found in the link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
 
 === Quality Goals
+These are some quality goals this application must fulfill:
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
-
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …
-
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
-
-[options="header",cols="1,1,1,1,1"]
+[options="header", cols = "1,2,5,2,2"]
 |===
-|Ref|Quality attribute|Scenario|Priority|Implementation complexity
-|3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
-|4|Security|Sensible user data will not be accessible for anyone but the user|High|High
-|5|Usability|The application should be either usable on a computer and on mobile devices|High|Medium
+|Code|Quality attribute|Scenario|Priority|Implementation complexity
+|QG3|Understandability|A new user should be able to find or add a place with the app in less than 5 minutes|High|Medium
+|QG4|Security/Privacy|Sensible user data will not be accessible for anyone but the user|High|High
+|QG5|Usability|The application should be usable both on a computer and on mobile devices|Medium|Medium
+|QG6|Testability|The application should allow for easy testing of its main components|Medium|High
 |===
 
 === Stakeholders
-
-[role="arc42help"]
-****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
-
-[options="header",cols="1,2,2"]
+These are some stakeholders the application has to interact with:
+[options="header", cols= "1,3,3"]
 |===
 |Role/Name|Contact|Expectations
 | _Developers_ | _Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
-Pablo Valdés Fernández_ | _Create, test (not entirely), document the system and communicate with the other roles to get feedback and resources._
-| _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provided
+Pablo Valdés Fernández_ | _Create, test (not entirely), and document the system and communicate with the other roles to get feedback and resources._
+| _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provides the
 project's skeleton._
-| _SOLID challenge_ | _Inrupt/Empathy_ | _From what is know currently. A challenge will take place and people in this role will have to evaluate the 
-usage of the SOLID pattern regarding user data._
-| _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to 
+| _SOLID challenge_ | _Inrupt/Empathy_ | _From what is know currently, a public challenge will take place and people in this institution will have to evaluate the
+usage of SOLID regarding user data._
+| _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to
 find problems, and test things like usability or UX_
-
 |===
