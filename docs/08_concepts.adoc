@@ -1,65 +1,81 @@
 [[section-concepts]]
 == Cross-cutting Concepts
-
-
-[role="arc42help"]
-****
-.Content
-This section describes overall, principal regulations and solution ideas that are
-relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
-
-* domain models
-* architecture patterns or design patterns
-* rules for using specific technology
-* principal, often technical decisions of overall decisions
-* implementation rules
-
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity)
-of the architecture. Thus, they are an important contribution to achieve inner qualities of your system.
-
-Some of these concepts cannot be assigned to individual building blocks
-(e.g. security or safety). This is the place in the template that we provided for a
-cohesive specification of such concepts.
-
-.Form
-The form can be varied:
-
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
-
-.Structure
-A potential (but not mandatory) structure for this section could be:
-
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
-
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
-****
-
+The application manages a lot of information. As such, it is required to define and explain some of them to reflect its internal workings.
 
 === Domain model
-image:DomainDiagram.svg["Class diagram with all the important elements of the architecture"]
+The following domain diagram and its description aim to describe the entities the application manages. It is important to note that some of these entities are, as of now, not implemented or lacking their functionality.
 
+[plantuml,"Domain Model",svg]
+----
+@startuml
+enum Visibility{
+    PUBLIC
+    PRIVATE
+    FRIEND
+}
+
+class Place{
+    name : String
+    coordinates : Coordinates
+}
+
+class Category{
+    name : String
+}
+
+class Picture{
+    url : String
+}
+
+class Comment{
+    text : String
+}
+
+class Score{
+    score : int
+}
+
+class Route{
+    name : String
+}
+
+class User{
+    username : String
+    webId : String
+}
+
+enum Role{
+    CITIZEN
+    TOURIST
+    BUSINESS
+}
+
+
+
+Place "0..n" -down- "1" Category
+Place o-down- "0..n" Picture
+Place o-down- "0..n" Comment
+Place o-down- "0..n" Score
+
+
+User "1" -up- "0..n" Picture
+User "1" -up- "0..n" Comment
+User "1" -up- "0..n" Score
+User "1" -- "0..n" User : is friends with
+User "1" -left- "0..n" Place
+
+Route "0..n" -- "1" Category
+Route "0..n" -left- "0..n" Place
+
+@enduml
+----
+
+[options="header", cols = "1, 4"]
 |===
-| *Element* | *Description and purpose*
+| Element | Description and purpose
 | User | The people that use the application.
-| Group | Users, if they want, can join groups with other users, where they can share places.
-| GroupVisibility | Groups can have different types of visibilities.
+| Visibility | The privacy level of elements of the application (markers, reviews, scores, etc.) can be managed. Either public, private or friend-only levels are currently supported.
 | Place | They represent the points on the map (they can be either created by users or be given by the application).
-| PlaceVisibility | Places have different types of visibilities.
 | Category | Places are classified into cateogries.
 | Picture | Users can upload pictures to places.
 | Score | Users can score places.
@@ -71,15 +87,14 @@ image:DomainDiagram.svg["Class diagram with all the important elements of the ar
 
 === Security and user privacy
 
-In order to increase security and privacy, all users will have a personal POD that will store their data, friends and maps. This way the users can decide who can see and use their information, giving them more freedom and control over the application.
+In order to increase security and privacy, all users authenticate through their POD, that will store their data, friends and maps. This way the users can decide who can see and use their information, giving them more freedom and control over the data they share.
 
 
-=== Persistance
+=== Persistence
 
-A database will be used to store minimal data of the users and the reviews (pictures, comments, scores...) they want to add to the different marked places. In addition, they will be used to link the users with their PODs.
-To ease this task, MySQL was chosen for the development.
+A document database will be used to store metadata about entities in the domain model. This metadata is intended to link entities with their containers, for example linking a comment to its associated place.
 
 
 === Session management
 
-Since only the device each user uses is going to be linked to each user's POD, each person will only sign in and have access to their saved data through it. Passwords will only be used to ensure the correct user is using the device.
+Since the POD is the only identity 'item' the application uses, each person will only sign in and have access to their saved data through it. Passwords will only be used by the Identity Provider to ensure the correct user is giving access to the POD's resources.
