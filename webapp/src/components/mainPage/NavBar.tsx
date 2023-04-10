@@ -48,9 +48,14 @@ export default function NavBar(): JSX.Element {
 }
 
 function LoggedNavbar(props:LogoutProps) {
+ let host = process.env.host || "localhost";
+ const reload = ()=>{
+    window.location.href="http://"+host+":3000/map";
+     
+  }
   return (
       <ul>
-        <CustomLink to="/map" >Map</CustomLink>
+        <CustomLink to="/map" onClick={reload}>Map</CustomLink>
         <Profile handleLogout={props.handleLogout}/>
       </ul>
     
