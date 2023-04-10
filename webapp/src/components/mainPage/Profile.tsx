@@ -6,14 +6,16 @@ import userIcon from '../../icons/user.png';
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
+import { LogoutProps } from "./NavBar";
 
-export default function Profile(): JSX.Element {
-    
-    const [open, setOpen] = useState(false);
-    
-    let menuRef = useRef<HTMLDivElement>(null);
 
-     //Get the list of places for the current user
+
+export default function Profile(props:LogoutProps): JSX.Element {
+    
+   const [open, setOpen] = useState(false);
+    
+   let menuRef = useRef<HTMLDivElement>(null);
+
    const [profile, setProfile] = useState<User>();
    const refreshProfile = async () => {
     getProfile().then((user) => setProfile(user));
@@ -21,7 +23,10 @@ export default function Profile(): JSX.Element {
   }
 
   const handleLogout = async () => {
-    await logout();
+    logout().then(()=>{
+        props.handleLogout(true);
+    });
+    
 
   }
 

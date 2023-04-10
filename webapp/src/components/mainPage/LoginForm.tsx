@@ -35,7 +35,7 @@ export default function LoginForm():JSX.Element{
           message: 'This provider is not supported.'
         });
       } else {
-        await login(idp, currentUrl);
+        login(idp, currentUrl);
 
       }
     }

@@ -14,8 +14,6 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 
 function App() {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 
     return (
 
