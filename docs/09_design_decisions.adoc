@@ -1,6 +1,6 @@
 [[section-design-decisions]]
 == Design Decisions
-The following table contains the design decisions we have taken, ordered by importance:
+The following table contains some of the design decisions we have taken:
 
 .Decisions
 [options="header",cols="1,2,3"]

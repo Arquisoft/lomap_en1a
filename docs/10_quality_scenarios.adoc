@@ -3,11 +3,39 @@
 
 === Quality Tree
 
-image::QualityTree.svg[Business Diagram]
+[plantuml, "Quality Tree", svg]
+----
+@startuml
+card Quality
+
+storage Availability
+storage Performance
+storage Understandability
+storage Privacy
+storage Security
+storage Usability
+storage Testability
+
+Availability -[hidden]r- Performance
+Performance -[hidden]r- Understandability
+Understandability -[hidden]r- Privacy
+Privacy -[hidden]r- Security
+Security -[hidden]r- Usability
+Usability -[hidden]r- Testability
+
+Quality -d-> Availability
+Quality -d-> Performance
+Quality -d-> Understandability
+Quality -d-> Privacy
+Quality -d-> Security
+Quality -d-> Usability
+Quality -d-> Testability
+@enduml
+----
 
 === Quality Scenarios
 
-[options="header",cols="1,1,1,1,1"]
+[options="header",cols="1,2,5,1,1"]
 |===
 |Ref|Quality attribute|Scenario|Priority|Implementation complexity
 |1|Availability|The application must be available the 99% of the time|Low|High

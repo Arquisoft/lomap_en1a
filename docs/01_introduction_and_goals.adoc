@@ -22,9 +22,9 @@ These are some quality goals this application must fulfill:
 |===
 |Code|Quality attribute|Scenario|Priority|Implementation complexity
 |QG3|Understandability|A new user should be able to find or add a place with the app in less than 5 minutes|High|Medium
-|QG4|Security|Sensible user data will not be accessible for anyone but the user|High|High
+|QG4|Security/Privacy|Sensible user data will not be accessible for anyone but the user|High|High
 |QG5|Usability|The application should be usable both on a computer and on mobile devices|Medium|Medium
-|QG7|Testability|The application should allow for easy testing of its main components|Medium|High
+|QG6|Testability|The application should allow for easy testing of its main components|Medium|High
 |===
 
 === Stakeholders
