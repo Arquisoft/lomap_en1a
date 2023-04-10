@@ -3,33 +3,32 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
+import { isLoggedIn } from "../../api/api";
 
 
-/*export interface NavBarProps {
-  isLoggedIn: boolean;
-}*/
+export default function NavBar(): JSX.Element {
 
-export default function NavBar(/*props: NavBarProps*/): JSX.Element {
 
-  //FIXME: temporal
-  var url = useLocation();
-  const [show,setShow] = useState(false);
 
-  //FIXME:temporal
-  useEffect(() => {
-    if(url.pathname!=="/" && url.pathname!=="/login"){
-      setShow(true)
-    }else{
-      setShow(false)
-    }
-  }, [url]);
+
+  const [show, setShow] = useState(false);
+
+  useEffect(()=>{
+  
+    isLoggedIn().then(b => {
+      setShow(b);
+    });
+    
+
+  }
+  ,[])
 
     return (
         <nav className="menu">
             <Link to="/" className="site-title">
                 <img src={logo} alt="Logo" id="logo_img"></img>
             </Link>
-            {/*props.isLoggedIn*/ show?<LoggedNavbar/> : <NotLoggedNavbar/>}
+            {show?<LoggedNavbar/> : <NotLoggedNavbar/>}
         </nav>
        
     )

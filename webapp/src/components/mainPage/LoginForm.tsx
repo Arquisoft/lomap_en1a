@@ -11,11 +11,9 @@ export type NotificationType = {
   message: string;
 }
 
-/*export interface LoginProps {
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}*/
 
-export default function LoginForm(/*props: LoginProps*/):JSX.Element{
+
+export default function LoginForm():JSX.Element{
   const [idp, setIdp] = useState("https://inrupt.net");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
@@ -38,9 +36,7 @@ export default function LoginForm(/*props: LoginProps*/):JSX.Element{
         });
       } else {
         await login(idp, currentUrl);
-        /*isLoggedIn().then(b => {
-          props.setIsLoggedIn(b);
-        });*/
+
       }
     }
   };

@@ -14,17 +14,18 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 
 function App() {
 
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     return (
 
         <div className="background-image container">
-            <NavBar /*isLoggedIn={isLoggedIn}*//>
+            <NavBar/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/about" element={<About/>}/>
                 <Route path="/contact" element={<Contact/>}/>
-                <Route path="/login" element={<LoginForm /*setIsLoggedIn={setIsLoggedIn}*//>}/>
+                <Route path="/login" element={<LoginForm/>}/>
                 <Route path="/map" element={<MapView/>}/>
                 <Route path="/profile" element={<UserProfile/>}/>
             </Routes>
