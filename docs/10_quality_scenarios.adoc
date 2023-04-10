@@ -1,40 +1,7 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
-
-[role="arc42help"]
-****
-
-.Content
-This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
-
-Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.
-
-.Motivation
-Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.
-****
-
 === Quality Tree
-
-[role="arc42help"]
-****
-.Content
-The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.
-
-.Motivation
-The tree structure with priorities provides an overview for a sometimes large number of quality requirements.
-
-.Form
-The quality tree is a high-level overview of the quality goals and requirements:
-
-* tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root
-* a mind map with quality categories as main branches
-
-In any case the tree should include links to the scenarios of the following section.
-****
 
 image::QualityTree.svg[Business Diagram]
 
@@ -43,7 +10,7 @@ image::QualityTree.svg[Business Diagram]
 [options="header",cols="1,1,1,1,1"]
 |===
 |Ref|Quality attribute|Scenario|Priority|Implementation complexity
-|1|Aviability|The application must be aviable the 99% of the time|Medium|High
+|1|Availability|The application must be available the 99% of the time|Low|High
 |2|Performance|40 concurrent users request the map of a given city in less than 2 seconds|Medium|High
 |3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
 |4|Security|Sensible user data will not be accessible for anyone but the user|High|High
