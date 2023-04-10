@@ -44,10 +44,9 @@ export default function MapView(): JSX.Element {
     sharedSites: []
   });
 
-
-
-
-
+  window.addEventListener( "popstate", function ( event ) {
+    window.location.reload();
+  });
 
   return (
 
