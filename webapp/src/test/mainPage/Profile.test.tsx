@@ -1,5 +1,5 @@
 import { render, act} from "@testing-library/react";
-import Profile from "./Profile";
+import Profile from "../../components/mainPage/Profile";
 import { BrowserRouter} from "react-router-dom";
 import * as api from '../../api/api'
 import { User } from "../../domain/User";

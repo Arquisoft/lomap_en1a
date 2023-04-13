@@ -77,6 +77,9 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //Get friend list
   useEffect(() => {
     refreshFriendList();
+    return () => {
+      setFriends([]); // Cleanup
+    };
   }, []);
 
   //For the sidebar
