@@ -18,7 +18,7 @@ export interface CreatePlaceWindowProps {
   longitude: number,
   setNewPlace: React.Dispatch<React.SetStateAction<number>>,
   deleteMarker: React.MutableRefObject<boolean>,
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  handleIsOpen: (value: boolean) => Promise<void>
 
 
 }
@@ -58,7 +58,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           message: 'Your new place has been added!'
         });
         props.deleteMarker.current = false;
-        props.setIsOpen(false); //Close the create place window automatically
+        props.handleIsOpen(false); //Close the create place window automatically
 
         var v = Visibility[visibility].toLowerCase();
         changeMarkerColour(v); //Changes the last marker colour
