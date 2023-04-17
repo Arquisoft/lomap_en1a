@@ -75,9 +75,9 @@ function DropdownItem(props: { img: string, text: string, linkTo: To, onClick?: 
         <ul>
             <li className="dropdown-item">
                 <img src={props.img} alt="icon"></img>
-                <div className="dropdown-links">
+                <ul className="dropdown-links">
                     <CustomLink to={props.linkTo} onClick={props.onClick}>{props.text}</CustomLink>
-                </div>
+                </ul>
             </li>
         </ul>
     )
