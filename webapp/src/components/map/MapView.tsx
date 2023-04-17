@@ -83,6 +83,15 @@ export default function MapView(): JSX.Element {
     setIsOpen(value);
   }
 
+  const handleNewPlace = async () => {
+    setNewPlace(n => n + 1);
+  }
+
+  const handleDeleteMarker = async (value:boolean) => {
+    deleteLastMarker.current=value;
+  }
+
+
 
 
 
@@ -133,8 +142,8 @@ export default function MapView(): JSX.Element {
         overlayClassName='info-window'
       >
         {
-          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
-            deleteMarker={deleteLastMarker} handleIsOpen={handleIsOpen} /> :
+          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
+          handleDeleteMarker ={handleDeleteMarker } handleIsOpen={handleIsOpen} /> :
             slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
               slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
