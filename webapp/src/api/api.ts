@@ -208,6 +208,16 @@ export async function getProfile(): Promise<User> {
   return response.json();
 }
 
+export async function getProfileById(userId: string): Promise<User> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/profile/' + userId, {
+    credentials: 'include',
+    mode: 'cors'
+  }); 
+  return response.json();
+}
+
 
 
 export async function isLoggedIn(): Promise<boolean> {

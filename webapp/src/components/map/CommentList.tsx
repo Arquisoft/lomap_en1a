@@ -4,6 +4,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
+import { getProfileById } from '../../api/api';
+import { User } from '../../domain/User';
+import { useState } from 'react';
 
 
 
@@ -12,8 +15,14 @@ type CommentListProps = {
 }
 
 export default function CommentList(props: CommentListProps): JSX.Element {
+  const [profile, setProfile] = useState<User>()
   const getPrimaryText = (comment: Comment) => {
-    let aux = comment.owner;
+    getProfileById(comment.owner)
+    .then(user => {
+      setProfile(user)
+    })
+
+    let aux = ""
     aux = aux.concat(" at ")
     let date = new Date(comment.date)
     aux = aux.concat(date.toDateString())
