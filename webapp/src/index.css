@@ -453,6 +453,10 @@ footer {
   color: var(--secondary-profile-text-color);
 }
 
+.dropdown-links {
+  padding: 0;
+}
+
 .dropdown-links li.active {
   font-weight: bold;
 }
