@@ -67,7 +67,6 @@ function NotLoggedNavbar() {
   return (
       <ul>
         <CustomLink to="/login" >Log in</CustomLink>
-        <CustomLink to="/signup" >Sign up</CustomLink>
       </ul>
   )
 }
