@@ -16,8 +16,8 @@ import { changeMarkerColour, updateMapList} from '../ol/vector';
 export interface CreatePlaceWindowProps {
   latitude: number,
   longitude: number,
-  setNewPlace: React.Dispatch<React.SetStateAction<number>>,
-  deleteMarker: React.MutableRefObject<boolean>,
+  handleNewPlace: () => Promise<void>,
+  handleDeleteMarker: (value: boolean) => Promise<void>,
   handleIsOpen: (value: boolean) => Promise<void>
 
 
@@ -51,13 +51,13 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
       let result = await addPlace(place);
       
       if (result.id!="ERR") {
-        props.setNewPlace(n => n + 1); //New place is increased when a place is added
+        props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
           severity: 'success',
           message: 'Your new place has been added!'
         });
-        props.deleteMarker.current = false;
+        props.handleDeleteMarker(false);
         props.handleIsOpen(false); //Close the create place window automatically
 
         var v = Visibility[visibility].toLowerCase();
@@ -71,7 +71,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           severity: 'error',
           message: 'There\'s been an error adding your place.'
         });
-        props.deleteMarker.current = true;
+        props.handleDeleteMarker(true);
       }
     }
     

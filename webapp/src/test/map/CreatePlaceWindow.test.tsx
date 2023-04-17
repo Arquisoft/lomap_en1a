@@ -1,11 +1,11 @@
-import { render, act, waitFor } from "@testing-library/react";
+import { render, act, waitFor, fireEvent } from "@testing-library/react";
 
 import * as api from '../../api/api'
 import { Place } from "../../domain/Place";
 import MySideBar from "../../components/map/SideBar";
 import { FriendWindowDataType, InfoWindowDataType } from "../../components/map/MapView";
 import { Visibility } from "../../domain/Visibility";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { User } from "../../domain/User";
 import CreatePlaceWindow from "../../components/map/CreatePlaceWindow";
@@ -24,6 +24,9 @@ const handleInfoWindowData = async (value:InfoWindowDataType) => {}
 const handleFriendWindowData = async (value:FriendWindowDataType) => {}
 const handleIsOpen = async (value:boolean) => {}
 const handleSlidingPaneView = async (value:number) => {}
+const handleNewPlace = async () => {}
+const handleDeleteMarker = async (value:boolean) => {}
+
 
 
 
@@ -32,29 +35,40 @@ test('check place is added', async () => {
   await act(async () => {
     const { container, getByText } = render(
 
-        <CreatePlaceWindow latitude={0} longitude={0} setNewPlace={setNewPlace}
-        deleteMarker={} handleIsOpen={handleIsOpen} /> 
+        <CreatePlaceWindow latitude={0} longitude={0} handleNewPlace={handleNewPlace}
+        handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
 
       )
-    expect(jest.spyOn(api, 'addPlace')).toHaveBeenCalled()
-    expect(await getByText("TEST-USER")).toBeInTheDocument();
+    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('input[name="text"]')!;
+    fireEvent.change(input, { target: { value: "hola" } })
+    const button = getByText("Add place");
+    fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addPlace')).toHaveBeenCalled()) 
+    
+    expect(await getByText("Your new place has been added!")).toBeInTheDocument();
   });
 })
 
-test('check place is not added', async () => {
 
-    await act(async () => {
-      const { container, getByText } = render(
-      <ProSidebarProvider>
-          <MySideBar handleFriendWindowData={handleFriendWindowData} 
-              handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
-          visibility="test" handleIsOpen={handleIsOpen} newPlace={1} />
-      </ProSidebarProvider>
-  
-        )
-      await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
-      expect(jest.spyOn(api, 'getPublicPlacesByUser')).toHaveBeenCalled()
-      expect(await getByText("TEST-PUBLIC")).toBeInTheDocument();
-    });
-  })
+test('check place is not added', async () => {
+  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ERR","","","",0,0,Visibility.PUBLIC)));
+  await act(async () => {
+    const { container, getByText } = render(
+
+        <CreatePlaceWindow latitude={0} longitude={0} handleNewPlace={handleNewPlace}
+        handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
+
+      )
+    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('input[name="text"]')!;
+    fireEvent.change(input, { target: { value: "hola" } })
+    const button = getByText("Add place");
+    fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addPlace')).toHaveBeenCalled()) 
+    
+    expect(await getByText("There\'s been an error adding your place.")).toBeInTheDocument();
+  });
+})
+
 
