@@ -208,9 +208,10 @@ export async function getProfile(): Promise<User> {
   return response.json();
 }
 
-export async function getProfileById(userId: string): Promise<User> {
+export async function getProfileById(id: string): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
+  let userId = encodeURIComponent(id);
   let response = await fetch(apiEndPoint + '/profile/' + userId, {
     credentials: 'include',
     mode: 'cors'
