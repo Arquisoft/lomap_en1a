@@ -57,7 +57,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
   const handleAddScore = async (value: number) => {
-    var score = new Score("", value, props.infoWindowData?.id, "webId", new Date(), Visibility.PUBLIC);
+    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);

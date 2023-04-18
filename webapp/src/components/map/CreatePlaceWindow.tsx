@@ -47,7 +47,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
-      var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
+      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility);
       let result = await addPlace(place);
       
       if (result.id!="ERR") {

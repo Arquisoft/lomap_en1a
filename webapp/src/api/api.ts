@@ -45,7 +45,7 @@ export async function addScore(score: Score): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'score': score.score, 'place': score.place, 'user': score.owner.replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'score': score.score, 'place': score.place })
   });
   if (response.status === 200)
     return true;
@@ -73,7 +73,7 @@ export async function addPlace(place: Place): Promise<Place> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'name': place.name, 'user': place.owner.replaceAll("/", "-").replaceAll("#", "-"),
+      'name': place.name, 
       'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude
     }),
 
