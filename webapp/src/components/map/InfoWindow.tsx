@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import noPic from "../../images/No_pictures_img.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments, getPictures } from '../../api/api';
+import { getComments, getPictures, getProfile, getProfileById } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
@@ -52,7 +52,17 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    getComments(props.infoWindowData?.id).then((s) => setComments(s));
+    const comments = await getComments(props.infoWindowData?.id);
+
+    const newComments = await Promise.all(comments.map(async (comm) => {
+      const user = await getProfileById(comm.owner);
+      return {
+        ...comm,
+        owner: user.username,
+      };
+    }));
+
+    setComments(newComments);
   }
 
 
