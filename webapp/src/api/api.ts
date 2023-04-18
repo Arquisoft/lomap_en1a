@@ -17,7 +17,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'comment': comment.text, 'place': comment.place, 'user': comment.owner.replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'comment': comment.text, 'place': comment.place,"visibility":comment.visibility })
   });
   if (response.status === 200)
     return true;
