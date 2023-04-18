@@ -4,6 +4,7 @@ import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
 import { isLoggedIn } from "../../api/api";
+import { useCookies } from "react-cookie";
 
 
 export interface LogoutProps{
@@ -12,6 +13,7 @@ export interface LogoutProps{
 
 
 export default function NavBar(): JSX.Element {
+  const [cookies,setCookie] = useCookies();
 
   const handleShow = async () => {
     isLoggedIn().then(b => {
@@ -20,6 +22,7 @@ export default function NavBar(): JSX.Element {
   }
 
   const handleLogout = async (value:boolean) => {
+    setCookie('isLogged','false')
     setLogout(value);
   }
   const [show, setShow] = useState(false);

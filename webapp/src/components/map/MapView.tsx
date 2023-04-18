@@ -155,15 +155,6 @@ export default function MapView(): JSX.Element {
     </>
 
 
-
-
-
-
-
-
-
-
-
   );
 
 
