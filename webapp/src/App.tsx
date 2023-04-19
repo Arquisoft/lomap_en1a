@@ -43,6 +43,7 @@ function App() {
                     <Route path="/login" element={<LoginForm/>}/>
                     <Route path="/map" element={<PrivateComponent children = {<MapView/>}/>}/>
                     <Route path="/profile" element={<PrivateComponent children = {<UserProfile/>}/>}/>
+                    <Route path="*" element={<Navigate to= "/"/>}/>
                 </Routes>
 
             <Footer/>
