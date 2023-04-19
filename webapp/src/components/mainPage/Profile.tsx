@@ -6,11 +6,12 @@ import userIcon from '../../icons/user.png';
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
-import { LogoutProps } from "./NavBar";
+import { useCookies } from "react-cookie";
 
 
 
-export default function Profile(props:LogoutProps): JSX.Element {
+export default function Profile(): JSX.Element {
+    const [cookies,setCookie] = useCookies(["user"]);
     
    const [open, setOpen] = useState(false);
     
@@ -24,7 +25,7 @@ export default function Profile(props:LogoutProps): JSX.Element {
 
   const handleLogout = async () => {
     logout().then(()=>{
-        props.handleLogout(true);
+        setCookie('user','false')
     });
     
 

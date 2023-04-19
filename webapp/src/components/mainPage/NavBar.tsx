@@ -3,28 +3,25 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
-import { isLoggedIn } from "../../api/api";
 import { useCookies } from "react-cookie";
 
 
-export interface LogoutProps{
-  handleLogout: (value: boolean) => Promise<void>;
-}
-
 
 export default function NavBar(): JSX.Element {
-  const [cookies,setCookie] = useCookies();
+  const [cookies,setCookie] = useCookies(["user"]);
 
   const handleShow = async () => {
-    isLoggedIn().then(b => {
+    /*isLoggedIn().then(b => {
       setShow(b);
-    });
+    });*/
+    if(cookies.user==="true"){
+      setShow(true);
+    }else{
+      setShow(false);
+    }
   }
 
-  const handleLogout = async (value:boolean) => {
-    setCookie('isLogged','false')
-    setLogout(value);
-  }
+
   const [show, setShow] = useState(false);
 
   const [logout, setLogout] = useState(false);
@@ -35,14 +32,14 @@ export default function NavBar(): JSX.Element {
 
   useEffect(()=>{  
       handleShow();
-    },[logout]);
+    },[cookies]);
 
     return (
         <nav className="menu">
             <Link to="/" className="site-title">
                 <img src={logo} alt="Logo" id="logo_img"></img>
             </Link>
-            {show?<LoggedNavbar handleLogout={handleLogout}/> : <NotLoggedNavbar/>}
+            {show?<LoggedNavbar/> : <NotLoggedNavbar/>}
         </nav>
        
     )
@@ -50,7 +47,7 @@ export default function NavBar(): JSX.Element {
 
 }
 
-function LoggedNavbar(props:LogoutProps) {
+function LoggedNavbar() {
  let host = process.env.host || "localhost";
   const reload = ()=>{
     window.location.href="http://"+host+":3000/map";
@@ -59,7 +56,7 @@ function LoggedNavbar(props:LogoutProps) {
   return (
       <ul>
         <CustomLink to="/map" onClick={reload}>Map</CustomLink>
-        <Profile handleLogout={props.handleLogout}/>
+        <Profile/>
       </ul>
     
   )
