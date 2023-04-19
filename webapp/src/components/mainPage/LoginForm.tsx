@@ -15,7 +15,7 @@ export type NotificationType = {
 
 
 export default function LoginForm():JSX.Element{
-  const [cookies,setCookie] = useCookies(["user"]);
+  const [cookies,setCookie] = useCookies();
 
   const [idp, setIdp] = useState("https://inrupt.net");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
@@ -38,7 +38,8 @@ export default function LoginForm():JSX.Element{
           message: 'This provider is not supported.'
         });
       } else {
-        login(idp, currentUrl).then(()=>setCookie('user','true'));
+        
+        login(idp, currentUrl).then(()=>setCookie('isLogged','true'));
 
 
 

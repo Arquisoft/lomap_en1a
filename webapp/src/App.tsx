@@ -1,5 +1,5 @@
 import NavBar from "./components/mainPage/NavBar"
-import React, { useEffect } from 'react';
+import React from 'react';
 import Home from "./components/mainPage/Home"
 import About from "./components/mainPage/About"
 import Contact from "./components/mainPage/Contact"
@@ -19,13 +19,11 @@ type PrivateProps={
     children:any
 }
 
-
-
 function PrivateComponent(props:PrivateProps):JSX.Element{
+    const [cookies] = useCookies();
 
-    const [cookies] = useCookies(['user']);
     
-    if(cookies.user==="true"){
+    if(cookies.isLogged==="true"){
         return props.children;
     }
     return <Navigate to= "/login"/>;
