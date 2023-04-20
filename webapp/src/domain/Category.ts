@@ -1,7 +1,8 @@
 export enum Category {
     BAR = "BAR",
-    LANDMARK = "LANDMARK",
     MUSEUM = "MUSEUM",
+    MONUMENT = "MONUMENT",
     RESTAURANT = "RESTAURANT",
+    SIGHT = "SIGHT",
     SHOP = "SHOP"
 }
