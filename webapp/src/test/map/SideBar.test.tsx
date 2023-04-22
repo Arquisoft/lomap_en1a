@@ -8,6 +8,7 @@ import { Visibility } from "../../domain/Visibility";
 import { useState } from "react";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { User } from "../../domain/User";
+import { Category } from "../../domain/Category";
 
 jest.mock('../../api/api');
 
@@ -28,13 +29,13 @@ var friends: User[];
 friends=[ new User("TEST-USER","")];
 
 var publicPlaces: Place[];
-publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC)];
+publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR)];
 
 var privatePlaces: Place[];
-privatePlaces=[ new Place("","TEST-PRIVATE","","",0,0,Visibility.PRIVATE)];
+privatePlaces=[ new Place("","TEST-PRIVATE","","",0,0,Visibility.PRIVATE,Category.BAR)];
 
 var sharedPlaces: Place[];
-sharedPlaces=[ new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS)];
+sharedPlaces=[ new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS,Category.BAR)];
 
 
 beforeEach(()=>{

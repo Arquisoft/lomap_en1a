@@ -74,7 +74,7 @@ export async function addPlace(place: Place): Promise<Place> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       'name': place.name, 
-      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude
+      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude, 'category':place.category
     }),
 
     credentials: 'include',

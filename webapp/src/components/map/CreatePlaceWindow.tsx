@@ -12,6 +12,7 @@ import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList} from '../ol/vector';
+import { Category } from '../../domain/Category';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -28,6 +29,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const [name, setName] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
+  const [category, setCategory] = useState<Category>(Category.BAR);
   const [showError, setShowError] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -35,10 +37,16 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
 
-  const handleChange = async(value: string) => {
+  const handleVisibilityChange = async(value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
+  }
+
+  const handleCategoryChange = async(value: string) => {
+    var newCategory = (Category as any)[value]
+
+    setCategory(newCategory);
   }
 
 
@@ -47,7 +55,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
-      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility);
+      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility,category);
       let result = await addPlace(place);
       
       if (result.id!="ERR") {
@@ -124,12 +132,31 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
               value={visibility}
               label="Visibility"
               onChange={e => {
-                handleChange(e.target.value as string);
+                handleVisibilityChange(e.target.value as string);
               }}
             >
               <MenuItem value={'PRIVATE'}>Private</MenuItem>
               <MenuItem value={'FRIENDS'}>Friends</MenuItem>
               <MenuItem value={'PUBLIC'}>Public</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl>
+            <InputLabel id="category-select-label">Category</InputLabel>
+            <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={category}
+              label="Category"
+              onChange={e => {
+                handleCategoryChange(e.target.value as string);
+              }}
+            >
+              <MenuItem value={'BAR'}>Bar</MenuItem>
+              <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+              <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
+              <MenuItem value={'SIGHT'}>Sight</MenuItem>
+              <MenuItem value={'SHOP'}>Shop</MenuItem>
             </Select>
           </FormControl>
 
