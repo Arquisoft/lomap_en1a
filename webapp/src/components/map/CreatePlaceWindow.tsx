@@ -13,6 +13,7 @@ import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList} from '../ol/vector';
 import { Category } from '../../domain/Category';
+import LoadingSpinner from '../LoadingSpinner';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -31,6 +32,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
   const [category, setCategory] = useState<Category>(Category.BAR);
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
@@ -52,12 +54,16 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
+      setIsLoading(true);//Start showing loading symbol
+
       var place = new Place("", name, "", "", props.latitude, props.longitude, visibility,category);
       let result = await addPlace(place);
-      
+      setIsLoading(false);//Stop showing loading symbol
+
       if (result.id!="ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
@@ -161,6 +167,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           </FormControl>
 
           <Button variant="contained" type="submit">Add place</Button>
+          {isLoading ? <LoadingSpinner />:<></>}
         </Grid>
 
       </form>

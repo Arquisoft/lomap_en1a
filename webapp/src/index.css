@@ -125,6 +125,29 @@ footer {
   text-decoration: underline;
   display: inline;
 }
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.spinner-container{
+  margin-top: 2.5vh;
+  display: flex;
+  flex-direction: row;
+  gap:2vh;
+}
+.loading-spinner {
+  width: 4vh;
+  height: 4vh;
+  border: 1vh solid #f3f3f3; /* Light grey */
+  border-top: 1vh solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
 /* ------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------- */
 

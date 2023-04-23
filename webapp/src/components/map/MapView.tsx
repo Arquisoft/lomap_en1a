@@ -9,6 +9,7 @@ import { MapComponent } from '../ol/map';
 import { deleteMarker } from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
 import { User } from '../../domain/User';
+import LoadingSpinner from '../LoadingSpinner';
 
 
 
@@ -44,6 +45,8 @@ export default function MapView(): JSX.Element {
 
   //Hooks
   const [isOpen, setIsOpen] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -91,6 +94,15 @@ export default function MapView(): JSX.Element {
     deleteLastMarker.current=value;
   }
 
+  const handleIsLoading = async (value:boolean,message?:string) => {
+    setIsLoading(value);
+    if(message){
+      setLoadingMessage(message);
+    }
+    
+
+  }
+
 
 
 
@@ -125,11 +137,12 @@ export default function MapView(): JSX.Element {
 
 
       <SlidingPane
+        title= {isLoading ? <LoadingSpinner message={loadingMessage} />:<></>}
         isOpen={isOpen}
         onRequestClose={() => {
           setIsOpen(false);
           //If a place was not added, when closing setRemoveMarker(true)
-          if (deleteLastMarker && slidingPaneView == SlidingPaneView.CreatePlaceView) {
+          if (deleteLastMarker && slidingPaneView === SlidingPaneView.CreatePlaceView) {
             deleteMarker();
           }
 
@@ -137,14 +150,14 @@ export default function MapView(): JSX.Element {
 
 
         }}
-        width="70vh"
+        width="75vh"
         className='info-window'
         overlayClassName='info-window'
       >
         {
           slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
           handleDeleteMarker ={handleDeleteMarker } handleIsOpen={handleIsOpen} /> :
-            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
+            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading}/> :
               slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
         }
