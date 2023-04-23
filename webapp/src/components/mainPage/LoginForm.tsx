@@ -50,30 +50,32 @@ export default function LoginForm():JSX.Element{
   return (
     <div className="centered-block text-area">
       <h1>Log in with your POD!</h1>
-      <FormGroup className="login-form">
-        <Grid container spacing={2} justifyContent="space-around">
-          <TextField
-            label="Identity Provider"
-            placeholder="Identity Provider"
-            type="url"
-            value={idp}
-            onChange={(e) => setIdp(e.target.value)}
-          />
-          <Button id="btn-Go" variant="contained" type="submit" onClick={handleLogin}>
-              Go
-          </Button>
-          <Snackbar id="incorrect-Idp-Alert" open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
-            <Alert severity={notification.severity} sx={{ width: '100%' }}>
-              {notification.message}
-            </Alert>
-          </Snackbar>
-        </Grid>
-      </FormGroup>
-      <div className="btn-group">
-        <ProviderButton text="Solid Community" idp="https://solidcommunity.net"></ProviderButton>
-        <ProviderButton text="Solid Web" idp="https://solidweb.org"></ProviderButton>
-        <ProviderButton text="inrupt.net" idp="https://inrupt.net"></ProviderButton>
-        <ProviderButton text="pod.inrupt.com" idp="https://login.inrupt.com"></ProviderButton>
+      <div className="login-div centered-block">
+        <FormGroup className="login-form">
+          <Grid container spacing={2} justifyContent="space-around">
+            <TextField
+              label="Identity Provider"
+              placeholder="Identity Provider"
+              type="url"
+              value={idp}
+              onChange={(e) => setIdp(e.target.value)}
+            />
+            <Button id="btn-Go" variant="contained" type="submit" onClick={handleLogin}>
+                Go
+            </Button>
+            <Snackbar id="incorrect-Idp-Alert" open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
+              <Alert severity={notification.severity} sx={{ width: '100%' }}>
+                {notification.message}
+              </Alert>
+            </Snackbar>
+          </Grid>
+        </FormGroup>
+        <div className="btn-group">
+          <ProviderButton text="Solid Community" idp="https://solidcommunity.net"></ProviderButton>
+          <ProviderButton text="Solid Web" idp="https://solidweb.org"></ProviderButton>
+          <ProviderButton text="inrupt.net" idp="https://inrupt.net"></ProviderButton>
+          <ProviderButton text="pod.inrupt.com" idp="https://login.inrupt.com"></ProviderButton>
+        </div>
       </div>
     </div >
   );

@@ -22,7 +22,7 @@ type PrivateProps={
 function PrivateComponent(props:PrivateProps):JSX.Element{
     const [cookies] = useCookies();
 
-    
+
     if(cookies.isLogged==="true"){
         return props.children;
     }

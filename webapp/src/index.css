@@ -31,7 +31,7 @@ code {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 6.5vmin;
 }
 
 ul {
@@ -74,23 +74,28 @@ footer {
 .centered-block {
   box-sizing: border-box;
   position: relative;
-  top: 43%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   margin-left: auto;
   margin-right: auto;
   width: 75%;
-  border: 3px solid #388fe6;
-  border-radius: 30px;
+  max-height: 80%;
+  height: auto;
   padding: 0em 1em;
 }
 
 .text-area {
+  top: 43%;
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
   max-height: 80%;
-  font-size: 0.8em;
+  height: 75%;
+  max-width: 75%;
+  width: auto;
+  font-size: 1.5vmax;
+  border: 3px solid #388fe6;
+  border-radius: 30px;
 }
 
 .text-area h1 {
@@ -263,7 +268,7 @@ footer {
   align-items: stretch;
   gap: 2em;
   width: 100%;
-  font-size: 1em;
+  font-size: 4.2vmin;
 }
 
 .menu ul {
@@ -342,7 +347,7 @@ footer {
 #btn-Go {
   border-width: 0px;
   color: var(--main-text-color);
-  font-size: 1em;
+  font-size: 3vmin;
   opacity: 0.6;
   background-color: #388fe6;
 }
@@ -354,7 +359,7 @@ footer {
 }
 
 .btn-login {
-  width: 90vh;
+  width: 100%;
   padding: 0.7em;
   margin-bottom: 0.4em;
   font-size: 1em;
@@ -370,27 +375,24 @@ footer {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 90vh;
+  width: 57%;
   margin-bottom: 1em;
 }
 
 .login-div {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 50%;
+  top: 34%;
+  height: auto;
 }
 
 .login-form {
   margin-left: auto;
   margin-right: auto;
   background-color: #eeeeee;
-  width: 90vh;
-  height: inherit;
+  width: 57%;
   padding: 1.2em 0 0.4em 0;
   margin-bottom: 1em;
   border-radius: 12px;
+  font-size: 3vmin
 }
 
 .login-button {
