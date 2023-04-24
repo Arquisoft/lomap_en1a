@@ -157,7 +157,7 @@ export default function MapView(): JSX.Element {
         {
           slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
           handleDeleteMarker ={handleDeleteMarker } handleIsOpen={handleIsOpen} /> :
-            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading}/> :
+            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading={isLoading}/> :
               slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
         }
