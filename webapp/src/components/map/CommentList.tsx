@@ -15,19 +15,14 @@ type CommentListProps = {
 }
 
 export default function CommentList(props: CommentListProps): JSX.Element {
-  const [profile, setProfile] = useState<User>()
+  const [profile, setProfile] = useState<string>()
   const getPrimaryText = (comment: Comment) => {
     getProfileById(comment.owner)
     .then(user => {
-      setProfile(user)
+      setProfile(user.username + "sduifsd")
     })
 
-    let aux = ""
-    aux = aux.concat(" at ")
-    let date = new Date(comment.date)
-    aux = aux.concat(date.toDateString())
-
-    return aux
+    
   }
   return (
     <>
