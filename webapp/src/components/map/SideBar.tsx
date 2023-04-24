@@ -11,6 +11,7 @@ import { Place } from "../../domain/Place";
 import { getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
+import { CategoryList } from "./FilterCategory";
 
 
 
@@ -197,6 +198,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
+
+        <SubMenu label="Categories" icon={<AddLocationIcon />}>
+          <CategoryList/>
+        </SubMenu>
+
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
       </Menu>

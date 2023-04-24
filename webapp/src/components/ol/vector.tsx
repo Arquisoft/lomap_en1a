@@ -24,6 +24,7 @@ var source: VectorSource = new VectorSource({
   features: undefined,
 });
 export var displayMap = new Map();
+export var visibleCategories = new Array();
 var lastMarker = new Feature();
 var currVisibility = "";
 
@@ -114,9 +115,10 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
   featureToAdd.setId(id);
 
   var markerVisibility = visibility.toUpperCase()
+  // TODO: Check how to pass category to addMarker
 
   if (!isFriend) {
-    if (isNew || checkVisibility(markerVisibility)) {
+    if (isNew || (checkVisibility(markerVisibility) && checkCategory(markerCategory))) {
       source.addFeatures([featureToAdd]);
       lastMarker = featureToAdd;
     }
