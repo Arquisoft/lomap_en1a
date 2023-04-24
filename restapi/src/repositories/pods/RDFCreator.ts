@@ -47,6 +47,6 @@ export class RDFCreator {
             .addStringNoLocale(SCHEMA_INRUPT.Person, place.getOwner())
             .addDecimal(SCHEMA_INRUPT.latitude, place.getLatitude())
             .addDecimal(SCHEMA_INRUPT.longitude, place.getLongitude())
-            .build();;
+            .build();
     }
 }
