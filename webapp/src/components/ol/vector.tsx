@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -138,6 +138,14 @@ const checkVisibility = (visibility:string) => {
   }
 
   return true;
+}
+
+
+export function addMarkersByUserId(id:string){
+  getPublicPlacesByPublicUser(id).then((p)=>{
+    addAllMarkers(p, true);   
+  })
+
 }
 
 export function addFriendMarkerById(id: string) {
