@@ -17,7 +17,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'comment': comment.text, 'place': comment.place, 'user': comment.owner.replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'comment': comment.text, 'place': comment.place,"visibility":comment.visibility })
   });
   if (response.status === 200)
     return true;
@@ -45,7 +45,7 @@ export async function addScore(score: Score): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'score': score.score, 'place': score.place, 'user': score.owner.replaceAll("/", "-").replaceAll("#", "-") })
+    body: JSON.stringify({ 'score': score.score, 'place': score.place })
   });
   if (response.status === 200)
     return true;
@@ -73,8 +73,8 @@ export async function addPlace(place: Place): Promise<Place> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      'name': place.name, 'user': place.owner.replaceAll("/", "-").replaceAll("#", "-"),
-      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude
+      'name': place.name, 
+      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude, 'category':place.category
     }),
 
     credentials: 'include',
@@ -208,9 +208,10 @@ export async function getProfile(): Promise<User> {
   return response.json();
 }
 
-export async function getProfileById(userId: string): Promise<User> {
+export async function getProfileById(id: string): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
+  let userId = encodeURIComponent(id);
   let response = await fetch(apiEndPoint + '/profile/' + userId, {
     credentials: 'include',
     mode: 'cors'

@@ -9,21 +9,12 @@ import { useRef, useState } from "react";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { User } from "../../domain/User";
 import CreatePlaceWindow from "../../components/map/CreatePlaceWindow";
+import { Category } from "../../domain/Category";
 
 jest.mock('../../api/api');
 
-//A mock resizeObserver must be defined
-/*class ResizeObserver {
-    observe() {}
-    unobserve() {}
-  }
-(global as any).ResizeObserver = ResizeObserver;*/
 
-
-const handleInfoWindowData = async (value:InfoWindowDataType) => {}
-const handleFriendWindowData = async (value:FriendWindowDataType) => {}
 const handleIsOpen = async (value:boolean) => {}
-const handleSlidingPaneView = async (value:number) => {}
 const handleNewPlace = async () => {}
 const handleDeleteMarker = async (value:boolean) => {}
 
@@ -31,7 +22,7 @@ const handleDeleteMarker = async (value:boolean) => {}
 
 
 test('check place is added', async () => {
-  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ID","","","",0,0,Visibility.PUBLIC)));
+  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ID","","","",0,0,Visibility.PUBLIC,Category.BAR)));
   await act(async () => {
     const { container, getByText } = render(
 
@@ -52,7 +43,7 @@ test('check place is added', async () => {
 
 
 test('check place is not added', async () => {
-  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ERR","","","",0,0,Visibility.PUBLIC)));
+  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ERR","","","",0,0,Visibility.PUBLIC,Category.BAR)));
   await act(async () => {
     const { container, getByText } = render(
 

@@ -7,11 +7,12 @@ import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
 import { LogoutProps } from "./NavBar";
+import { useCookies } from "react-cookie";
 
 
 
 export default function Profile(props:LogoutProps): JSX.Element {
-    
+   const [cookies,setCookie] = useCookies();
    const [open, setOpen] = useState(false);
     
    let menuRef = useRef<HTMLDivElement>(null);
@@ -24,6 +25,7 @@ export default function Profile(props:LogoutProps): JSX.Element {
 
   const handleLogout = async () => {
     logout().then(()=>{
+        setCookie('isLogged','false')
         props.handleLogout(true);
     });
     

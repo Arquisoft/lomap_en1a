@@ -3,7 +3,7 @@ import InfoWindow from "../../components/map/InfoWindow";
 
 
 test('check info window data is rendered correctly', async () => {
-
+  const handleIsLoading = async () => {}
 
   await act(async () => {    
 
@@ -13,7 +13,7 @@ test('check info window data is rendered correctly', async () => {
         latitude: 0,
         longitude: 0
     }
-    const {container, getByText} = render(<InfoWindow infoWindowData={infoWindowData} /> )  
+    const {container, getByText} = render(<InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading}/> )  
     expect(await getByText("Test title")).toBeInTheDocument();
   });
   

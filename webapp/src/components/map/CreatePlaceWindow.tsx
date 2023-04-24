@@ -12,6 +12,8 @@ import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList} from '../ol/vector';
+import { Category } from '../../domain/Category';
+import LoadingSpinner from '../LoadingSpinner';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -28,28 +30,40 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const [name, setName] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
+  const [category, setCategory] = useState<Category>(Category.BAR);
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
 
 
-  const handleChange = (value: string) => {
+  const handleVisibilityChange = async(value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
 
+  const handleCategoryChange = async(value: string) => {
+    var newCategory = (Category as any)[value]
+
+    setCategory(newCategory);
+  }
+
 
   //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
-      var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
+      setIsLoading(true);//Start showing loading symbol
+
+      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility,category);
       let result = await addPlace(place);
-      
+      setIsLoading(false);//Stop showing loading symbol
+
       if (result.id!="ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
@@ -124,7 +138,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
               value={visibility}
               label="Visibility"
               onChange={e => {
-                handleChange(e.target.value as string);
+                handleVisibilityChange(e.target.value as string);
               }}
             >
               <MenuItem value={'PRIVATE'}>Private</MenuItem>
@@ -133,7 +147,27 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             </Select>
           </FormControl>
 
+          <FormControl>
+            <InputLabel id="category-select-label">Category</InputLabel>
+            <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={category}
+              label="Category"
+              onChange={e => {
+                handleCategoryChange(e.target.value as string);
+              }}
+            >
+              <MenuItem value={'BAR'}>Bar</MenuItem>
+              <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+              <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
+              <MenuItem value={'SIGHT'}>Sight</MenuItem>
+              <MenuItem value={'SHOP'}>Shop</MenuItem>
+            </Select>
+          </FormControl>
+
           <Button variant="contained" type="submit">Add place</Button>
+          {isLoading ? <LoadingSpinner />:<></>}
         </Grid>
 
       </form>

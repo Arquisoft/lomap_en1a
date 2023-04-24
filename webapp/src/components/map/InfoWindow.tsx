@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import noPic from "../../images/No_pictures_img.png";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getComments, getPictures } from '../../api/api';
+import { getComments, getPictures, getProfileById } from '../../api/api';
 import CommentForm from './CommentForm';
 import CommentList from './CommentList';
 import { Comment } from '../../domain/Comment';
@@ -24,10 +24,12 @@ type InfoWindowProps = {
     latitude: number;
     longitude: number;
   }
+  handleIsLoading: (value: boolean, message?: string) => Promise<void>
 }
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
+  
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
@@ -52,12 +54,24 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    getComments(props.infoWindowData?.id).then((s) => setComments(s));
+    props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
+    const comments = await getComments(props.infoWindowData?.id);
+
+    const newComments = await Promise.all(comments.map(async (comm) => {
+      const user = await getProfileById(comm.owner);
+      return {
+        ...comm,
+        owner: user.username,
+      };
+    }));
+    props.handleIsLoading(false);//Stop showing loading symbol
+
+    setComments(newComments);
   }
 
 
   const handleAddScore = async (value: number) => {
-    var score = new Score("", value, props.infoWindowData?.id, "webId", new Date(), Visibility.PUBLIC);
+    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);
@@ -176,7 +190,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
 
         <Grid item xs={12}>
-          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} user={"username"} />
+          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id}/>
         </Grid>
         <Grid item xs={12}>
           <CommentList comments={comments} />
