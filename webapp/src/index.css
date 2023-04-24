@@ -214,6 +214,7 @@ footer {
   grid-row-end:last;
   grid-column-start:firstC ;
   grid-column-end: secondC;
+  font-size: 3vmin;
 }
 
 #no-pictures-img {
@@ -268,7 +269,7 @@ footer {
   align-items: stretch;
   gap: 2em;
   width: 100%;
-  font-size: 4.2vmin;
+  font-size: 3vmin;
 }
 
 .menu ul {
@@ -406,8 +407,8 @@ footer {
   z-index : 4;
   top: 20px;
   right: 20px;
-  height: 60px;
-  width: 60px;
+  height: 2em;
+  width: auto;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;

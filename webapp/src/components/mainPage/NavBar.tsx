@@ -4,7 +4,6 @@ import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
 import { isLoggedIn } from "../../api/api";
-import useCookies from '@js-smart/react-cookie-service';
 
 
 export interface LogoutProps{
