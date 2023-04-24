@@ -21,10 +21,6 @@ type PrivateProps={
 
 function PrivateComponent(props:PrivateProps):JSX.Element{
     const [cookies, setCookie] = useCookies();
-    const handleBeforeUnload = () => {
-        setCookie('isLogged','false');
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
 
     if(cookies.isLogged==="true"){
         return props.children;
