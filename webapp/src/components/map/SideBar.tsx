@@ -111,6 +111,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
               onClick={() => {
                 props.handleInfoWindowData({
                   title: place.name,
+                  category:place.category,
                   id: place.id,
                   latitude: place.latitude,
                   longitude: place.longitude
@@ -135,6 +136,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   onClick={() => {
                     props.handleInfoWindowData({
                       title: place.name,
+                      category:place.category,
                       id: place.id,
                       latitude: place.latitude,
                       longitude: place.longitude
@@ -162,6 +164,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                 onClick={() => {
                   props.handleInfoWindowData({
                     title: place.name,
+                    category:place.category,
                     id: place.id,
                     latitude: place.latitude,
                     longitude: place.longitude
@@ -197,8 +200,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-        <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
+        
       </Menu>
     </Sidebar>
 

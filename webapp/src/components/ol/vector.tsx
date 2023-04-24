@@ -258,6 +258,7 @@ function Vector(props: TVectorLayerComponentProps) {
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
+      category:place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude

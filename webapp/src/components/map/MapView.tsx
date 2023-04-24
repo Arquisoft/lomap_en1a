@@ -10,6 +10,7 @@ import { deleteMarker } from '../ol/vector';
 import { FriendPanel } from './FriendPanel';
 import { User } from '../../domain/User';
 import LoadingSpinner from '../LoadingSpinner';
+import { Category } from '../../domain/Category';
 
 
 
@@ -27,6 +28,7 @@ export type FriendWindowDataType={
 
 export type InfoWindowDataType={
   title: string,
+  category:Category,
   id: string,
   latitude: number,
   longitude: number,
@@ -53,6 +55,7 @@ export default function MapView(): JSX.Element {
   const [slidingPaneView, setSlidingPaneView] = useState(0);
   const [infoWindowData, setInfoWindowData] = useState<InfoWindowDataType>({
     title: "",
+    category: Category.BAR,
     id: "",
     latitude: 0,
     longitude: 0,

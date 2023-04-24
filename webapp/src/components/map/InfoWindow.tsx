@@ -16,14 +16,10 @@ import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
+import { InfoWindowDataType } from './MapView';
 
 type InfoWindowProps = {
-  infoWindowData: {
-    id: string;
-    title: string;
-    latitude: number;
-    longitude: number;
-  }
+  infoWindowData: InfoWindowDataType,
   handleIsLoading: (value: boolean, message?: string) => Promise<void>
 }
 
@@ -142,6 +138,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
         <Grid item xs={6} textAlign="center">
           <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+        </Grid>
+        <Grid item xs={6} textAlign="center">
+          <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
     
         <Grid item xs={12}>
