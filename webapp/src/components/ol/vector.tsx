@@ -16,6 +16,7 @@ import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
+import { Category } from "../../domain/Category";
 
 
 
@@ -94,6 +95,11 @@ const getMarkers = async () => {
     addFriendPlaces();
 }
 
+const checkCategory = (category: Category) => {
+  // FIXME: Actually implement it
+  return true;
+}
+
 //Adds a marker to the map
 const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
@@ -127,6 +133,7 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
 
   var markerVisibility = visibility.toUpperCase()
   // TODO: Check how to pass category to addMarker
+  var markerCategory = Category.BAR
 
   if (!isFriend) {
     if (isNew || (checkVisibility(markerVisibility) && checkCategory(markerCategory))) {
