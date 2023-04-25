@@ -42,7 +42,7 @@ export interface PlaceRepository {
      * @param sessionId
      * @returns A list of the places publicly posted by the current user.
      */
-    findPublic(sessionId: string): Promise<Place[]>;
+    findPublic(sessionId: string, webId: string): Promise<Place[]>;
 
     /**
      * Finds all the places shared to the current user by its friends.
@@ -50,4 +50,6 @@ export interface PlaceRepository {
      * @returns A list of plcaes posted by friends of the current user.
      */
     findSharedFriends(sessionId: string): Promise<Place[]>;
+
+    findOwnPublic(sessionId: string): Promise<Place[]>;
 }

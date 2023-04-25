@@ -20,9 +20,8 @@ type PrivateProps={
 }
 
 function PrivateComponent(props:PrivateProps):JSX.Element{
-    const [cookies] = useCookies();
+    const [cookies, setCookie] = useCookies();
 
-    
     if(cookies.isLogged==="true"){
         return props.children;
     }
@@ -30,7 +29,7 @@ function PrivateComponent(props:PrivateProps):JSX.Element{
 }
 
 function App() {
-
+  
     return (
 
         <div className="background-image container">

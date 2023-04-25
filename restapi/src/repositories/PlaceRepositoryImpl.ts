@@ -28,9 +28,13 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         return this.find(sessionId, user, "friends");
     }
 
-    async findPublic(sessionId: string): Promise<Place[]> {
+    async findOwnPublic(sessionId: string): Promise<Place[]> {
         let user: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
         return this.find(sessionId, user, "public");
+    }
+
+    async findPublic(sessionId: string, webId: string): Promise<Place[]> {
+        return this.find(sessionId, webId, "public");
     }
 
     private async find(sessionId: string, user: string, zone: string) {
