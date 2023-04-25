@@ -56,7 +56,7 @@ export class PlaceServiceImpl implements PlaceService {
         }
 
         //FIXME
-        return new Place("ERR","","","",0,0,visibility);
+        return new Place("ERR", "", "", "", 0, 0, visibility);
     }
 
     async findOwn(sessionId: string): Promise<Place[]> {
@@ -71,8 +71,12 @@ export class PlaceServiceImpl implements PlaceService {
         return this.placeRepository.findFriend(sessionId);
     }
 
-    async findPublic(sessionId: string): Promise<Place[]> {
-        return this.placeRepository.findPublic(sessionId);
+    async findPublic(sessionId: string, webId: string): Promise<Place[]> {
+        return this.placeRepository.findPublic(sessionId, webId);
+    }
+
+    async findOwnPublic(sessionId: string): Promise<Place[]> {
+        return this.placeRepository.findOwnPublic(sessionId);
     }
 
     async findSharedFriends(sessionId: string): Promise<Place[]> {

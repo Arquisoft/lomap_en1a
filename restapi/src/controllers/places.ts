@@ -27,7 +27,26 @@ module.exports = function (api: Router, service: PlaceService) {
 
                 var sessionId: string = <string>req.session.solidSessionId;
 
-                return res.send(await service.findPublic(sessionId));
+                return res.send(await service.findOwnPublic(sessionId));
+            }
+            catch (error) {
+                console.log(error.message);
+                return res.send("Places could not be fetched.");
+            }
+        }
+    );
+
+    //List all public places
+    api.get("/place/public/list/:user",
+        async (req: any, res: Response): Promise<Response> => {
+            try {
+                Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
+                Assertion.exists(req.params.user, "A user must be provided.");
+
+                var sessionId: string = <string>req.session.solidSessionId;
+                var user: string = <string>req.params.user;
+
+                return res.send(await service.findPublic(sessionId, user));
             }
             catch (error) {
                 console.log(error.message);

@@ -25,7 +25,7 @@ export class PodSessionManager {
         let provider = req.params.provider;
         Assertion.exists(provider, "A provider must be given.");
         provider = decodeURIComponent(provider);
-        //provider = "https://inrupt.net";
+        provider = "https://inrupt.net";
 
         let redirect = req.params.redirect;
         //Assertion.exists(redirect, "A redirect url must be given.");

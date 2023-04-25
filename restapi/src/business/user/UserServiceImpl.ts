@@ -29,4 +29,16 @@ export class UserServiceImpl implements UserService {
 
         return this.userRepository.isLoggedIn(sessionId);
     }
+
+    async addFriend(sessionId: string, webId: string): Promise<boolean> {
+        return this.userRepository.addFriend(sessionId, webId);
+    }
+
+    async sharePublicPlaces(sessionId: string): Promise<boolean> {
+        return this.userRepository.sharePublicPlaces(sessionId);
+    }
+
+    async getPublicUsers(sessionId: string): Promise<User[]> {
+        return this.userRepository.getPublicUsers(sessionId);
+    }
 }

@@ -38,12 +38,7 @@ export interface PlaceService {
      */
     findFriendForUser(sessionId: string, user: string): Promise<Place[]>;
 
-    /**
-     * Finds all public places for the current user.
-     * @param sessionId
-     * @returns A list of the places publicly posted by the current user.
-     */
-    findPublic(sessionId: string): Promise<Place[]>;
+    findPublic(sessionId: string, webId: string): Promise<Place[]>;
 
     /**
      * Finds all the places shared to the current user by its friends.
@@ -51,4 +46,11 @@ export interface PlaceService {
      * @returns A list of places posted by friends of the current user.
      */
     findSharedFriends(sessionId: string): Promise<Place[]>;
+
+    /**
+     * Finds all public places for the current user.
+     * @param sessionId
+     * @returns A list of the places publicly posted by the current user.
+     */
+    findOwnPublic(sessionId: string): Promise<Place[]>;
 }
