@@ -1,5 +1,5 @@
 import { render, fireEvent, act, findByText } from "@testing-library/react";
-import CommentForm from "./CommentForm";
+import CommentForm from "../../components/map/CommentForm";
 import * as api from '../../api/api'
 import { Comment } from "../../domain/Comment";
 

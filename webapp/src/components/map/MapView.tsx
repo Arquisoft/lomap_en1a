@@ -18,36 +18,87 @@ export enum SlidingPaneView {
   FriendsView
 }
 
+export type FriendWindowDataType={
+  friend:User,
+  friendPhoto:string,
+  sharedSites:any
+}
+
+export type InfoWindowDataType={
+  title: string,
+  id: string,
+  latitude: number,
+  longitude: number,
+}
+
+
 export default function MapView(): JSX.Element {
 
   const deleteLastMarker = useRef(false);//To control when to remove a marker from the map automatically
-  const [isOpen, setIsOpen] = useState(false);
+
 
   //These useState is used to monitor useEffect hooks; they just increment to detect change when needed
   //FIXME
   const [newPlace, setNewPlace] = useState(0);
 
 
+  //Hooks
+  const [isOpen, setIsOpen] = useState(false);
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [slidingPaneView, setSlidingPaneView] = useState(0);
-  const [infoWindowData, setInfoWindowData] = useState({
+  const [infoWindowData, setInfoWindowData] = useState<InfoWindowDataType>({
     title: "",
     id: "",
     latitude: 0,
     longitude: 0,
   });
-  const [friendWindowData, setFriendWindowData] = useState({
+  const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
     friend: new User("", ""),
     friendPhoto: "",
     sharedSites: []
   });
 
 
+  //Handlers
+  const handleFriendWindowData = async (value:FriendWindowDataType) => {
+    setFriendWindowData(value);
+  }
+  const handleInfoWindowData = async (value:InfoWindowDataType) => {
+    setInfoWindowData(value);
+  }
+  const handleSlidingPaneView = async (value:number) => {
+    setSlidingPaneView(value);
+  }
+
+  const handleLatitude = async (value:number) => {
+    setLatitude(value);
+  }
+
+  const handleLongitude = async (value:number) => {
+    setLongitude(value);
+  }
+  const handleIsOpen = async (value:boolean) => {
+    setIsOpen(value);
+  }
+
+  const handleNewPlace = async () => {
+    setNewPlace(n => n + 1);
+  }
+
+  const handleDeleteMarker = async (value:boolean) => {
+    deleteLastMarker.current=value;
+  }
 
 
 
+
+
+
+  window.addEventListener( "popstate", function ( event ) {
+    window.location.reload();
+  });
 
   return (
 
@@ -55,8 +106,8 @@ export default function MapView(): JSX.Element {
       <div className='map-view'>
         <div className='side-bar'>
           <ProSidebarProvider>
-            <MySideBar setFriendWindowData={setFriendWindowData} setInfoWindowData={setInfoWindowData} setSlidingPaneView={setSlidingPaneView}
-              visibility={visibility} setIsOpen={setIsOpen} newPlace={newPlace} />
+            <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData ={handleInfoWindowData } handleSlidingPaneView={handleSlidingPaneView}
+              visibility={visibility} handleIsOpen={handleIsOpen} newPlace={newPlace} />
           </ProSidebarProvider>
         </div>
 
@@ -65,8 +116,8 @@ export default function MapView(): JSX.Element {
         </div>
 
 
-        <MapComponent setSlidingPaneView={setSlidingPaneView} setInfoWindowData={setInfoWindowData}
-          setLatitude={setLatitude} setLongitude={setLongitude} setIsOpen={setIsOpen} visibility={visibility} />
+        <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
+          handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility} />
 
       </div>
 
@@ -91,8 +142,8 @@ export default function MapView(): JSX.Element {
         overlayClassName='info-window'
       >
         {
-          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} setNewPlace={setNewPlace}
-            deleteMarker={deleteLastMarker} setIsOpen={setIsOpen} /> :
+          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
+          handleDeleteMarker ={handleDeleteMarker } handleIsOpen={handleIsOpen} /> :
             slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} /> :
               slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
                 <div></div>
@@ -102,15 +153,6 @@ export default function MapView(): JSX.Element {
       </SlidingPane>
 
     </>
-
-
-
-
-
-
-
-
-
 
 
   );

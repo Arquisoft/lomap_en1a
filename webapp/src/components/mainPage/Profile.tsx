@@ -6,14 +6,17 @@ import userIcon from '../../icons/user.png';
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
+import { LogoutProps } from "./NavBar";
+import { useCookies } from "react-cookie";
 
-export default function Profile(): JSX.Element {
-    
-    const [open, setOpen] = useState(false);
-    
-    let menuRef = useRef<HTMLDivElement>(null);
 
-     //Get the list of places for the current user
+
+export default function Profile(props:LogoutProps): JSX.Element {
+   const [cookies,setCookie] = useCookies();
+   const [open, setOpen] = useState(false);
+    
+   let menuRef = useRef<HTMLDivElement>(null);
+
    const [profile, setProfile] = useState<User>();
    const refreshProfile = async () => {
     getProfile().then((user) => setProfile(user));
@@ -21,7 +24,11 @@ export default function Profile(): JSX.Element {
   }
 
   const handleLogout = async () => {
-    await logout();
+    logout().then(()=>{
+        setCookie('isLogged','false')
+        props.handleLogout(true);
+    });
+    
 
   }
 
@@ -70,9 +77,9 @@ function DropdownItem(props: { img: string, text: string, linkTo: To, onClick?: 
         <ul>
             <li className="dropdown-item">
                 <img src={props.img} alt="icon"></img>
-                <div className="dropdown-links">
+                <ul className="dropdown-links">
                     <CustomLink to={props.linkTo} onClick={props.onClick}>{props.text}</CustomLink>
-                </div>
+                </ul>
             </li>
         </ul>
     )

@@ -11,7 +11,9 @@ import {
     getStringNoLocale,
     getUrlAll,
     SolidDataset,
-    createSolidDataset
+    createSolidDataset,
+    buildThing,
+    addIri
 } from "@inrupt/solid-client";
 
 //Configuration
@@ -19,6 +21,9 @@ import configuration from '../../configuration.json';
 import { User } from "../../domain/User";
 import { FOAF } from "@inrupt/vocab-common-rdf";
 import { Assertion } from "../../Assertion";
+import { PodSessionManager } from "./PodSessionManager";
+import { Factory } from "../../Factory";
+import { PodManager } from "./PodManager";
 
 export class PodDataManager {
 
@@ -80,12 +85,10 @@ export class PodDataManager {
         if (webId == undefined) {
             throw new Error();
         }
-        var a = (webId.split("profile")[0])
+        let a = (webId.split("profile")[0])
         let url = a + this.profilePodZone + "#me"
         let myDataset = await getSolidDataset(url, { fetch: session.fetch });
-
         const profile = getThing(myDataset, a + this.profilePodZone + "#me") as Thing;
-
         return profile;
     }
 
@@ -120,5 +123,32 @@ export class PodDataManager {
         }
 
         return new User(name, webId);
+    }
+
+    async addFriend(sessionId: string, webId: string): Promise<boolean> {
+        Assertion.exists(sessionId, "The user must be logged in.");
+        Assertion.exists(webId, "A web id must be provided.");
+
+        let session = await getSessionFromStorage(sessionId);
+
+        if (session == null) {
+            throw Error("The user must be logged in.");
+        }
+
+        let userWebId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+
+        let url = userWebId.split("profile")[0] + this.profilePodZone + "#me"
+        let profileDataSet = await getSolidDataset(url, { fetch: session.fetch });
+
+        let profile = getThing(profileDataSet, url) as Thing;
+
+        profile = addIri(profile, FOAF.knows, webId);
+
+        profileDataSet = setThing(profileDataSet, profile);
+
+        await saveSolidDatasetAt(url, profileDataSet, {
+            fetch: session.fetch,
+        })
+        return true;
     }
 }

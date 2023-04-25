@@ -12,13 +12,14 @@ import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList} from '../ol/vector';
+import { Category } from '../../domain/Category';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
   longitude: number,
-  setNewPlace: React.Dispatch<React.SetStateAction<number>>,
-  deleteMarker: React.MutableRefObject<boolean>,
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  handleNewPlace: () => Promise<void>,
+  handleDeleteMarker: (value: boolean) => Promise<void>,
+  handleIsOpen: (value: boolean) => Promise<void>
 
 
 }
@@ -28,6 +29,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const [name, setName] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
+  const [category, setCategory] = useState<Category>(Category.BAR);
   const [showError, setShowError] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -35,10 +37,16 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
 
-  const handleChange = (value: string) => {
+  const handleVisibilityChange = async(value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
+  }
+
+  const handleCategoryChange = async(value: string) => {
+    var newCategory = (Category as any)[value]
+
+    setCategory(newCategory);
   }
 
 
@@ -47,18 +55,18 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
-      var place = new Place("", name, "", "webId", props.latitude, props.longitude, visibility);
+      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility,category);
       let result = await addPlace(place);
       
       if (result.id!="ERR") {
-        props.setNewPlace(n => n + 1); //New place is increased when a place is added
+        props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
           severity: 'success',
           message: 'Your new place has been added!'
         });
-        props.deleteMarker.current = false;
-        props.setIsOpen(false); //Close the create place window automatically
+        props.handleDeleteMarker(false);
+        props.handleIsOpen(false); //Close the create place window automatically
 
         var v = Visibility[visibility].toLowerCase();
         changeMarkerColour(v); //Changes the last marker colour
@@ -71,7 +79,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           severity: 'error',
           message: 'There\'s been an error adding your place.'
         });
-        props.deleteMarker.current = true;
+        props.handleDeleteMarker(true);
       }
     }
     
@@ -124,12 +132,31 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
               value={visibility}
               label="Visibility"
               onChange={e => {
-                handleChange(e.target.value as string);
+                handleVisibilityChange(e.target.value as string);
               }}
             >
               <MenuItem value={'PRIVATE'}>Private</MenuItem>
               <MenuItem value={'FRIENDS'}>Friends</MenuItem>
               <MenuItem value={'PUBLIC'}>Public</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl>
+            <InputLabel id="category-select-label">Category</InputLabel>
+            <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={category}
+              label="Category"
+              onChange={e => {
+                handleCategoryChange(e.target.value as string);
+              }}
+            >
+              <MenuItem value={'BAR'}>Bar</MenuItem>
+              <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+              <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
+              <MenuItem value={'SIGHT'}>Sight</MenuItem>
+              <MenuItem value={'SHOP'}>Shop</MenuItem>
             </Select>
           </FormControl>
 

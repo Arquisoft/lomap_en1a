@@ -1,10 +1,11 @@
 import { useState, useEffect} from "react";
 import { Button, TextField, FormGroup } from "@material-ui/core";
-import { isLoggedIn, login } from "../../api/api";
+import { login } from "../../api/api";
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import type { AlertColor } from '@mui/material/Alert';
+import { useCookies } from "react-cookie";
 
 export type NotificationType = {
   severity: AlertColor,
@@ -14,6 +15,8 @@ export type NotificationType = {
 
 
 export default function LoginForm():JSX.Element{
+  const [cookies,setCookie] = useCookies();
+
   const [idp, setIdp] = useState("https://inrupt.net");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
@@ -35,7 +38,10 @@ export default function LoginForm():JSX.Element{
           message: 'This provider is not supported.'
         });
       } else {
-        await login(idp, currentUrl);
+        
+        login(idp, currentUrl).then(()=>setCookie('isLogged','true'));
+
+
 
       }
     }

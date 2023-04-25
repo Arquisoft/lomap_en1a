@@ -1,0 +1,75 @@
+import { render, act, waitFor, fireEvent } from "@testing-library/react";
+
+import * as api from '../../api/api'
+import { Place } from "../../domain/Place";
+import MySideBar from "../../components/map/SideBar";
+import { FriendWindowDataType, InfoWindowDataType } from "../../components/map/MapView";
+import { Visibility } from "../../domain/Visibility";
+import { useRef, useState } from "react";
+import { ProSidebarProvider } from "react-pro-sidebar";
+import { User } from "../../domain/User";
+import CreatePlaceWindow from "../../components/map/CreatePlaceWindow";
+import { Category } from "../../domain/Category";
+
+jest.mock('../../api/api');
+
+//A mock resizeObserver must be defined
+/*class ResizeObserver {
+    observe() {}
+    unobserve() {}
+  }
+(global as any).ResizeObserver = ResizeObserver;*/
+
+
+const handleInfoWindowData = async (value:InfoWindowDataType) => {}
+const handleFriendWindowData = async (value:FriendWindowDataType) => {}
+const handleIsOpen = async (value:boolean) => {}
+const handleSlidingPaneView = async (value:number) => {}
+const handleNewPlace = async () => {}
+const handleDeleteMarker = async (value:boolean) => {}
+
+
+
+
+test('check place is added', async () => {
+  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ID","","","",0,0,Visibility.PUBLIC,Category.BAR)));
+  await act(async () => {
+    const { container, getByText } = render(
+
+        <CreatePlaceWindow latitude={0} longitude={0} handleNewPlace={handleNewPlace}
+        handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
+
+      )
+    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('input[name="text"]')!;
+    fireEvent.change(input, { target: { value: "hola" } })
+    const button = getByText("Add place");
+    fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addPlace')).toHaveBeenCalled()) 
+    
+    expect(await getByText("Your new place has been added!")).toBeInTheDocument();
+  });
+})
+
+
+test('check place is not added', async () => {
+  jest.spyOn(api, 'addPlace').mockImplementation((): Promise<Place> => Promise.resolve(new Place("ERR","","","",0,0,Visibility.PUBLIC,Category.BAR)));
+  await act(async () => {
+    const { container, getByText } = render(
+
+        <CreatePlaceWindow latitude={0} longitude={0} handleNewPlace={handleNewPlace}
+        handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
+
+      )
+    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('input[name="text"]')!;
+    fireEvent.change(input, { target: { value: "hola" } })
+    const button = getByText("Add place");
+    fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addPlace')).toHaveBeenCalled()) 
+    
+    expect(await getByText("There\'s been an error adding your place.")).toBeInTheDocument();
+  });
+})
+
+

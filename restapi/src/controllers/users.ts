@@ -28,7 +28,7 @@ module.exports = function (api: Router) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("There was an error while logging in.");
+                return res.send({ error: "There was an error while logging in." });
             }
         }
     );
@@ -41,7 +41,7 @@ module.exports = function (api: Router) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("There was an error while logging in.");
+                return res.send({ error: "There was an error while logging in." });
             }
         }
     );
@@ -63,7 +63,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send("Profile could not be fetched");
+            return res.send({ error: "Profile could not be fetched" });
         }
     })
 
@@ -82,7 +82,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send("Profile could not be fetched");
+            return res.send({ error: "Profile could not be fetched" });
         }
     })
 
@@ -95,13 +95,15 @@ module.exports = function (api: Router) {
             let sessionId: string = <string>req.session.solidSessionId;
             let webId: string = <string>req.params.webId;
 
+            webId = "https://boblomapen1a.inrupt.net/profile/card#me";
+
             let userService: UserService = Factory.services.getUserService();
 
             return res.send(await userService.getFriends(sessionId, webId));
         }
         catch (error) {
             console.log(error.message);
-            return res.send("Friends could not be fetched");
+            return res.send({ error: "Friends could not be fetched" });
         }
     })
 
@@ -115,7 +117,50 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send("There was an error while checking if the user is logged in");
+            return res.send({ error: "There was an error while checking if the user is logged in" });
+        }
+    })
+
+    api.post("/users/friends/add", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+            let webId = req.body.webId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.addFriend(sessionId, webId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.send({ error: "There was an error while adding a friend" });
+        }
+    });
+
+    api.get("/users/share", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.sharePublicPlaces(sessionId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.send({ error: "There was an error while checking if the user is logged in" });
+        }
+    })
+
+    api.get("/users/public", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.getPublicUsers(sessionId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.send({ error: "There was an error while checking if the user is logged in" });
         }
     })
 }

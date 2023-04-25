@@ -238,11 +238,11 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
-    props.setSlidingPaneView(SlidingPaneView.CreatePlaceView);
-    props.setIsOpen(true);
+    props.handleSlidingPaneView(SlidingPaneView.CreatePlaceView);
+    props.handleIsOpen(true);
 
-    props.setLatitude(event.coordinate[1]);
-    props.setLongitude(event.coordinate[0]);
+    props.handleLatitude(event.coordinate[1]);
+    props.handleLongitude(event.coordinate[0]);
     addMarker(event.coordinate, "public", "",true); //The new marker still has no id
   };
 
@@ -256,14 +256,14 @@ function Vector(props: TVectorLayerComponentProps) {
     let id = f.getId() as string;
     var place = findPlace(id);
     place = place as Place;
-    props.setInfoWindowData({
+    props.handleInfoWindowData({
       title: place.name,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude
     });
-    props.setIsOpen(true);
-    props.setSlidingPaneView(SlidingPaneView.InfoWindowView);
+    props.handleIsOpen(true);
+    props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
 
 
 

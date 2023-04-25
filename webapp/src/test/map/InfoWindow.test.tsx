@@ -1,5 +1,5 @@
 import { render, act} from "@testing-library/react";
-import InfoWindow from "./InfoWindow";
+import InfoWindow from "../../components/map/InfoWindow";
 
 
 test('check info window data is rendered correctly', async () => {

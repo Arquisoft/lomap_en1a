@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from "@testing-library/react";
-import CommentList from './CommentList';
+import CommentList from '../../components/map/CommentList';
 import { Comment } from '../../domain/Comment';
 import { Visibility } from '../../domain/Visibility';
 

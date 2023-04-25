@@ -29,4 +29,10 @@ export interface UserService {
      * @param sessionId
      */
     isLoggedIn(sessionId: string): Promise<boolean>;
+
+    addFriend(sessionId: string, webId: string): Promise<boolean>;
+
+    sharePublicPlaces(sessionId: string): Promise<boolean>;
+
+    getPublicUsers(sessionId: string): Promise<User[]>;
 }
