@@ -135,8 +135,9 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 //List public places by user
 
 export async function getPublicPlacesByPublicUser(id:string): Promise<Place[]> {
+  let userId = encodeURIComponent(id);
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/place/public/list/'+id, {
+  let response = await fetch(apiEndPoint + '/place/public/list/'+userId, {
     credentials: 'include',
     mode: 'cors'
   });
