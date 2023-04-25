@@ -16,15 +16,12 @@ import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
+import { InfoWindowDataType } from './MapView';
 
 type InfoWindowProps = {
-  infoWindowData: {
-    id: string;
-    title: string;
-    latitude: number;
-    longitude: number;
-  }
-  handleIsLoading: (value: boolean, message?: string) => Promise<void>
+  infoWindowData: InfoWindowDataType;
+  handleIsLoading: (value: boolean, message?: string) => Promise<void>;
+  isLoading: boolean;
 }
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
@@ -42,6 +39,8 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  const [cachedComments, setCachedComments] = useState<Comment[]>([]);
+
   
 
   const refreshPicturesSlide = async () => {
@@ -57,14 +56,17 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
 
+
     const newComments = await Promise.all(comments.map(async (comm) => {
       const user = await getProfileById(comm.owner);
       return {
         ...comm,
         owner: user.username,
       };
+      
     }));
     props.handleIsLoading(false);//Stop showing loading symbol
+    
 
     setComments(newComments);
   }
@@ -138,10 +140,13 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
     <>
-      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
+      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window' style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
 
         <Grid item xs={6} textAlign="center">
           <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+        </Grid>
+        <Grid item xs={6} textAlign="center">
+          <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
     
         <Grid item xs={12}>

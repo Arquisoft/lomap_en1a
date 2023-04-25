@@ -8,10 +8,12 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
+import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 import { CategoryList } from "./FilterCategory";
+import { addMarkersByUserId } from "../ol/vector";
+import { NotificationType } from "./CommentForm";
 
 
 
@@ -28,6 +30,9 @@ type SideBarProps = {
 
 
 export default function MySideBar(props: SideBarProps): JSX.Element {
+
+  const [notificationStatus, setNotificationStatus] = useState(false);
+  const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
   //For the public places
   const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
@@ -57,6 +62,32 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   }
 
+   //Get the list of public users
+  const [users, setUsers] = useState<User[]>([]);
+  const refreshPublicUsersList = async () => {
+    getAllPublicUsers().then((u) => setUsers(u));
+
+  }
+
+  const addUserToPublicList = async () => {
+    let result = await addUserToList();
+    if (result) {
+      setNotificationStatus(true);
+      setNotification({
+        severity: 'success',
+        message: 'You have been added to the public user list!'
+      });
+    }
+    else {
+      setNotificationStatus(true);
+      setNotification({
+        severity: 'error',
+        message: 'There\'s been an error adding you to the public user list.'
+      });
+    }
+
+  }
+
   //For the visibility
   const displayVisibility = (visibility: string) => {
     if (visibility == null) {
@@ -75,9 +106,10 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   }, [props.newPlace]);
 
 
-  //Get friend list
+  //Get friend list and public users list
   useEffect(() => {
     refreshFriendList();
+    refreshPublicUsersList();
     return () => {
       setFriends([]); // Cleanup
     };
@@ -87,7 +119,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const { collapseSidebar } = useProSidebar();
 
   return (
-    <Sidebar style={{ height: "80vh", color: "black" }}>
+    <Sidebar style={{ height: "80vh", color: "black",width:"44vh" }}>
       <Menu
       >
         <MenuItem
@@ -112,6 +144,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
               onClick={() => {
                 props.handleInfoWindowData({
                   title: place.name,
+                  category:place.category,
                   id: place.id,
                   latitude: place.latitude,
                   longitude: place.longitude
@@ -136,6 +169,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   onClick={() => {
                     props.handleInfoWindowData({
                       title: place.name,
+                      category:place.category,
                       id: place.id,
                       latitude: place.latitude,
                       longitude: place.longitude
@@ -163,6 +197,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                 onClick={() => {
                   props.handleInfoWindowData({
                     title: place.name,
+                    category:place.category,
                     id: place.id,
                     latitude: place.latitude,
                     longitude: place.longitude
@@ -198,13 +233,27 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
+<<<<<<< HEAD
 
         <SubMenu label="Categories" icon={<AddLocationIcon />}>
           <CategoryList/>
         </SubMenu>
 
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
+=======
+        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   } >
+          {users.map((user, index) => (
+            <MenuItem icon={<PersonIcon />}
+              key={index}
+              onClick={() => {addMarkersByUserId(user.webId)}}
+            >{user.username}</MenuItem>
+          ))}
+
+        </SubMenu>
+        <MenuItem onClick={()=>addUserToPublicList()}>Add me to public user list</MenuItem>
+>>>>>>> UI
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
+        
       </Menu>
     </Sidebar>
 
