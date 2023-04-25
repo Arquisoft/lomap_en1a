@@ -30,6 +30,10 @@ var currVisibility = "";
 //List of all places added to the map
 var places:Place[];
 places = [];
+
+//List of public users to show their places
+var users:string[];
+users = [];
 //-------------------------------------------------
 
 
@@ -51,6 +55,13 @@ const addPublicPlaces = async()=>{
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
   });
+
+  //When filtering, the public places of other users added to the map should appear too
+  for(let i = 0;i<users.length;i++){
+    getPublicPlacesByPublicUser(users[i]).then((p)=>{
+      addAllMarkers(p, true);   
+    })
+  }
 }
 
 //Adds all private places to the map
@@ -142,6 +153,7 @@ const checkVisibility = (visibility:string) => {
 
 
 export function addMarkersByUserId(id:string){
+  users.push(id);
   getPublicPlacesByPublicUser(id).then((p)=>{
     addAllMarkers(p, true);   
   })
