@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -30,6 +30,10 @@ var currVisibility = "";
 //List of all places added to the map
 var places:Place[];
 places = [];
+
+//List of public users to show their places
+var users:string[];
+users = [];
 //-------------------------------------------------
 
 
@@ -51,6 +55,13 @@ const addPublicPlaces = async()=>{
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
   });
+
+  //When filtering, the public places of other users added to the map should appear too
+  for(let i = 0;i<users.length;i++){
+    getPublicPlacesByPublicUser(users[i]).then((p)=>{
+      addAllMarkers(p, true);   
+    })
+  }
 }
 
 //Adds all private places to the map
@@ -138,6 +149,15 @@ const checkVisibility = (visibility:string) => {
   }
 
   return true;
+}
+
+
+export function addMarkersByUserId(id:string){
+  users.push(id);
+  getPublicPlacesByPublicUser(id).then((p)=>{
+    addAllMarkers(p, true);   
+  })
+
 }
 
 export function addFriendMarkerById(id: string) {
@@ -258,6 +278,7 @@ function Vector(props: TVectorLayerComponentProps) {
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
+      category:place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude

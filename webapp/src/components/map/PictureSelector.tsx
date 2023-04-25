@@ -2,24 +2,19 @@ import React, {useState} from "react";
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import type { AlertColor } from '@mui/material/Alert';
 import { addPicture } from '../../api/api';
 import { Picture } from "../../domain/Picture";
 import Grid from '@mui/material/Grid';
 import btnImage from "../../icons/Add_image.png";
 import Snackbar from '@mui/material/Snackbar';
 import { Visibility } from "../../domain/Visibility";
+import { NotificationType } from "./CommentForm";
 
 
 type PictureSelectorProps = {
   OnPictureListChange: () => void;
   place:string;
   user:string;
-}
-
-export type NotificationType = {
-  severity: AlertColor,
-  message: string;
 }
 
 

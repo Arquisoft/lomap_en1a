@@ -4,14 +4,8 @@ import { login } from "../../api/api";
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import type { AlertColor } from '@mui/material/Alert';
 import { useCookies } from "react-cookie";
-
-export type NotificationType = {
-  severity: AlertColor,
-  message: string;
-}
-
+import { NotificationType } from "../map/CommentForm";
 
 
 export default function LoginForm():JSX.Element{
