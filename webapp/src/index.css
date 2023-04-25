@@ -214,7 +214,7 @@ footer {
   grid-row-end:last;
   grid-column-start:firstC ;
   grid-column-end: secondC;
-  font-size: 3vmin;
+  font-size: 3.5vmin;
 }
 
 #no-pictures-img {
@@ -269,7 +269,7 @@ footer {
   align-items: stretch;
   gap: 2em;
   width: 100%;
-  font-size: 3vmin;
+  font-size: 3.5vmin;
 }
 
 .menu ul {
@@ -317,9 +317,12 @@ footer {
 
 .slide {
   display: inline-block;
-  height: 400px;
+}
+
+.slide > img {
+  height: auto;
   width: 100%;
-  border-radius: 4em;
+  border-radius: 1em;
 }
 
 .slideshowDots {
@@ -407,7 +410,7 @@ footer {
   z-index : 4;
   top: 20px;
   right: 20px;
-  height: 2em;
+  height: 2.3em;
   width: auto;
   border-radius: 50%;
   overflow: hidden;
