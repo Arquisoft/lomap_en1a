@@ -233,25 +233,12 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-<<<<<<< HEAD
 
         <SubMenu label="Categories" icon={<AddLocationIcon />}>
           <CategoryList/>
         </SubMenu>
 
         <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
-=======
-        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   } >
-          {users.map((user, index) => (
-            <MenuItem icon={<PersonIcon />}
-              key={index}
-              onClick={() => {addMarkersByUserId(user.webId)}}
-            >{user.username}</MenuItem>
-          ))}
-
-        </SubMenu>
-        <MenuItem onClick={()=>addUserToPublicList()}>Add me to public user list</MenuItem>
->>>>>>> UI
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
         
       </Menu>
