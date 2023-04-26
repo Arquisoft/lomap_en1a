@@ -17,6 +17,7 @@ import { Visibility } from '../../domain/Visibility';
 import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
 import { InfoWindowDataType } from './MapView';
+import { VisibilitySelect } from './CreatePlaceWindow';
 
 type InfoWindowProps = {
   infoWindowData: InfoWindowDataType;
@@ -35,11 +36,11 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //For the rating
   const [value, setValue] = useState(0);
+  const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
 
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
-  const [cachedComments, setCachedComments] = useState<Comment[]>([]);
 
   
 
@@ -122,6 +123,12 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     refreshScores();
   }
 
+  const handleVisibilityChange = async(value: string) => {
+    var newVisibility = (Visibility as any)[value]
+
+    setVisibility(newVisibility);
+  }
+
 
 
 
@@ -162,7 +169,6 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12}>
            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
         </Grid>  
-
         <Grid item xs={6}>
           <Box
             sx={{
@@ -185,14 +191,16 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
             )}
           </Box>
         </Grid>
-
         <Grid item xs={3}>
-          <Box component="p" textAlign="right">{avg}</Box>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
         </Grid>
 
-        <Grid item xs={3}>
-          <StarIcon htmlColor='orange' fontSize='large' />
+        <Grid item xs={2}>
+          <Box component="p" textAlign="right" >{avg}
+          <StarIcon htmlColor='orange' fontSize='medium' /></Box>
         </Grid>
+
+
 
         <Grid item xs={12}>
           <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id}/>

@@ -22,6 +22,33 @@ export interface CreatePlaceWindowProps {
   handleDeleteMarker: (value: boolean) => Promise<void>,
   handleIsOpen: (value: boolean) => Promise<void>
 
+}
+
+interface VisibilitySelectProps{
+  visibility:Visibility,
+  handleVisibilityChange: (value: string) => Promise<void>
+}
+
+export function VisibilitySelect(props:VisibilitySelectProps):JSX.Element{
+
+  return(
+    <FormControl>
+    <InputLabel id="visibility-select-label">Visibility</InputLabel>
+    <Select
+      labelId="visibility-select-label"
+      id="visibility-select"
+      value={props.visibility}
+      label="Visibility"
+      onChange={e => {
+        props.handleVisibilityChange(e.target.value as string);
+      }}
+    >
+      <MenuItem value={'PRIVATE'}>Private</MenuItem>
+      <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+      <MenuItem value={'PUBLIC'}>Public</MenuItem>
+    </Select>
+  </FormControl>
+  )
 
 }
 
@@ -41,6 +68,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const handleVisibilityChange = async(value: string) => {
     var newVisibility = (Visibility as any)[value]
+    console.log(newVisibility)
 
     setVisibility(newVisibility);
   }
@@ -130,22 +158,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
           />
 
-          <FormControl>
-            <InputLabel id="visibility-select-label">Visibility</InputLabel>
-            <Select
-              labelId="visibility-select-label"
-              id="visibility-select"
-              value={visibility}
-              label="Visibility"
-              onChange={e => {
-                handleVisibilityChange(e.target.value as string);
-              }}
-            >
-              <MenuItem value={'PRIVATE'}>Private</MenuItem>
-              <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-              <MenuItem value={'PUBLIC'}>Public</MenuItem>
-            </Select>
-          </FormControl>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
 
           <FormControl>
             <InputLabel id="category-select-label">Category</InputLabel>
