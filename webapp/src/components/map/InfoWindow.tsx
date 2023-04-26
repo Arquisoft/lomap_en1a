@@ -157,31 +157,37 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
           <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
     
-        <Grid item xs={12}>
-          {
-            pictureURLs.length == 0 ?
-              <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
-              :
-              <Slideshow images={pictureURLs} />
-          }
-        </Grid>
 
+        <div className="centered-element">
+          <Grid item xs={12}>
+            {
+              pictureURLs.length == 0 ?
+                <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
+                :
+                <Slideshow images={pictureURLs} />
+            }
+          </Grid>
+        </div>
+        <div className="description">
+          <Grid item xs={12}>
+              <TextField
+                disabled
+                multiline
+                rows={6}
+                fullWidth
+                name="description"
+                variant="filled"
+                value={props.infoWindowData.description}
+
+              />
+          </Grid>
+        </div>
+        
 
         <Grid item xs={12}>
            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
         </Grid>  
-        <Grid item xs={12}>
-            <TextField
-              disabled
-              multiline
-              rows={6}
-              fullWidth
-              name="description"
-              variant="filled"
-              value={props.infoWindowData.description}
-
-            />
-          </Grid>
+        
         <Grid item xs={6}>
           <Box
             sx={{

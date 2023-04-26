@@ -128,6 +128,12 @@ footer {
   }
 }
 
+.description {
+  margin-bottom: 1em;
+  width: 100%;
+  word-wrap: break-word;
+}
+
 .email div {
   text-decoration: underline;
   display: inline;
@@ -223,13 +229,16 @@ footer {
   font-size: 3.5vmin;
 }
 
+.centered-element {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #no-pictures-img {
   max-width: 100%;
   max-height: 350px;
   width: auto;
   height: auto;
-  margin-right: auto;
-  margin-left: auto;
   border-radius: 30px;
   margin-bottom: 1.5em;
 }
