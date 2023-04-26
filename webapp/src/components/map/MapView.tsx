@@ -32,6 +32,7 @@ export type InfoWindowDataType={
   id: string,
   latitude: number,
   longitude: number,
+  description:string
 }
 
 
@@ -59,6 +60,7 @@ export default function MapView(): JSX.Element {
     id: "",
     latitude: 0,
     longitude: 0,
+    description:""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
     friend: new User("", ""),

@@ -18,6 +18,7 @@ import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
 import { InfoWindowDataType } from './MapView';
 import { VisibilitySelect } from './CreatePlaceWindow';
+import TextField from '@mui/material/TextField';
 
 type InfoWindowProps = {
   infoWindowData: InfoWindowDataType;
@@ -169,6 +170,18 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12}>
            <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
         </Grid>  
+        <Grid item xs={12}>
+            <TextField
+              disabled
+              multiline
+              rows={6}
+              fullWidth
+              name="description"
+              variant="filled"
+              value={props.infoWindowData.description}
+
+            />
+          </Grid>
         <Grid item xs={6}>
           <Box
             sx={{

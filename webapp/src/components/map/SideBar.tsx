@@ -147,7 +147,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   category:place.category,
                   id: place.id,
                   latitude: place.latitude,
-                  longitude: place.longitude
+                  longitude: place.longitude,
+                  description:place.description
 
                 });
                 props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
@@ -172,7 +173,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                       category:place.category,
                       id: place.id,
                       latitude: place.latitude,
-                      longitude: place.longitude
+                      longitude: place.longitude,
+                      description:place.description
 
                     });
                     props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
@@ -198,7 +200,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                     category:place.category,
                     id: place.id,
                     latitude: place.latitude,
-                    longitude: place.longitude
+                    longitude: place.longitude,
+                    description:place.description
 
                   });
                   props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
