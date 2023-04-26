@@ -96,7 +96,9 @@ footer {
   font-size: 1.5vmax;
   border: 3px solid #388fe6;
   border-radius: 30px;
+  overflow-y: auto;
 }
+
 
 .text-area h1 {
   border-bottom: 8px solid rgba(0, 0, 0, 0.2);
@@ -306,8 +308,7 @@ footer {
 .slideshow {
   margin: 0 auto;
   overflow: hidden;
-  max-width: 100%;
-  
+  max-width: 39vw;
 }
 
 .slideshowSlider {
@@ -323,6 +324,7 @@ footer {
   height: auto;
   width: 100%;
   border-radius: 1em;
+  vertical-align: middle;
 }
 
 .slideshowDots {
@@ -380,7 +382,6 @@ footer {
   margin-right: auto;
   display: block;
   width: 57%;
-  margin-bottom: 1em;
 }
 
 .login-div {
