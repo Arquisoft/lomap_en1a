@@ -40,6 +40,7 @@ function App() {
                     <Route path="/about" element={<About/>}/>
                     <Route path="/contact" element={<Contact/>}/>
                     <Route path="/login" element={<LoginForm/>}/>
+                    <Route path="/login/fail" element={<LoginForm fail={true}/>}/>
                     <Route path="/map" element={<PrivateComponent children = {<MapView/>}/>}/>
                     <Route path="/profile" element={<PrivateComponent children = {<UserProfile/>}/>}/>
                     <Route path="*" element={<Navigate to= "/"/>}/>

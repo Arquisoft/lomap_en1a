@@ -7,8 +7,11 @@ import Alert from '@mui/material/Alert';
 import { useCookies } from "react-cookie";
 import { NotificationType } from "../map/CommentForm";
 
+export interface LoginFormProps {
+  fail?:boolean;
+}
 
-export default function LoginForm():JSX.Element{
+export default function LoginForm(props:LoginFormProps):JSX.Element{
   const [cookies,setCookie] = useCookies();
 
   const [idp, setIdp] = useState("https://inrupt.net");
@@ -19,26 +22,21 @@ export default function LoginForm():JSX.Element{
 
 
   useEffect(() => {
+    if (props.fail != null && props.fail) {
+      setNotificationStatus(true);
+      setNotification({
+        severity: 'warning',
+        message: 'This provider is not supported.'
+      })
+    }
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
 
   const handleLogin =async () => {
-    {
-      let supportedProviders = ["https://solidcommunity.net", "https://solidweb.org", "https://inrupt.net", "https://login.inrupt.com"];
-      if (!supportedProviders.includes(idp)) {
-        setNotificationStatus(true);
-        setNotification({
-          severity: 'warning',
-          message: 'This provider is not supported.'
-        });
-      } else {
-        
-        login(idp, currentUrl).then(()=>setCookie('isLogged','true'));
-
-
-
-      }
-    }
+    login(idp, currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
   };
 
   return (
