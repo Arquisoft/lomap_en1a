@@ -1,7 +1,5 @@
 import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from "react-pro-sidebar";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
@@ -14,6 +12,8 @@ import { User } from "../../domain/User";
 import { CategoryList } from "./FilterCategory";
 import { addMarkersByUserId } from "../ol/vector";
 import { NotificationType } from "./CommentForm";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 
@@ -184,9 +184,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
           </SubMenu>
 
-          <SubMenu label="Shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }
-
-          }>
+          <SubMenu label="Shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }}>
 
             {sharedPlaces.map((place, index) => (
 
@@ -238,7 +236,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           <CategoryList/>
         </SubMenu>
 
-        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   } >
+
+        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   }>
           {users.map((user, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}
@@ -251,7 +250,16 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
         
       </Menu>
+              
+      <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
+        <Alert severity={notification.severity} sx={{ width: '100%' }}>
+          {notification.message}
+        </Alert>
+      </Snackbar>
+
+
     </Sidebar>
+    
 
   )
 

@@ -1,8 +1,7 @@
 import { FormGroup } from "@material-ui/core";
-import { Checkbox, FormControlLabel, ToggleButton } from "@mui/material";
-import { ToggleButtonGroup } from "@mui/material";
+import { Checkbox, FormControlLabel} from "@mui/material";
 import { Category } from "../../domain/Category";
-import { refreshMarkers, visibleCategories } from "../ol/vector";
+import {visibleCategories } from "../ol/vector";
 
 export function CategoryList(): JSX.Element {
 
