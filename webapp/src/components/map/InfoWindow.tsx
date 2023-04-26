@@ -196,7 +196,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
 
         <Grid item xs={12}>
-          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} />
+          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={12}>
           <CommentList comments={comments} />
