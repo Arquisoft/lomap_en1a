@@ -35,4 +35,6 @@ export interface UserRepository {
     sharePublicPlaces(sessionId: string): Promise<boolean>;
 
     getPublicUsers(sessionId: string): Promise<User[]>;
+
+    getFriendRequests(sessionId: string): Promise<User[]>;
 }
