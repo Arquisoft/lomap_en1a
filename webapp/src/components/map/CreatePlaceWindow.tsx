@@ -11,7 +11,7 @@ import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { changeMarkerColour, updateMapList} from '../ol/vector';
+import { changeMarkerColour, updateMapList } from '../ol/vector';
 import { Category } from '../../domain/Category';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -39,13 +39,13 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
 
-  const handleVisibilityChange = async(value: string) => {
+  const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
 
-  const handleCategoryChange = async(value: string) => {
+  const handleCategoryChange = async (value: string) => {
     var newCategory = (Category as any)[value]
 
     setCategory(newCategory);
@@ -54,17 +54,17 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
+
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
 
       setIsLoading(true);//Start showing loading symbol
 
-      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility,category);
+      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility, category);
       let result = await addPlace(place);
       setIsLoading(false);//Stop showing loading symbol
 
-      if (result.id!="ERR") {
+      if (result.id != "ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
@@ -88,7 +88,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.handleDeleteMarker(true);
       }
     }
-    
+
   }
 
 
@@ -109,11 +109,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
     <>
-      <form name="register" onSubmit={handleSubmit}>
+      <form name="register" onSubmit={handleSubmit} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
         <Grid container spacing={2} justifyContent="space-around">
 
-          <Grid item xs={12}>
-            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
+          <Grid item xs={12} >
+            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
           </Grid>
           <TextField
             error={showError}
@@ -167,7 +167,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           </FormControl>
 
           <Button variant="contained" type="submit">Add place</Button>
-          {isLoading ? <LoadingSpinner />:<></>}
+          {isLoading ? <LoadingSpinner /> : <></>}
         </Grid>
 
       </form>
