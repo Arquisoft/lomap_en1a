@@ -1,7 +1,7 @@
 export enum Category {
     BAR = "BAR",
-    MUSEUM = "MUSEUM",
     MONUMENT = "MONUMENT",
+    MUSEUM = "MUSEUM",
     RESTAURANT = "RESTAURANT",
     SIGHT = "SIGHT",
     SHOP = "SHOP"

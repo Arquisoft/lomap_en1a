@@ -13,7 +13,6 @@ import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 type CommentFormProps = {
   OnCommentListChange: () => void;
   place: string;
-  user: string;
 }
 
 export type NotificationType = {
@@ -25,7 +24,6 @@ export type NotificationType = {
 
 export default function CommentForm(props: CommentFormProps): JSX.Element {
 
-  const [name, setName] = useState('');
   const [text, setText] = useState('');
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -42,7 +40,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
     e.preventDefault();
 
 
-    let result: boolean = await addComment(new Comment("", text, props.place, props.user, new Date(), visibility)); //The comment still has no ID
+    let result: boolean = await addComment(new Comment("", text, props.place, "", new Date(), visibility)); //The comment still has no ID
     if (result) {
       setNotificationStatus(true);
       setNotification({
@@ -76,7 +74,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
             value={text}
             onChange={e => {
               setText(e.target.value);
-              setName(props.user);//This may not be necessary
+            
 
             }}
 

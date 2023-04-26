@@ -27,7 +27,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
 
 export async function getComments(id: string): Promise<Comment[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-
+  console.log(apiEndPoint + '/comment/list/' + id)
   let response = await fetch(apiEndPoint + '/comment/list/' + id, {
     credentials: 'include',
     mode: 'cors'
@@ -133,6 +133,19 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 
 
 //List public places by user
+
+export async function getPublicPlacesByPublicUser(id:string): Promise<Place[]> {
+  let userId = encodeURIComponent(id);
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/place/public/list/'+userId, {
+    credentials: 'include',
+    mode: 'cors'
+  });
+
+  return response.json();
+}
+
+
 export async function getPublicPlacesByUser(): Promise<Place[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   let response = await fetch(apiEndPoint + '/place/public/list', {
@@ -184,7 +197,7 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
   return response.json();
 }
 
-
+//User--------------------------------------------------------
 export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
@@ -196,7 +209,6 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
   return response.json();
 }
 
-//User---------------------------------------------------------
 
 export async function getProfile(): Promise<User> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
@@ -219,6 +231,15 @@ export async function getProfileById(id: string): Promise<User> {
   return response.json();
 }
 
+export async function getAllPublicUsers(): Promise<User[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/users/public', {
+    credentials: 'include',
+    mode: 'cors'
+  }); 
+  return response.json();
+}
 
 
 export async function isLoggedIn(): Promise<boolean> {
@@ -229,6 +250,20 @@ export async function isLoggedIn(): Promise<boolean> {
     mode: 'cors'
   }); 
   return response.json();
+}
+
+export async function addUserToList(): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/users/share', {
+    credentials: 'include',
+    mode: 'cors',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  if (response.status === 200)
+    return true;
+  else
+    return false;
 }
 
 

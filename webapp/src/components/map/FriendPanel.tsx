@@ -58,6 +58,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 //Returns a list of p elements with data from the places
 function PlacesOf(props: PlaceOfProps): JSX.Element {
 
+    const [updateCount, setUpdateCount] = useState(0);
 
     const changePlaceDisplayStatus = (id: string) => {
         if (!displayMap.has(id)) {
@@ -73,24 +74,14 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
             displayMap.set(id, !displayMap.get(id));
         }
 
-        updateLabel(id);
+        setUpdateCount(updateCount + 1)
     }
 
     const getPlaceDisplayStatus = (id: string) => {
         if (displayMap.get(id)) {
-            return "Status: Displayed"
+            return true
         } else {
-            return "Status: Hidden"
-        }
-    }
-
-    const updateLabel = (id: string) => {
-        let label = document.getElementById(id);
-              
-        let newText = getPlaceDisplayStatus(id);
-
-        if (label) {
-            label.innerText = newText
+            return false
         }
     }
 
@@ -100,14 +91,16 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                 props.sharedSites.map((place) => (
 
                     <Box component="p" textAlign="left">
-                        <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
-                            {place.name}
-                        </Button>
-                        {place.latitude + "," + place.longitude}
+                        {place.name}
                         <br></br>
-                        <label id={place.id}>
+                        <Button id={place.id} variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
+                            {getPlaceDisplayStatus(place.id)?"Hide":"Show"}
+                        </Button>
+                        <br></br>
+                        {place.latitude + "," + place.longitude}
+                        {/* <label id={place.id}>
                             {getPlaceDisplayStatus(place.id)}
-                        </label>
+                        </label> */}
                     </Box>
 
                 ))

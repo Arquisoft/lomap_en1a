@@ -28,6 +28,9 @@ const handleSlidingPaneView = async (value:number) => {}
 var friends: User[];
 friends=[ new User("TEST-USER","")];
 
+var users: User[];
+users=[ new User("TEST-USER-PUBLIC","")];
+
 var publicPlaces: Place[];
 publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR)];
 
@@ -40,6 +43,7 @@ sharedPlaces=[ new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS,Category
 
 beforeEach(()=>{
     jest.spyOn(api, 'getFriendsForUser').mockImplementation((): Promise<User[]> => Promise.resolve(friends));
+    jest.spyOn(api, 'getAllPublicUsers').mockImplementation((): Promise<User[]> => Promise.resolve(users));
     jest.spyOn(api, 'getPublicPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(publicPlaces));
     jest.spyOn(api, 'getPrivatePlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(privatePlaces));
     jest.spyOn(api, 'getSharedPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(sharedPlaces));
@@ -63,6 +67,8 @@ test('check friend list is shown', async () => {
     expect(await getByText("TEST-USER")).toBeInTheDocument();
   });
 })
+
+
 
 test('check public list place is shown', async () => {
 

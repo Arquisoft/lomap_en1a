@@ -45,6 +45,7 @@ module.exports = function (api: Router, service: PlaceService) {
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var user: string = <string>req.params.user;
+                user = decodeURIComponent(user);
 
                 return res.send(await service.findPublic(sessionId, user));
             }

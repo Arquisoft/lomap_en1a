@@ -13,18 +13,8 @@ import { Category } from "../../domain/Category";
 
 jest.mock('../../api/api');
 
-//A mock resizeObserver must be defined
-/*class ResizeObserver {
-    observe() {}
-    unobserve() {}
-  }
-(global as any).ResizeObserver = ResizeObserver;*/
 
-
-const handleInfoWindowData = async (value:InfoWindowDataType) => {}
-const handleFriendWindowData = async (value:FriendWindowDataType) => {}
 const handleIsOpen = async (value:boolean) => {}
-const handleSlidingPaneView = async (value:number) => {}
 const handleNewPlace = async () => {}
 const handleDeleteMarker = async (value:boolean) => {}
 

@@ -136,7 +136,7 @@ module.exports = function (api: Router) {
         }
     });
 
-    api.get("/users/share", async (req: any, res: Response) => {
+    api.post("/users/share", async (req: any, res: Response) => {
         try {
             let sessionId: string = <string>req.session.solidSessionId;
 
