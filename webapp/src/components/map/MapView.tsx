@@ -153,7 +153,7 @@ export default function MapView(): JSX.Element {
 
 
         }}
-        width="75vh"
+        width="85vh"
         className='info-window'
         overlayClassName='info-window'
       >
