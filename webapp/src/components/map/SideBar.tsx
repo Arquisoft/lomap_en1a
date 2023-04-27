@@ -6,7 +6,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect, useRef, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
+import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByPublicUser, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 import { CategoryList } from "./FilterCategory";
@@ -67,6 +67,28 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
       setPrivatePlaces(places)
     });
 
+  }
+
+  const [importedPlaces, setImportedPlaces] = useState<Place[]>([]);
+  const refreshImportedPlaceList = async () => {
+    let places: Place[] = []
+    for (let i = 0; i < displayedUsers.length; i++) {
+      let id = displayedUsers[i];
+      let userPlaces = await getPublicPlacesByPublicUser(id);
+
+      userPlaces.forEach(p => {
+        places.push(p)});
+    }
+
+    places.sort(function(a, b) {
+      let name1 = a.name.toLowerCase();
+      let name2 = b.name.toLowerCase();
+      if(name1 < name2) { return -1; }
+      if(name1 > name2) { return 1; }
+      return 0;
+    })
+
+    setImportedPlaces(places);
   }
 
   //For the friend places
@@ -149,6 +171,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
       addMarkersByUserId(id)
     }
 
+    refreshImportedPlaceList();
     setUpdateCount(updateCount + 1)
   }
 
@@ -232,6 +255,33 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         <SubMenu label="Private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
 
               {privatePlaces.map((place, index) => (
+
+
+                <MenuItem icon={<ArrowRightIcon />}
+
+                  key={index}
+                  onClick={() => {
+                    props.handleInfoWindowData({
+                      title: place.name,
+                      category:place.category,
+                      id: place.id,
+                      latitude: place.latitude,
+                      longitude: place.longitude,
+                      description:place.description
+
+                    });
+                    props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
+                    props.handleIsOpen(true);
+                  }}
+
+                >{place.name}</MenuItem>
+              ))}
+
+          </SubMenu>
+
+          <SubMenu label="Imported sites" icon={<AddLocationIcon />} onClick={() => { refreshImportedPlaceList(); }}>
+
+              {importedPlaces.map((place, index) => (
 
 
                 <MenuItem icon={<ArrowRightIcon />}
