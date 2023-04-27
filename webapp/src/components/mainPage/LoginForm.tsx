@@ -14,7 +14,7 @@ export interface LoginFormProps {
 export default function LoginForm(props:LoginFormProps):JSX.Element{
   const [cookies,setCookie] = useCookies();
 
-  const [idp, setIdp] = useState("https://inrupt.net");
+  const [idp, setIdp] = useState("");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -23,17 +23,41 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
 
   useEffect(() => {
     if (props.fail != null && props.fail) {
-      setNotificationStatus(true);
-      setNotification({
-        severity: 'warning',
-        message: 'This provider is not supported.'
-      })
+      errorHandler("This provider is not supported.")
     }
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
 
+
+  function errorHandler(message:string) {
+    setNotificationStatus(true);
+    setNotification({
+      severity: 'warning',
+      message: message
+    })
+  }
+
   const handleLogin =async () => {
-    login(idp, currentUrl)
+    if (idp.trim().length === 0) {
+      errorHandler("The provider cannot be empty.")
+    } else {
+      login(idp.trim(), currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
+    }
+  };
+
+  const handleLoginBtn =async (idp2:string) => {
+    if (idp2.trim().length === 0) {
+      errorHandler("The provider cannot be empty.")
+    } else {
+      login(idp2.trim(), currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
+    }
+    login(idp2.trim(), currentUrl)
       .then(()=>{
         setCookie('isLogged','true')
       })
@@ -75,8 +99,8 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
   function ProviderButton(props: { text: string, idp: string }) {
     return (
       <button className="btn-login" onClick={() => {
-        setIdp(props.idp)
-        handleLogin;
+        setIdp(props.idp);
+        handleLoginBtn(props.idp);
       }}
       >{props.text}</button>
     )
