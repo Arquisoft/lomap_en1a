@@ -133,9 +133,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     <>
       <form name="register" onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="space-around">
-          <Grid item xs={12}>
-            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
-          </Grid>
+          <div className="centered-element">
+            <Grid item xs={12}>
+              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
+            </Grid>
+          </div>
           <TextField
             error={showError}
             helperText={"Invalid name"}
