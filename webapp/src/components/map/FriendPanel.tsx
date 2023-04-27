@@ -24,7 +24,17 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     //For the friends
     const [friendPlaces, setFriendPlaces] = useState<Place[]>([]);
     const refreshFriendPlaceList = async () => {
-        getPlacesToShareByUser(props.friend.webId).then((places) => setFriendPlaces(places));
+        getPlacesToShareByUser(props.friend.webId).then((places) => {
+            places.sort(function(a, b) {
+                let name1 = a.name.toLowerCase();
+                let name2 = b.name.toLowerCase();
+                if(name1 < name2) { return -1; }
+                if(name1 > name2) { return 1; }
+                return 0;
+            })
+
+            setFriendPlaces(places)
+        });
 
     }
 
@@ -90,10 +100,10 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
             {
                 props.sharedSites.map((place) => (
 
-                    <Box component="p" textAlign="left">
+                    <Box key={place.id} component="p" textAlign="left">
                         {place.name}
                         <br></br>
-                        <Button id={place.id} variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
+                        <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
                             {getPlaceDisplayStatus(place.id)?"Hide":"Show"}
                         </Button>
                         <br></br>

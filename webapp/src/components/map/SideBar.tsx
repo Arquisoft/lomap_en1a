@@ -14,6 +14,7 @@ import { addMarkersByUserId, displayedUsers, removeMarkersByUserId } from "../ol
 import { NotificationType } from "./CommentForm";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { Box, Button } from "@mui/material";
 
 
 
@@ -37,40 +38,87 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   //For the public places
   const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
   const refreshPublicPlaceList = async () => {
-    getPublicPlacesByUser().then((places) => setPublicPlaces(places));
+    getPublicPlacesByUser().then((places) => {
+      places.sort(function(a, b) {
+        let name1 = a.name.toLowerCase();
+        let name2 = b.name.toLowerCase();
+        if(name1 < name2) { return -1; }
+        if(name1 > name2) { return 1; }
+        return 0;
+      })
+
+      setPublicPlaces(places)
+    });
 
   }
 
   //For the  private places
   const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
   const refreshPrivatePlaceList = async () => {
-    getPrivatePlacesByUser().then((places) => setPrivatePlaces(places));
+    getPrivatePlacesByUser().then((places) => {
+      places.sort(function(a, b) {
+        let name1 = a.name.toLowerCase();
+        let name2 = b.name.toLowerCase();
+        if(name1 < name2) { return -1; }
+        if(name1 > name2) { return 1; }
+        return 0;
+      })
+      
+      setPrivatePlaces(places)
+    });
 
   }
 
   //For the friend places
   const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
   const refreshSharedPlaceList = async () => {
-    getSharedPlacesByUser().then((places) => setSharedPlaces(places));
+    getSharedPlacesByUser().then((places) => {
+      places.sort(function(a, b) {
+        let name1 = a.name.toLowerCase();
+        let name2 = b.name.toLowerCase();
+        if(name1 < name2) { return -1; }
+        if(name1 > name2) { return 1; }
+        return 0;
+      })
+
+      setSharedPlaces(places)
+    });
 
   }
 
  //Get the list of places for the current user
   const [friends, setFriends] = useState<User[]>([]);
   const refreshFriendList = async () => {
-    getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => setFriends(friends)));
+    getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => {
+      friends.sort(function(a, b) {
+        let name1 = a.username.toLowerCase();
+        let name2 = b.username.toLowerCase();
+        if(name1 < name2) { return -1; }
+        if(name1 > name2) { return 1; }
+        return 0;
+      })
+
+      setFriends(friends)
+    }));
 
   }
 
    //Get the list of public users
   const [users, setUsers] = useState<User[]>([]);
   const refreshPublicUsersList = async () => {
-    // getAllPublicUsers().then((u) => setUsers(u));
     let publicUsers = await getAllPublicUsers();
     let profile = await getProfile();
 
     let index = publicUsers.map(u => u.webId).indexOf(profile.webId);
     if (index >= 0) publicUsers.splice(index, 1);
+
+    publicUsers.sort(function(a, b) {
+      let name1 = a.username.toLowerCase();
+      let name2 = b.username.toLowerCase();
+      if(name1 < name2) { return -1; }
+      if(name1 > name2) { return 1; }
+      return 0;
+    })
 
     setUsers(publicUsers);
   }
@@ -94,12 +142,18 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   }
 
-  const handleUserMarkers = (user: User) => {
-    if (displayedUsers.indexOf(user.webId) >= 0) {
-      removeMarkersByUserId(user.webId)
+  const handleUserMarkers = (id: string) => {
+    if (displayedUsers.indexOf(id) >= 0) {
+      removeMarkersByUserId(id)
     } else {
-      addMarkersByUserId(user.webId)
+      addMarkersByUserId(id)
     }
+
+    setUpdateCount(updateCount + 1)
+  }
+
+  const getUserDisplayStatus = (id: string) => {
+    return displayedUsers.indexOf(id) >= 0
   }
 
   //For the visibility
@@ -131,6 +185,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the sidebar
   const { collapseSidebar } = useProSidebar();
+
+  const [updateCount, setUpdateCount] = useState(0);
 
   return (
     <Sidebar style={{ height: "80vh", color: "black",width:"44vh" }}>
@@ -256,10 +312,13 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
         <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   }>
           {users.map((user, index) => (
-            <MenuItem icon={<PersonIcon />}
-              key={index}
-              onClick={() => {handleUserMarkers(user)}}
-            >{user.username}</MenuItem>
+            <Box key={index} component="p" textAlign="left">
+                {user.username}
+                <br></br>
+                <Button variant="contained" onClick={() => handleUserMarkers(user.webId)}>
+                    {getUserDisplayStatus(user.webId)?"Hide this user's markers":"Show this user's markers"}
+                </Button>
+            </Box>
           ))}
 
         </SubMenu>
