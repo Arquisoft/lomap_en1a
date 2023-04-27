@@ -4,7 +4,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Place } from "../../domain/Place";
 import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
@@ -117,9 +117,8 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   //For the sidebar
   const { collapseSidebar } = useProSidebar();
-
   return (
-    <Sidebar style={{ height: "80vh", color: "black",width:"44vh" }}>
+    <Sidebar style={{ height: "80vh", color: "black"}}>
       <Menu
       >
         <MenuItem
@@ -253,7 +252,6 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
         
       </Menu>
-              
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
           {notification.message}
