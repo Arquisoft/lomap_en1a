@@ -199,6 +199,34 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
 }
 
 //User--------------------------------------------------------
+export async function addFriend(id: string): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/users/friends/add', {
+    credentials: 'include',
+    mode: 'cors',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      'webId':id
+    })
+  });
+  if (response.status === 200)
+    return true;
+  else
+    return false;
+}
+
+export async function getFriendRequests(): Promise<User[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/users/request', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  return response.json();
+}
+
+
 export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
