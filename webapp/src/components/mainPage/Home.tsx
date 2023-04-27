@@ -1,13 +1,14 @@
 import Slideshow from "./SlideShow"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import map from "../../images-places/map.jpg";
 import paris from "../../images-places/paris.jpg";
 import london from "../../images-places/Londres.jpg";
 import madrid from "../../images-places/Madrid.jpg";
 import eii from "../../images-places/eii.jpg";
 import new_york from "../../images-places/nueva-york.jpg";
 
-const images = [paris, london, eii, new_york, madrid];
+const images = [map, paris, london, eii, new_york, madrid];
 
 
 export default function Home(): JSX.Element {
