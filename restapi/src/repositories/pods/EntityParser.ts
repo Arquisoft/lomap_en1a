@@ -5,6 +5,7 @@ import { Score } from "../../domain/Score";
 import { Picture } from "../../domain/Picture";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
 import { Visibility } from "../../domain/Visibility";
+import { Category } from "../../domain/Category";
 
 export class EntityParser {
 
@@ -115,7 +116,9 @@ export class EntityParser {
 
         let visibility = <Visibility>thing.url.split("/")[4]
 
-        return new Place(id, name, description, owner, latitude, longitude, visibility);
+        let category = <Category>getStringNoLocale(thing, SCHEMA_INRUPT.brand)
+
+        return new Place(id, name, description, owner, latitude, longitude, visibility, category);
     }
 
     public parseScores(dataSet: SolidDataset): Score[] {

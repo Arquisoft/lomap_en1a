@@ -68,9 +68,11 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
 
           <Grid item xs={6}>
               <TextField
+                multiline
+                rows={2}
                 required
                 name="text"
-                label="Write your review"
+                placeholder="Write your review"
                 variant="filled"
                 value={text}
                 onChange={e => {

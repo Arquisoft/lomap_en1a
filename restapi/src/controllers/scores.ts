@@ -27,7 +27,7 @@ module.exports = function (api: Router, service: ScoreService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Scores could not be fetched.");
+                return res.status(400).send({ error: "Scores could not be fetched." });
             }
         }
     );
@@ -39,26 +39,25 @@ module.exports = function (api: Router, service: ScoreService) {
                 Assertion.exists(req.body.user, "A user must be provided.");
                 Assertion.exists(req.body.score, "An score must be provided.");
                 Assertion.exists(req.body.place, "A place must be provided.");
-                //Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                Assertion.exists(req.body.visibility, "A visibility must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var punt: number = <number>req.body.score;
                 var placeId: string = <string>req.body.place;
-                //var visibility: Visibility = <Visibility>req.params.visibility;
+                var visibility: Visibility = <Visibility>req.body.visibility;
 
                 var score: ScoreDto = new ScoreDto();
                 score.score = punt;
                 score.place = placeId;
-                //score.visibility = visibility;
-                //FIXME
+                score.visibility = visibility;
                 score.visibility = Visibility.PUBLIC;
 
                 return res.send(await service.add(sessionId, score));
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("The score could not be added.");
+                return res.status(400).send({ error: "The score could not be added." });
             }
         }
     );

@@ -12,6 +12,7 @@ import { Response, Router } from 'express';
 
 //Assertion
 import { Assertion } from '../Assertion';
+import { Category } from "../domain/Category";
 
 
 
@@ -31,7 +32,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -51,7 +52,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -71,7 +72,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -88,7 +89,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -105,7 +106,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -122,7 +123,7 @@ module.exports = function (api: Router, service: PlaceService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Places could not be fetched.");
+                return res.status(400).send({ error: "Places could not be fetched." });
             }
         }
     );
@@ -133,15 +134,16 @@ module.exports = function (api: Router, service: PlaceService) {
             try {
                 Assertion.exists(req.body.name, "A name must be provided.");
                 Assertion.exists(req.body.visibility, "A visibility must be provided.");
-                // Assertion.exists(req.body.description, "A description must be provided.");
+                Assertion.exists(req.body.description, "A description must be provided.");
                 Assertion.exists(req.body.latitude, "A latitude must be provided.");
                 Assertion.exists(req.body.longitude, "A longitude must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
                 var sessionId: string = <string>req.session.solidSessionId;
                 var name: string = <string>req.body.name;
-                //var description: string = <string>req.body.description;
+                var description: string = <string>req.body.description;
                 var visibility: Visibility = <Visibility>req.body.visibility;
+                var category: Category = <Category>req.body.category;
                 var latitude: number = <number>req.body.latitude;
                 var longitude: number = <number>req.body.longitude;
 
@@ -150,16 +152,15 @@ module.exports = function (api: Router, service: PlaceService) {
                 place.latitude = latitude;
                 place.longitude = longitude;
                 place.visibility = visibility;
-                // place.description = description;
-                //FIXME
-                place.description = "DESCRIPTION"
+                place.description = description;
+                place.category = category;
 
 
                 return res.send(await service.add(sessionId, place));
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("The place could not be added.");
+                return res.status(400).send({ error: "The place could not be added." });
             }
         }
     );

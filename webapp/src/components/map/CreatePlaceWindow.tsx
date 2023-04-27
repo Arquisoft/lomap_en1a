@@ -168,6 +168,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             >
               <MenuItem value={'BAR'}>Bar</MenuItem>
               <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+              <MenuItem value={'MUSEUM'}>Museum</MenuItem>
               <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
               <MenuItem value={'SIGHT'}>Sight</MenuItem>
               <MenuItem value={'SHOP'}>Shop</MenuItem>

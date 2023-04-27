@@ -85,6 +85,8 @@ footer {
   padding: 0em 1em;
 }
 
+
+
 .text-area {
   top: 43%;
   background-color: var(--secondary-bg);
@@ -97,6 +99,23 @@ footer {
   border: 3px solid #388fe6;
   border-radius: 30px;
   overflow-y: auto;
+}
+
+.table-area {
+  text-align:left;
+  background-color: var(--secondary-bg);
+  color: var(--block-text-color);
+  height: 90%;
+  width: auto;
+  font-size: 1.5vmax;
+  overflow-y: auto;
+  padding-left: 10vh;
+  padding-right: 10vh;
+}
+.table-area h1 {
+  border-bottom: 8px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 0.3em;
+
 }
 
 
@@ -211,6 +230,11 @@ footer {
   display: flex;
   gap: 5%;
   margin-top: 0.5em;
+}
+
+.category-button {
+  color: white;
+  background-color: cyan;
 }
 /* ------------------------------------------------------------------- */
 
