@@ -33,8 +33,8 @@ var places:Place[];
 places = [];
 
 //List of public users to show their places
-var users:string[];
-users = [];
+export var displayedUsers:string[];
+displayedUsers = [];
 //-------------------------------------------------
 
 
@@ -59,8 +59,8 @@ const addPublicPlaces = async()=>{
   });
 
   //When filtering, the public places of other users added to the map should appear too
-  for(let i = 0;i<users.length;i++){
-    getPublicPlacesByPublicUser(users[i]).then((p)=>{
+  for(let i = 0;i<displayedUsers.length;i++){
+    getPublicPlacesByPublicUser(displayedUsers[i]).then((p)=>{
       addAllMarkers(p, true);   
     })
   }
@@ -178,9 +178,18 @@ const checkVisibility = (visibility:string) => {
 
 
 export function addMarkersByUserId(id:string){
-  users.push(id);
+  displayedUsers.push(id);
   getPublicPlacesByPublicUser(id).then((p)=>{
     addAllMarkers(p, true);
+  })
+
+}
+
+export function removeMarkersByUserId(id:string){
+  let index = displayedUsers.indexOf(id)
+  displayedUsers.splice(index, 1)
+  getPublicPlacesByPublicUser(id).then((p)=>{
+    deleteAllMarkers(p);
   })
 
 }
@@ -198,6 +207,12 @@ export function addFriendMarkerById(id: string) {
       }
     }
   });
+}
+
+function deleteAllMarkers(places: Place[]) {
+  for (let i = 0; i < places.length; i++) {
+    deleteMarkerById(places[i].id);
+  }
 }
 
 //Deletes a marker given its ID

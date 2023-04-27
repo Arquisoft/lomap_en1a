@@ -10,7 +10,7 @@ import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByU
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 import { CategoryList } from "./FilterCategory";
-import { addMarkersByUserId } from "../ol/vector";
+import { addMarkersByUserId, displayedUsers, removeMarkersByUserId } from "../ol/vector";
 import { NotificationType } from "./CommentForm";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -92,6 +92,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
       });
     }
 
+  }
+
+  const handleUserMarkers = (user: User) => {
+    if (displayedUsers.indexOf(user.webId) >= 0) {
+      removeMarkersByUserId(user.webId)
+    } else {
+      addMarkersByUserId(user.webId)
+    }
   }
 
   //For the visibility
@@ -250,7 +258,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           {users.map((user, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}
-              onClick={() => {addMarkersByUserId(user.webId)}}
+              onClick={() => {handleUserMarkers(user)}}
             >{user.username}</MenuItem>
           ))}
 
