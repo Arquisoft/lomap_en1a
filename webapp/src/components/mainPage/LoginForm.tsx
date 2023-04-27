@@ -47,7 +47,7 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
           <Grid container spacing={2} justifyContent="space-around">
             <TextField
               label="Identity Provider"
-              placeholder="Identity Provider"
+              placeholder="Write the link of your identity provider or choose one in the list"
               type="url"
               value={idp}
               onChange={(e) => setIdp(e.target.value)}
@@ -74,7 +74,11 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
 
   function ProviderButton(props: { text: string, idp: string }) {
     return (
-      <button className="btn-login" onClick={() => setIdp(props.idp)}>{props.text}</button>
+      <button className="btn-login" onClick={() => {
+        setIdp(props.idp)
+        handleLogin;
+      }}
+      >{props.text}</button>
     )
 }
 }

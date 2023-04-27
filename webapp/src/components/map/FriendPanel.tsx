@@ -44,7 +44,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                 </Grid>
 
                 <Grid alignItems="center" item xs={12}>
-                    <Box justifySelf={"center"} component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+                    <Box component="img" textAlign="center" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto'}}></Box>
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
                     <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
