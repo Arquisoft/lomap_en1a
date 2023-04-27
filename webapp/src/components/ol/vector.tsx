@@ -16,7 +16,6 @@ import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
-import { Category } from "../../domain/Category";
 
 
 
@@ -47,8 +46,9 @@ const addAllMarkers=(p:Place[], myOwn: boolean)=>{
     places.push(p[i])
     coordinates = [p[i].longitude, p[i].latitude];
     var visibility = p[i].visibility;
+    var category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
-      addMarker(coordinates, visibility,p[i].id);
+      addMarker(coordinates, visibility, category,p[i].id);
   }
 }
 
@@ -95,13 +95,27 @@ const getMarkers = async () => {
     addFriendPlaces();
 }
 
-const checkCategory = (category: Category) => {
-  // FIXME: Actually implement it
-  return true;
+const checkCategory = (category: string) => {
+  if (category == "DEFAULT" || visibleCategories.length == 0) {
+    return true;
+  } else {
+    if (typeof category === undefined) {
+      return false;
+    } else {
+      var isCategoryVisible = false;
+      for (let i = 0; i < visibleCategories.length; i++) {
+        if (visibleCategories[i] === category) {
+          isCategoryVisible = true;
+          break;
+        }
+      }
+      return isCategoryVisible;
+    }
+  }
 }
 
 //Adds a marker to the map
-const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?: boolean, isFriend?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string, category: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -132,8 +146,10 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
   featureToAdd.setId(id);
 
   var markerVisibility = visibility.toUpperCase()
-  // TODO: Check how to pass category to addMarker
-  var markerCategory = Category.BAR
+  var markerCategory = category;
+  if (category !== null && typeof category !== undefined) {
+    markerCategory = markerCategory.toUpperCase();
+  }
 
   if (!isFriend) {
     if (isNew || (checkVisibility(markerVisibility) && checkCategory(markerCategory))) {
@@ -141,7 +157,7 @@ const addMarker = (coordinate: Coordinate, visibility: string,id:string, isNew?:
       lastMarker = featureToAdd;
     }
   } else {
-    if (displayMap.get(id) && checkVisibility(markerVisibility)) {
+    if (displayMap.get(id) && checkVisibility(markerVisibility) && checkCategory(markerCategory)) {
       source.addFeatures([featureToAdd]);
       lastMarker = featureToAdd;
     }
@@ -177,7 +193,8 @@ export function addFriendMarkerById(id: string) {
         places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility,p[i].id, false, true);
+        var category = p[i].category;
+        addMarker(coordinates, visibility, category, p[i].id, false, true);
       }
     }
   });
@@ -232,6 +249,10 @@ export function changeMarkerColour(visibility:string){
 
 }
 
+export async function updateMarkers() {
+  refreshMarkers(currVisibility);
+}
+
 export async function refreshMarkers(visibility: string) {
   source.clear();
   currVisibility = visibility;
@@ -272,7 +293,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.handleLatitude(event.coordinate[1]);
     props.handleLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public", "",true); //The new marker still has no id
+    addMarker(event.coordinate, "public", "default", "",true); //The new marker still has no id
   };
 
   const findPlace=(id:String)=>{

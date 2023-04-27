@@ -1,15 +1,9 @@
 import { FormGroup } from "@material-ui/core";
-import { Checkbox, FormControlLabel} from "@mui/material";
+import { Button, Checkbox, FormControlLabel} from "@mui/material";
 import { Category } from "../../domain/Category";
-import {visibleCategories } from "../ol/vector";
+import { updateMarkers, visibleCategories } from "../ol/vector";
 
 export function CategoryList(): JSX.Element {
-
-  const displayCategories = () => {
-    for (let i = 0; i < visibleCategories.length; i++) {
-      alert(visibleCategories[i])
-    }
-  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, value: string) => {
     let category = value as Category;
@@ -19,8 +13,10 @@ export function CategoryList(): JSX.Element {
       let index = visibleCategories.indexOf(category)
       visibleCategories.splice(index, 1)
     }
+  }
 
-    displayCategories();
+  const applyFilters = () => {
+    updateMarkers();
   }
 
   return (
@@ -52,7 +48,9 @@ export function CategoryList(): JSX.Element {
         value="SHOP"
         onChange={event => handleChange(event, event.currentTarget.value)}
       />} label="Shop" />
-
+      <Button className="category-button" onClick={applyFilters}>
+        Apply filters
+      </Button>
     </FormGroup>
   );
 
