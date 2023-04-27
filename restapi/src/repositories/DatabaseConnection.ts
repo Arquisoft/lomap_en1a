@@ -24,4 +24,9 @@ export class DatabaseConnection {
         let collection = this.database.collection(collectionName);
         return collection.find(filter);
     }
+
+    public static async delete(collectionName: string, filter: any) {
+        let collection = this.database.collection(collectionName);
+        return collection.deleteOne(filter);
+    }
 }

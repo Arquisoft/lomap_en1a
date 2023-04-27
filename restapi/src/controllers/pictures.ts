@@ -27,7 +27,7 @@ module.exports = function (api: Router, service: PictureService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Pictures could not be fetched.");
+                return res.status(400).send({ error: "Pictures could not be fetched." });
             }
         }
     );
@@ -51,12 +51,12 @@ module.exports = function (api: Router, service: PictureService) {
                 picture.url = url;
                 picture.place = placeId;
                 picture.visibility = visibility;
-                
+
                 return res.send(await service.add(sessionId, picture));
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("The picture could not be added.");
+                return res.status(400).send({ error: "The picture could not be added." });
             }
         }
     );

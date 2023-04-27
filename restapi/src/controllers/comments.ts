@@ -17,7 +17,7 @@ module.exports = function (api: Router, service: CommentService) {
     api.get("/comment/list/:place",
         async (req: any, res: Response): Promise<Response> => {
             try {
-            
+
                 Assertion.exists(req.params.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
 
@@ -28,7 +28,7 @@ module.exports = function (api: Router, service: CommentService) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("Comments could not be fetched.");
+                return res.status(400).send({ error: "Comments could not be fetched." });
             }
         }
     );
@@ -37,7 +37,7 @@ module.exports = function (api: Router, service: CommentService) {
     api.post("/comment/add",
         async (req: any, res: Response): Promise<Response> => {
             try {
-                //Assertion.exists(req.body.visibility, "A visibility must be provided.");
+                Assertion.exists(req.body.visibility, "A visibility must be provided.");
                 Assertion.exists(req.body.comment, "A comment must be provided.");
                 Assertion.exists(req.body.place, "A place must be provided.");
                 Assertion.exists(req.session.solidSessionId, "The user must be logged in.");
@@ -45,20 +45,18 @@ module.exports = function (api: Router, service: CommentService) {
                 var sessionId: string = <string>req.session.solidSessionId;
                 var text: string = <string>req.body.comment;
                 var placeId: string = <string>req.body.place;
-                //var visibility: Visibility = <Visibility>req.params.visibility;
+                var visibility: Visibility = <Visibility>req.body.visibility;
 
                 var comment = new CommentDto();
                 comment.place = placeId;
                 comment.text = text;
-                //comment.visibility = visibility;
-                //FIXME
-                comment.visibility=Visibility.PUBLIC
+                comment.visibility = visibility;
 
                 return res.send(await service.add(sessionId, comment));
             }
             catch (error) {
                 console.log(error.message);
-                return res.send("The comment could not be added.");
+                return res.status(400).send({ error: "The comment could not be added." });
             }
         }
     );
