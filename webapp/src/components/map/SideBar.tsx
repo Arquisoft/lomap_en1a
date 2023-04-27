@@ -65,8 +65,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
    //Get the list of public users
   const [users, setUsers] = useState<User[]>([]);
   const refreshPublicUsersList = async () => {
-    getAllPublicUsers().then((u) => setUsers(u));
+    // getAllPublicUsers().then((u) => setUsers(u));
+    let publicUsers = await getAllPublicUsers();
+    let profile = await getProfile();
 
+    let index = publicUsers.map(u => u.webId).indexOf(profile.webId);
+    if (index >= 0) publicUsers.splice(index, 1);
+
+    setUsers(publicUsers);
   }
 
   const addUserToPublicList = async () => {
