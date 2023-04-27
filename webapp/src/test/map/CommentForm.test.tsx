@@ -10,7 +10,7 @@ test('check comment is added', async () => {
     jest.spyOn(api,'addComment').mockImplementation((c:Comment):Promise<boolean> => Promise.resolve(true))
     await act(async () => {    
       const {container, getByText} = render(<CommentForm OnCommentListChange={()=>{}} place=""/>)  
-      const input = container.querySelector('input[name="text"]')!;
+      const input = container.querySelector('textarea[name="text"]')!;
       fireEvent.change(input, { target: { value: "Hello" } });
       const button = getByText("Post");
       fireEvent.click(button);
@@ -24,7 +24,7 @@ test('check comment is added', async () => {
     jest.spyOn(api,'addComment').mockImplementation((c:Comment):Promise<boolean> => Promise.resolve(false))
     await act(async () => {    
       const {container, getByText} = render(<CommentForm OnCommentListChange={()=>{}} place=""/>)  
-      const input = container.querySelector('input[name="text"]')!;
+      const input = container.querySelector('textarea[name="text"]')!;
       fireEvent.change(input, { target: { value: "Hello" } });
       const button = getByText("Post");
       fireEvent.click(button);
