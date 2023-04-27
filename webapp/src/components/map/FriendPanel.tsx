@@ -98,9 +98,6 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                         </Button>
                         <br></br>
                         {place.latitude + "," + place.longitude}
-                        {/* <label id={place.id}>
-                            {getPlaceDisplayStatus(place.id)}
-                        </label> */}
                     </Box>
 
                 ))

@@ -180,7 +180,7 @@ const checkVisibility = (visibility:string) => {
 export function addMarkersByUserId(id:string){
   users.push(id);
   getPublicPlacesByPublicUser(id).then((p)=>{
-    addAllMarkers(p, true);   
+    addAllMarkers(p, true);
   })
 
 }
