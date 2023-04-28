@@ -111,7 +111,7 @@ function FriendsTable() {
             <StyledTableRow>
               <StyledTableCell align="center">Friend username</StyledTableCell>
               <StyledTableCell align="center">Friend web id</StyledTableCell>
-              <StyledTableCell align="center">Accept</StyledTableCell>
+              <StyledTableCell align="center">Accept requests</StyledTableCell>
             </StyledTableRow>
           </TableHead>
           <TableBody>
@@ -132,7 +132,7 @@ function FriendsTable() {
                     <StyledTableCell align="center">
                         <Button variant="contained" onClick={()=>{
                           handleSubmit(row.webId);
-                          }}>Add friend</Button>
+                          }}>Acept request</Button>
                     </StyledTableCell>
     
                   </StyledTableRow>
