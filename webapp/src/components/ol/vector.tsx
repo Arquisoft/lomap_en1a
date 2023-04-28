@@ -297,7 +297,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
   //When map is first rendered
   useEffect(() => {
-    props.handleIsLoading(true)
+    props.handleIsMainLoading(true)
     props.map.addLayer(layer);
     props.map.on("dblclick", onMapClick);
     props.map.on('singleclick', function (e) {
@@ -308,7 +308,7 @@ function Vector(props: TVectorLayerComponentProps) {
     });
 
     getMarkers();
-    props.handleIsLoading(false)
+    props.handleIsMainLoading(false)
 
   }, [])
 

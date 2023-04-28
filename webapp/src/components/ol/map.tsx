@@ -57,7 +57,7 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
             <VectorLayerWithContext handleSlidingPaneView={this.props.handleSlidingPaneView} handleInfoWindowData={this.props.handleInfoWindowData}
               handleLatitude={this.props.handleLatitude} handleLongitude={this.props.handleLongitude}
               handleIsOpen={this.props.handleIsOpen} visibility={this.props.visibility}
-              handleIsLoading={this.props.handleIsLoading} isLoading={this.props.isLoading} />
+              handleIsMainLoading={this.props.handleIsMainLoading} />
           </MapContext.Provider>
         )}
       </div>

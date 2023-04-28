@@ -48,7 +48,9 @@ export default function MapView(): JSX.Element {
   //Hooks
   const [isOpen, setIsOpen] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [mainLoadingMessage, setMainLoadingMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMainLoading, setIsMainLoading] = useState(false);
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -105,6 +107,14 @@ export default function MapView(): JSX.Element {
 
 
   }
+  const handleIsMainLoading = async (value: boolean, message?: string) => {
+    setIsMainLoading(value);
+    if (message) {
+      setMainLoadingMessage(message);
+    }
+
+
+  }
 
 
 
@@ -118,7 +128,12 @@ export default function MapView(): JSX.Element {
   return (
 
     <>
-      <div className='map-view' style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}} >
+
+      <div className='map-view' id={isMainLoading + ""} style={isMainLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+
+        {
+          isMainLoading ? <LoadingSpinner message={mainLoadingMessage} /> : <LoadingSpinner message="Cargó" />
+        }
         <div className='side-bar'>
           <ProSidebarProvider>
             <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
@@ -133,8 +148,7 @@ export default function MapView(): JSX.Element {
 
         <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
           handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility}
-          handleIsLoading={handleIsLoading}
-          isLoading={isLoading} />
+          handleIsMainLoading={handleIsMainLoading} />
 
       </div>
 
