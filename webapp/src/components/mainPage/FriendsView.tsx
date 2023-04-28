@@ -50,16 +50,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 
-function FriendsTable(props:FriendsTableProps) {
+function FriendsTable() {
 
-   
+  const[requests,setRequests] = useState<User[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
     const [notificationStatus, setNotificationStatus] = useState(false);
     const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
     const[text,setText] = useState("");
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.friends.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - requests.length) : 0;
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -83,6 +83,8 @@ function FriendsTable(props:FriendsTableProps) {
           severity: 'success',
           message: 'Your new friend has been added!'
         });
+        getFriendRequests().then(f=>setRequests(f))
+        
       }
       else {
         setNotificationStatus(true);
@@ -93,6 +95,11 @@ function FriendsTable(props:FriendsTableProps) {
       }
     }
 
+
+    useEffect(()=>{
+      getFriendRequests().then(f=>setRequests(f))
+    }
+    ,[])
 
 
 
@@ -108,10 +115,10 @@ function FriendsTable(props:FriendsTableProps) {
             </StyledTableRow>
           </TableHead>
           <TableBody>
-                {(rowsPerPage > 0
-                    ? props.friends.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    : props.friends
-                ).map((row) => (
+              {(rowsPerPage > 0
+                      ? requests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      : requests
+                  ).map((row) => (
                     <StyledTableRow
                     key={row.webId}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -143,7 +150,7 @@ function FriendsTable(props:FriendsTableProps) {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={props.friends.length}
+              count={requests.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
@@ -177,7 +184,7 @@ function FriendsTable(props:FriendsTableProps) {
 export default function FriendsView(){
     //Hook for the friend web id
     
-    const[requests,setRequests] = useState<User[]>([]);
+    
     const [notificationStatus, setNotificationStatus] = useState(false);
     const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
     const[text,setText] = useState("");
@@ -204,10 +211,6 @@ export default function FriendsView(){
 
 
 
-    useEffect(()=>{
-      getFriendRequests().then(f=>setRequests(f))
-    }
-    ,[])
 
     return (
         <>
@@ -235,7 +238,7 @@ export default function FriendsView(){
                         </Grid>
                         
                           <Grid item xs={12}>
-                              <FriendsTable friends={requests}/>
+                              <FriendsTable/>
                           </Grid>
                         
 
