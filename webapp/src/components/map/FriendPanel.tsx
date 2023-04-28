@@ -24,7 +24,17 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     //For the friends
     const [friendPlaces, setFriendPlaces] = useState<Place[]>([]);
     const refreshFriendPlaceList = async () => {
-        getPlacesToShareByUser(props.friend.webId).then((places) => setFriendPlaces(places));
+        getPlacesToShareByUser(props.friend.webId).then((places) => {
+            places.sort(function(a, b) {
+                let name1 = a.name.toLowerCase();
+                let name2 = b.name.toLowerCase();
+                if(name1 < name2) { return -1; }
+                if(name1 > name2) { return 1; }
+                return 0;
+            })
+
+            setFriendPlaces(places)
+        });
 
     }
 
@@ -44,7 +54,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                 </Grid>
 
                 <Grid alignItems="center" item xs={12}>
-                    <Box justifySelf={"center"} component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', }}></Box>
+                    <Box component="img" textAlign="center" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto'}}></Box>
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
                     <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
@@ -90,17 +100,14 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
             {
                 props.sharedSites.map((place) => (
 
-                    <Box component="p" textAlign="left">
+                    <Box key={place.id} component="p" textAlign="left">
                         {place.name}
                         <br></br>
-                        <Button id={place.id} variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
+                        <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
                             {getPlaceDisplayStatus(place.id)?"Hide":"Show"}
                         </Button>
                         <br></br>
                         {place.latitude + "," + place.longitude}
-                        {/* <label id={place.id}>
-                            {getPlaceDisplayStatus(place.id)}
-                        </label> */}
                     </Box>
 
                 ))

@@ -20,10 +20,11 @@ export class UserRepositoryImpl implements UserRepository {
     async addFriend(sessionId: string, webId: string): Promise<boolean> {
 
         let currentUser: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
-        webId = webId.split("/profile")[0];
-        let currentUserFriends = (await PodManager.dataManager.getFriends(sessionId, currentUser)).map(user => { return user.getWebId().split("/profile")[0] });
 
-        if (!currentUserFriends.includes(webId.split("/profile")[0])) {
+        let currentUserFriends = (await PodManager.dataManager.getFriends(sessionId, currentUser)).map(user => { return user.getWebId() });
+
+        console.log(currentUserFriends)
+        if (!currentUserFriends.includes(webId)) {
             this.sendFriendRequest(sessionId, currentUser, webId);
             this.deleteFriendRequest(sessionId, currentUser, webId);
             return PodManager.dataManager.addFriend(sessionId, webId);
@@ -38,8 +39,8 @@ export class UserRepositoryImpl implements UserRepository {
         if (!friendFriends.includes(currentUser)) {
             DatabaseConnection.add("friends",
                 {
-                    requester: currentUser.split("/profile")[0],
-                    requestee: friend.split("/profile")[0]
+                    requester: currentUser,
+                    requestee: friend
                 });
         }
     }
@@ -84,14 +85,13 @@ export class UserRepositoryImpl implements UserRepository {
     }
 
     async getFriendRequests(sessionId: string): Promise<User[]> {
-        let webId = PodManager.sessionManager.getCurrentWebId(sessionId);
+        let webId: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
         let userList = await DatabaseConnection.find("friends", { requestee: webId });
         let users: User[] = [];
 
         await Promise.all((await userList.toArray()).map(async (user) => {
-            users.push(await PodManager.dataManager.getUser(sessionId, user.user));
+            users.push(await PodManager.dataManager.getUser(sessionId,user.requester));
         }));
-
         return users;
     }
 

@@ -55,9 +55,11 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
         <Grid container spacing={2} justifyContent="space-around">
           
             <TextField
+                multiline
+                rows={2}
                 required
                 name="text"
-                label="Write the URL of your new picture" 
+                placeholder="Write the URL of your new picture" 
                 variant="filled"
                 value={url}
                 onChange={e => {

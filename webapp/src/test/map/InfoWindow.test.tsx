@@ -13,7 +13,8 @@ test('check info window data is rendered correctly', async () => {
         category: Category.BAR,
         id: "",
         latitude: 0,
-        longitude: 0
+        longitude: 0,
+        description:""
     }
     const {container, getByText} = render(<InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading = {false}/> )  
     expect(await getByText("Test title")).toBeInTheDocument();

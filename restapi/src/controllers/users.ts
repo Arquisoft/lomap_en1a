@@ -95,8 +95,7 @@ module.exports = function (api: Router) {
 
             let sessionId: string = <string>req.session.solidSessionId;
             let webId: string = <string>req.params.webId;
-
-            webId = "https://boblomapen1a.inrupt.net/profile/card#me";
+            webId = decodeURIComponent(webId);
 
             let userService: UserService = Factory.services.getUserService();
 
