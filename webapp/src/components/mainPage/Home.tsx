@@ -12,18 +12,43 @@ const images = [map, paris, london, eii, new_york, madrid];
 
 
 export default function Home(): JSX.Element {
-  const text ="LoMap is a software system where the citizens can have personalized maps about places and local businesses in their city. Places that can be mapped can vary from shops to bars, restaurants, sights, culture, etc.";
-  return (
-    <Grid container className="centered-container">
-    <Grid item xs={4}>
-    <Box component="h1" className="fade-in">LoMap</Box>
-      <Box component="p" className="fade-in">{text}</Box>
-    </Grid>
-    <Grid item xs={6}>
-      <Slideshow images={images}/>
-    </Grid>
-
-    </Grid>
+  let description ="Welcome to LoMap! With this application you will be able to select and share your favourite places around " +
+    "the world with your friends. Take a sit, log in, and most importantly, have fun!!";
   
+  let description2 ="With LoMap, not only can you add places anywhere you want, but also you will be able to: ";
+
+  return (
+    <div className="background-image margin">
+    <Grid container spacing={4} 
+        justifyItems="flex-end"
+        alignItems="center"
+        padding="0em 5em" 
+        paddingBottom="3em"
+        fontSize="3.2vmin">
+      <Grid item xs={12} textAlign="center">
+        <Box component="h1">LoMap</Box>
+      </Grid>
+      <Grid item xs={12} textAlign="justify" fontSize="4vmin">
+        <Box>{description}</Box>
+      </Grid>
+      <Grid item xs={12} textAlign="center">
+        <Box component="img" src={map} alt="App view"
+        sx={{maxWidth: '100%', maxHeight: '20em', width: 'auto', height: 'auto', borderRadius: '2em'}}></Box>
+      </Grid>
+      <Grid item xs={6} textAlign="justify">
+        <p>{description2}</p>
+        <ul className="homepage-list">
+          <li>Review places!</li>
+          <li>Leave comments!</li>
+          <li>Add pictures!</li>
+          <li>Describe your favourite sites!</li>
+          <li>Add friends!</li>
+        </ul>
+      </Grid>
+      <Grid item xs={6} textAlign="center" alignItems="center">
+        <Slideshow images={images}/>
+      </Grid>
+    </Grid>
+    </div>  
   )
 }
