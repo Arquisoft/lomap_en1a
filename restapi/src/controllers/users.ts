@@ -3,6 +3,7 @@ import { PodManager } from "../repositories/pods/PodManager";
 import { UserService } from "../business/user/UserService";
 import { Factory } from "../Factory";
 import { Assertion } from "../Assertion";
+import { PermissionManager } from "../repositories/pods/PermissionManager";
 
 module.exports = function (api: Router) {
 

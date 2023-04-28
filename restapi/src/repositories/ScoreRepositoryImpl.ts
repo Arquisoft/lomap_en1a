@@ -28,9 +28,17 @@ export class ScoreRepositoryImpl implements ScoreRepository {
     async findOwn(sessionId: string, user: string): Promise<Score[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "comments", webId, "private");
+        let scores: Score[] = [];
 
-        return PodManager.entityParser.parseScores(dataset);
+        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "private");
+
+        scores = PodManager.entityParser.parseScores(dataset);
+
+        dataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "friends");
+
+        scores = scores.concat(PodManager.entityParser.parseScores(dataset));
+
+        return scores;
     }
 
     async findByPlace(sessionId: string, place: string): Promise<Score[]> {
@@ -42,7 +50,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         let webIds: string[] = [];
 
-        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+        await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
             if (!webIds.includes(d.webId)) {
                 webIds.push(d.webId)
             }
@@ -55,7 +63,7 @@ export class ScoreRepositoryImpl implements ScoreRepository {
 
         webIds = [];
 
-        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
+        await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
             if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
                 webIds.push(d.webId)
             }

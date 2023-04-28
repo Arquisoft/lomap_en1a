@@ -28,9 +28,17 @@ export class PictureRepositoryImpl implements PictureRepository {
     async findOwn(sessionId: string, user: string): Promise<Picture[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
+        let pictures: Picture[] = [];
+
         let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "private");
 
-        return PodManager.entityParser.parsePictures(dataset);
+        pictures = PodManager.entityParser.parsePictures(dataset);
+
+        dataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "friends");
+
+        pictures = pictures.concat(PodManager.entityParser.parsePictures(dataset));
+
+        return pictures;
     }
 
     async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
@@ -42,7 +50,7 @@ export class PictureRepositoryImpl implements PictureRepository {
 
         let webIds: string[] = [];
 
-        await(await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
+        await (await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
             if (!webIds.includes(d.webId)) {
                 webIds.push(d.webId)
             }

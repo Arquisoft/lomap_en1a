@@ -31,9 +31,17 @@ export class CommentRepositoryImpl implements CommentRepository {
     async findOwn(sessionId: string, user: string): Promise<Comment[]> {
         let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
+        let comments: Comment[] = [];
+
         let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "comments", webId, "private");
 
-        return PodManager.entityParser.parseComments(dataset);
+        comments = PodManager.entityParser.parseComments(dataset);
+
+        dataset = await PodManager.dataManager.fetchData(sessionId, "comments", webId, "friends");
+
+        comments = comments.concat(PodManager.entityParser.parseComments(dataset));
+
+        return comments;
     }
 
     async findByPlace(sessionId: string, place: string): Promise<Comment[]> {
@@ -44,24 +52,24 @@ export class CommentRepositoryImpl implements CommentRepository {
         let friends: string[] = (await PodManager.dataManager.getFriends(sessionId, webId)).map(f => f.getWebId());
 
         let webIds: string[] = [];
-        
-    
+
+
         await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
-        
+
             if (!webIds.includes(d.webId)) {
                 webIds.push(d.webId)
             }
         });
-        
+
         for (let w in webIds) {
-            
+
             let webID = webIds[w];
-            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "public")).filter(c => c.getPlace() == place).forEach(c => { comments.push(c) });
+            PodManager.entityParser.parseComments(await PodManager.dataManager.fetchData(sessionId, "comments", webID, "public")).filter(c => c.getPlace() == place).forEach((c: Comment) => { comments.push(c) });
         }
 
         webIds = [];
 
-        await(await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
+        await (await DatabaseConnection.find("comments", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
             if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
                 webIds.push(d.webId)
             }
