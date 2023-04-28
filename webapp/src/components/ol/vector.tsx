@@ -26,6 +26,7 @@ var source: VectorSource = new VectorSource({
   features: undefined,
 });
 export var displayMap = new Map();
+export var visibleCategories = new Array();
 var lastMarker = new Feature();
 var currVisibility = "";
 
@@ -34,8 +35,8 @@ var places: Place[];
 places = [];
 
 //List of public users to show their places
-var users: string[];
-users = [];
+export var displayedUsers:string[];
+displayedUsers = [];
 //-------------------------------------------------
 
 
@@ -48,8 +49,9 @@ const addAllMarkers = (p: Place[], myOwn: boolean) => {
     places.push(p[i])
     coordinates = [p[i].longitude, p[i].latitude];
     var visibility = p[i].visibility;
+    var category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
-      addMarker(coordinates, visibility, p[i].id);
+      addMarker(coordinates, visibility, category,p[i].id);
   }
 }
 
@@ -60,9 +62,9 @@ const addPublicPlaces = async () => {
   });
 
   //When filtering, the public places of other users added to the map should appear too
-  for (let i = 0; i < users.length; i++) {
-    getPublicPlacesByPublicUser(users[i]).then((p) => {
-      addAllMarkers(p, true);
+  for(let i = 0;i<displayedUsers.length;i++){
+    getPublicPlacesByPublicUser(displayedUsers[i]).then((p)=>{
+      addAllMarkers(p, true);   
     })
   }
 }
@@ -96,8 +98,27 @@ const getMarkers = async () => {
   addFriendPlaces();
 }
 
+const checkCategory = (category: string) => {
+  if (category == "DEFAULT" || visibleCategories.length == 0) {
+    return true;
+  } else {
+    if (typeof category === undefined) {
+      return false;
+    } else {
+      var isCategoryVisible = false;
+      for (let i = 0; i < visibleCategories.length; i++) {
+        if (visibleCategories[i] === category) {
+          isCategoryVisible = true;
+          break;
+        }
+      }
+      return isCategoryVisible;
+    }
+  }
+}
+
 //Adds a marker to the map
-const addMarker = (coordinate: Coordinate, visibility: string, id: string, isNew?: boolean, isFriend?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string, category: string,id:string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -128,14 +149,18 @@ const addMarker = (coordinate: Coordinate, visibility: string, id: string, isNew
   featureToAdd.setId(id);
 
   var markerVisibility = visibility.toUpperCase()
+  var markerCategory = category;
+  if (category !== null && typeof category !== undefined) {
+    markerCategory = markerCategory.toUpperCase();
+  }
 
   if (!isFriend) {
-    if (isNew || checkVisibility(markerVisibility)) {
+    if (isNew || (checkVisibility(markerVisibility) && checkCategory(markerCategory))) {
       source.addFeatures([featureToAdd]);
       lastMarker = featureToAdd;
     }
   } else {
-    if (displayMap.get(id) && checkVisibility(markerVisibility)) {
+    if (displayMap.get(id) && checkVisibility(markerVisibility) && checkCategory(markerCategory)) {
       source.addFeatures([featureToAdd]);
       lastMarker = featureToAdd;
     }
@@ -155,10 +180,19 @@ const checkVisibility = (visibility: string) => {
 }
 
 
-export function addMarkersByUserId(id: string) {
-  users.push(id);
-  getPublicPlacesByPublicUser(id).then((p) => {
+export function addMarkersByUserId(id:string){
+  displayedUsers.push(id);
+  getPublicPlacesByPublicUser(id).then((p)=>{
     addAllMarkers(p, true);
+  })
+
+}
+
+export function removeMarkersByUserId(id:string){
+  let index = displayedUsers.indexOf(id)
+  displayedUsers.splice(index, 1)
+  getPublicPlacesByPublicUser(id).then((p)=>{
+    deleteAllMarkers(p);
   })
 
 }
@@ -171,10 +205,17 @@ export function addFriendMarkerById(id: string) {
         places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
         var visibility = p[i].visibility;
-        addMarker(coordinates, visibility, p[i].id, false, true);
+        var category = p[i].category;
+        addMarker(coordinates, visibility, category, p[i].id, false, true);
       }
     }
   });
+}
+
+function deleteAllMarkers(places: Place[]) {
+  for (let i = 0; i < places.length; i++) {
+    deleteMarkerById(places[i].id);
+  }
 }
 
 //Deletes a marker given its ID
@@ -226,6 +267,10 @@ export function changeMarkerColour(visibility: string) {
 
 }
 
+export async function updateMarkers() {
+  refreshMarkers(currVisibility);
+}
+
 export async function refreshMarkers(visibility: string) {
   source.clear();
   currVisibility = visibility;
@@ -267,7 +312,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.handleLatitude(event.coordinate[1]);
     props.handleLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public", "", true); //The new marker still has no id
+    addMarker(event.coordinate, "public", "default", "",true); //The new marker still has no id
   };
 
   const findPlace = (id: String) => {
@@ -285,7 +330,8 @@ function Vector(props: TVectorLayerComponentProps) {
       category: place.category,
       id: place.id,
       latitude: place.latitude,
-      longitude: place.longitude
+      longitude: place.longitude,
+      description:place.description
     });
     props.handleIsOpen(true);
     props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);

@@ -28,6 +28,7 @@ export class PlaceServiceImpl implements PlaceService {
         let latitude = place.latitude;
         let longitude = place.longitude;
         let visibility = place.visibility;
+        let category = place.category;
 
         if (name == undefined || name == null) {
             throw new Error();
@@ -49,14 +50,16 @@ export class PlaceServiceImpl implements PlaceService {
             throw new Error();
         }
 
-        let p = new Place(id, name, description, "", latitude, longitude, visibility);
+        if (category == undefined || category == null) {
+            throw new Error();
+        }
+
+        let p = new Place(id, name, description, "", latitude, longitude, visibility, category);
 
         if (await this.placeRepository.add(sessionId, p)) {
             return p;
         }
-
-        //FIXME
-        return new Place("ERR", "", "", "", 0, 0, visibility);
+        return new Place("ERR", "", "", "", 0, 0, visibility,category);
     }
 
     async findOwn(sessionId: string): Promise<Place[]> {

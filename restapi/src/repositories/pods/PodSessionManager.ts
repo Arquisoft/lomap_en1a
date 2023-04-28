@@ -18,6 +18,7 @@ export class PodSessionManager {
     private port = configuration.port;
     private clientName = configuration.clientName;
 
+
     public async login(req: any, res: Response): Promise<void> {
 
         let host: string = process.env.host || "localhost";
@@ -25,7 +26,7 @@ export class PodSessionManager {
         let provider = req.params.provider;
         Assertion.exists(provider, "A provider must be given.");
         provider = decodeURIComponent(provider);
-        provider = "https://inrupt.net";
+        //provider = "https://inrupt.net";
 
         let redirect = req.params.redirect;
         //Assertion.exists(redirect, "A redirect url must be given.");
@@ -34,15 +35,20 @@ export class PodSessionManager {
 
         const session = new Session();
         req.session.solidSessionId = session.info.sessionId;
-
-        await session.login({
-            redirectUrl: redirect,
-            oidcIssuer: <string>provider,
-            clientName: this.clientName,
-            handleRedirect: (url: string) => {
-                res.redirect(url)
-            }
-        });
+        
+        try {
+            await session.login({
+                redirectUrl: redirect,
+                oidcIssuer: <string>provider,
+                clientName: this.clientName,
+                handleRedirect: (url: string) => {
+                    res.redirect(url)
+                    console.log(url);
+                }
+            })
+        } catch (err) {
+            res.redirect("http://" + host + ":3000/login/fail");
+        }
 
     }
 

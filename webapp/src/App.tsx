@@ -11,6 +11,7 @@ import MapView from "./components/map/MapView"
 import UserProfile from "./components/mainPage/UserProfile"
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { useCookies } from "react-cookie";
+import FriendsView from "./components/mainPage/FriendsView";
 
 
 
@@ -40,7 +41,9 @@ function App() {
                     <Route path="/about" element={<About/>}/>
                     <Route path="/contact" element={<Contact/>}/>
                     <Route path="/login" element={<LoginForm/>}/>
+                    <Route path="/login/fail" element={<LoginForm fail={true}/>}/>
                     <Route path="/map" element={<PrivateComponent children = {<MapView/>}/>}/>
+                    <Route path="/friends" element={<PrivateComponent children = {<FriendsView/>}/>}/>
                     <Route path="/profile" element={<PrivateComponent children = {<UserProfile/>}/>}/>
                     <Route path="*" element={<Navigate to= "/"/>}/>
                 </Routes>

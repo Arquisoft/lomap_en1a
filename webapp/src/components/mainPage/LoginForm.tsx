@@ -7,11 +7,14 @@ import Alert from '@mui/material/Alert';
 import { useCookies } from "react-cookie";
 import { NotificationType } from "../map/CommentForm";
 
+export interface LoginFormProps {
+  fail?:boolean;
+}
 
-export default function LoginForm():JSX.Element{
+export default function LoginForm(props:LoginFormProps):JSX.Element{
   const [cookies,setCookie] = useCookies();
 
-  const [idp, setIdp] = useState("https://inrupt.net");
+  const [idp, setIdp] = useState("");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
 
   const [notificationStatus, setNotificationStatus] = useState(false);
@@ -19,26 +22,45 @@ export default function LoginForm():JSX.Element{
 
 
   useEffect(() => {
+    if (props.fail != null && props.fail) {
+      errorHandler("This provider is not supported.")
+    }
     setCurrentUrl(window.location.href);
   }, [setCurrentUrl]);
 
+
+  function errorHandler(message:string) {
+    setNotificationStatus(true);
+    setNotification({
+      severity: 'warning',
+      message: message
+    })
+  }
+
   const handleLogin =async () => {
-    {
-      let supportedProviders = ["https://solidcommunity.net", "https://solidweb.org", "https://inrupt.net", "https://login.inrupt.com"];
-      if (!supportedProviders.includes(idp)) {
-        setNotificationStatus(true);
-        setNotification({
-          severity: 'warning',
-          message: 'This provider is not supported.'
-        });
-      } else {
-        
-        login(idp, currentUrl).then(()=>setCookie('isLogged','true'));
-
-
-
-      }
+    if (idp.trim().length === 0) {
+      errorHandler("The provider cannot be empty.")
+    } else {
+      login(idp.trim(), currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
     }
+  };
+
+  const handleLoginBtn =async (idp2:string) => {
+    if (idp2.trim().length === 0) {
+      errorHandler("The provider cannot be empty.")
+    } else {
+      login(idp2.trim(), currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
+    }
+    login(idp2.trim(), currentUrl)
+      .then(()=>{
+        setCookie('isLogged','true')
+      })
   };
 
   return (
@@ -49,7 +71,7 @@ export default function LoginForm():JSX.Element{
           <Grid container spacing={2} justifyContent="space-around">
             <TextField
               label="Identity Provider"
-              placeholder="Identity Provider"
+              placeholder="Write the link of your identity provider or choose one in the list"
               type="url"
               value={idp}
               onChange={(e) => setIdp(e.target.value)}
@@ -76,7 +98,11 @@ export default function LoginForm():JSX.Element{
 
   function ProviderButton(props: { text: string, idp: string }) {
     return (
-      <button className="btn-login" onClick={() => setIdp(props.idp)}>{props.text}</button>
+      <button className="btn-login" onClick={() => {
+        setIdp(props.idp);
+        handleLoginBtn(props.idp);
+      }}
+      >{props.text}</button>
     )
 }
 }

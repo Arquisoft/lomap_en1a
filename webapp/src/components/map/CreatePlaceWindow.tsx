@@ -13,7 +13,6 @@ import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList } from '../ol/vector';
 import { Category } from '../../domain/Category';
-import LoadingSpinner from '../LoadingSpinner';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -22,6 +21,33 @@ export interface CreatePlaceWindowProps {
   handleDeleteMarker: (value: boolean) => Promise<void>,
   handleIsOpen: (value: boolean) => Promise<void>
 
+}
+
+interface VisibilitySelectProps{
+  visibility:Visibility,
+  handleVisibilityChange: (value: string) => Promise<void>
+}
+
+export function VisibilitySelect(props:VisibilitySelectProps):JSX.Element{
+
+  return(
+    <FormControl>
+    <InputLabel id="visibility-select-label">Visibility</InputLabel>
+    <Select
+      labelId="visibility-select-label"
+      id="visibility-select"
+      value={props.visibility}
+      label="Visibility"
+      onChange={e => {
+        props.handleVisibilityChange(e.target.value as string);
+      }}
+    >
+      <MenuItem value={'PRIVATE'}>Private</MenuItem>
+      <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+      <MenuItem value={'PUBLIC'}>Public</MenuItem>
+    </Select>
+  </FormControl>
+  )
 
 }
 
@@ -29,11 +55,10 @@ export interface CreatePlaceWindowProps {
 export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.Element {
 
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
   const [category, setCategory] = useState<Category>(Category.BAR);
   const [showError, setShowError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
@@ -41,6 +66,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
+    console.log(newVisibility)
 
     setVisibility(newVisibility);
   }
@@ -57,12 +83,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
-
-      setIsLoading(true);//Start showing loading symbol
-
-      var place = new Place("", name, "", "", props.latitude, props.longitude, visibility, category);
+      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility,category);
       let result = await addPlace(place);
-      setIsLoading(false);//Stop showing loading symbol
 
       if (result.id != "ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
@@ -111,16 +133,17 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     <>
       <form name="register" onSubmit={handleSubmit} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
         <Grid container spacing={2} justifyContent="space-around">
-
-          <Grid item xs={12} >
-            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
-          </Grid>
+          <div className="centered-element">
+            <Grid item xs={12}>
+              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
+            </Grid>
+          </div>
           <TextField
             error={showError}
             helperText={"Invalid name"}
             required
             name="text"
-            label="Write the name of your new place"
+            placeholder="Write the name of your new place"
             variant="filled"
             value={name}
             onChange={e => {
@@ -130,22 +153,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
           />
 
-          <FormControl>
-            <InputLabel id="visibility-select-label">Visibility</InputLabel>
-            <Select
-              labelId="visibility-select-label"
-              id="visibility-select"
-              value={visibility}
-              label="Visibility"
-              onChange={e => {
-                handleVisibilityChange(e.target.value as string);
-              }}
-            >
-              <MenuItem value={'PRIVATE'}>Private</MenuItem>
-              <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-              <MenuItem value={'PUBLIC'}>Public</MenuItem>
-            </Select>
-          </FormControl>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
 
           <FormControl>
             <InputLabel id="category-select-label">Category</InputLabel>
@@ -160,6 +168,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             >
               <MenuItem value={'BAR'}>Bar</MenuItem>
               <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+              <MenuItem value={'MUSEUM'}>Museum</MenuItem>
               <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
               <MenuItem value={'SIGHT'}>Sight</MenuItem>
               <MenuItem value={'SHOP'}>Shop</MenuItem>
@@ -167,7 +176,22 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
           </FormControl>
 
           <Button variant="contained" type="submit">Add place</Button>
-          {isLoading ? <LoadingSpinner /> : <></>}
+          <Grid item xs={12}>
+            <TextField
+              multiline
+              rows={7}
+              fullWidth
+              name="description"
+              placeholder="Write the description of your new place"
+              variant="filled"
+              value={description}
+              onChange={e => {
+                setDescription(e.target.value)
+
+              }}
+            />
+          </Grid>
+
         </Grid>
 
       </form>

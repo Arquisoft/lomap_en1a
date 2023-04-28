@@ -4,9 +4,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
-import { getProfileById } from '../../api/api';
-import { User } from '../../domain/User';
-import { useState } from 'react';
 
 
 

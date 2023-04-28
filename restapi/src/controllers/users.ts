@@ -28,7 +28,7 @@ module.exports = function (api: Router) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send({ error: "There was an error while logging in." });
+                return res.status(400).send({ error: "There was an error while logging in." });
             }
         }
     );
@@ -41,7 +41,7 @@ module.exports = function (api: Router) {
             }
             catch (error) {
                 console.log(error.message);
-                return res.send({ error: "There was an error while logging in." });
+                return res.status(400).send({ error: "There was an error while logging in." });
             }
         }
     );
@@ -63,7 +63,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "Profile could not be fetched" });
+            return res.status(400).send({ error: "Profile could not be fetched" });
         }
     })
 
@@ -82,7 +82,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "Profile could not be fetched" });
+            return res.status(400).send({ error: "Profile could not be fetched" });
         }
     })
 
@@ -94,8 +94,7 @@ module.exports = function (api: Router) {
 
             let sessionId: string = <string>req.session.solidSessionId;
             let webId: string = <string>req.params.webId;
-
-            webId = "https://boblomapen1a.inrupt.net/profile/card#me";
+            webId = decodeURIComponent(webId);
 
             let userService: UserService = Factory.services.getUserService();
 
@@ -103,7 +102,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "Friends could not be fetched" });
+            return res.status(400).send({ error: "Friends could not be fetched" });
         }
     })
 
@@ -117,7 +116,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "There was an error while checking if the user is logged in" });
+            return res.status(400).send({ error: "There was an error while checking if the user is logged in" });
         }
     })
 
@@ -132,11 +131,11 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "There was an error while adding a friend" });
+            return res.status(400).send({ error: "There was an error while adding a friend" });
         }
     });
 
-    api.get("/users/share", async (req: any, res: Response) => {
+    api.post("/users/share", async (req: any, res: Response) => {
         try {
             let sessionId: string = <string>req.session.solidSessionId;
 
@@ -146,7 +145,7 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "There was an error while checking if the user is logged in" });
+            return res.status(400).send({ error: "There was an error while checking if the user is logged in" });
         }
     })
 
@@ -160,7 +159,21 @@ module.exports = function (api: Router) {
         }
         catch (error) {
             console.log(error.message);
-            return res.send({ error: "There was an error while checking if the user is logged in" });
+            return res.status(400).send({ error: "There was an error while checking if the user is logged in" });
+        }
+    })
+
+    api.get("/users/request", async (req: any, res: Response) => {
+        try {
+            let sessionId: string = <string>req.session.solidSessionId;
+
+            let userService: UserService = Factory.services.getUserService();
+
+            return res.send(await userService.getFriendRequests(sessionId));
+        }
+        catch (error) {
+            console.log(error.message);
+            return res.status(400).send({ error: "There was an error while checking if the user is logged in" });
         }
     })
 }

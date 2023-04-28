@@ -45,7 +45,7 @@ export async function addScore(score: Score): Promise<boolean> {
     mode: 'cors',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 'score': score.score, 'place': score.place })
+    body: JSON.stringify({ 'score': score.score, 'place': score.place, 'visibility':score.visibility })
   });
   if (response.status === 200)
     return true;
@@ -74,7 +74,8 @@ export async function addPlace(place: Place): Promise<Place> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       'name': place.name, 
-      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude, 'category':place.category
+      'visibility': place.visibility, 'latitude': place.latitude, 'longitude': place.longitude, 'category':place.category,
+      'description':place.description
     }),
 
     credentials: 'include',
@@ -135,8 +136,9 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 //List public places by user
 
 export async function getPublicPlacesByPublicUser(id:string): Promise<Place[]> {
+  let userId = encodeURIComponent(id);
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-  let response = await fetch(apiEndPoint + '/place/public/list/'+id, {
+  let response = await fetch(apiEndPoint + '/place/public/list/'+userId, {
     credentials: 'include',
     mode: 'cors'
   });
@@ -197,6 +199,34 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
 }
 
 //User--------------------------------------------------------
+export async function addFriend(id: string): Promise<boolean> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  let response = await fetch(apiEndPoint + '/users/friends/add', {
+    credentials: 'include',
+    mode: 'cors',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      'webId':id
+    })
+  });
+  if (response.status === 200)
+    return true;
+  else
+    return false;
+}
+
+export async function getFriendRequests(): Promise<User[]> {
+  const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+
+  let response = await fetch(apiEndPoint + '/users/request', {
+    credentials: 'include',
+    mode: 'cors'
+  });
+  return response.json();
+}
+
+
 export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint = process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
 
