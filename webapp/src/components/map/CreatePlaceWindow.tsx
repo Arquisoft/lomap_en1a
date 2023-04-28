@@ -23,30 +23,30 @@ export interface CreatePlaceWindowProps {
 
 }
 
-interface VisibilitySelectProps{
-  visibility:Visibility,
+interface VisibilitySelectProps {
+  visibility: Visibility,
   handleVisibilityChange: (value: string) => Promise<void>
 }
 
-export function VisibilitySelect(props:VisibilitySelectProps):JSX.Element{
+export function VisibilitySelect(props: VisibilitySelectProps): JSX.Element {
 
-  return(
+  return (
     <FormControl>
-    <InputLabel id="visibility-select-label">Visibility</InputLabel>
-    <Select
-      labelId="visibility-select-label"
-      id="visibility-select"
-      value={props.visibility}
-      label="Visibility"
-      onChange={e => {
-        props.handleVisibilityChange(e.target.value as string);
-      }}
-    >
-      <MenuItem value={'PRIVATE'}>Private</MenuItem>
-      <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-      <MenuItem value={'PUBLIC'}>Public</MenuItem>
-    </Select>
-  </FormControl>
+      <InputLabel id="visibility-select-label">Visibility</InputLabel>
+      <Select
+        labelId="visibility-select-label"
+        id="visibility-select"
+        value={props.visibility}
+        label="Visibility"
+        onChange={e => {
+          props.handleVisibilityChange(e.target.value as string);
+        }}
+      >
+        <MenuItem value={'PRIVATE'}>Private</MenuItem>
+        <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+        <MenuItem value={'PUBLIC'}>Public</MenuItem>
+      </Select>
+    </FormControl>
   )
 
 }
@@ -83,7 +83,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
-      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility,category);
+      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
       let result = await addPlace(place);
 
       if (result.id != "ERR") {
@@ -131,11 +131,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
     <>
-      <form name="register" onSubmit={handleSubmit} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+      <form name="register" onSubmit={handleSubmit}>
         <Grid container spacing={2} justifyContent="space-around">
           <div className="centered-element">
             <Grid item xs={12}>
-              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
+              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
             </Grid>
           </div>
           <TextField
@@ -153,7 +153,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
           />
 
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
 
           <FormControl>
             <InputLabel id="category-select-label">Category</InputLabel>
