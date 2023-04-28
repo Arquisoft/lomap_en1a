@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -10,12 +10,16 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
+import LoadingSpinner from "../LoadingSpinner";
+import { Grid } from "@mui/material";
+
+
 
 
 
@@ -29,18 +33,19 @@ var lastMarker = new Feature();
 var currVisibility = "";
 
 //List of all places added to the map
-var places:Place[];
+var places: Place[];
 places = [];
 
 //List of public users to show their places
-export var displayedUsers:string[];
+export var displayedUsers: string[];
 displayedUsers = [];
 //-------------------------------------------------
 
 
 
+
 //Adds all the places given in the array to the map
-const addAllMarkers=(p:Place[], myOwn: boolean)=>{
+const addAllMarkers = (p: Place[], myOwn: boolean) => {
   var coordinates: number[];
   for (let i = 0; i < p.length; i++) {
     places.push(p[i])
@@ -48,51 +53,67 @@ const addAllMarkers=(p:Place[], myOwn: boolean)=>{
     var visibility = p[i].visibility;
     var category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
-      addMarker(coordinates, visibility, category,p[i].id);
+      addMarker(coordinates, visibility, category, p[i].id);
   }
 }
 
 //Adds all public places to the map
-const addPublicPlaces = async()=>{
+const addPublicPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
+
   });
 
   //When filtering, the public places of other users added to the map should appear too
-  for(let i = 0;i<displayedUsers.length;i++){
-    getPublicPlacesByPublicUser(displayedUsers[i]).then((p)=>{
-      addAllMarkers(p, true);   
+  for (let i = 0; i < displayedUsers.length; i++) {
+    getPublicPlacesByPublicUser(displayedUsers[i]).then((p) => {
+      addAllMarkers(p, true);
+      if (counter) {
+        counter(a => a + 1);
+      }
     })
   }
 }
 
 //Adds all private places to the map
-const addPrivatePlaces = async()=>{
+const addPrivatePlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getPrivatePlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all shared places to the map
-const addSharedPlaces = async()=>{
+const addSharedPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getSharedPlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all friends places to the map
-export const addFriendPlaces = async()=>{
+export const addFriendPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getSharedPlacesByFriends().then((p) => {
     addAllMarkers(p, false);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all places to the map
-const getMarkers = async () => {
-    addPublicPlaces();
-    addPrivatePlaces();
-    addSharedPlaces();
-    addFriendPlaces();
+const getMarkers = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+  addPublicPlaces(counter)
+  addSharedPlaces(counter)
+  addFriendPlaces(counter)
+  addPrivatePlaces(counter)
 }
 
 const checkCategory = (category: string) => {
@@ -115,7 +136,7 @@ const checkCategory = (category: string) => {
 }
 
 //Adds a marker to the map
-const addMarker = (coordinate: Coordinate, visibility: string, category: string,id:string, isNew?: boolean, isFriend?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string, category: string, id: string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -165,7 +186,7 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
 }
 
 
-const checkVisibility = (visibility:string) => {
+const checkVisibility = (visibility: string) => {
 
   if (typeof currVisibility !== undefined) {
     if (currVisibility && visibility !== currVisibility) {
@@ -177,18 +198,18 @@ const checkVisibility = (visibility:string) => {
 }
 
 
-export function addMarkersByUserId(id:string){
+export function addMarkersByUserId(id: string) {
   displayedUsers.push(id);
-  getPublicPlacesByPublicUser(id).then((p)=>{
+  getPublicPlacesByPublicUser(id).then((p) => {
     addAllMarkers(p, true);
   })
 
 }
 
-export function removeMarkersByUserId(id:string){
+export function removeMarkersByUserId(id: string) {
   let index = displayedUsers.indexOf(id)
   displayedUsers.splice(index, 1)
-  getPublicPlacesByPublicUser(id).then((p)=>{
+  getPublicPlacesByPublicUser(id).then((p) => {
     deleteAllMarkers(p);
   })
 
@@ -218,15 +239,15 @@ function deleteAllMarkers(places: Place[]) {
 //Deletes a marker given its ID
 export function deleteMarkerById(id: string) {
   var sourceFeatures = source.getFeatures()
-  var markerToDelete=sourceFeatures.find(marker=>marker.getId()===id)
-  if(markerToDelete !== undefined){
+  var markerToDelete = sourceFeatures.find(marker => marker.getId() === id)
+  if (markerToDelete !== undefined) {
     source.removeFeature(markerToDelete);
   }
 
 }
 
 //Updates the map list 
-export function updateMapList(place:Place){
+export function updateMapList(place: Place) {
   lastMarker.setId(place.id)//The id for the last marker is added
   places.push(place);
 }
@@ -237,8 +258,8 @@ export function deleteMarker() {
 }
 
 //Changes the colour of the last marker given its visibility
-export function changeMarkerColour(visibility:string){
- 
+export function changeMarkerColour(visibility: string) {
+
   var color;
 
   switch (visibility) {
@@ -286,7 +307,7 @@ export async function refreshMarkers(visibility: string) {
       addPrivatePlaces();
       break;
 
-     default:
+    default:
       getMarkers();
       break;
   }
@@ -302,17 +323,18 @@ function Vector(props: TVectorLayerComponentProps) {
   });
 
 
+
   const onMapClick = (event: MapBrowserEvent<UIEvent>) => {
     props.handleSlidingPaneView(SlidingPaneView.CreatePlaceView);
     props.handleIsOpen(true);
 
     props.handleLatitude(event.coordinate[1]);
     props.handleLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public", "default", "",true); //The new marker still has no id
+    addMarker(event.coordinate, "public", "default", "", true); //The new marker still has no id
   };
 
-  const findPlace=(id:String)=>{
-    return places.find(p => p.id===id);
+  const findPlace = (id: String) => {
+    return places.find(p => p.id === id);
   }
 
   const onMarkerClick = async (feature: FeatureLike) => {
@@ -323,11 +345,11 @@ function Vector(props: TVectorLayerComponentProps) {
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
-      category:place.category,
+      category: place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude,
-      description:place.description
+      description: place.description
     });
     props.handleIsOpen(true);
     props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
@@ -336,9 +358,18 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   }
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    console.log(counter)
+    if (counter == 4) {
+      setMainFalse()
+    }
+  }, [counter])
 
   //When map is first rendered
   useEffect(() => {
+    props.handleIsMainLoading(true)
     props.map.addLayer(layer);
     props.map.on("dblclick", onMapClick);
     props.map.on('singleclick', function (e) {
@@ -346,22 +377,35 @@ function Vector(props: TVectorLayerComponentProps) {
         onMarkerClick(feature);
 
       })
+
     });
 
-    getMarkers();
+    getMarkers(setCounter)
+
   }, [])
+
+  function setMainFalse() {
+    props.handleIsMainLoading(false)
+  }
+
+
 
   return null;
 }
 
 export const VectorLayerWithContext = (props: TOpenLayersProps) => {
   return (
-    <MapContext.Consumer>
-      {(mapContext: IMapContext | void) => {
-        if (mapContext) {
-          return <Vector {...props} map={mapContext.map} />;
-        }
-      }}
-    </MapContext.Consumer>
+    <div >
+      {props.isMainLoading ? <LoadingSpinner /> : <div></div>}
+      <MapContext.Consumer >
+        {(mapContext: IMapContext | void) => {
+          if (mapContext) {
+            return <Vector {...props} map={mapContext.map} />;
+          }
+        }}
+      </MapContext.Consumer>
+
+
+    </div>
   );
 };
