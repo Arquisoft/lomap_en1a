@@ -24,34 +24,27 @@ export function CategoryList(): JSX.Element {
       className="checkbox-group"
       aria-label="categories"
     >
-      <FormControlLabel control={<Checkbox
-        value="BAR"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Bar" />
-      <FormControlLabel control={<Checkbox
-        value="MONUMENT"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Monument" />
-      <FormControlLabel control={<Checkbox
-        value="MUSEUM"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Museum" />
-      <FormControlLabel control={<Checkbox
-        value="RESTAURANT"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Restaurant" />
-      <FormControlLabel control={<Checkbox
-        value="SIGHT"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Sight" />
-      <FormControlLabel control={<Checkbox
-        value="SHOP"
-        onChange={event => handleChange(event, event.currentTarget.value)}
-      />} label="Shop" />
-      <Button className="category-button" onClick={applyFilters}>
+      <FilterCategory name="Bar" handleChange={handleChange}/>
+      <FilterCategory name="Monument" handleChange={handleChange}/>
+      <FilterCategory name="Museum" handleChange={handleChange}/>
+      <FilterCategory name="Restaurant" handleChange={handleChange}/>
+      <FilterCategory name="Sight" handleChange={handleChange}/>
+      <FilterCategory name="Shop" handleChange={handleChange}/>
+      <Button onClick={applyFilters}>
         Apply filters
       </Button>
     </FormGroup>
   );
 
+}
+
+function FilterCategory(props: { name: string, handleChange: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void }) {
+  return (
+    <>
+      <FormControlLabel control={<Checkbox
+        value={props.name.toUpperCase()}
+        onChange={event => props.handleChange(event, event.currentTarget.value)}
+      />} label={props.name} />
+    </>
+  )
 }
