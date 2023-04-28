@@ -83,6 +83,8 @@ function FriendsTable() {
           severity: 'success',
           message: 'Your new friend has been added!'
         });
+        getFriendRequests().then(f=>setRequests(f))
+        
       }
       else {
         setNotificationStatus(true);
@@ -99,8 +101,6 @@ function FriendsTable() {
     }
     ,[])
 
-    let A: User[]
-    A=[]
 
 
 
@@ -115,7 +115,10 @@ function FriendsTable() {
             </StyledTableRow>
           </TableHead>
           <TableBody>
-                {A.map((row) => (
+              {(rowsPerPage > 0
+                      ? requests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                      : requests
+                  ).map((row) => (
                     <StyledTableRow
                     key={row.webId}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -147,7 +150,7 @@ function FriendsTable() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={A.length}
+              count={requests.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{

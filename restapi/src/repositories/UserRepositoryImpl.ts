@@ -25,7 +25,6 @@ export class UserRepositoryImpl implements UserRepository {
 
         console.log(currentUserFriends)
         if (!currentUserFriends.includes(webId)) {
-            console.log("hola")
             this.sendFriendRequest(sessionId, currentUser, webId);
             this.deleteFriendRequest(sessionId, currentUser, webId);
             return PodManager.dataManager.addFriend(sessionId, webId);
@@ -38,7 +37,6 @@ export class UserRepositoryImpl implements UserRepository {
         let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
 
         if (!friendFriends.includes(currentUser)) {
-            console.log("kdfsd")
             DatabaseConnection.add("friends",
                 {
                     requester: currentUser,
@@ -94,7 +92,6 @@ export class UserRepositoryImpl implements UserRepository {
         await Promise.all((await userList.toArray()).map(async (user) => {
             users.push(await PodManager.dataManager.getUser(sessionId,user.requester));
         }));
-        console.log(users)
         return users;
     }
 
