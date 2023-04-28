@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -16,6 +16,8 @@ import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
+import LoadingSpinner from "../LoadingSpinner";
+import { Grid } from "@mui/material";
 
 
 
@@ -35,7 +37,7 @@ var places: Place[];
 places = [];
 
 //List of public users to show their places
-export var displayedUsers:string[];
+export var displayedUsers: string[];
 displayedUsers = [];
 //-------------------------------------------------
 
@@ -51,51 +53,67 @@ const addAllMarkers = (p: Place[], myOwn: boolean) => {
     var visibility = p[i].visibility;
     var category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
-      addMarker(coordinates, visibility, category,p[i].id);
+      addMarker(coordinates, visibility, category, p[i].id);
   }
 }
 
 //Adds all public places to the map
-const addPublicPlaces = async () => {
+const addPublicPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
+
   });
 
   //When filtering, the public places of other users added to the map should appear too
-  for(let i = 0;i<displayedUsers.length;i++){
-    getPublicPlacesByPublicUser(displayedUsers[i]).then((p)=>{
-      addAllMarkers(p, true);   
+  for (let i = 0; i < displayedUsers.length; i++) {
+    getPublicPlacesByPublicUser(displayedUsers[i]).then((p) => {
+      addAllMarkers(p, true);
+      if (counter) {
+        counter(a => a + 1);
+      }
     })
   }
 }
 
 //Adds all private places to the map
-const addPrivatePlaces = async () => {
+const addPrivatePlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getPrivatePlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all shared places to the map
-const addSharedPlaces = async () => {
+const addSharedPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getSharedPlacesByUser().then((p) => {
     addAllMarkers(p, true);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all friends places to the map
-export const addFriendPlaces = async () => {
+export const addFriendPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
   getSharedPlacesByFriends().then((p) => {
     addAllMarkers(p, false);
+    if (counter) {
+      counter(a => a + 1);
+    }
   });
 }
 
 //Adds all places to the map
-const getMarkers = async () => {
-  addPublicPlaces();
-  addPrivatePlaces();
-  addSharedPlaces();
-  addFriendPlaces();
+const getMarkers = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+  addPublicPlaces(counter)
+  addSharedPlaces(counter)
+  addFriendPlaces(counter)
+  addPrivatePlaces(counter)
 }
 
 const checkCategory = (category: string) => {
@@ -118,7 +136,7 @@ const checkCategory = (category: string) => {
 }
 
 //Adds a marker to the map
-const addMarker = (coordinate: Coordinate, visibility: string, category: string,id:string, isNew?: boolean, isFriend?: boolean) => {
+const addMarker = (coordinate: Coordinate, visibility: string, category: string, id: string, isNew?: boolean, isFriend?: boolean) => {
 
   const featureToAdd = new Feature({
     geometry: new Point(coordinate),
@@ -180,18 +198,18 @@ const checkVisibility = (visibility: string) => {
 }
 
 
-export function addMarkersByUserId(id:string){
+export function addMarkersByUserId(id: string) {
   displayedUsers.push(id);
-  getPublicPlacesByPublicUser(id).then((p)=>{
+  getPublicPlacesByPublicUser(id).then((p) => {
     addAllMarkers(p, true);
   })
 
 }
 
-export function removeMarkersByUserId(id:string){
+export function removeMarkersByUserId(id: string) {
   let index = displayedUsers.indexOf(id)
   displayedUsers.splice(index, 1)
-  getPublicPlacesByPublicUser(id).then((p)=>{
+  getPublicPlacesByPublicUser(id).then((p) => {
     deleteAllMarkers(p);
   })
 
@@ -312,7 +330,7 @@ function Vector(props: TVectorLayerComponentProps) {
 
     props.handleLatitude(event.coordinate[1]);
     props.handleLongitude(event.coordinate[0]);
-    addMarker(event.coordinate, "public", "default", "",true); //The new marker still has no id
+    addMarker(event.coordinate, "public", "default", "", true); //The new marker still has no id
   };
 
   const findPlace = (id: String) => {
@@ -331,7 +349,7 @@ function Vector(props: TVectorLayerComponentProps) {
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude,
-      description:place.description
+      description: place.description
     });
     props.handleIsOpen(true);
     props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
@@ -340,6 +358,14 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   }
+  const [counter, setCounter] = useState(0)
+
+  useEffect(() => {
+    console.log(counter)
+    if (counter == 4) {
+      setMainFalse()
+    }
+  }, [counter])
 
   //When map is first rendered
   useEffect(() => {
@@ -351,12 +377,18 @@ function Vector(props: TVectorLayerComponentProps) {
         onMarkerClick(feature);
 
       })
+
     });
 
-    getMarkers();
-    props.handleIsMainLoading(false)
+    getMarkers(setCounter)
 
   }, [])
+
+  function setMainFalse() {
+    props.handleIsMainLoading(false)
+  }
+
+
 
   return null;
 }
@@ -364,6 +396,7 @@ function Vector(props: TVectorLayerComponentProps) {
 export const VectorLayerWithContext = (props: TOpenLayersProps) => {
   return (
     <div >
+      {props.isMainLoading ? <LoadingSpinner /> : <div></div>}
       <MapContext.Consumer >
         {(mapContext: IMapContext | void) => {
           if (mapContext) {
@@ -371,6 +404,8 @@ export const VectorLayerWithContext = (props: TOpenLayersProps) => {
           }
         }}
       </MapContext.Consumer>
+
+
     </div>
   );
 };

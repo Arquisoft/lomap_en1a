@@ -2,7 +2,7 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
@@ -11,6 +11,7 @@ import { FriendPanel } from './FriendPanel';
 import { User } from '../../domain/User';
 import LoadingSpinner from '../LoadingSpinner';
 import { Category } from '../../domain/Category';
+import Grid from '@mui/material/Grid';
 
 
 
@@ -32,7 +33,7 @@ export type InfoWindowDataType = {
   id: string,
   latitude: number,
   longitude: number,
-  description:string
+  description: string
 }
 
 
@@ -62,7 +63,7 @@ export default function MapView(): JSX.Element {
     id: "",
     latitude: 0,
     longitude: 0,
-    description:""
+    description: ""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
     friend: new User("", ""),
@@ -118,6 +119,13 @@ export default function MapView(): JSX.Element {
 
   }
 
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  function toggleIsMainLoading() {
+    setIsMainLoading(false);
+  }
+
 
 
 
@@ -130,61 +138,61 @@ export default function MapView(): JSX.Element {
   return (
 
     <>
+      <Grid style={isMainLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+        <div className='map-view' id={isMainLoading + ""} >
 
-      <div className='map-view' id={isMainLoading + ""} style={isMainLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+          <div className='side-bar'>
+            <ProSidebarProvider >
+              <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
+                visibility={visibility} handleIsOpen={handleIsOpen} newPlace={newPlace} />
+            </ProSidebarProvider>
+          </div>
 
-        {
-          isMainLoading ? <LoadingSpinner message={mainLoadingMessage} /> : <LoadingSpinner message="Cargó" />
-        }
-        <div className='side-bar'>
-          <ProSidebarProvider>
-            <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
-              visibility={visibility} handleIsOpen={handleIsOpen} newPlace={newPlace} />
-          </ProSidebarProvider>
+          <div className='filter-list'>
+            <FilterList visibility={visibility} setVisibility={setVisibility} />
+          </div>
+
+
+
+          <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
+            handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility}
+            handleIsMainLoading={handleIsMainLoading} isMainLoading={isMainLoading} />
+
+
         </div>
 
-        <div className='filter-list'>
-          <FilterList visibility={visibility} setVisibility={setVisibility} />
-        </div>
-
-
-        <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
-          handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility}
-          handleIsMainLoading={handleIsMainLoading} />
-
-      </div>
 
 
 
+        <SlidingPane
+          title={isLoading ? <LoadingSpinner message={loadingMessage} /> : <></>}
+          isOpen={isOpen}
+          onRequestClose={() => {
+            setIsOpen(false);
+            //If a place was not added, when closing setRemoveMarker(true)
+            if (deleteLastMarker && slidingPaneView === SlidingPaneView.CreatePlaceView) {
+              deleteMarker();
+            }
 
-      <SlidingPane
-        title={isLoading ? <LoadingSpinner message={loadingMessage} /> : <></>}
-        isOpen={isOpen}
-        onRequestClose={() => {
-          setIsOpen(false);
-          //If a place was not added, when closing setRemoveMarker(true)
-          if (deleteLastMarker && slidingPaneView === SlidingPaneView.CreatePlaceView) {
-            deleteMarker();
+            deleteLastMarker.current = false;
+
+
+          }}
+          width="85vh"
+          className='info-window'
+          overlayClassName='info-window'
+        >
+          {
+            slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
+              handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> :
+              slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading={isLoading} /> :
+                slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
+                  <div></div>
           }
 
-          deleteLastMarker.current = false;
 
-
-        }}
-        width="85vh"
-        className='info-window'
-        overlayClassName='info-window'
-      >
-        {
-          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
-            handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> :
-            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading={isLoading} /> :
-              slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
-                <div></div>
-        }
-
-
-      </SlidingPane>
+        </SlidingPane>
+      </Grid>
 
     </>
 

@@ -11,6 +11,7 @@
   --alternative-text-color: black;
   --active-bg-color: #555;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 /* General styles ----------------------------------------------------------------------- */
@@ -56,8 +57,11 @@ footer {
   margin: 0;
   border: 0;
   text-align: center;
-  width: 100%; height: 100%;
-  position: absolute; top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .centered-container {
@@ -120,10 +124,11 @@ footer {
 
 @keyframes fadeInAnimation {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
+
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -146,24 +151,34 @@ footer {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
-.spinner-container{
+
+.spinner-container {
   margin-top: 2.5vh;
   display: flex;
   flex-direction: row;
-  gap:2vh;
+  gap: 2vh;
 }
+
 .loading-spinner {
   width: 4vh;
   height: 4vh;
-  border: 1vh solid #f3f3f3; /* Light grey */
-  border-top: 1vh solid #383636; /* Black */
+  border: 1vh solid #f3f3f3;
+  /* Light grey */
+  border-top: 1vh solid #383636;
+  /* Black */
   border-radius: 50%;
   animation: spinner 1.5s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
 }
+
 /* ------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------- */
 
@@ -171,7 +186,7 @@ footer {
   background-image: url(images/map.jpg);
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat ;
+  background-repeat: no-repeat;
   max-width: 100vw;
   max-height: 100vh;
   background-color: #464646;
@@ -179,7 +194,7 @@ footer {
 
 /* Friends ------------------------------------------------------------------------------ */
 .table-area {
-  text-align:left;
+  text-align: left;
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
   height: 90%;
@@ -194,19 +209,20 @@ footer {
   border-bottom: 8px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 0.3em;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 /* Map ---------------------------------------------------------------------------------- */
 .map-view {
   display: grid;
-  grid-template-rows: [first]10% [second]100%[last] ;
-  grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC] ;
+  grid-template-rows: [first]10% [second]100%[last];
+  grid-template-columns: [firstC]25% [secondC]55%[thirdC]20%[lastC];
 }
 
 .map {
   grid-row-start: first;
   grid-row-end: last;
-  grid-column-start: firstC ;
+  grid-column-start: firstC;
   grid-column-end: lastC;
 }
 
@@ -221,11 +237,11 @@ footer {
   z-index: 1;
   grid-row-start: first;
   grid-row-end: second;
-  grid-column-start: secondC ;
+  grid-column-start: secondC;
   grid-column-end: thirdC;
 }
 
-.toggle-button-group{
+.toggle-button-group {
   display: flex;
   gap: 5%;
   margin-top: 0.5em;
@@ -239,19 +255,20 @@ footer {
 .checkbox-group {
   margin: 0 4vh;
 }
+
 /* ------------------------------------------------------------------- */
 
 /* Side bars --------------------------------------------------------- */
-.info-window{
-  color:black;
+.info-window {
+  color: black;
   z-index: 3;
 }
 
 .side-bar {
   z-index: 2;
   grid-row-start: first;
-  grid-row-end:last;
-  grid-column-start:firstC ;
+  grid-row-end: last;
+  grid-column-start: firstC;
   grid-column-end: secondC;
   font-size: 3.5vmin;
 }
@@ -350,6 +367,7 @@ footer {
 .menu ul li:not(.noHover li):hover {
   background-color: #777;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 
@@ -369,7 +387,7 @@ footer {
   display: inline-block;
 }
 
-.slide > img {
+.slide>img {
   height: auto;
   width: 100%;
   border-radius: 1em;
@@ -396,6 +414,7 @@ footer {
 .slideshowDot.active {
   background-color: blue;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 /* Login -------------------------------------------------------------------------------- */
@@ -453,11 +472,12 @@ footer {
   position: absolute;
   height: inherit;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 /* Profile dropdown --------------------------------------------------------------------- */
 #user-icon {
-  z-index : 4;
+  z-index: 4;
   top: 20px;
   right: 20px;
   height: 2.3em;
@@ -472,7 +492,7 @@ footer {
 }
 
 .profile-dropdown {
-  z-index : 4;
+  z-index: 4;
   position: absolute;
   top: 12%;
   right: 20px;
@@ -556,6 +576,7 @@ footer {
   opacity: 1;
   cursor: pointer;
 }
+
 /* -------------------------------------------------------------------------------------- */
 
 /* Profile ------------------------------------------------------------------------------ */
@@ -596,5 +617,6 @@ footer {
   padding-top: 0.1em;
   font-size: 1.3em;
 }
+
 
 /* -------------------------------------------------------------------------------------- */
