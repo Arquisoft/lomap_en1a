@@ -23,7 +23,9 @@ export class UserRepositoryImpl implements UserRepository {
 
         let currentUserFriends = (await PodManager.dataManager.getFriends(sessionId, currentUser)).map(user => { return user.getWebId() });
 
-        if (currentUserFriends.includes(webId)) {
+        console.log(currentUserFriends)
+        if (!currentUserFriends.includes(webId)) {
+            console.log("hola")
             this.sendFriendRequest(sessionId, currentUser, webId);
             this.deleteFriendRequest(sessionId, currentUser, webId);
             return PodManager.dataManager.addFriend(sessionId, webId);
@@ -35,7 +37,8 @@ export class UserRepositoryImpl implements UserRepository {
     private async sendFriendRequest(sessionId: string, currentUser: string, friend: string) {
         let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
 
-        if (friendFriends.includes(currentUser)) {
+        if (!friendFriends.includes(currentUser)) {
+            console.log("kdfsd")
             DatabaseConnection.add("friends",
                 {
                     requester: currentUser,
@@ -84,14 +87,14 @@ export class UserRepositoryImpl implements UserRepository {
     }
 
     async getFriendRequests(sessionId: string): Promise<User[]> {
-        let webId = PodManager.sessionManager.getCurrentWebId(sessionId);
+        let webId: string = await PodManager.sessionManager.getCurrentWebId(sessionId);
         let userList = await DatabaseConnection.find("friends", { requestee: webId });
         let users: User[] = [];
 
         await Promise.all((await userList.toArray()).map(async (user) => {
-            users.push(await PodManager.dataManager.getUser(sessionId, user.user));
+            users.push(await PodManager.dataManager.getUser(sessionId,user.requester));
         }));
-
+        console.log(users)
         return users;
     }
 
