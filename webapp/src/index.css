@@ -57,6 +57,11 @@ footer {
   list-style: circle;
 }
 
+.vis-select * {
+  width: 100%;
+  height: 100%;
+}
+
 .container {
   margin: 0;
   border: 0;
@@ -94,8 +99,8 @@ footer {
 .text-area {
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
-  max-height: 80%;
-  height: 75%;
+  max-height: 85%;
+  height: 85%;
   max-width: 75%;
   width: auto;
   font-size: 1.5vmax;
@@ -181,7 +186,7 @@ footer {
 
 .margin {
   padding-top: 2em;
-  height: 100%;
+  height: -webkit-fill-available;
 }
 
 /* Friends ------------------------------------------------------------------------------ */
@@ -251,7 +256,7 @@ footer {
 /* Side bars --------------------------------------------------------- */
 .info-window{
   color:black;
-  z-index: 3;
+  z-index: 6;
 }
 
 .place-name {
@@ -287,15 +292,14 @@ footer {
 
 #img-Add-Image {
   opacity: 0.3;
-  max-width: 3.5em;
-  max-height: 3.5em;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   justify-content: center;
 }
 
 #btn-Add-Image {
-  border-width: 0px;
   opacity: 0.6;
   color: white;
 }
@@ -328,7 +332,7 @@ footer {
 }
 
 .menu {
-  z-index: 5;
+  z-index: 4;
   background-color: #333;
   color: var(--main-text-color);
   display: flex;
@@ -388,9 +392,14 @@ footer {
 
 .slide > img {
   height: auto;
-  width: 100%;
+  max-width: 100%;
   border-radius: 1em;
   vertical-align: middle;
+}
+
+#photos img {
+  width: 500px;
+  max-width: 100%;
 }
 
 .slideshowDots {
@@ -462,7 +471,7 @@ footer {
   padding: 1.2em 0 0.4em 0;
   margin-bottom: 1em;
   border-radius: 12px;
-  font-size: 3vmin
+  font-size: 3vmin;
 }
 
 .login-button {

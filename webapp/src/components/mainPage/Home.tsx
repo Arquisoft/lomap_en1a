@@ -18,7 +18,7 @@ export default function Home(): JSX.Element {
   let description2 ="With LoMap, not only can you add places anywhere you want, but also you will be able to: ";
 
   return (
-    <div className="background-image margin">
+    <div className="background-image">
     <Grid container spacing={4} 
         justifyItems="flex-end"
         alignItems="center"

@@ -9,6 +9,7 @@ import btnImage from "../../icons/Add_image.png";
 import Snackbar from '@mui/material/Snackbar';
 import { Visibility } from "../../domain/Visibility";
 import { NotificationType } from "./CommentForm";
+import { Box } from "@mui/material";
 
 
 type PictureSelectorProps = {
@@ -31,6 +32,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
       e.preventDefault();
       let result: boolean = await addPicture(new Picture("", url, props.place, props.user, new Date(), Visibility.PUBLIC));
       if (result) {
+        setUrl("");
         setNotificationStatus(true);
         setNotification({
           severity: 'success',
@@ -52,25 +54,41 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
   return (
     <>
       <form name="register" onSubmit={handleAddPicture}>
-        <Grid container spacing={2} justifyContent="space-around">
-          
-            <TextField
-                multiline
-                rows={2}
-                required
-                name="text"
-                placeholder="Write the URL of your new picture" 
-                variant="filled"
-                value={url}
-                onChange={e => {
-                    setUrl(e.target.value);
-                    setName(props.user);
-                }}
-                
-            />
-            <Button id="btn-Add-Image" variant="contained" type="submit">
-                  <img id="img-Add-Image" src={btnImage} alt="Add image"/>
-            </Button>
+        <Grid container spacing={3} justifyContent="space-around">
+            <Grid item xs={10}>
+            <Box 
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+                <TextField
+                  style={{width: '100%'}}
+                  multiline
+                  rows={2}
+                  required
+                  spellCheck={false}
+                  name="text"
+                  placeholder="Write the URL of your new picture" 
+                  variant="filled"
+                  value={url}
+                  onChange={e => {
+                      setUrl(e.target.value);
+                      setName(props.user);
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={2}>
+              <Box 
+                  height="100%"
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column">
+                <Button id="btn-Add-Image" variant="contained" type="submit" disabled={url.length == 0}>
+                    <img id="img-Add-Image" src={btnImage} alt="Add image"/>
+                </Button>
+              </Box>
+            </Grid>
         </Grid>
 
 

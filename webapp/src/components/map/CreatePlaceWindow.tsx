@@ -31,22 +31,26 @@ interface VisibilitySelectProps{
 export function VisibilitySelect(props:VisibilitySelectProps):JSX.Element{
 
   return(
-    <FormControl>
-    <InputLabel id="visibility-select-label">Visibility</InputLabel>
-    <Select
-      labelId="visibility-select-label"
-      id="visibility-select"
-      value={props.visibility}
-      label="Visibility"
-      onChange={e => {
-        props.handleVisibilityChange(e.target.value as string);
-      }}
-    >
-      <MenuItem value={'PRIVATE'}>Private</MenuItem>
-      <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-      <MenuItem value={'PUBLIC'}>Public</MenuItem>
-    </Select>
-  </FormControl>
+    <div className='vis-selector'>
+      <FormControl style={{width: '100%', height: '100%'}}>
+        <InputLabel id="visibility-select-label">Visibility</InputLabel>
+        <Select
+          labelId="visibility-select-label"
+          id="visibility-select"
+          value={props.visibility}
+          label="Visibility"
+          onChange={e => {
+            props.handleVisibilityChange(e.target.value as string);
+          }}
+        >
+          <MenuItem value={'PRIVATE'}>Private</MenuItem>
+          <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+          <MenuItem value={'PUBLIC'}>Public</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
+  
+    
   )
 
 }

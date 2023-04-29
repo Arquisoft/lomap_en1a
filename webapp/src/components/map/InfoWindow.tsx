@@ -14,12 +14,12 @@ import { addScore } from '../../api/api';
 import Rating from '@mui/material/Rating';
 import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
-import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
 import { InfoWindowDataType } from './MapView';
 import { VisibilitySelect } from './CreatePlaceWindow';
 import TextField from '@mui/material/TextField';
 import { Divider } from '@material-ui/core';
+import PictureSelector from './PictureSelector';
 
 type InfoWindowProps = {
   infoWindowData: InfoWindowDataType;
@@ -158,9 +158,11 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12} textAlign="center">
           { pictureURLs.length == 0 ?
             <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found" 
-              sx={{maxWidth: '100%', maxHeight: '10em', width: 'auto', height: 'auto'}}></Box>
+              sx={{maxWidth: '100%', maxHeight: '12em', width: 'auto', height: 'auto'}}></Box>
             :
-            <Slideshow images={pictureURLs} />
+            <div id="photos">
+              <Slideshow images={pictureURLs} />
+            </div>
           }
         </Grid>
         <Grid item xs={12}>
@@ -169,46 +171,31 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
             disabled
             multiline
             fullWidth
+            spellCheck={false}
             name="description"
-            variant="filled"
+            //variant="filled"
             value={props.infoWindowData.description}
             sx={{
               "& fieldset": 
                 { 
-                  //border: 'none',
-                },
-              margin: '5em'
+                  //border: 'none'
+                }
             }}
           />
         </Grid>
-      </Grid>
-      {/*<Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window' style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
-
-        <div className="description">
-          <Grid item xs={12}>
-              <TextField
-                disabled
-                multiline
-                rows={6}
-                fullWidth
-                name="description"
-                variant="filled"
-                value={props.infoWindowData.description}
-
-              />
-          </Grid>
-        </div>
-        
-
         <Grid item xs={12}>
-           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
-        </Grid>  
+          <Divider/>
+        </Grid>
         
-        <Grid item xs={6}>
+        <Grid item xs={12}>
+          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
+        </Grid>
+        <Grid item xs={7} alignItems="stretch" textAlign="center">
           <Box
+            height="100%"
+            display="flex"
+            justifyContent="center"
             sx={{
-              width: 200,
-              display: 'flex',
               alignItems: 'center',
             }}>
             <Rating
@@ -221,35 +208,38 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
                 refreshScoresAfterAdding(value as number);
               }}
             />
+            
             {value !== null && (
               <Box sx={{ ml: 2 }}>{value + "/5"}</Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          <Box 
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            flexDirection="column">
+              <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          </Box>
+          
         </Grid>
-
         <Grid item xs={2}>
-          <Box component="p" textAlign="right" >{avg}
-          <StarIcon htmlColor='orange' fontSize='medium' /></Box>
+          <Box textAlign="center" >{avg + " "}
+          <StarIcon htmlColor='orange' fontSize='medium'/></Box>
         </Grid>
-
-
 
         <Grid item xs={12}>
           <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id}/>
         </Grid>
         <Grid item xs={12}>
+          <Divider/>
+        </Grid>
+        <Grid item xs={12}>
           <CommentList comments={comments} />
         </Grid>
-
-
-      </Grid>*/}
+      </Grid>
     </>
-
-
-
   );
 
 
