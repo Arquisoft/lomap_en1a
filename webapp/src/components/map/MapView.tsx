@@ -29,12 +29,8 @@ export type FriendWindowDataType = {
 
 export type InfoWindowDataType = {
   title: string,
-<<<<<<< HEAD
   creator: string,
   category:Category,
-=======
-  category: Category,
->>>>>>> UI
   id: string,
   latitude: number,
   longitude: number,
