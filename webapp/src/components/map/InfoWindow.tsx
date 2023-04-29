@@ -94,8 +94,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
-      props.handleIsLoading(false);//Remove loading symbol
+      
     }
+    props.handleIsLoading(false);//Remove loading symbol
   }
 
   //For the computation of the avg score
