@@ -66,8 +66,6 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
-    console.log(newVisibility)
-
     setVisibility(newVisibility);
   }
 

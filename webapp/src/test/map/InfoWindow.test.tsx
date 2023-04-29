@@ -10,6 +10,7 @@ test('check info window data is rendered correctly', async () => {
 
     const infoWindowData= {
         title: "Test title",
+        creator: "",
         category: Category.BAR,
         id: "",
         latitude: 0,
