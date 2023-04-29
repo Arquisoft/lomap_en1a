@@ -68,7 +68,7 @@ export default function MapView(): JSX.Element {
     description: ""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
-    friend: new User("", ""),
+    friend: new User("", "",null),
     friendPhoto: "",
     sharedSites: []
   });

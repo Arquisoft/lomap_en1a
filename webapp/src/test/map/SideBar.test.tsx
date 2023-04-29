@@ -26,10 +26,10 @@ const handleIsOpen = async (value:boolean) => {}
 const handleSlidingPaneView = async (value:number) => {}
 
 var friends: User[];
-friends=[ new User("TEST-USER","")];
+friends=[ new User("TEST-USER","",null)];
 
 var users: User[];
-users=[ new User("TEST-USER-PUBLIC","")];
+users=[ new User("TEST-USER-PUBLIC","",null)];
 
 var publicPlaces: Place[];
 publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR)];
@@ -47,7 +47,7 @@ beforeEach(()=>{
     jest.spyOn(api, 'getPublicPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(publicPlaces));
     jest.spyOn(api, 'getPrivatePlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(privatePlaces));
     jest.spyOn(api, 'getSharedPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(sharedPlaces));
-    jest.spyOn(api, 'getProfile').mockImplementation((): Promise<User> => Promise.resolve(new User("","")));
+    jest.spyOn(api, 'getProfile').mockImplementation((): Promise<User> => Promise.resolve(new User("","",null)));
 }
 
 );

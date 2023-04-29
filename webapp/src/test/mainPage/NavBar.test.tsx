@@ -25,7 +25,7 @@ test('check not logged navbar is rendered correctly', async () => {
 test('check logged navbar is rendered correctly', async () => {
 
     jest.spyOn(api,'isLoggedIn').mockImplementation(():Promise<boolean> => Promise.resolve(true));
-    jest.spyOn(api,'getProfile').mockImplementation(():Promise<User> => Promise.resolve(new User("TEST","TEST")));
+    jest.spyOn(api,'getProfile').mockImplementation(():Promise<User> => Promise.resolve(new User("TEST","TEST",null)));
     //Profile component must be inside BrowserRouter for the test
     await act(async () => {    
       const {container, getByText} = render(

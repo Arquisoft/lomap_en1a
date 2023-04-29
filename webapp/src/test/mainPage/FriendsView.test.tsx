@@ -5,7 +5,7 @@ import FriendsView from "../../components/mainPage/FriendsView";
 jest.mock('../../api/api');
 
 beforeEach(()=>{
-    jest.spyOn(api,'getFriendRequests').mockImplementation(():Promise<User[]> => Promise.resolve([new User("FRIEND","FRIEND-ID")]));
+    jest.spyOn(api,'getFriendRequests').mockImplementation(():Promise<User[]> => Promise.resolve([new User("FRIEND","FRIEND-ID",null)]));
 }
 
 );

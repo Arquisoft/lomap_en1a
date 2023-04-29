@@ -15,7 +15,7 @@ test('check info window data is rendered correctly', async () => {
   jest.spyOn(api, 'getComments').mockImplementation((): Promise<Comment[]> => Promise.resolve([]));
   jest.spyOn(api, 'getPictures').mockImplementation((): Promise<Picture[]> => Promise.resolve([]));
   jest.spyOn(api, 'getScores').mockImplementation((): Promise<Score[]> => Promise.resolve([new Score("",3,"","",new Date(),Visibility.FRIENDS)]));
-  jest.spyOn(api,'getProfileById').mockImplementation(():Promise<User> => Promise.resolve(new User("Test creator","")));
+  jest.spyOn(api,'getProfileById').mockImplementation(():Promise<User> => Promise.resolve(new User("Test creator","",null)));
   const handleIsLoading = async () => {}
   await act(async () => {    
 

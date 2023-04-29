@@ -7,7 +7,7 @@ jest.mock('../../api/api');
 
 test('check user profile is rendered correctly', async () => {
 
-  jest.spyOn(api,'getProfile').mockImplementation(():Promise<User> => Promise.resolve(new User("TEST","TEST-ID")));
+  jest.spyOn(api,'getProfile').mockImplementation(():Promise<User> => Promise.resolve(new User("TEST","TEST-ID",null)));
   //Profile component must be inside BrowserRouter for the test
   await act(async () => {    
     const {container, getByText} = render(<UserProfile/>)  
