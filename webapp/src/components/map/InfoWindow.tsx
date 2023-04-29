@@ -134,7 +134,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   }
 
   const getCreatorName = async(id: string) => {
-    if (id === null || typeof id === undefined || id.trim().length === 0) {
+    if (id === null || typeof id === undefined) {
       setCreatorName("")
     } else {
       let creator = await getProfileById(id);
@@ -143,7 +143,16 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   }
   
   const getCreatorText = () => {
-    return creatorName === ""?"":"Place created by " + creatorName;
+    // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
+    if (creatorName === null || typeof creatorName === 'undefined') {
+      return "Creator could not be found"
+    }
+
+    if (creatorName.trim().length === 0) {
+      return "";
+    }
+
+    return "Place created by " + creatorName;
   }
 
 
