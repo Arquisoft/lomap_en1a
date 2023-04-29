@@ -6,74 +6,126 @@ import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
 
 export class PictureRepositoryImpl implements PictureRepository {
+  async add(sessionId: string, picture: Picture): Promise<boolean> {
+    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    async add(sessionId: string, picture: Picture): Promise<boolean> {
-        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+    picture.setOwner(webId);
 
-        picture.setOwner(webId);
-
-        if (picture.getVisibility() != Visibility.PRIVATE) {
-            DatabaseConnection.add("pictures",
-                {
-                    picture: picture.getId(),
-                    place: picture.getPlace(),
-                    webId: webId,
-                    visibility: picture.getVisibility()
-                });
-        }
-
-        return PodManager.dataManager.writeData(sessionId, "pictures", PodManager.rdfCreator.createPicture(picture), webId, picture.getVisibility().toLowerCase());
+    if (picture.getVisibility() != Visibility.PRIVATE) {
+      DatabaseConnection.add("pictures", {
+        picture: picture.getId(),
+        place: picture.getPlace(),
+        webId: webId,
+        visibility: picture.getVisibility(),
+      });
     }
 
-    async findOwn(sessionId: string, user: string): Promise<Picture[]> {
-        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+    return PodManager.dataManager.writeData(
+      sessionId,
+      "pictures",
+      PodManager.rdfCreator.createPicture(picture),
+      webId,
+      picture.getVisibility().toLowerCase()
+    );
+  }
 
-        let pictures: Picture[] = [];
+  async findOwn(sessionId: string, user: string): Promise<Picture[]> {
+    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-        let dataset: SolidDataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "private");
+    let pictures: Picture[] = [];
 
-        pictures = PodManager.entityParser.parsePictures(dataset);
+    let dataset: SolidDataset = await PodManager.dataManager.fetchData(
+      sessionId,
+      "pictures",
+      webId,
+      "private"
+    );
 
-        dataset = await PodManager.dataManager.fetchData(sessionId, "pictures", webId, "friends");
+    pictures = PodManager.entityParser.parsePictures(dataset);
 
-        pictures = pictures.concat(PodManager.entityParser.parsePictures(dataset));
+    dataset = await PodManager.dataManager.fetchData(
+      sessionId,
+      "pictures",
+      webId,
+      "friends"
+    );
 
-        return pictures;
-    }
+    pictures = pictures.concat(PodManager.entityParser.parsePictures(dataset));
 
-    async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
-        let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+    return pictures;
+  }
 
-        let pictures = (await this.findOwn(sessionId, webId)).filter(c => c.getPlace() === place);
+  async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
+    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-        let friends: string[] = (await PodManager.dataManager.getFriends(sessionId, webId)).map(f => f.getWebId());
+    let pictures = (await this.findOwn(sessionId, webId)).filter(
+      (c) => c.getPlace() === place
+    );
 
-        let webIds: string[] = [];
+    let friends: string[] = (
+      await PodManager.dataManager.getFriends(sessionId, webId)
+    ).map((f) => f.getWebId());
 
-        await (await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.PUBLIC })).forEach(d => {
-            if (!webIds.includes(d.webId)) {
-                webIds.push(d.webId)
-            }
+    let webIds: string[] = [];
+
+    await (
+      await DatabaseConnection.find("pictures", {
+        place: place,
+        visibility: Visibility.PUBLIC,
+      })
+    ).forEach((d) => {
+      if (!webIds.includes(d.webId)) {
+        webIds.push(d.webId);
+      }
+    });
+
+    for (let w in webIds) {
+      let webID = webIds[w];
+      PodManager.entityParser
+        .parsePictures(
+          await PodManager.dataManager.fetchData(
+            sessionId,
+            "pictures",
+            webID,
+            "public"
+          )
+        )
+        .filter((p) => p.getPlace() == place)
+        .forEach((p) => {
+          pictures.push(p);
         });
-
-        for (let w in webIds) {
-            let webID = webIds[w];
-            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "public")).filter(p => p.getPlace() == place).forEach(p => { pictures.push(p) });
-        }
-
-        webIds = [];
-
-        await (await DatabaseConnection.find("pictures", { place: place, visibility: Visibility.FRIENDS })).forEach(d => {
-            if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
-                webIds.push(d.webId)
-            }
-        });
-
-        for (let w in webIds) {
-            let webID = webIds[w];
-            PodManager.entityParser.parsePictures(await PodManager.dataManager.fetchData(sessionId, "pictures", webID, "friends")).filter(p => p.getPlace() == place).forEach(p => { pictures.push(p) });
-        }
-
-        return pictures;
     }
+
+    webIds = [];
+
+    await (
+      await DatabaseConnection.find("pictures", {
+        place: place,
+        visibility: Visibility.FRIENDS,
+      })
+    ).forEach((d) => {
+      if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
+        webIds.push(d.webId);
+      }
+    });
+
+    for (let w in webIds) {
+      let webID = webIds[w];
+      PodManager.entityParser
+        .parsePictures(
+          await PodManager.dataManager.fetchData(
+            sessionId,
+            "pictures",
+            webID,
+            "friends"
+          )
+        )
+        .filter((p) => p.getPlace() == place)
+        .forEach((p) => {
+          pictures.push(p);
+        });
+    }
+
+    return pictures;
+  }
 }

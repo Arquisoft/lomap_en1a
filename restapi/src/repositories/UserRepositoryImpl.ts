@@ -23,7 +23,6 @@ export class UserRepositoryImpl implements UserRepository {
 
         let currentUserFriends = (await PodManager.dataManager.getFriends(sessionId, currentUser)).map(user => { return user.getWebId() });
 
-        console.log(currentUserFriends)
         if (!currentUserFriends.includes(webId)) {
             this.sendFriendRequest(sessionId, currentUser, webId);
             this.deleteFriendRequest(sessionId, currentUser, webId);
