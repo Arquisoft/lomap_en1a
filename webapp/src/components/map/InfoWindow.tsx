@@ -80,7 +80,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   const handleAddScore = async (value: number) => {
     props.handleIsLoading(true, "Posting score");//Start showing loading symbol
-    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
+    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), visibility);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);
@@ -95,8 +95,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
-      props.handleIsLoading(false);//Remove loading symbol
+      
     }
+    props.handleIsLoading(false);//Remove loading symbol
   }
 
   //For the computation of the avg score
