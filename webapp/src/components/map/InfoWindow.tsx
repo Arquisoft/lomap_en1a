@@ -42,6 +42,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  // Creator name
+  const [creatorName, setCreatorName] = useState<string>("")
+
 
 
 
@@ -75,6 +78,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
   const handleAddScore = async (value: number) => {
+    props.handleIsLoading(true, "Posting score");//Start showing loading symbol
     var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
@@ -90,6 +94,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
+      props.handleIsLoading(false);//Remove loading symbol
     }
   }
 
@@ -124,17 +129,39 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     refreshScores();
   }
 
-  const handleVisibilityChange = async(value: string) => {
+  const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
 
+  const getCreatorName = async(id: string) => {
+    if (id === null || typeof id === undefined) {
+      setCreatorName("")
+    } else {
+      let creator = await getProfileById(id);
+      setCreatorName(creator.username)
+    }
+  }
+  
+  const getCreatorText = () => {
+    // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
+    if (creatorName === null || typeof creatorName === 'undefined') {
+      return "Creator could not be found"
+    }
+
+    if (creatorName.trim().length === 0) {
+      return "";
+    }
+
+    return "Place created by " + creatorName;
+  }
 
 
 
   //Update comment list and scores when the info window data changes
   useEffect(() => {
+    getCreatorName(props.infoWindowData.creator);
     refreshScores();
     refreshCommentList();
     refreshPicturesSlide();
@@ -152,14 +179,12 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         style={props.isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
 
         <Grid item xs={12} textAlign="center">
-          <Box component="h3"  height={4}><>{props.infoWindowData?.title}</></Box>
+          <Box component="h3" height={4}><>{props.infoWindowData?.title}</></Box>
         </Grid>
 
         <Grid item xs={12} textAlign="center">
           <Box component="p" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
-    
-
         <div className="centered-element">
           <Grid item xs={12}>
             {
@@ -170,26 +195,29 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
             }
           </Grid>
         </div>
+        <Grid item xs={12} textAlign="center">
+          <Box component="h4"><>{getCreatorText()}</></Box>
+        </Grid>
         <div className="description">
           <Grid item xs={12}>
-              <TextField
-                disabled
-                multiline
-                rows={6}
-                fullWidth
-                name="description"
-                variant="filled"
-                value={props.infoWindowData.description}
+            <TextField
+              disabled
+              multiline
+              rows={6}
+              fullWidth
+              name="description"
+              variant="filled"
+              value={props.infoWindowData.description}
 
-              />
+            />
           </Grid>
         </div>
-        
+
 
         <Grid item xs={12}>
-           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
-        </Grid>  
-        
+          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"} />
+        </Grid>
+
         <Grid item xs={6}>
           <Box
             sx={{
@@ -213,12 +241,12 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
         </Grid>
 
         <Grid item xs={2}>
           <Box component="p" textAlign="right" >{avg}
-          <StarIcon htmlColor='orange' fontSize='medium' /></Box>
+            <StarIcon htmlColor='orange' fontSize='medium' /></Box>
         </Grid>
 
 
