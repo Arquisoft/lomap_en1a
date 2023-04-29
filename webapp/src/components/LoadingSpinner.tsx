@@ -1,10 +1,10 @@
 import React from "react";
 
-interface LoadingSpinnerProps{
-  message?:string
+interface LoadingSpinnerProps {
+  message?: string
 }
 
-export default function LoadingSpinner(props:LoadingSpinnerProps) {
+export default function LoadingSpinner(props: LoadingSpinnerProps) {
   return (
     <div className="spinner-container">
       <div className="loading-spinner">

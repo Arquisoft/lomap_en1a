@@ -3,10 +3,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import image from "../../icons/friend.icon.png";
 import { User } from "../../domain/User";
-import { getPlacesToShareByUser} from "../../api/api";
+import { getPlacesToShareByUser } from "../../api/api";
 import { Place } from "../../domain/Place";
 import { Button } from "@mui/material";
 import { addFriendMarkerById, deleteMarkerById, displayMap } from "../ol/vector";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 
@@ -23,17 +24,21 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 
     //For the friends
     const [friendPlaces, setFriendPlaces] = useState<Place[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const refreshFriendPlaceList = async () => {
+        setIsLoading(true)
         getPlacesToShareByUser(props.friend.webId).then((places) => {
-            places.sort(function(a, b) {
+            places.sort(function (a, b) {
                 let name1 = a.name.toLowerCase();
                 let name2 = b.name.toLowerCase();
-                if(name1 < name2) { return -1; }
-                if(name1 > name2) { return 1; }
+                if (name1 < name2) { return -1; }
+                if (name1 > name2) { return 1; }
+
                 return 0;
             })
 
             setFriendPlaces(places)
+            setIsLoading(false);
         });
 
     }
@@ -48,13 +53,15 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     return (
 
         <>
-            <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'>
+            {isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <div></div>}
+            <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
+                style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
                 <Grid item xs={6} textAlign="center">
                     <Box component="h1" ><>{props.friend.username}</></Box>
                 </Grid>
 
                 <Grid alignItems="center" item xs={12}>
-                    <Box component="img" textAlign="center" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto'}}></Box>
+                    <Box component="img" textAlign="center" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto' }}></Box>
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
                     <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
@@ -104,7 +111,7 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                         {place.name}
                         <br></br>
                         <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
-                            {getPlaceDisplayStatus(place.id)?"Hide":"Show"}
+                            {getPlaceDisplayStatus(place.id) ? "Hide" : "Show"}
                         </Button>
                         <br></br>
                         {place.latitude + "," + place.longitude}
