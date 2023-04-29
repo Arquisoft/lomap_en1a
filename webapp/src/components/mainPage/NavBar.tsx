@@ -58,7 +58,6 @@ function LoggedNavbar(props:LogoutProps) {
   return (
       <ul>
         <CustomLink to="/map" onClick={reload}>Map</CustomLink>
-        <CustomLink to="/friends" >Friends management</CustomLink>
         <Profile handleLogout={props.handleLogout}/>
       </ul>
     

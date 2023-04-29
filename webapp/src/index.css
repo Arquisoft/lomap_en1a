@@ -548,22 +548,30 @@ footer {
   padding: 0;
 }
 
+.dropdown-items ul {
+  padding-inline-start: 20px;
+}
+
 .dropdown-item {
   display: flex;
   margin: 10px auto;
   padding: 10px 0;
   /* margin-right: 35px; /* Uncomment to center lines separating elements */
-  border-top: 3px solid rgba(0, 0, 0, 0.05);
+  border-top: 2px solid rgba(0, 0, 0, 0.03);
+}
+
+.logout {
+  border-top: 3px solid rgba(0, 0, 0, 0.07);
 }
 
 .dropdown-item a {
-  max-width: 100px;
+  max-width: 120px;
   margin-left: 10px;
   transition: var(--speed);
   color: var(--secondary-profile-text-color);
 }
 
-.dropdown-links {
+.dropdown-links ul {
   padding: 0;
 }
 
@@ -574,7 +582,6 @@ footer {
 .dropdown-item img {
   max-width: 25px;
   max-height: 25px;
-  margin-right: 10px;
   opacity: 0.5;
   transition: var(--speed);
 }

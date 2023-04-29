@@ -3,6 +3,7 @@ import { User } from "../../domain/User";
 import placeholderImage from '../../images/user_icon.png';
 import log_out from '../../icons/log-out.png';
 import userIcon from '../../icons/user.png';
+import envelope from '../../icons/envelope.png'
 import { CustomLink } from "../CustomLink";
 import { To } from "react-router-dom";
 import { getProfile,logout } from "../../api/api";
@@ -62,8 +63,9 @@ export default function Profile(props:LogoutProps): JSX.Element {
                 <div className={`profile-dropdown ${open? 'profile-active' : 'profile-inactive'} noHover`}>
                     <h3>{profile?.username}<br/><span>{profile?.webId}</span></h3>
                     <ul className="dropdown-items" onClick={() => {setOpen(!open)}}>
-                        <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/profile"}/></li> 
-                        <li><DropdownItem img={log_out} text={"Log out"} linkTo={"/"} onClick={handleLogout}/></li>
+                        <li><DropdownItem img={userIcon} text={"My profile"} linkTo={"/profile"}/></li>
+                        <li><DropdownItem img={envelope} text={"Friend requests"} linkTo={"/friends"}/></li>
+                        <li><DropdownItem img={log_out} text={"Log out"} linkTo={"/"} logout onClick={handleLogout}/></li>
                     </ul>
                 </div>
             </div>
@@ -71,10 +73,10 @@ export default function Profile(props:LogoutProps): JSX.Element {
     )
 }
 
-function DropdownItem(props: { img: string, text: string, linkTo: To, onClick?: React.MouseEventHandler<HTMLAnchorElement> | undefined }) {
+function DropdownItem(props: { img: string, text: string, linkTo: To, logout?:boolean, onClick?: React.MouseEventHandler<HTMLAnchorElement> | undefined }) {
     return (
         <ul>
-            <li className="dropdown-item">
+            <li className={props.logout ? "dropdown-item logout" : "dropdown-item"}>
                 <img src={props.img} alt="icon"></img>
                 <ul className="dropdown-links">
                     <CustomLink to={props.linkTo} onClick={props.onClick}>{props.text}</CustomLink>
