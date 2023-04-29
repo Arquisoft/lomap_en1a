@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,49 +10,54 @@ import Snackbar from '@mui/material/Snackbar';
 import { Visibility } from "../../domain/Visibility";
 import { NotificationType } from "./CommentForm";
 import { Box } from "@mui/material";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 type PictureSelectorProps = {
   OnPictureListChange: () => void;
-  place:string;
-  user:string;
+  place: string;
+  user: string;
 }
 
 
 
 export default function PictureSelector(props: PictureSelectorProps): JSX.Element {
 
-    const [name, setName] = useState('');
-    const [url, setUrl] = useState('');
-  
-    const [notificationStatus, setNotificationStatus] = useState(false);
-    const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
+  const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleAddPicture = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      let result: boolean = await addPicture(new Picture("", url, props.place, props.user, new Date(), Visibility.PUBLIC));
-      if (result) {
+  const [notificationStatus, setNotificationStatus] = useState(false);
+  const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
+
+  const handleAddPicture = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true)
+    e.preventDefault();
+    let result: boolean = await addPicture(new Picture("", url, props.place, props.user, new Date(), Visibility.PUBLIC));
+    if (result) {
         setUrl("");
-        setNotificationStatus(true);
-        setNotification({
-          severity: 'success',
-          message: 'Your picture has been posted!'
-        });
-        //Notify the change to the parent component
-        props.OnPictureListChange();
-      }
-      else {
-        setNotificationStatus(true);
-        setNotification({
-          severity: 'error',
-          message: 'There\'s been an error posting your picture.'
-        });
-      }
+      setNotificationStatus(true);
+      setNotification({
+        severity: 'success',
+        message: 'Your picture has been posted!'
+      });
+      //Notify the change to the parent component
+      props.OnPictureListChange();
+      setIsLoading(false)
     }
-  
+    else {
+      setNotificationStatus(true);
+      setNotification({
+        severity: 'error',
+        message: 'There\'s been an error posting your picture.'
+      });
+    }
+  }
+
 
   return (
     <>
+      {isLoading ? <LoadingSpinner message="Loading image" /> : <div></div>}
       <form name="register" onSubmit={handleAddPicture}>
         <Grid container spacing={3} justifyContent="space-around">
             <Grid item xs={10}>
@@ -93,7 +98,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
 
 
       </form>
-      <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={()=>{setNotificationStatus(false)}}>
+      <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
           {notification.message}
         </Alert>

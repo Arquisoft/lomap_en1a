@@ -29,7 +29,7 @@ type InfoWindowProps = {
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
-  
+
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
@@ -43,20 +43,23 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  // Creator name
+  const [creatorName, setCreatorName] = useState<string>("")
 
-  
+
+
 
   const refreshPicturesSlide = async () => {
     getPictures(props.infoWindowData?.id).then((pics) => {
       let picURLs: string[] = pics.map((pic, i) => pic.url);
       setPictureURLs(picURLs);
-    });   
-    
+    });
+
   }
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
+    props.handleIsLoading(true, "Loading comments...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
 
 
@@ -66,16 +69,17 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         ...comm,
         owner: user.username,
       };
-      
+
     }));
     props.handleIsLoading(false);//Stop showing loading symbol
-    
+
 
     setComments(newComments);
   }
 
 
   const handleAddScore = async (value: number) => {
+    props.handleIsLoading(true, "Posting score");//Start showing loading symbol
     var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
@@ -91,6 +95,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
+      props.handleIsLoading(false);//Remove loading symbol
     }
   }
 
@@ -125,17 +130,39 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     refreshScores();
   }
 
-  const handleVisibilityChange = async(value: string) => {
+  const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
 
+  const getCreatorName = async(id: string) => {
+    if (id === null || typeof id === undefined) {
+      setCreatorName("")
+    } else {
+      let creator = await getProfileById(id);
+      setCreatorName(creator.username)
+    }
+  }
+  
+  const getCreatorText = () => {
+    // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
+    if (creatorName === null || typeof creatorName === 'undefined') {
+      return "Creator could not be found"
+    }
+
+    if (creatorName.trim().length === 0) {
+      return "";
+    }
+
+    return "Place created by " + creatorName;
+  }
 
 
 
   //Update comment list and scores when the info window data changes
   useEffect(() => {
+    getCreatorName(props.infoWindowData.creator);
     refreshScores();
     refreshCommentList();
     refreshPicturesSlide();
@@ -154,6 +181,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
           <Box className="place-name">{props.infoWindowData?.title}</Box>
           <Box className="place-category">{props.infoWindowData?.category}</Box>
           <Divider/>
+        </Grid>
+        <Grid item xs={12} textAlign="center">
+          <Box component="h4"><>{getCreatorText()}</></Box>
         </Grid>
         <Grid item xs={12} textAlign="center">
           { pictureURLs.length == 0 ?
@@ -230,7 +260,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
 
         <Grid item xs={12}>
-          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id}/>
+          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={12}>
           <Divider/>

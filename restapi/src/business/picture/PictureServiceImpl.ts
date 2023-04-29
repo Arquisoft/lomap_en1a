@@ -13,41 +13,41 @@ import { PictureService } from "./PictureService";
 import { PictureRepository } from "../repositories/PictureRepository";
 
 //Others
-import { v4 as generateUUID } from 'uuid';
+import { v4 as generateUUID } from "uuid";
 
 export class PictureServiceImpl implements PictureService {
+  private pictureRepository: PictureRepository =
+    Factory.repositories.getPictureRepository();
 
-    private pictureRepository: PictureRepository = Factory.repositories.getPictureRepository();
+  async add(sessionId: string, picture: PictureDto): Promise<boolean> {
+    let id = generateUUID();
+    let url = picture.url;
+    let place = picture.place;
+    let date = new Date();
+    let visibility = picture.visibility;
 
-    async add(sessionId: string, picture: PictureDto): Promise<boolean> {
-        let id = generateUUID();
-        let url = picture.url;
-        let place = picture.place;
-        let date = new Date();
-        let visibility = picture.visibility;
-
-        if (url == undefined || url == null) {
-            return false;
-        }
-
-        if (place == undefined || place == null) {
-            return false;
-        }
-
-        if (visibility == undefined || visibility == null) {
-            return false;
-        }
-
-        let p = new Picture(id, url, place, "", date, visibility);
-
-        return this.pictureRepository.add(sessionId, p);
+    if (url == undefined || url == null) {
+      return false;
     }
 
-    async findOwn(sessionId: string, user: string): Promise<Picture[]> {
-        return this.pictureRepository.findOwn(sessionId, user);
+    if (place == undefined || place == null) {
+      return false;
     }
 
-    async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
-        return this.pictureRepository.findByPlace(sessionId, place);
+    if (visibility == undefined || visibility == null) {
+      return false;
     }
+
+    let p = new Picture(id, url, place, "", date, visibility);
+
+    return this.pictureRepository.add(sessionId, p);
+  }
+
+  async findOwn(sessionId: string, user: string): Promise<Picture[]> {
+    return this.pictureRepository.findOwn(sessionId, user);
+  }
+
+  async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
+    return this.pictureRepository.findByPlace(sessionId, place);
+  }
 }
