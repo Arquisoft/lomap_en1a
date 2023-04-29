@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser, getProfile } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -323,6 +323,7 @@ function Vector(props: TVectorLayerComponentProps) {
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
+      creator: place.owner,
       category:place.category,
       id: place.id,
       latitude: place.latitude,

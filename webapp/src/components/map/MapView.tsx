@@ -28,6 +28,7 @@ export type FriendWindowDataType={
 
 export type InfoWindowDataType={
   title: string,
+  creator: string,
   category:Category,
   id: string,
   latitude: number,
@@ -56,6 +57,7 @@ export default function MapView(): JSX.Element {
   const [slidingPaneView, setSlidingPaneView] = useState(0);
   const [infoWindowData, setInfoWindowData] = useState<InfoWindowDataType>({
     title: "",
+    creator: "",
     category: Category.BAR,
     id: "",
     latitude: 0,
