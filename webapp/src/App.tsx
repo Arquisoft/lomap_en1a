@@ -36,6 +36,7 @@ function App() {
         <div className="background-image container">
     
             <NavBar/>
+            <div className="margin">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/about" element={<About/>}/>
@@ -47,7 +48,7 @@ function App() {
                     <Route path="/profile" element={<PrivateComponent children = {<UserProfile/>}/>}/>
                     <Route path="*" element={<Navigate to= "/"/>}/>
                 </Routes>
-
+            </div>
             <Footer/>
     
 

@@ -19,6 +19,7 @@ import Slideshow from '../mainPage/SlideShow';
 import { InfoWindowDataType } from './MapView';
 import { VisibilitySelect } from './CreatePlaceWindow';
 import TextField from '@mui/material/TextField';
+import { Divider } from '@material-ui/core';
 
 type InfoWindowProps = {
   infoWindowData: InfoWindowDataType;
@@ -55,7 +56,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
+    //props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
 
 
@@ -67,7 +68,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
       };
       
     }));
-    props.handleIsLoading(false);//Stop showing loading symbol
+    //props.handleIsLoading(false);//Stop showing loading symbol
     
 
     setComments(newComments);
@@ -148,26 +149,41 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
     <>
-      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window' style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
-
-        <Grid item xs={6} textAlign="center">
-          <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+      <Grid container spacing={3} style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+        <Grid item xs={12} textAlign="center">
+          <Box className="place-name">{props.infoWindowData?.title}</Box>
+          <Box className="place-category">{props.infoWindowData?.category}</Box>
+          <Divider/>
         </Grid>
-        <Grid item xs={6} textAlign="center">
-          <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
+        <Grid item xs={12} textAlign="center">
+          { pictureURLs.length == 0 ?
+            <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found" 
+              sx={{maxWidth: '100%', maxHeight: '10em', width: 'auto', height: 'auto'}}></Box>
+            :
+            <Slideshow images={pictureURLs} />
+          }
         </Grid>
-    
+        <Grid item xs={12}>
+          <TextField
+            className='description'
+            disabled
+            multiline
+            fullWidth
+            name="description"
+            variant="filled"
+            value={props.infoWindowData.description}
+            sx={{
+              "& fieldset": 
+                { 
+                  //border: 'none',
+                },
+              margin: '5em'
+            }}
+          />
+        </Grid>
+      </Grid>
+      {/*<Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window' style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
 
-        <div className="centered-element">
-          <Grid item xs={12}>
-            {
-              pictureURLs.length == 0 ?
-                <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
-                :
-                <Slideshow images={pictureURLs} />
-            }
-          </Grid>
-        </div>
         <div className="description">
           <Grid item xs={12}>
               <TextField
@@ -229,7 +245,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
 
 
-      </Grid>
+      </Grid>*/}
     </>
 
 

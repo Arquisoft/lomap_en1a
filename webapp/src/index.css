@@ -78,6 +78,7 @@ footer {
 
 .centered-block {
   box-sizing: border-box;
+  top: 50%;
   position: relative;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -91,7 +92,6 @@ footer {
 }
 
 .text-area {
-  top: 43%;
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
   max-height: 80%;
@@ -180,7 +180,8 @@ footer {
 }
 
 .margin {
-  margin-top: 2em;
+  padding-top: 2em;
+  height: 100%;
 }
 
 /* Friends ------------------------------------------------------------------------------ */
@@ -188,7 +189,7 @@ footer {
   text-align:left;
   background-color: var(--secondary-bg);
   color: var(--block-text-color);
-  height: 90%;
+  height: 100%;
   width: auto;
   font-size: 1.5vmax;
   overflow-y: auto;
@@ -272,7 +273,7 @@ footer {
   grid-row-end:last;
   grid-column-start:firstC ;
   grid-column-end: secondC;
-  font-size: 3.5vmin;
+  font-size: 3vmin;
 }
 
 .centered-element {
@@ -327,6 +328,7 @@ footer {
 }
 
 .menu {
+  z-index: 5;
   background-color: #333;
   color: var(--main-text-color);
   display: flex;
@@ -488,13 +490,13 @@ footer {
 .profile-dropdown {
   z-index : 4;
   position: absolute;
-  top: 12%;
-  right: 20px;
+  top: 120%;
+  right: 30px;
   background-color: var(--secondary-bg);
   border-radius: var(--border-radius);
-  padding: 10px 20px;
+  padding: 18px 30px;
   width: 200px;
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .profile-dropdown.profile-active {
@@ -514,15 +516,15 @@ footer {
 .profile-menu h3 {
   width: 100%;
   text-align: center;
-  font-size: 18px;
-  padding: 20px 0;
+  font-size: 20px;
+  padding: 18px 0;
   font-weight: 500;
   color: var(--primary-profile-text-color);
-  line-height: 1.2rem;
+  line-height: 1.5rem;
 }
 
 .profile-menu h3 span {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--secondary-profile-text-color);
   font-weight: 400;
 }
@@ -548,6 +550,7 @@ footer {
 
 .dropdown-links {
   padding: 0;
+  padding-top: 2px;
 }
 
 .dropdown-links li.active {
@@ -555,7 +558,8 @@ footer {
 }
 
 .dropdown-item img {
-  max-width: 20px;
+  max-width: 25px;
+  max-height: 25px;
   margin-right: 10px;
   opacity: 0.5;
   transition: var(--speed);
