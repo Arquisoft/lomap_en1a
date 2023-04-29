@@ -9,6 +9,8 @@ export type TOpenLayersProps = {
   handleLongitude: (value: number) => Promise<void>,
   handleSlidingPaneView: (value: number) => Promise<void>,
   handleInfoWindowData: (value: InfoWindowDataType) => Promise<void>
+  handleIsMainLoading: (value: boolean) => Promise<void>,
+  isMainLoading: boolean
 };
 
 export type TVectorLayerComponentProps = TOpenLayersProps & {

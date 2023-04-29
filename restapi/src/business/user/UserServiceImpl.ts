@@ -5,40 +5,43 @@ import { UserRepository } from "../repositories/UserRepository";
 import { UserService } from "./UserService";
 
 export class UserServiceImpl implements UserService {
+  private userRepository: UserRepository =
+    Factory.repositories.getUserRepository();
 
-    private userRepository: UserRepository = Factory.repositories.getUserRepository();
-
-    async getProfile(sessionId: string, webId: string): Promise<User> {
-
-        if (webId == "OWN") {
-            webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-            webId = (webId)
-        }
-
-        return this.userRepository.getProfile(sessionId, webId);
+  async getProfile(sessionId: string, webId: string): Promise<User> {
+    if (webId == "OWN") {
+      webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+      webId = webId;
     }
 
-    async getFriends(sessionId: string, webId: string): Promise<User[]> {
-        return this.userRepository.getFriends(sessionId, webId);
+    return this.userRepository.getProfile(sessionId, webId);
+  }
+
+  async getFriends(sessionId: string, webId: string): Promise<User[]> {
+    return this.userRepository.getFriends(sessionId, webId);
+  }
+
+  async isLoggedIn(sessionId: string): Promise<boolean> {
+    if (sessionId == undefined) {
+      return false;
     }
 
-    async isLoggedIn(sessionId: string): Promise<boolean> {
-        if (sessionId == undefined) {
-            return false;
-        }
+    return this.userRepository.isLoggedIn(sessionId);
+  }
 
-        return this.userRepository.isLoggedIn(sessionId);
-    }
+  async addFriend(sessionId: string, webId: string): Promise<boolean> {
+    return this.userRepository.addFriend(sessionId, webId);
+  }
 
-    async addFriend(sessionId: string, webId: string): Promise<boolean> {
-        return this.userRepository.addFriend(sessionId, webId);
-    }
+  async sharePublicPlaces(sessionId: string): Promise<boolean> {
+    return this.userRepository.sharePublicPlaces(sessionId);
+  }
 
-    async sharePublicPlaces(sessionId: string): Promise<boolean> {
-        return this.userRepository.sharePublicPlaces(sessionId);
-    }
+  async getPublicUsers(sessionId: string): Promise<User[]> {
+    return this.userRepository.getPublicUsers(sessionId);
+  }
 
-    async getPublicUsers(sessionId: string): Promise<User[]> {
-        return this.userRepository.getPublicUsers(sessionId);
-    }
+  getFriendRequests(sessionId: string): Promise<User[]> {
+    return this.userRepository.getFriendRequests(sessionId);
+  }
 }

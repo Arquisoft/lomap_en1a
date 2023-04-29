@@ -20,53 +20,50 @@ import { ScoreRepositoryImpl } from "./repositories/ScoreRepositoryImpl";
 import { UserRepositoryImpl } from "./repositories/UserRepositoryImpl";
 
 class ServicesFactory {
+  getUserService(): UserService {
+    return new UserServiceImpl();
+  }
 
-    getUserService(): UserService {
-        return new UserServiceImpl();
-    }
+  public getPlaceService(): PlaceService {
+    return new PlaceServiceImpl();
+  }
 
-    public getPlaceService(): PlaceService {
-        return new PlaceServiceImpl();
-    }
+  public getCommentService(): CommentService {
+    return new CommentServiceImpl();
+  }
 
-    public getCommentService(): CommentService {
-        return new CommentServiceImpl();
-    }
+  public getScoreService(): ScoreService {
+    return new ScoreServiceImpl();
+  }
 
-    public getScoreService(): ScoreService {
-        return new ScoreServiceImpl();
-    }
-
-    public getPictureService(): PictureService {
-        return new PictureServiceImpl();
-    }
+  public getPictureService(): PictureService {
+    return new PictureServiceImpl();
+  }
 }
 
 class RepositoriesFactory {
+  public getPlaceRepository(): PlaceRepository {
+    return new PlaceRepositoryImpl();
+  }
 
-    public getPlaceRepository(): PlaceRepository {
-        return new PlaceRepositoryImpl();
-    }
+  public getCommentRepository(): CommentRepository {
+    return new CommentRepositoryImpl();
+  }
 
-    public getCommentRepository(): CommentRepository {
-        return new CommentRepositoryImpl();
-    }
+  public getPictureRepository(): PictureRepository {
+    return new PictureRepositoryImpl();
+  }
 
-    public getPictureRepository(): PictureRepository {
-        return new PictureRepositoryImpl();
-    }
+  public getScoreRepository(): ScoreRepository {
+    return new ScoreRepositoryImpl();
+  }
 
-    public getScoreRepository(): ScoreRepository {
-        return new ScoreRepositoryImpl();
-    }
-
-    public getUserRepository(): UserRepository {
-        return new UserRepositoryImpl();
-    }
+  public getUserRepository(): UserRepository {
+    return new UserRepositoryImpl();
+  }
 }
 
 export class Factory {
-
-    public static services: ServicesFactory = new ServicesFactory();
-    public static repositories: RepositoriesFactory = new RepositoriesFactory();
+  public static services: ServicesFactory = new ServicesFactory();
+  public static repositories: RepositoriesFactory = new RepositoriesFactory();
 }

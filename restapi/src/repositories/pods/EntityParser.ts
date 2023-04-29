@@ -1,222 +1,234 @@
-import { SolidDataset, Thing, getDatetime, getDecimal, getStringNoLocale, getThing } from "@inrupt/solid-client";
+import {
+  SolidDataset,
+  Thing,
+  getDatetime,
+  getDecimal,
+  getStringNoLocale,
+  getThing,
+} from "@inrupt/solid-client";
 import { Comment } from "../../domain/Comment";
 import { Place } from "../../domain/Place";
 import { Score } from "../../domain/Score";
 import { Picture } from "../../domain/Picture";
 import { SCHEMA_INRUPT } from "@inrupt/vocab-common-rdf";
 import { Visibility } from "../../domain/Visibility";
+import { Category } from "../../domain/Category";
 
 export class EntityParser {
+  public parseComments(dataSet: SolidDataset): Comment[] {
+    let comments: Comment[] = [];
 
-    public parseComments(dataSet: SolidDataset): Comment[] {
+    for (let c in dataSet.graphs.default) {
+      let comment = dataSet.graphs.default[c];
 
-        let comments: Comment[] = []
-
-        for (let c in dataSet.graphs.default) {
-            let comment = dataSet.graphs.default[c];
-
-            comments.push(this.parseComment(dataSet, comment))
-        }
-
-        return comments;
+      comments.push(this.parseComment(dataSet, comment));
     }
 
-    private parseComment(dataSet: SolidDataset, comment: any): Comment {
+    return comments;
+  }
 
-        let thing: Thing = getThing(dataSet, comment.url) as Thing;
+  private parseComment(dataSet: SolidDataset, comment: any): Comment {
+    let thing: Thing = getThing(dataSet, comment.url) as Thing;
 
-        let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier)
+    let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier);
 
-        if (id == null) {
-            id = "NO ID"
-        }
-
-        let text = getStringNoLocale(thing, SCHEMA_INRUPT.text)
-
-        if (text == null) {
-            text = "NO TEXT"
-        }
-
-        let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person)
-
-        if (owner == null) {
-            owner = "NO OWNER"
-        }
-
-        let place = getStringNoLocale(thing, SCHEMA_INRUPT.address)
-
-        if (place == null) {
-            place = "NO PLACE"
-        }
-
-        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
-
-        if (date == null) {
-            date = new Date();
-        }
-
-        let visibility = <Visibility>thing.url.split("/")[4]
-
-        return new Comment(id, text, place, owner, date, visibility);
+    if (id == null) {
+      id = "NO ID";
     }
 
-    public parsePlaces(dataSet: SolidDataset): Place[] {
+    let text = getStringNoLocale(thing, SCHEMA_INRUPT.text);
 
-        let places = [];
-
-        for (let p in dataSet.graphs.default) {
-            let place = dataSet.graphs.default[p];
-
-            places.push(this.parsePlace(dataSet, place))
-        }
-
-        return places;
+    if (text == null) {
+      text = "NO TEXT";
     }
 
-    private parsePlace(dataSet: SolidDataset, place: any): Place {
+    let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person);
 
-        let thing: Thing = getThing(dataSet, place.url) as Thing;
-
-        let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier)
-
-        if (id == null) {
-            id = "NO ID"
-        }
-
-        let name = getStringNoLocale(thing, SCHEMA_INRUPT.name)
-
-        if (name == null) {
-            name = "NO NAME"
-        }
-
-        let description = getStringNoLocale(thing, SCHEMA_INRUPT.description)
-
-        if (description == null) {
-            description = "NO DESCRIPTION"
-        }
-
-        let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person)
-
-        if (owner == null) {
-            owner = "NO OWNER"
-        }
-
-        let latitude = getDecimal(thing, SCHEMA_INRUPT.latitude)
-
-        if (latitude == null) {
-            latitude = 0
-        }
-
-        let longitude = getDecimal(thing, SCHEMA_INRUPT.longitude)
-
-        if (longitude == null) {
-            longitude = 0
-        }
-
-        let visibility = <Visibility>thing.url.split("/")[4]
-
-        return new Place(id, name, description, owner, latitude, longitude, visibility);
+    if (owner == null) {
+      owner = "NO OWNER";
     }
 
-    public parseScores(dataSet: SolidDataset): Score[] {
+    let place = getStringNoLocale(thing, SCHEMA_INRUPT.address);
 
-        let scores: Score[] = []
-
-        for (let s in dataSet.graphs.default) {
-            let score = dataSet.graphs.default[s];
-
-            scores.push(this.parseScore(dataSet, score))
-        }
-
-        return scores;
+    if (place == null) {
+      place = "NO PLACE";
     }
 
-    private parseScore(dataSet: SolidDataset, score: any): Score {
-        let thing: Thing = getThing(dataSet, score.url) as Thing;
+    let date = getDatetime(thing, SCHEMA_INRUPT.dateModified);
 
-        let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier)
-
-        if (id == null) {
-            id = "NO ID"
-        }
-
-        let val = getDecimal(thing, SCHEMA_INRUPT.value)
-
-        if (val == null) {
-            val = -1
-        }
-
-        let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person)
-
-        if (owner == null) {
-            owner = "NO OWNER"
-        }
-
-        let place = getStringNoLocale(thing, SCHEMA_INRUPT.address)
-
-        if (place == null) {
-            place = "NO PLACE"
-        }
-
-        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
-
-        if (date == null) {
-            date = new Date();
-        }
-
-        let visibility = <Visibility>thing.url.split("/")[4]
-
-        return new Score(id, val, place, owner, date, visibility);
+    if (date == null) {
+      date = new Date();
     }
 
-    public parsePictures(dataSet: SolidDataset): Picture[] {
+    let visibility = <Visibility>thing.url.split("/")[4];
 
-        let pictures: Picture[] = []
+    return new Comment(id, text, place, owner, date, visibility);
+  }
 
-        for (let p in dataSet.graphs.default) {
-            let picture = dataSet.graphs.default[p];
+  public parsePlaces(dataSet: SolidDataset): Place[] {
+    let places = [];
 
-            pictures.push(this.parsePicture(dataSet, picture))
-        }
+    for (let p in dataSet.graphs.default) {
+      let place = dataSet.graphs.default[p];
 
-        return pictures;
+      places.push(this.parsePlace(dataSet, place));
     }
 
-    private parsePicture(dataSet: SolidDataset, picture: any): Picture {
-        let thing: Thing = getThing(dataSet, picture.url) as Thing;
+    return places;
+  }
 
-        let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier)
+  private parsePlace(dataSet: SolidDataset, place: any): Place {
+    let thing: Thing = getThing(dataSet, place.url) as Thing;
 
-        if (id == null) {
-            id = "NO ID"
-        }
+    let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier);
 
-        let url = getStringNoLocale(thing, SCHEMA_INRUPT.url)
-
-        if (url == null) {
-            url = "NO URL"
-        }
-
-        let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person)
-
-        if (owner == null) {
-            owner = "NO OWNER"
-        }
-
-        let place = getStringNoLocale(thing, SCHEMA_INRUPT.address)
-
-        if (place == null) {
-            place = "NO PLACE"
-        }
-
-        let date = getDatetime(thing, SCHEMA_INRUPT.dateModified)
-
-        if (date == null) {
-            date = new Date();
-        }
-
-        let visibility = <Visibility>thing.url.split("/")[4]
-
-        return new Picture(id, url, place, owner, date, visibility);
+    if (id == null) {
+      id = "NO ID";
     }
+
+    let name = getStringNoLocale(thing, SCHEMA_INRUPT.name);
+
+    if (name == null) {
+      name = "NO NAME";
+    }
+
+    let description = getStringNoLocale(thing, SCHEMA_INRUPT.description);
+
+    if (description == null) {
+      description = "NO DESCRIPTION";
+    }
+
+    let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person);
+
+    if (owner == null) {
+      owner = "NO OWNER";
+    }
+
+    let latitude = getDecimal(thing, SCHEMA_INRUPT.latitude);
+
+    if (latitude == null) {
+      latitude = 0;
+    }
+
+    let longitude = getDecimal(thing, SCHEMA_INRUPT.longitude);
+
+    if (longitude == null) {
+      longitude = 0;
+    }
+
+    let visibility = <Visibility>thing.url.split("/")[4];
+
+    let category = <Category>getStringNoLocale(thing, SCHEMA_INRUPT.brand);
+
+    return new Place(
+      id,
+      name,
+      description,
+      owner,
+      latitude,
+      longitude,
+      visibility,
+      category
+    );
+  }
+
+  public parseScores(dataSet: SolidDataset): Score[] {
+    let scores: Score[] = [];
+
+    for (let s in dataSet.graphs.default) {
+      let score = dataSet.graphs.default[s];
+
+      scores.push(this.parseScore(dataSet, score));
+    }
+
+    return scores;
+  }
+
+  private parseScore(dataSet: SolidDataset, score: any): Score {
+    let thing: Thing = getThing(dataSet, score.url) as Thing;
+
+    let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier);
+
+    if (id == null) {
+      id = "NO ID";
+    }
+
+    let val = getDecimal(thing, SCHEMA_INRUPT.value);
+
+    if (val == null) {
+      val = -1;
+    }
+
+    let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person);
+
+    if (owner == null) {
+      owner = "NO OWNER";
+    }
+
+    let place = getStringNoLocale(thing, SCHEMA_INRUPT.address);
+
+    if (place == null) {
+      place = "NO PLACE";
+    }
+
+    let date = getDatetime(thing, SCHEMA_INRUPT.dateModified);
+
+    if (date == null) {
+      date = new Date();
+    }
+
+    let visibility = <Visibility>thing.url.split("/")[4];
+
+    return new Score(id, val, place, owner, date, visibility);
+  }
+
+  public parsePictures(dataSet: SolidDataset): Picture[] {
+    let pictures: Picture[] = [];
+
+    for (let p in dataSet.graphs.default) {
+      let picture = dataSet.graphs.default[p];
+
+      pictures.push(this.parsePicture(dataSet, picture));
+    }
+
+    return pictures;
+  }
+
+  private parsePicture(dataSet: SolidDataset, picture: any): Picture {
+    let thing: Thing = getThing(dataSet, picture.url) as Thing;
+
+    let id = getStringNoLocale(thing, SCHEMA_INRUPT.identifier);
+
+    if (id == null) {
+      id = "NO ID";
+    }
+
+    let url = getStringNoLocale(thing, SCHEMA_INRUPT.url);
+
+    if (url == null) {
+      url = "NO URL";
+    }
+
+    let owner = getStringNoLocale(thing, SCHEMA_INRUPT.Person);
+
+    if (owner == null) {
+      owner = "NO OWNER";
+    }
+
+    let place = getStringNoLocale(thing, SCHEMA_INRUPT.address);
+
+    if (place == null) {
+      place = "NO PLACE";
+    }
+
+    let date = getDatetime(thing, SCHEMA_INRUPT.dateModified);
+
+    if (date == null) {
+      date = new Date();
+    }
+
+    let visibility = <Visibility>thing.url.split("/")[4];
+
+    return new Picture(id, url, place, owner, date, visibility);
+  }
 }
