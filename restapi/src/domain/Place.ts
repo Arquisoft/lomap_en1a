@@ -3,78 +3,85 @@ import { Category } from "./Category";
 import { Visibility } from "./Visibility";
 
 export class Place extends BaseEntity {
+  private name: string;
+  private owner: string;
+  private description: string;
+  private visibility: Visibility;
+  private category: Category;
 
-    private name: string;
-    private owner: string;
-    private description: string;
-    private visibility: Visibility;
-    private category: Category;
+  private latitude: number;
+  private longitude: number;
 
-    private latitude: number;
-    private longitude: number;
+  public constructor(
+    id: string,
+    name: string,
+    description: string,
+    owner: string,
+    latitude: number,
+    longitude: number,
+    visibility: Visibility,
+    category: Category
+  ) {
+    super(id);
+    this.name = name;
+    this.description = description;
+    this.owner = owner;
+    this.visibility = visibility;
+    this.category = category;
 
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 
-    public constructor(id: string, name: string, description: string, owner: string, latitude: number, longitude: number, visibility: Visibility, category: Category) {
-        super(id);
-        this.name = name;
-        this.description = description;
-        this.owner = owner;
-        this.visibility = visibility;
-        this.category = category;
+  public setName(name: string) {
+    this.name = name;
+  }
 
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
+  public getName(): string {
+    return this.name;
+  }
 
-    public setName(name: string) {
-        this.name = name;
-    }
+  public setOwner(owner: string) {
+    this.owner = owner;
+  }
 
-    public getName(): string {
-        return this.name;
-    }
+  public getOwner(): string {
+    return this.owner;
+  }
 
-    public setOwner(owner: string) {
-        this.owner = owner;
-    }
+  public setDescription(description: string) {
+    this.description = description;
+  }
 
-    public getOwner(): string {
-        return this.owner;
-    }
+  public getDescription(): string {
+    return this.description;
+  }
 
-    public setDescription(description: string) {
-        this.description = description;
-    }
+  public getLatitude(): number {
+    return this.latitude;
+  }
 
-    public getDescription(): string {
-        return this.description;
-    }
+  public getLongitude(): number {
+    return this.longitude;
+  }
 
-    public getLatitude(): number {
-        return this.latitude;
-    }
+  public setVisibility(visibility: Visibility) {
+    this.visibility = visibility;
+  }
 
-    public getLongitude(): number {
-        return this.longitude;
-    }
+  public getVisibility(): Visibility {
+    return this.visibility;
+  }
 
-    public setVisibility(visibility: Visibility) {
-        this.visibility = visibility;
-    }
+  public setCategory(category: Category) {
+    this.category = category;
+  }
 
-    public getVisibility(): Visibility {
-        return this.visibility;
-    }
+  public getCategory(): Category {
+    return this.category;
+  }
 
-    public setCategory(category: Category) {
-        this.category = category;
-    }
-
-    public getCategory(): Category {
-        return this.category;
-    }
-
-    public toString(): string {
-        return this.getId() + ": " + this.getLatitude() + "-" + this.getLongitude();
-    }
+  public toString(): string {
+    return this.getId() + ": " + this.getLatitude() + "-" + this.getLongitude();
+  }
 }
