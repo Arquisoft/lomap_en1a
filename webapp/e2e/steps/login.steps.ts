@@ -7,7 +7,7 @@ let page: puppeteer.Page;
 let browser: puppeteer.Browser;
 
 defineFeature(feature, test => {
-  
+
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
@@ -18,36 +18,55 @@ defineFeature(feature, test => {
       .goto("http://localhost:3000", {
         waitUntil: "networkidle0",
       })
-      .catch(() => {});
+      .catch(() => { });
   });
 
-  test('The user is not logged in the site', ({given,when,then}) => {
-    
-    let password:string;
-    let username:string;
+  test('The user is not logged in the site', ({ given, when, then }) => {
+
+    let password: string;
+    let username: string;
 
     given('A not logged user', () => {
-      password = "#AliceLoMapEN1A"
-      username = "AliceLoMapEN1A"
+      password = "ADMSIS123$"
+      username = "gertrudis"
     });
-    
+
 
     when('The user goes to the login, fills the data in the form and presses submit', async () => {
-       await page.goto("http://localhost:3000/login")
 
-      await expect(page).toFillForm('form', {
-        username: username,
-        password: password,
-      })
-      await expect(page).toClick('button', { text: 'Log in' })
+      await expect(page).toClick('a', { text: 'Log in' })
+      await expect(page).toClick('button', { text: 'Solid Community' })
+      //Hago submit con el boton de Go
+      await page.waitForSelector('button[type="submit"]')
+      await page.click('button[type="submit"]')
+
+
+      //Espero a que se cargue la pagina de login
+      await page.waitForSelector('#username')
+      //Relleno el campo de username
+      await expect(page).toFill('#username', username)
+      //Relleno el campo de password
+      await expect(page).toFill('#password', password)
+      //Hago submit con el boton de login
+      await expect(page).toClick('button', { text: 'Log In' })
+      //¿Cannot get /map?
+      await page.waitForSelector('a[href="/map"]')
+
+
+
     });
 
     then('The user enters the map page', async () => {
-      await expect(page).toMatch('You have been registered in the system!')
+      await expect(page).toMatch('Map')
     });
   })
 
-  afterAll(async ()=>{
+
+
+
+
+
+  afterAll(async () => {
     browser.close()
   })
 
