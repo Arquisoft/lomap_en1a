@@ -4,6 +4,8 @@ import { PodManager } from "./pods/PodManager";
 import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
+import { Worker } from "./pararelism/Worker";
+import { asyncParallelForEach } from "async-parallel-foreach";
 
 export class ScoreRepositoryImpl implements ScoreRepository {
   async add(sessionId: string, score: Score): Promise<boolean> {
@@ -29,102 +31,61 @@ export class ScoreRepositoryImpl implements ScoreRepository {
     );
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Score[]> {
-    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-
-    let scores: Score[] = [];
-
-    let dataset: SolidDataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "pictures",
-      webId,
-      "private"
-    );
-
-    scores = PodManager.entityParser.parseScores(dataset);
-
-    dataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "pictures",
-      webId,
-      "friends"
-    );
-
-    scores = scores.concat(PodManager.entityParser.parseScores(dataset));
-
-    return scores;
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Score[]> {
     let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    let scores = (await this.findOwn(sessionId, webId)).filter(
-      (s) => s.getPlace() === place
-    );
-
-    let friends: string[] = (
+    let friendsWebIds: string[] = (
       await PodManager.dataManager.getFriends(sessionId, webId)
     ).map((f) => f.getWebId());
 
-    let webIds: string[] = [];
+    let workers: Worker[] = [];
+    let aux: string[] = [];
+    let scores: Score[] = [];
+    let resource = "$webIdlomap/$visibility/scores";
 
-    await (
-      await DatabaseConnection.find("comments", {
-        place: place,
-        visibility: Visibility.PUBLIC,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId)) {
-        webIds.push(d.webId);
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "private")
+      )
+    );
+
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "friends")
+      )
+    );
+
+    let result = await DatabaseConnection.find("scores", { place: place });
+
+    await result.forEach((score) => {
+      if (!aux.includes(score.webId + "/" + score.visibility.toLowerCase())) {
+        let webId = score.webId;
+        let visibility = score.visibility.toLowerCase();
+        aux.push(webId + "/" + visibility);
+        if (visibility == "public" || friendsWebIds.includes(webId)) {
+          workers.push(
+            new Worker(
+              sessionId,
+              resource
+                .replace("$webId", webId)
+                .replace("$visibility", visibility)
+            )
+          );
+        }
       }
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parseScores(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "scores",
-            webID,
-            "public"
-          )
-        )
-        .filter((s) => s.getPlace() == place)
-        .forEach((s) => {
-          scores.push(s);
-        });
-    }
-
-    webIds = [];
-
-    await (
-      await DatabaseConnection.find("comments", {
-        place: place,
-        visibility: Visibility.FRIENDS,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
-        webIds.push(d.webId);
-      }
+    await asyncParallelForEach(workers, -1, async (w: Worker) => {
+      await w.run();
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parseScores(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "scores",
-            webID,
-            "friends"
-          )
-        )
-        .filter((s) => s.getPlace() == place)
-        .forEach((s) => {
-          scores.push(s);
-        });
-    }
+    workers.forEach((w) => {
+      scores = scores.concat(
+        PodManager.entityParser.parseScores(w.getResult())
+      );
+    });
 
     return scores;
   }

@@ -176,4 +176,25 @@ module.exports = function (api: Router, service: PlaceService) {
       return res.status(400).send({ error: "The place could not be added." });
     }
   });
+
+  api.get(
+    "/place/all/list",
+    async (req: any, res: Response): Promise<Response> => {
+      try {
+        Assertion.exists(
+          req.session.solidSessionId,
+          "The user must be logged in."
+        );
+
+        var sessionId: string = <string>req.session.solidSessionId;
+
+        return res.send(await service.findAll(sessionId));
+      } catch (error) {
+        console.log(error.message);
+        return res
+          .status(400)
+          .send({ error: "The places could not be fetched." });
+      }
+    }
+  );
 };

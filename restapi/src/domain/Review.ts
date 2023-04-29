@@ -20,25 +20,16 @@ export abstract class Review extends BaseEntity {
     this.owner = owner;
     this.visibility = visibility;
   }
-
-  public setPlace(place: string) {
-    this.place = place;
-  }
-
   public getPlace(): string {
     return this.place;
-  }
-
-  public setOwner(owner: string) {
-    this.owner = owner;
   }
 
   public getOwner(): string {
     return this.owner;
   }
 
-  public setDate(date: Date) {
-    this.date = date;
+  public setOwner(owner: string): void {
+    this.owner = owner;
   }
 
   public getDate(): Date {
@@ -47,9 +38,5 @@ export abstract class Review extends BaseEntity {
 
   public getVisibility(): Visibility {
     return this.visibility;
-  }
-
-  public setVisibility(visibility: Visibility) {
-    this.visibility = visibility;
   }
 }

@@ -1,7 +1,7 @@
 export class User {
   public username: string;
   public webId: string;
-  public photo: string | null;
+  public photo: string | null | undefined;
 
   public constructor(username: string, webId: string) {
     this.username = username;

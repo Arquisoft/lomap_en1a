@@ -8,11 +8,6 @@ export class User {
     this.webId = webId.split("profile")[0];
     this.photo = photo;
   }
-
-  public setUsername(username: string) {
-    this.username = username;
-  }
-
   public getUsername(): string {
     return this.username;
   }
@@ -21,16 +16,8 @@ export class User {
     return this.webId;
   }
 
-  public setWebId(webId: string) {
-    this.webId = webId.split("profile")[0];
-  }
-
   public getPhoto(): string | null {
     return this.photo;
-  }
-
-  public setPhoto(photo: string | null) {
-    this.photo = photo;
   }
 }
 

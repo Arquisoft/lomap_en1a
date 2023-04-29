@@ -43,10 +43,6 @@ export class PictureServiceImpl implements PictureService {
     return this.pictureRepository.add(sessionId, p);
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Picture[]> {
-    return this.pictureRepository.findOwn(sessionId, user);
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
     return this.pictureRepository.findByPlace(sessionId, place);
   }

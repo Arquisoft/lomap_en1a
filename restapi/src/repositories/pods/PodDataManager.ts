@@ -95,13 +95,10 @@ export class PodDataManager {
     if (webId == undefined) {
       throw new Error();
     }
-    let a = webId.split("profile")[0];
-    let url = a + this.profilePodZone + "#me";
-    let myDataset = await getSolidDataset(url, { fetch: session.fetch });
-    const profile = getThing(
-      myDataset,
-      a + this.profilePodZone + "#me"
-    ) as Thing;
+    let url = webId.split("profile")[0] + this.profilePodZone + "#me";
+    let dataset = await getSolidDataset(url, { fetch: session.fetch });
+    let end = new Date().getTime();
+    const profile = getThing(dataset, url) as Thing;
     return profile;
   }
 

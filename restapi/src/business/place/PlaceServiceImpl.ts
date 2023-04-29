@@ -93,4 +93,8 @@ export class PlaceServiceImpl implements PlaceService {
   async findSharedFriends(sessionId: string): Promise<Place[]> {
     return this.placeRepository.findSharedFriends(sessionId);
   }
+
+  async findAll(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findAll(sessionId);
+  }
 }

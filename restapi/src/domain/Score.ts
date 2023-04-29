@@ -16,10 +16,6 @@ export class Score extends Review {
     this.score = score;
   }
 
-  public setScore(score: number) {
-    this.score = score;
-  }
-
   public getScore(): number {
     return this.score;
   }

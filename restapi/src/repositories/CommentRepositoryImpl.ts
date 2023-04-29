@@ -4,6 +4,8 @@ import { CommentRepository } from "../business/repositories/CommentRepository";
 import { PodManager } from "./pods/PodManager";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
+import { Worker } from "./pararelism/Worker";
+import { asyncParallelForEach } from "async-parallel-foreach";
 
 /**
  * Implements the CommentRepository interface.
@@ -32,102 +34,87 @@ export class CommentRepositoryImpl implements CommentRepository {
     );
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Comment[]> {
-    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-
-    let comments: Comment[] = [];
-
-    let dataset: SolidDataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "comments",
-      webId,
-      "private"
-    );
-
-    comments = PodManager.entityParser.parseComments(dataset);
-
-    dataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "comments",
-      webId,
-      "friends"
-    );
-
-    comments = comments.concat(PodManager.entityParser.parseComments(dataset));
-
-    return comments;
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Comment[]> {
     let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    let comments = (await this.findOwn(sessionId, webId)).filter(
-      (c) => c.getPlace() === place
-    );
+    let userName = (
+      await PodManager.dataManager.getUser(sessionId, webId)
+    ).getUsername();
 
-    let friends: string[] = (
+    let friendsWebIds: string[] = (
       await PodManager.dataManager.getFriends(sessionId, webId)
     ).map((f) => f.getWebId());
 
-    let webIds: string[] = [];
+    let publicWebIds: string[] = [];
+    let workers: Worker[] = [];
+    let aux: string[] = [];
+    let users: string[] = [];
+    let comments: Comment[] = [];
+    let resource = "$webIdlomap/$visibility/comments";
 
-    await (
-      await DatabaseConnection.find("comments", {
-        place: place,
-        visibility: Visibility.PUBLIC,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId)) {
-        webIds.push(d.webId);
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "private")
+      )
+    );
+
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "friends")
+      )
+    );
+
+    let result = await DatabaseConnection.find("comments", { place: place });
+
+    await result.forEach((comment) => {
+      if (
+        !aux.includes(comment.webId + "/" + comment.visibility.toLowerCase())
+      ) {
+        let webId = comment.webId;
+        let visibility = comment.visibility.toLowerCase();
+        aux.push(webId + "/" + visibility);
+        if (visibility == "public" || friendsWebIds.includes(webId)) {
+          if (!publicWebIds.includes(webId)) {
+            publicWebIds.push(webId);
+          }
+          workers.push(
+            new Worker(
+              sessionId,
+              resource
+                .replace("$webId", webId)
+                .replace("$visibility", visibility)
+            )
+          );
+        }
       }
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parseComments(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "comments",
-            webID,
-            "public"
-          )
-        )
-        .filter((c) => c.getPlace() == place)
-        .forEach((c: Comment) => {
-          comments.push(c);
-        });
-    }
-
-    webIds = [];
-
-    await (
-      await DatabaseConnection.find("comments", {
-        place: place,
-        visibility: Visibility.FRIENDS,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
-        webIds.push(d.webId);
-      }
+    await asyncParallelForEach(publicWebIds, -1, async (w: string) => {
+      users.push(
+        (await PodManager.dataManager.getUser(sessionId, w)).getUsername()
+      );
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parseComments(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "comments",
-            webID,
-            "friends"
-          )
-        )
-        .filter((c) => c.getPlace() == place)
-        .forEach((c) => {
-          comments.push(c);
-        });
-    }
+    await asyncParallelForEach(workers, -1, async (w: Worker) => {
+      await w.run();
+    });
+
+    workers.forEach((w) => {
+      comments = comments.concat(
+        PodManager.entityParser.parseComments(w.getResult())
+      );
+    });
+
+    comments.forEach((c: Comment) => {
+      let i: number = publicWebIds.indexOf(c.getOwner());
+      let owner: string = userName;
+      if (i != -1) {
+        owner = users[i];
+      }
+      c.setOwner(owner);
+    });
 
     return comments;
   }
