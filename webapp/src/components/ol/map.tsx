@@ -28,7 +28,7 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
 
     const map = new Map({
       target: this.mapDivRef.current,
-      interactions : defaults({doubleClickZoom :false}),
+      interactions: defaults({ doubleClickZoom: false }),
       layers: [
         new TileLayer({
           source: new XYZ({
@@ -51,11 +51,13 @@ export class MapComponent extends React.PureComponent<TOpenLayersProps, TMapStat
 
   render() {
     return (
-      <div  className="map" ref={this.mapDivRef}>
+      <div className="map" ref={this.mapDivRef}>
         {this.state.mapContext && (
-          <MapContext.Provider value={this.state.mapContext}>
+          <MapContext.Provider value={this.state.mapContext} >
             <VectorLayerWithContext handleSlidingPaneView={this.props.handleSlidingPaneView} handleInfoWindowData={this.props.handleInfoWindowData}
-            handleLatitude={this.props.handleLatitude} handleLongitude={this.props.handleLongitude} handleIsOpen={this.props.handleIsOpen} visibility = {this.props.visibility}/>
+              handleLatitude={this.props.handleLatitude} handleLongitude={this.props.handleLongitude}
+              handleIsOpen={this.props.handleIsOpen} visibility={this.props.visibility}
+              handleIsMainLoading={this.props.handleIsMainLoading} isMainLoading={this.props.isMainLoading} />
           </MapContext.Provider>
         )}
       </div>

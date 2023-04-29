@@ -2,7 +2,7 @@ import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
 import SlidingPane from "react-sliding-pane";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FilterList } from './FilterList';
 import CreatePlaceWindow from './CreatePlaceWindow';
 import { MapComponent } from '../ol/map';
@@ -11,6 +11,7 @@ import { FriendPanel } from './FriendPanel';
 import { User } from '../../domain/User';
 import LoadingSpinner from '../LoadingSpinner';
 import { Category } from '../../domain/Category';
+import Grid from '@mui/material/Grid';
 
 
 
@@ -20,20 +21,24 @@ export enum SlidingPaneView {
   FriendsView
 }
 
-export type FriendWindowDataType={
-  friend:User,
-  friendPhoto:string,
-  sharedSites:any
+export type FriendWindowDataType = {
+  friend: User,
+  friendPhoto: string,
+  sharedSites: any
 }
 
-export type InfoWindowDataType={
+export type InfoWindowDataType = {
   title: string,
+<<<<<<< HEAD
   creator: string,
   category:Category,
+=======
+  category: Category,
+>>>>>>> UI
   id: string,
   latitude: number,
   longitude: number,
-  description:string
+  description: string
 }
 
 
@@ -50,7 +55,9 @@ export default function MapView(): JSX.Element {
   //Hooks
   const [isOpen, setIsOpen] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [mainLoadingMessage, setMainLoadingMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMainLoading, setIsMainLoading] = useState(false);
   const [visibility, setVisibility] = useState("");
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -62,7 +69,7 @@ export default function MapView(): JSX.Element {
     id: "",
     latitude: 0,
     longitude: 0,
-    description:""
+    description: ""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
     friend: new User("", ""),
@@ -72,24 +79,24 @@ export default function MapView(): JSX.Element {
 
 
   //Handlers
-  const handleFriendWindowData = async (value:FriendWindowDataType) => {
+  const handleFriendWindowData = async (value: FriendWindowDataType) => {
     setFriendWindowData(value);
   }
-  const handleInfoWindowData = async (value:InfoWindowDataType) => {
+  const handleInfoWindowData = async (value: InfoWindowDataType) => {
     setInfoWindowData(value);
   }
-  const handleSlidingPaneView = async (value:number) => {
+  const handleSlidingPaneView = async (value: number) => {
     setSlidingPaneView(value);
   }
 
-  const handleLatitude = async (value:number) => {
+  const handleLatitude = async (value: number) => {
     setLatitude(value);
   }
 
-  const handleLongitude = async (value:number) => {
+  const handleLongitude = async (value: number) => {
     setLongitude(value);
   }
-  const handleIsOpen = async (value:boolean) => {
+  const handleIsOpen = async (value: boolean) => {
     setIsOpen(value);
   }
 
@@ -97,17 +104,32 @@ export default function MapView(): JSX.Element {
     setNewPlace(n => n + 1);
   }
 
-  const handleDeleteMarker = async (value:boolean) => {
-    deleteLastMarker.current=value;
+  const handleDeleteMarker = async (value: boolean) => {
+    deleteLastMarker.current = value;
   }
 
-  const handleIsLoading = async (value:boolean,message?:string) => {
+  const handleIsLoading = async (value: boolean, message?: string) => {
     setIsLoading(value);
-    if(message){
+    if (message) {
       setLoadingMessage(message);
     }
-    
 
+
+  }
+  const handleIsMainLoading = async (value: boolean, message?: string) => {
+    setIsMainLoading(value);
+    if (message) {
+      setMainLoadingMessage(message);
+    }
+
+
+  }
+
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  function toggleIsMainLoading() {
+    setIsMainLoading(false);
   }
 
 
@@ -115,62 +137,68 @@ export default function MapView(): JSX.Element {
 
 
 
-  window.addEventListener( "popstate", function ( event ) {
+  window.addEventListener("popstate", function (event) {
     window.location.reload();
   });
 
   return (
 
     <>
-      <div className='map-view'>
-        <div className='side-bar'>
-          <ProSidebarProvider>
-            <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData ={handleInfoWindowData } handleSlidingPaneView={handleSlidingPaneView}
-              visibility={visibility} handleIsOpen={handleIsOpen} newPlace={newPlace} />
-          </ProSidebarProvider>
+      <Grid style={isMainLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+        <div className='map-view' id={isMainLoading + ""} >
+
+          <div className='side-bar'>
+            <ProSidebarProvider >
+              <MySideBar handleFriendWindowData={handleFriendWindowData} handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
+                visibility={visibility} handleIsOpen={handleIsOpen} newPlace={newPlace} />
+            </ProSidebarProvider>
+          </div>
+
+          <div className='filter-list'>
+            <FilterList visibility={visibility} setVisibility={setVisibility} />
+          </div>
+
+
+
+          <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
+            handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility}
+            handleIsMainLoading={handleIsMainLoading} isMainLoading={isMainLoading} />
+
+
         </div>
 
-        <div className='filter-list'>
-          <FilterList visibility={visibility} setVisibility={setVisibility} />
-        </div>
-
-
-        <MapComponent handleSlidingPaneView={handleSlidingPaneView} handleInfoWindowData={handleInfoWindowData}
-          handleLatitude={handleLatitude} handleLongitude={handleLongitude} handleIsOpen={handleIsOpen} visibility={visibility} />
-
-      </div>
 
 
 
+        <SlidingPane
+          title={isLoading ? <LoadingSpinner message={loadingMessage} /> : <></>}
+          isOpen={isOpen}
+          onRequestClose={() => {
+            setIsOpen(false);
+            //If a place was not added, when closing setRemoveMarker(true)
+            if (deleteLastMarker && slidingPaneView === SlidingPaneView.CreatePlaceView) {
+              deleteMarker();
+            }
 
-      <SlidingPane
-        title= {isLoading ? <LoadingSpinner message={loadingMessage} />:<></>}
-        isOpen={isOpen}
-        onRequestClose={() => {
-          setIsOpen(false);
-          //If a place was not added, when closing setRemoveMarker(true)
-          if (deleteLastMarker && slidingPaneView === SlidingPaneView.CreatePlaceView) {
-            deleteMarker();
+            deleteLastMarker.current = false;
+
+
+          }}
+          width="85vh"
+          className='info-window'
+          overlayClassName='info-window'
+        >
+          {
+            slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
+              handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> :
+              slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading={isLoading} /> :
+                slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
+                  <div></div>
           }
 
-          deleteLastMarker.current = false;
 
-
-        }}
-        width="85vh"
-        className='info-window'
-        overlayClassName='info-window'
-      >
-        {
-          slidingPaneView === SlidingPaneView.CreatePlaceView ? <CreatePlaceWindow latitude={latitude} longitude={longitude} handleNewPlace={handleNewPlace}
-          handleDeleteMarker ={handleDeleteMarker } handleIsOpen={handleIsOpen} /> :
-            slidingPaneView === SlidingPaneView.InfoWindowView ? <InfoWindow infoWindowData={infoWindowData} handleIsLoading={handleIsLoading} isLoading={isLoading}/> :
-              slidingPaneView === SlidingPaneView.FriendsView ? <FriendPanel friend={friendWindowData.friend} friendPhoto={friendWindowData.friendPhoto} sharedSites={friendWindowData.sharedSites} /> :
-                <div></div>
-        }
-
-
-      </SlidingPane>
+        </SlidingPane>
+      </Grid>
 
     </>
 

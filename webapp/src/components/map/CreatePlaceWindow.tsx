@@ -11,7 +11,7 @@ import { addPlace } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
 import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { changeMarkerColour, updateMapList} from '../ol/vector';
+import { changeMarkerColour, updateMapList } from '../ol/vector';
 import { Category } from '../../domain/Category';
 
 export interface CreatePlaceWindowProps {
@@ -23,30 +23,30 @@ export interface CreatePlaceWindowProps {
 
 }
 
-interface VisibilitySelectProps{
-  visibility:Visibility,
+interface VisibilitySelectProps {
+  visibility: Visibility,
   handleVisibilityChange: (value: string) => Promise<void>
 }
 
-export function VisibilitySelect(props:VisibilitySelectProps):JSX.Element{
+export function VisibilitySelect(props: VisibilitySelectProps): JSX.Element {
 
-  return(
+  return (
     <FormControl>
-    <InputLabel id="visibility-select-label">Visibility</InputLabel>
-    <Select
-      labelId="visibility-select-label"
-      id="visibility-select"
-      value={props.visibility}
-      label="Visibility"
-      onChange={e => {
-        props.handleVisibilityChange(e.target.value as string);
-      }}
-    >
-      <MenuItem value={'PRIVATE'}>Private</MenuItem>
-      <MenuItem value={'FRIENDS'}>Friends</MenuItem>
-      <MenuItem value={'PUBLIC'}>Public</MenuItem>
-    </Select>
-  </FormControl>
+      <InputLabel id="visibility-select-label">Visibility</InputLabel>
+      <Select
+        labelId="visibility-select-label"
+        id="visibility-select"
+        value={props.visibility}
+        label="Visibility"
+        onChange={e => {
+          props.handleVisibilityChange(e.target.value as string);
+        }}
+      >
+        <MenuItem value={'PRIVATE'}>Private</MenuItem>
+        <MenuItem value={'FRIENDS'}>Friends</MenuItem>
+        <MenuItem value={'PUBLIC'}>Public</MenuItem>
+      </Select>
+    </FormControl>
   )
 
 }
@@ -64,12 +64,12 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
 
-  const handleVisibilityChange = async(value: string) => {
+  const handleVisibilityChange = async (value: string) => {
     var newVisibility = (Visibility as any)[value]
     setVisibility(newVisibility);
   }
 
-  const handleCategoryChange = async(value: string) => {
+  const handleCategoryChange = async (value: string) => {
     var newCategory = (Category as any)[value]
 
     setCategory(newCategory);
@@ -78,13 +78,13 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    
+
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
-      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility,category);
+      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
       let result = await addPlace(place);
 
-      if (result.id!="ERR") {
+      if (result.id != "ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
@@ -108,7 +108,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.handleDeleteMarker(true);
       }
     }
-    
+
   }
 
 
@@ -130,12 +130,11 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
     <>
       <form name="register" onSubmit={handleSubmit}>
-        <Grid container spacing={2} justifyContent="space-around">
-          <div className="centered-element">
+        <Grid container spacing={1} justifyContent="space-around">
             <Grid item xs={12}>
-              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto'}}></Box>
+              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
             </Grid>
-          </div>
+          
           <TextField
             error={showError}
             helperText={"Invalid name"}
@@ -151,7 +150,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
           />
 
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
 
           <FormControl>
             <InputLabel id="category-select-label">Category</InputLabel>

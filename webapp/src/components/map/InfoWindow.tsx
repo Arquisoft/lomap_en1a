@@ -28,7 +28,7 @@ type InfoWindowProps = {
 
 export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
-  
+
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
@@ -46,19 +46,19 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   const [creatorName, setCreatorName] = useState<string>("")
 
 
-  
+
 
   const refreshPicturesSlide = async () => {
     getPictures(props.infoWindowData?.id).then((pics) => {
       let picURLs: string[] = pics.map((pic, i) => pic.url);
       setPictureURLs(picURLs);
-    });   
-    
+    });
+
   }
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    props.handleIsLoading(true,"Loading comments...");//Start showing loading symbol
+    props.handleIsLoading(true, "Loading comments...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
 
 
@@ -68,10 +68,10 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         ...comm,
         owner: user.username,
       };
-      
+
     }));
     props.handleIsLoading(false);//Stop showing loading symbol
-    
+
 
     setComments(newComments);
   }
@@ -164,13 +164,15 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
     <>
-      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window' style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
+        style={props.isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
 
-        <Grid item xs={6} textAlign="center">
-          <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+        <Grid item xs={12} textAlign="center">
+          <Box component="h3"  height={4}><>{props.infoWindowData?.title}</></Box>
         </Grid>
-        <Grid item xs={6} textAlign="center">
-          <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
+
+        <Grid item xs={12} textAlign="center">
+          <Box component="p" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
         <div className="centered-element">
           <Grid item xs={12}>
@@ -239,7 +241,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
         <Grid item xs={12}>
-          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id}/>
+          <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={12}>
           <CommentList comments={comments} />
