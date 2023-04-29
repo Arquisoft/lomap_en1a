@@ -237,6 +237,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
               onClick={() => {
                 props.handleInfoWindowData({
                   title: place.name,
+                  creator: place.owner,
                   category:place.category,
                   id: place.id,
                   latitude: place.latitude,
@@ -263,6 +264,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   onClick={() => {
                     props.handleInfoWindowData({
                       title: place.name,
+                      creator: place.owner,
                       category:place.category,
                       id: place.id,
                       latitude: place.latitude,
@@ -290,6 +292,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                   onClick={() => {
                     props.handleInfoWindowData({
                       title: place.name,
+                      creator: place.owner,
                       category:place.category,
                       id: place.id,
                       latitude: place.latitude,
@@ -317,6 +320,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                 onClick={() => {
                   props.handleInfoWindowData({
                     title: place.name,
+                    creator: place.owner,
                     category:place.category,
                     id: place.id,
                     latitude: place.latitude,

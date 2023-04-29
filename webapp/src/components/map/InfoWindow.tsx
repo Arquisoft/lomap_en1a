@@ -42,6 +42,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  // Creator name
+  const [creatorName, setCreatorName] = useState<string>("")
+
 
 
 
@@ -132,11 +135,33 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     setVisibility(newVisibility);
   }
 
+  const getCreatorName = async(id: string) => {
+    if (id === null || typeof id === undefined) {
+      setCreatorName("")
+    } else {
+      let creator = await getProfileById(id);
+      setCreatorName(creator.username)
+    }
+  }
+  
+  const getCreatorText = () => {
+    // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
+    if (creatorName === null || typeof creatorName === 'undefined') {
+      return "Creator could not be found"
+    }
+
+    if (creatorName.trim().length === 0) {
+      return "";
+    }
+
+    return "Place created by " + creatorName;
+  }
 
 
 
   //Update comment list and scores when the info window data changes
   useEffect(() => {
+    getCreatorName(props.infoWindowData.creator);
     refreshScores();
     refreshCommentList();
     refreshPicturesSlide();
@@ -160,8 +185,6 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12} textAlign="center">
           <Box component="p" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
-
-
         <div className="centered-element">
           <Grid item xs={12}>
             {
@@ -172,6 +195,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
             }
           </Grid>
         </div>
+        <Grid item xs={12} textAlign="center">
+          <Box component="h4"><>{getCreatorText()}</></Box>
+        </Grid>
         <div className="description">
           <Grid item xs={12}>
             <TextField

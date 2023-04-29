@@ -132,7 +132,7 @@ function FriendsTable() {
                     <StyledTableCell align="center">
                         <Button variant="contained" onClick={()=>{
                           handleSubmit(row.webId);
-                          }}>Acept request</Button>
+                          }}>Accept request</Button>
                     </StyledTableCell>
     
                   </StyledTableRow>
@@ -204,7 +204,7 @@ export default function FriendsView(){
         setNotificationStatus(true);
         setNotification({
           severity: 'error',
-          message: 'There\'s been an error sending your friend requestt.'
+          message: 'There\'s been an error sending your friend request.'
         });
       }
     }
