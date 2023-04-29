@@ -11,8 +11,7 @@ export class UserServiceImpl implements UserService {
     async getProfile(sessionId: string, webId: string): Promise<User> {
 
         if (webId == "OWN") {
-            webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-            webId = (webId)
+            webId = await PodManager.sessionManager.getCurrentWebId(sessionId)
         }
 
         return this.userRepository.getProfile(sessionId, webId);
@@ -23,10 +22,6 @@ export class UserServiceImpl implements UserService {
     }
 
     async isLoggedIn(sessionId: string): Promise<boolean> {
-        if (sessionId == undefined) {
-            return false;
-        }
-
         return this.userRepository.isLoggedIn(sessionId);
     }
 

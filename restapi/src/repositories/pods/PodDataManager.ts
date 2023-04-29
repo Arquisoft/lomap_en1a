@@ -79,11 +79,11 @@ export class PodDataManager {
     public async getProfile(sessionId: string, webId: string) {
         let session = await getSessionFromStorage(sessionId);
         if (session == null) {
-            throw new Error();
+            throw new Error('Session could not be found.');
         }
 
         if (webId == undefined) {
-            throw new Error();
+            throw new Error('WebId cannot be undefined.');
         }
         let a = (webId.split("profile")[0])
         let url = a + this.profilePodZone + "#me"
