@@ -147,15 +147,11 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   
   const getCreatorText = () => {
     // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
-    if (creatorName === null || typeof creatorName === 'undefined') {
-      return "Creator could not be found"
+    if (creatorName === null || typeof creatorName === 'undefined' || creatorName.trim().length === 0) {
+      return ""
     }
 
-    if (creatorName.trim().length === 0) {
-      return "";
-    }
-
-    return "Place created by " + creatorName;
+    return "by " + creatorName + " -";
   }
 
 
@@ -179,11 +175,8 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
       <Grid container spacing={3} style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
         <Grid item xs={12} textAlign="center">
           <Box className="place-name">{props.infoWindowData?.title}</Box>
-          <Box className="place-category">{props.infoWindowData?.category}</Box>
+          <Box className="place-category">{getCreatorText()} {props.infoWindowData?.category}</Box>
           <Divider/>
-        </Grid>
-        <Grid item xs={12} textAlign="center">
-          <Box component="h4"><>{getCreatorText()}</></Box>
         </Grid>
         <Grid item xs={12} textAlign="center">
           { pictureURLs.length == 0 ?

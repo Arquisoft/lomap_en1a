@@ -360,6 +360,7 @@ footer {
   gap: 2em;
   width: 100%;
   font-size: 3.5vmin;
+  position: fixed;
 }
 
 .menu:not(footer) {
@@ -414,17 +415,17 @@ footer {
   display: inline-block;
 }
 
-.slide>img {
+.slide > img {
   height: auto;
   max-width: 100%;
   border-radius: 1em;
   vertical-align: middle;
 }
 
-#photos img {
+/*#photos img {
   width: 500px;
   max-width: 100%;
-}
+}*/
 
 .slideshowDots {
   text-align: center;
