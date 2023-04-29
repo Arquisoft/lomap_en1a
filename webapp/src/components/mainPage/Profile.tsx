@@ -53,7 +53,6 @@ export default function Profile(props:LogoutProps): JSX.Element {
         refreshProfile();
     },[])
 
-    //TODO: Add user data.
     return (
         <>
             <div className="profile-menu" ref={menuRef}>

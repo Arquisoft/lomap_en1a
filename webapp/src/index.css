@@ -10,6 +10,8 @@
   --main-text-color: white;
   --alternative-text-color: black;
   --active-bg-color: #555;
+
+  --nav-bar-size: 2.5em;
 }
 /* -------------------------------------------------------------------------------------- */
 
@@ -344,10 +346,15 @@ footer {
   position: fixed;
 }
 
+.menu:not(footer) {
+  height: var(--nav-bar-size);
+}
+
 .menu ul {
   list-style: none;
   gap: 1rem;
   margin: 0;
+  vertical-align: middle;
 }
 
 .menu ul:not(.profile-dropdown ul) {
@@ -483,9 +490,8 @@ footer {
 /* Profile dropdown --------------------------------------------------------------------- */
 #user-icon {
   z-index : 4;
-  top: 20px;
   right: 20px;
-  height: 2.3em;
+  height: var(--nav-bar-size);
   width: auto;
   border-radius: 50%;
   overflow: hidden;
@@ -559,7 +565,6 @@ footer {
 
 .dropdown-links {
   padding: 0;
-  padding-top: 2px;
 }
 
 .dropdown-links li.active {
