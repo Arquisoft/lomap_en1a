@@ -151,11 +151,12 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
       <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
         style={props.isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
 
-        <Grid item xs={6} textAlign="center">
-          <Box component="h3" ><>{props.infoWindowData?.title}</></Box>
+        <Grid item xs={12} textAlign="center">
+          <Box component="h3"  height={4}><>{props.infoWindowData?.title}</></Box>
         </Grid>
-        <Grid item xs={6} textAlign="center">
-          <Box component="h4" ><>{props.infoWindowData?.category}</></Box>
+
+        <Grid item xs={12} textAlign="center">
+          <Box component="p" ><>{props.infoWindowData?.category}</></Box>
         </Grid>
     
 
