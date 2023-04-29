@@ -13,6 +13,7 @@ import { Place } from '../../domain/Place';
 import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
 import { changeMarkerColour, updateMapList } from '../ol/vector';
 import { Category } from '../../domain/Category';
+import LoadingSpinner from '../LoadingSpinner';
 
 export interface CreatePlaceWindowProps {
   latitude: number,
@@ -62,6 +63,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
+  const [isLoading, setIsLoading] = useState(false);
+
 
 
   const handleVisibilityChange = async (value: string) => {
@@ -78,7 +81,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
   //Adds a place
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
+    setIsLoading(true);
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
       var place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
@@ -98,6 +101,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         changeMarkerColour(v); //Changes the last marker colour
 
         updateMapList(result);
+        setIsLoading(false);
       }
       else {
         setNotificationStatus(true);
@@ -129,12 +133,13 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
     <>
-      <form name="register" onSubmit={handleSubmit}>
-        <Grid container spacing={1} justifyContent="space-around">
-            <Grid item xs={12}>
-              <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
-            </Grid>
-          
+      {isLoading ? <LoadingSpinner /> : <div></div>}
+      <form name="register" onSubmit={handleSubmit} >
+        <Grid container spacing={1} justifyContent="space-around" style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
+          <Grid item xs={12}>
+            <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
+          </Grid>
+
           <TextField
             error={showError}
             helperText={"Invalid name"}
