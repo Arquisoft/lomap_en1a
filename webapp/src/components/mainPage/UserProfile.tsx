@@ -3,11 +3,8 @@ import { User } from "../../domain/User";
 import placeholderImage from '../../images/user_icon.png';
 import { getProfile } from "../../api/api";
 
-export interface UserProps {
-    user?: User;
-}
 
-export default function UserProfile(props: UserProps): JSX.Element {
+export default function UserProfile(): JSX.Element {
 
     //Get the list of places for the current user
     const [profile, setProfile] = useState<User>();

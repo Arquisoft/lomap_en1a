@@ -21,6 +21,8 @@ test('check profile menu is rendered correctly', async () => {
     )  
     await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
     expect(await getAllByText("TEST")[0]).toBeInTheDocument();
+    expect(await getAllByText("Log out")[0]).toBeInTheDocument();
+    expect(await getAllByText("My profile")[0]).toBeInTheDocument();
   });
   
   
