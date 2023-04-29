@@ -1,6 +1,6 @@
 {
     "location": "lomap/",
-    "appUrl": "https://localhost",
+    "appUrl": "http://localhost",
     "handle": "/api",
     "port": ":5000",
     "clientName": "LoMap EN1A",

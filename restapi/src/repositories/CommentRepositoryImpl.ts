@@ -91,11 +91,13 @@ export class CommentRepositoryImpl implements CommentRepository {
       }
     });
 
-    await asyncParallelForEach(publicWebIds, -1, async (w: string) => {
-      users.push(
-        (await PodManager.dataManager.getUser(sessionId, w)).getUsername()
-      );
-    });
+    if (publicWebIds.length > 0) {
+      await asyncParallelForEach(publicWebIds, -1, async (w: string) => {
+        users.push(
+          (await PodManager.dataManager.getUser(sessionId, w)).getUsername()
+        );
+      });
+    }
 
     await asyncParallelForEach(workers, -1, async (w: Worker) => {
       await w.run();

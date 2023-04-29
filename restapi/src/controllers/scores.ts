@@ -37,7 +37,6 @@ module.exports = function (api: Router, service: ScoreService) {
   //Add a score
   api.post("/score/add", async (req: any, res: Response): Promise<Response> => {
     try {
-      Assertion.exists(req.body.user, "A user must be provided.");
       Assertion.exists(req.body.score, "An score must be provided.");
       Assertion.exists(req.body.place, "A place must be provided.");
       Assertion.exists(req.body.visibility, "A visibility must be provided.");
@@ -55,7 +54,6 @@ module.exports = function (api: Router, service: ScoreService) {
       score.score = punt;
       score.place = placeId;
       score.visibility = visibility;
-      score.visibility = Visibility.PUBLIC;
 
       return res.send(await service.add(sessionId, score));
     } catch (error) {

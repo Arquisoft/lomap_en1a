@@ -16,8 +16,6 @@ export class Worker {
   }
 
   public async run(): Promise<void> {
-    console.log(this.resource);
-
     let session = await getSessionFromStorage(this.sessionId);
 
     if (session == null) {

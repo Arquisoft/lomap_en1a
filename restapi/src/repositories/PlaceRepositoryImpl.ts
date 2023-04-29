@@ -81,6 +81,8 @@ export class PlaceRepositoryImpl implements PlaceRepository {
       );
     });
 
+    if (workers.length == 0) return places;
+
     await asyncParallelForEach(workers, -1, async (w: Worker) => {
       await w.run();
     });
@@ -126,6 +128,8 @@ export class PlaceRepositoryImpl implements PlaceRepository {
         resource.replace("$webId", webId).replace("$visibility", "public")
       )
     );
+
+    if (workers.length == 0) return places;
 
     await asyncParallelForEach(workers, -1, async (w: Worker) => {
       await w.run();

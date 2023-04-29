@@ -26,7 +26,7 @@ export class PodSessionManager {
     provider = decodeURIComponent(provider);
 
     let redirect = req.params.redirect;
-    redirect = "https://" + host + ":5000/api/login/success";
+    redirect = "http://" + host + ":5000/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;
@@ -41,7 +41,7 @@ export class PodSessionManager {
         },
       });
     } catch (err) {
-      res.redirect("https://" + host + ":3000/login/fail");
+      res.redirect("http://" + host + ":3000/login/fail");
     }
   }
 
@@ -53,7 +53,7 @@ export class PodSessionManager {
     let solidSession = await getSessionFromStorage(sessionId);
 
     await solidSession?.handleIncomingRedirect(
-      `https://${host}${this.port}${this.handle}${req.url}`
+      `http://${host}${this.port}${this.handle}${req.url}`
     );
 
     await PodManager.permissionManager.setupPod(sessionId);
