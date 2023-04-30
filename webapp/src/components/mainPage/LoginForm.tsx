@@ -15,7 +15,7 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
   const [cookies,setCookie] = useCookies();
 
   const [idp, setIdp] = useState("");
-  const [currentUrl, setCurrentUrl] = useState("http://localhost:3000/map");
+  const [currentUrl, setCurrentUrl] = useState("http://localhost:443/map");
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'warning', message: '' });

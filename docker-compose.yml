@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 # volumes:
 #     prometheus_data: {}
 #     grafana_data: {}
@@ -11,8 +11,8 @@ services:
   webapp:
     build: ./webapp
     ports:
-      - "3000:3000"
-    depends_on: 
+      - "443:443"
+    depends_on:
       - restapi
   # prometheus:
   #   image: prom/prometheus
@@ -21,7 +21,7 @@ services:
   #     - prometheus_data:/prometheus
   #   ports:
   #     - "9090:9090"
-  #   depends_on: 
+  #   depends_on:
   #     - restapi
   # grafana:
   #   image: grafana/grafana
@@ -35,5 +35,5 @@ services:
   #     - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
   #   ports:
   #     - "9091:9091"
-  #   depends_on: 
+  #   depends_on:
   #     - restapi

@@ -7,7 +7,7 @@ services:
   webapp:
     image: ghcr.io/arquisoft/lomap_en1a/webapp:latest
     ports:
-      - "3000:3000"
+      - "443:443"
     depends_on:
       - restapi
 # deploy:

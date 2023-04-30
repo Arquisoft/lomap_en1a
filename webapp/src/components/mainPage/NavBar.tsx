@@ -52,7 +52,7 @@ export default function NavBar(): JSX.Element {
 function LoggedNavbar(props:LogoutProps) {
  let host = process.env.host || "localhost";
   const reload = ()=>{
-    window.location.href="http://"+host+":3000/map";
+    window.location.href="https://"+host+":443/map";
   }
   
   return (
