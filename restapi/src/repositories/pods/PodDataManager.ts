@@ -85,20 +85,22 @@ export class PodDataManager {
 
     return true;
   }
-
   public async getProfile(sessionId: string, webId: string) {
     let session = await getSessionFromStorage(sessionId);
     if (session == null) {
-      throw new Error();
+      throw new Error("Session could not be found.");
     }
 
     if (webId == undefined) {
-      throw new Error();
+      throw new Error("WebId cannot be undefined.");
     }
-    let url = webId.split("profile")[0] + this.profilePodZone + "#me";
-    let dataset = await getSolidDataset(url, { fetch: session.fetch });
-    let end = new Date().getTime();
-    const profile = getThing(dataset, url) as Thing;
+    let a = webId.split("profile")[0];
+    let url = a + this.profilePodZone + "#me";
+    let myDataset = await getSolidDataset(url, { fetch: session.fetch });
+    const profile = getThing(
+      myDataset,
+      a + this.profilePodZone + "#me"
+    ) as Thing;
     return profile;
   }
 
