@@ -24,7 +24,7 @@ export class FriendsPermission implements Permission {
 
       await access.setAgentAccess(
         url,
-        webId.split("/profile")[0] + "/profile/card#me",
+        webId.split("/profile")[0] + "profile/card#me",
         { read: true },
         { fetch: session.fetch }
       );
