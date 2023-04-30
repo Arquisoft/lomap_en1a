@@ -1,4 +1,4 @@
-import { render, fireEvent, act, findByText } from "@testing-library/react";
+import { render, fireEvent, act, findByText, waitFor } from "@testing-library/react";
 import CommentForm from "../../components/map/CommentForm";
 import * as api from '../../api/api'
 import { Comment } from "../../domain/Comment";
@@ -12,9 +12,10 @@ test('check comment is added', async () => {
   await act(async () => {
     const { container, getByText } = render(<CommentForm OnCommentListChange={() => { }} place="" handleIsLoading={handleIsLoading} />)
     const input = container.querySelector('textarea[name="text"]')!;
-    fireEvent.change(input, { target: { value: "Hello" } });
+    await fireEvent.change(input, { target: { value: "Hello" } });
     const button = getByText("Post");
     fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addComment')).toHaveBeenCalled()) //Wait for component to render
     expect(jest.spyOn(api, 'addComment')).toHaveBeenCalled()
     expect(await findByText(container, "Your comment has been posted!")).toBeInTheDocument();
   });
@@ -26,9 +27,10 @@ test('check comment is not added', async () => {
   await act(async () => {
     const { container, getByText } = render(<CommentForm OnCommentListChange={() => { }} place="" handleIsLoading={handleIsLoading} />)
     const input = container.querySelector('textarea[name="text"]')!;
-    fireEvent.change(input, { target: { value: "Hello" } });
+    await fireEvent.change(input, { target: { value: "Hello" } });
     const button = getByText("Post");
     fireEvent.click(button);
+    await waitFor(()=>expect(jest.spyOn(api, 'addComment')).toHaveBeenCalled()) //Wait for component to render
     expect(jest.spyOn(api, 'addComment')).toHaveBeenCalled()
     expect(await findByText(container, "There\'s been an error posting your comment.")).toBeInTheDocument();
   });

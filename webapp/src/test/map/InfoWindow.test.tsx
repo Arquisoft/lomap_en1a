@@ -34,7 +34,7 @@ test('check info window data is rendered correctly', async () => {
     expect(jest.spyOn(api, 'getComments')).toHaveBeenCalled()
     expect(jest.spyOn(api, 'getPictures')).toHaveBeenCalled()
     expect(await getByText("Test title")).toBeInTheDocument();    
-    expect(await getByText("Place created by Test creator")).toBeInTheDocument();
+    expect(await getByText("by Test creator - BAR")).toBeInTheDocument();
     expect(await getByText("Test description")).toBeInTheDocument();
   });
   
