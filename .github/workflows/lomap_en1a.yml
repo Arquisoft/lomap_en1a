@@ -61,8 +61,8 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-		host: ${{ secrets.DEPLOY_HOST }}
         API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
+        host: ${{ secrets.DEPLOY_HOST }}
       with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
@@ -79,15 +79,15 @@ jobs:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
-	  env:
+      env:
           host: ${{ secrets.DEPLOY_HOST }}
       with:
+          buildargs: host
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: restapi
-		  buildargs: host
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
