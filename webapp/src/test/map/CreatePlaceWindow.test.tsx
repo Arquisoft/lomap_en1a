@@ -30,8 +30,8 @@ test('check place is added', async () => {
         handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
 
       )
-    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
-    const input = container.querySelector('input[name="text"]')!;
+    await waitFor(()=>expect(getByText("New place!")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('textarea[name="text"]')!;
     fireEvent.change(input, { target: { value: "hola" } })
     const button = getByText("Add place");
     fireEvent.click(button);
@@ -51,8 +51,8 @@ test('check place is not added', async () => {
         handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
 
       )
-    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
-    const input = container.querySelector('input[name="text"]')!;
+    await waitFor(()=>expect(getByText("New place!")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('textarea[name="text"]')!;
     fireEvent.change(input, { target: { value: "hola" } })
     const button = getByText("Add place");
     fireEvent.click(button);
