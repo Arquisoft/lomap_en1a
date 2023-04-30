@@ -12,8 +12,7 @@
   --active-bg-color: #555;
 
   --nav-bar-size: 2.5em;
-  --user-profile-dimensions: 2.3em;
-  --user-profile-padding: 0.2em;
+  --user-profile-dimensions: 2.2em;
 }
 
 /* -------------------------------------------------------------------------------------- */
@@ -484,6 +483,9 @@ footer {
   border-width: 0px;
   color: var(--main-text-color);
   font-size: 3vmin;
+}
+
+#btn-Go :enabled {
   opacity: 0.6;
   background-color: #388fe6;
 }
@@ -495,9 +497,7 @@ footer {
 }
 
 .btn-login {
-  width: 100%;
-  padding: 0.7em;
-  margin-bottom: 0.4em;
+  height: 100%;
   font-size: 1em;
   border-radius: 12px;
   border-width: 1px;
@@ -514,20 +514,9 @@ footer {
   width: 57%;
 }
 
-.login-div {
-  top: 34%;
-  height: auto;
-}
-
 .login-form {
-  margin-left: auto;
-  margin-right: auto;
   background-color: #eeeeee;
-  width: 57%;
-  padding: 1.2em 0 0.4em 0;
-  margin-bottom: 1em;
   border-radius: 12px;
-  font-size: 3vmin;
 }
 
 .login-button {
@@ -547,7 +536,7 @@ footer {
   object-fit: cover;
   width: var(--user-profile-dimensions);
   height: var(--user-profile-dimensions);
-  padding: 0.1em;
+  padding: 0.15em;
 }
 
 #user-icon:hover {

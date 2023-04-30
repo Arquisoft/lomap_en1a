@@ -177,8 +177,8 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
                   justifyContent="center"
                   flexDirection="column">
               <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
-          </Box>
-            </Grid>
+            </Box>
+          </Grid>
           <Grid item xs={2}>
             <Box 
                   height="100%"
@@ -214,7 +214,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
                 display="flex"
                 justifyContent="center"
                 flexDirection="column">
-              <Button sx={{height: '100%'}} variant="contained" type="submit" disabled={name.length == 0}>Add place</Button>
+              <Button sx={{ height: '100%'}} variant="contained" type="submit" disabled={name.length == 0}>Add place</Button>
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -235,55 +235,13 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
             />
           </Grid>
         </Grid>
-        {/*<Grid container spacing={1} justifyContent="space-around" style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
-
-
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
-
-          <FormControl>
-            <InputLabel id="category-select-label">Category</InputLabel>
-            <Select
-              labelId="category-select-label"
-              id="category-select"
-              value={category}
-              label="Category"
-              onChange={e => {
-                handleCategoryChange(e.target.value as string);
-              }}
-            >
-              <MenuItem value={'BAR'}>Bar</MenuItem>
-              <MenuItem value={'MONUMENT'}>Monument</MenuItem>
-              <MenuItem value={'MUSEUM'}>Museum</MenuItem>
-              <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
-              <MenuItem value={'SIGHT'}>Sight</MenuItem>
-              <MenuItem value={'SHOP'}>Shop</MenuItem>
-            </Select>
-          </FormControl>
-          <Grid item xs={12}>
-            <TextField
-              multiline
-              rows={7}
-              fullWidth
-              name="description"
-              placeholder="Write the description of your new place"
-              variant="filled"
-              value={description}
-              onChange={e => {
-                setDescription(e.target.value)
-
-              }}
-            />
-          </Grid>
-
-            </Grid>*/}
-
-            </form>
+      </form>
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
           {notification.message}
         </Alert>
       </Snackbar>
-            </>
+    </>
 
 
 
