@@ -8,8 +8,6 @@ export default {
         [
             "**/src/**",
             "!**/src/configuration.json",
-            "**/src/business/**",
-            "!**/src/business/repositories/**",
             // "**/src/controllers/**",
             // "**/src/repositories/**",
         ]
