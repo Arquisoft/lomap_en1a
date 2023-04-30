@@ -1,7 +1,6 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
 import { PodManager } from "./pods/PodManager";
 import { Picture } from "../domain/Picture";
-import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
 import { Worker } from "./pararelism/Worker";

@@ -10,7 +10,6 @@ import {
   getUrlAll,
   SolidDataset,
   createSolidDataset,
-  buildThing,
   addIri,
   getUrl,
 } from "@inrupt/solid-client";

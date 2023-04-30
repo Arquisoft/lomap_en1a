@@ -1,4 +1,3 @@
-import { SolidDataset } from "@inrupt/solid-client";
 import { Comment } from "../domain/Comment";
 import { CommentRepository } from "../business/repositories/CommentRepository";
 import { PodManager } from "./pods/PodManager";

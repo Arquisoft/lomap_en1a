@@ -2,7 +2,6 @@ import { PlaceRepository } from "../business/repositories/PlaceRepository";
 import { Place } from "../domain/Place";
 import { PodManager } from "./pods/PodManager";
 import { SolidDataset } from "@inrupt/solid-client";
-import { User } from "../domain/User";
 import { Worker } from "./pararelism/Worker";
 import { asyncParallelForEach } from "async-parallel-foreach";
 

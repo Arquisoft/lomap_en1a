@@ -1,7 +1,6 @@
 import { ScoreRepository } from "../business/repositories/ScoreRepository";
 import { Score } from "../domain/Score";
 import { PodManager } from "./pods/PodManager";
-import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
 import { Worker } from "./pararelism/Worker";

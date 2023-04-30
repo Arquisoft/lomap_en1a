@@ -3,7 +3,6 @@ import { PodManager } from "../repositories/pods/PodManager";
 import { UserService } from "../business/user/UserService";
 import { Factory } from "../Factory";
 import { Assertion } from "../Assertion";
-import { CommentRepository } from "../business/repositories/CommentRepository";
 
 module.exports = function (api: Router) {
   //Log in into the pod
