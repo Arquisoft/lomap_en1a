@@ -11,15 +11,15 @@ jobs:
       run:
         working-directory: webapp
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 18
-    - run: npm ci
-    - run: npm test --coverage --watchAll
-    - name: Analyze with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm test --coverage --watchAll
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   # unit-test-restapi:
@@ -54,35 +54,31 @@ jobs:
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp] 
+    needs: [unit-test-webapp]
     #needs: [e2e-tests]
     steps:
-    - uses: actions/checkout@v3
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@v5
-      env:
-        API_URI: http://${{ secrets.DEPLOY_HOST }}:5000/api
-        host: ${{ secrets.DEPLOY_HOST }}
-      with:
+      - uses: actions/checkout@v3
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        env:
+          API_URI: https://${{ secrets.DEPLOY_HOST }}:5000/api
+        with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI, host
+          buildargs: API_URI
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp] 
+    needs: [unit-test-webapp]
     #needs: [e2e-tests]
     steps:
-    - uses: actions/checkout@v3
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@v5
-      env:
-          host: ${{ secrets.DEPLOY_HOST }}
-      with:
-          buildargs: host
+      - uses: actions/checkout@v3
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        with:
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
@@ -91,17 +87,17 @@ jobs:
   deploy:
     name: Deploy over SSH
     runs-on: ubuntu-latest
-    needs: [docker-push-restapi,docker-push-webapp]
+    needs: [docker-push-restapi, docker-push-webapp]
     steps:
-    - name: Deploy over SSH
-      uses: fifsky/ssh-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        user: ${{ secrets.DEPLOY_USER }}
-        key: ${{ secrets.DEPLOY_KEY }}
-        command: |
-          wget https://raw.githubusercontent.com/arquisoft/lomap_en1a/master/docker-compose-deploy.yml -O docker-compose.yml
-          docker-compose stop
-          docker-compose rm -f
-          docker-compose pull   
-          docker-compose up -d
+      - name: Deploy over SSH
+        uses: fifsky/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          user: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          command: |
+            wget https://raw.githubusercontent.com/arquisoft/lomap_en1a/master/docker-compose-deploy.yml -O docker-compose.yml
+            docker-compose stop
+            docker-compose rm -f
+            docker-compose pull   
+            docker-compose up -d

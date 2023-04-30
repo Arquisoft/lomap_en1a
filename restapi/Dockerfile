@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG host="localhost"
+ARG host="51.11.182.145"
 ENV host=$host
 
 CMD [ "npm", "start" ]
