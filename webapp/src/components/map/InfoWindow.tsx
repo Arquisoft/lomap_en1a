@@ -105,20 +105,13 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   const refreshScores = async () => {
 
-
     getScores(props.infoWindowData.id).then((s) => {
-      if (s.length > 0) {
-        let aux = 0;
-        for (let i = 0; i < s.length; i++) {
-
-          aux += s[i].score;
-        }
-        let avg = aux / s.length;
-        let a = avg.toFixed(1)
-        setAvg(parseFloat(a)); //Calculates the new average
-      } else {
-        setAvg(0)
-      }
+      let sum = 0;
+      s.forEach((score) => {
+        sum += score.score/s.length;
+      });
+      let a = sum.toFixed(1)
+      setAvg(parseFloat(a)); 
 
     });
   }
@@ -128,7 +121,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   const refreshScoresAfterAdding = async (value: number) => {
     await handleAddScore(value); //Adds the new score
 
-    refreshScores();
+    await refreshScores();
   }
 
   const handleVisibilityChange = async (value: string) => {
