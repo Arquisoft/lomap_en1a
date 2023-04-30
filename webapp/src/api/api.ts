@@ -28,7 +28,6 @@ export async function addComment(comment: Comment): Promise<boolean> {
 export async function getComments(id: string): Promise<Comment[]> {
   const apiEndPoint =
     process.env.REACT_APP_API_URI || "https://localhost:5000/api";
-  console.log(apiEndPoint + "/comment/list/" + id);
   let response = await fetch(apiEndPoint + "/comment/list/" + id, {
     credentials: "include",
     mode: "cors",
