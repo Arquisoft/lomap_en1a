@@ -4,7 +4,7 @@ import Home from "./components/mainPage/Home"
 import About from "./components/mainPage/About"
 import Contact from "./components/mainPage/Contact"
 import Footer from "./components/mainPage/Footer"
-import {Navigate, Route, Routes} from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import "./App.css";
 import LoginForm from "./components/mainPage/LoginForm"
 import MapView from "./components/map/MapView"
@@ -16,21 +16,21 @@ import FriendsView from "./components/mainPage/FriendsView";
 
 
 
-type PrivateProps={
-    children:any
+type PrivateProps = {
+    children: any
 }
 
-function PrivateComponent(props:PrivateProps):JSX.Element{
+function PrivateComponent(props: PrivateProps): JSX.Element {
     const [cookies, setCookie] = useCookies();
 
-    if(cookies.isLogged==="true"){
+    if (cookies.isLogged === "true") {
         return props.children;
     }
-    return <Navigate to= "/login"/>;
+    return <Navigate to="/login" />;
 }
 
 function App() {
-  
+
     return (
 
         <div className="background-image container">
@@ -52,7 +52,10 @@ function App() {
             <Footer/>
     
 
-        
+            <Footer />
+
+
+
 
 
         </div>

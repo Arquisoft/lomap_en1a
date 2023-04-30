@@ -1,7 +1,8 @@
+import { waitFor } from '@testing-library/react';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
-const feature = loadFeature('./features/login.feature');
+const feature = loadFeature('./features/profile.feature');
 
 let page: puppeteer.Page;
 let browser: puppeteer.Browser;
@@ -11,7 +12,7 @@ defineFeature(feature, test => {
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: true, slowMo: 50 });
+      : await puppeteer.launch({ headless: false, slowMo: 50 });
     page = await browser.newPage();
 
     await page
@@ -21,7 +22,7 @@ defineFeature(feature, test => {
       .catch(() => { });
   });
 
-  test('The user is not logged in the site', ({ given, when, then }) => {
+  test('The user wants to see the profile', ({ given, when, then }) => {
 
     let password: string;
     let username: string;
@@ -29,11 +30,11 @@ defineFeature(feature, test => {
     given('A not logged user', () => {
       password = "ADMSIS123$"
       username = "gertrudis"
+
     });
 
 
-    when('The user goes to the login, fills the data in the form and presses submit', async () => {
-
+    when('The user logs opens the profile', async () => {
       await expect(page).toClick('a', { text: 'Log in' })
       await expect(page).toClick('button', { text: 'Solid Community' })
       //Hago submit con el boton de Go
@@ -51,13 +52,21 @@ defineFeature(feature, test => {
       await expect(page).toClick('button', { text: 'Log In' })
       //¿Cannot get /map?
       await page.waitForSelector('a[href="/map"]')
+      await page.waitForSelector('img')
+      //Hago clic en el dropdown de perfil
+      await page.goto("http://localhost:3000/profile")
+
+      //Espero a que se cargue la pagina de añadir lugar
+
+
+
 
 
 
     });
 
-    then('The user enters the map page', async () => {
-      await expect(page).toMatch('Map')
+    then('The user sees his profile', async () => {
+      await expect(page).toMatch('Username')
     });
   })
 
