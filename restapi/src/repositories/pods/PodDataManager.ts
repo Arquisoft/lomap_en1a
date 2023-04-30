@@ -52,7 +52,9 @@ export class PodDataManager {
           fetch: session.fetch,
         }
       );
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
 
     return dataset;
   }
