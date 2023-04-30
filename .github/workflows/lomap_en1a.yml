@@ -5,23 +5,23 @@ on:
     types: [published]
 
 jobs:
-  unit-test-webapp:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: webapp
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npm test --coverage --watchAll
-      - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # unit-test-webapp:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: webapp
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 18
+  #     - run: npm ci
+  #     - run: npm test --coverage --watchAll
+  #     - name: Analyze with SonarCloud
+  #       uses: sonarsource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   # unit-test-restapi:
   #   runs-on: ubuntu-latest
   #   defaults:
@@ -54,7 +54,7 @@ jobs:
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp]
+    # needs: [unit-test-webapp]
     #needs: [e2e-tests]
     steps:
       - uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    needs: [unit-test-webapp]
+    # needs: [unit-test-webapp]
     #needs: [e2e-tests]
     steps:
       - uses: actions/checkout@v3

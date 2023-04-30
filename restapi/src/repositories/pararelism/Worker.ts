@@ -28,9 +28,7 @@ export class Worker {
       dataset = await getSolidDataset(this.resource, {
         fetch: session.fetch,
       });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
 
     this.result = dataset;
   }

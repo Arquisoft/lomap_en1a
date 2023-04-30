@@ -58,9 +58,6 @@ export class PlaceRepositoryImpl implements PlaceRepository {
       zone
     );
 
-    console.log(user);
-    console.log(dataset);
-
     return PodManager.entityParser.parsePlaces(dataset);
   }
 
