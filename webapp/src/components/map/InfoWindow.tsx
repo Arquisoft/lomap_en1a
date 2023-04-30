@@ -207,7 +207,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         <Grid item xs={12}>
           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
         </Grid>
-        <Grid item xs={7} alignItems="stretch" textAlign="center">
+        <Grid item xs={6.5} alignItems="stretch" textAlign="center">
           <Box
             height="100%"
             display="flex"
@@ -241,7 +241,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
           </Box>
           
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2.5}>
           <Box textAlign="center" >{avg + " "}
           <StarIcon htmlColor='orange' fontSize='medium'/></Box>
         </Grid>

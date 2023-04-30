@@ -12,6 +12,8 @@
   --active-bg-color: #555;
 
   --nav-bar-size: 2.5em;
+  --user-profile-dimensions: 2.3em;
+  --user-profile-padding: 0.2em;
 }
 
 /* -------------------------------------------------------------------------------------- */
@@ -133,13 +135,14 @@ footer {
   overflow-y: auto;
 }
 
-.text-area h1 {
+.text-area h1, .grid-text-area h1 {
   border-bottom: 8px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 0.3em;
 }
 
-.text-area p {
+.text-area p, .grid-text-area p {
   text-align: left;
+  font-size: 1.6vmax;
 }
 
 .text-area ul {
@@ -542,8 +545,9 @@ footer {
   overflow: hidden;
   cursor: pointer;
   object-fit: cover;
-  width: var(--nav-bar-size);
-  height: var(--nav-bar-size);
+  width: var(--user-profile-dimensions);
+  height: var(--user-profile-dimensions);
+  padding: 0.1em;
 }
 
 #user-icon:hover {
@@ -662,15 +666,10 @@ footer {
   padding-bottom: 2em;
 }
 
-#profile-pic-div {
-  padding-bottom: 0.7em;
-  border-bottom: 4px solid rgba(0, 0, 0, 0.4);
-  margin: 0em 4em 2em 4em;
-}
-
 .profile-attribute {
   text-align: left;
-  margin: 0em 4em;
+  word-wrap: break-word;
+  max-width: 93%;
 }
 
 .profile-attribute label {
