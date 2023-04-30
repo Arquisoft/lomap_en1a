@@ -87,6 +87,24 @@ footer {
   direction: row;
 }
 
+.centered-grid {
+  box-sizing: border-box;
+  top: 50%;
+  position: relative;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.grid-text-area {
+  background-color: var(--secondary-bg);
+  color: var(--block-text-color);
+  font-size: 2.5vh;
+  border: 3px solid #388fe6;
+  border-radius: 30px;
+  overflow-y: auto;
+}
+
 .centered-block {
   box-sizing: border-box;
   top: 50%;
@@ -633,8 +651,9 @@ footer {
 #profile-pic {
   justify-content: center;
   max-height: 30%;
+  object-fit: cover;
   height: 10em;
-  width: auto;
+  width: 10em;
   border-radius: 50%;
 }
 
@@ -651,7 +670,7 @@ footer {
 
 .profile-attribute {
   text-align: left;
-  margin: 0em 4em 1em 4em;
+  margin: 0em 4em;
 }
 
 .profile-attribute label {
