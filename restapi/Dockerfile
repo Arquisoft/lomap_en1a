@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="20.77.8.13"
-ENV host=$API_URI
+ARG host="localhost"
+ENV host=$host
 
 CMD [ "npm", "start" ]

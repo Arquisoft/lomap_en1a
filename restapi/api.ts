@@ -8,8 +8,6 @@ import cors from "cors";
 
 const api: Router = express.Router();
 
-let factory: Factory = new Factory();
-
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 api.use(bodyParser.json());
