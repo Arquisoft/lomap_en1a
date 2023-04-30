@@ -57,6 +57,28 @@ footer {
 
 /* General classes---------------------------------------------------- */
 
+.bgr-color {
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 0em 0.7em;
+  border-radius: 1.5em;
+}
+
+#enter-btn {
+  border-width: 0px;
+  color: var(--main-text-color);
+  font-size: 4vmin;
+  padding: 0.1em 0.5em;
+  background-color: #388fe6;
+  border: 0.1em solid black;
+  border-radius: 0.3em;
+}
+
+.homepage h1 {
+  font-size: 10vmin;
+  -webkit-text-stroke: 0.05em #388fe6;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .homepage-list {
   list-style: circle;
 }
