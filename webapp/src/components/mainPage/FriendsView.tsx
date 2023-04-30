@@ -18,10 +18,6 @@ import { addFriend, getFriendRequests } from '../../api/api';
 import LoadingSpinner from '../LoadingSpinner';
 import { Box } from '@mui/material';
 
-interface FriendsTableProps {
-  friends: User[]
-}
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
