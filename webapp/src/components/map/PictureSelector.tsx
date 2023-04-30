@@ -57,7 +57,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
 
   return (
     <>
-      {isLoading ? <LoadingSpinner message="Loading image" /> : <div></div>}
+      {isLoading ? <LoadingSpinner message="Loading image" /> : <></>}
       <form name="register" onSubmit={handleAddPicture}>
         <Grid container spacing={3} justifyContent="space-around">
             <Grid item xs={10}>
@@ -66,7 +66,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
               display="flex"
               justifyContent="center"
               flexDirection="column">
-                <TextField
+                <TextField className="text-box"
                   style={{width: '100%'}}
                   multiline
                   rows={2}

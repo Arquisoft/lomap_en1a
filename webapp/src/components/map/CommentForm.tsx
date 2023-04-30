@@ -71,8 +71,8 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
       <form name="register" onSubmit={handleSubmit}>
         <Grid container spacing={3} justifyContent="space-around">
           <Grid item xs={7}>
-              <TextField
-                style={{width: '100%'}}
+              <TextField className="text-box"
+                style={{ width: '100%'}}
                 multiline
                 rows={4}
                 required

@@ -60,7 +60,7 @@ footer {
   list-style: circle;
 }
 
-.vis-select * {
+.selector * {
   width: 100%;
   height: 100%;
 }
@@ -276,6 +276,15 @@ footer {
 .info-window{
   color:black;
   z-index: 6;
+}
+
+.text-box textarea {
+  padding: 0.6em;
+}
+
+.new-place {
+  font-weight: bold;
+  padding: 1em 0em;
 }
 
 .place-name {
@@ -585,7 +594,7 @@ footer {
 }
 
 .dropdown-item a {
-  max-width: 120px;
+  max-width: 130px;
   margin-left: 10px;
   transition: var(--speed);
   color: var(--secondary-profile-text-color);

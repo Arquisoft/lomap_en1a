@@ -191,7 +191,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            className='description'
+            className='description text-box'
             disabled
             multiline
             fullWidth
