@@ -63,6 +63,16 @@ footer {
   border-radius: 1.5em;
 }
 
+#enter-btn {
+  border-width: 0px;
+  color: var(--main-text-color);
+  font-size: 4vmin;
+  padding: 0.1em 0.5em;
+  background-color: #388fe6;
+  border: 0.1em solid black;
+  border-radius: 0.3em;
+}
+
 .homepage h1 {
   font-size: 10vmin;
   -webkit-text-stroke: 0.05em #388fe6;

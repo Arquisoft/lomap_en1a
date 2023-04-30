@@ -8,6 +8,8 @@ import madrid from "../../images-places/Madrid.jpg";
 import eii from "../../images-places/eii.jpg";
 import new_york from "../../images-places/nueva-york.jpg";
 import lomap from "../../images/LoMap logo.png";
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 const images = [map, paris, london, eii, new_york, madrid];
 
@@ -17,6 +19,13 @@ export default function Home(): JSX.Element {
     "the world with your friends. Take a sit, log in, and most importantly, have fun!!";
   
   let description2 ="With LoMap, not only can you add places anywhere you want, but also you will be able to: ";
+
+  let navigate = useNavigate();
+
+
+  const handleClick = () => {
+    navigate("/login");
+  }
 
   return (
     <div className="background-image">
@@ -28,7 +37,11 @@ export default function Home(): JSX.Element {
         fontSize="3.2vmin">
       <Grid item xs={12} textAlign="center">
         <Box component="img" src={lomap} alt="Logo"
-          sx={{padding: "0.5em", maxWidth: "50%", maxHeight: "50%" }}></Box>
+          sx={{padding: "0.5em", maxWidth: "50%", maxHeight: "50%" }}>
+        </Box>
+      </Grid>
+      <Grid item xs={12} textAlign="center">
+        <Button id="enter-btn" sx={{height: '100%' }} variant="contained" onClick={handleClick}>Enter now!</Button>
       </Grid>
       <Grid item xs={12} textAlign="justify" fontSize="4vmin">
         <Box className="bgr-color"
