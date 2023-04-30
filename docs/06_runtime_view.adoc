@@ -35,7 +35,7 @@ This scenario describes the steps taken for a user to save a location to the sys
 actor User as "Alice"
 participant Frontend
 participant Backend
-database DB as "General Purpose DB"
+database DB as "System DB"
 database POD
 
 User-> Frontend: Send location data
@@ -61,7 +61,7 @@ In this case, several PODs are accessed, as the comments, reviews and scores are
 actor User as "Alice"
 participant Frontend
 participant Backend
-database DB as "General Purpose DB"
+database DB as "System DB"
 database PODs
 
 User-> Frontend: Fetch location request
@@ -94,7 +94,7 @@ This scenario describes the process taken when a user wants to leave a review. T
 actor User as "Alice"
 participant Frontend
 participant Backend
-database DB as "General Purpose DB"
+database DB as "System DB"
 database PODs
 
 User -> Frontend: Review

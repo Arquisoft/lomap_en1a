@@ -14,27 +14,112 @@ This diagram is divided based on data ownership. Three main groups are considere
 - LoMap: groups all application-specific blocks.
 - External Services: groups all other blocks that are not directly related to the user nor to the application.
 
-image::5-buildingBlock-L1-0.svg[Building Block View (Level 1)]
+[plantuml, "Building Block View", svg]
+----
+@startuml
+' Building Block View Diagram v1.0
+' Level 1
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+card LoMap {
+    component WebApp as Frontend
+    component RestAPI as Backend
+    database Database
+}
+
+
+card "User" as UserDat {
+    actor User
+    database POD
+}
+
+rectangle "External Services" {
+    cloud "Map Provider" as MapService
+}
+
+'-----------------------
+'Definition of relations
+'-----------------------
+User -r-> Frontend : interacts
+' Hidden relations help with spacing
+User -[hidden]--- Frontend
+User -d-> POD : manages
+Frontend --> Backend
+POD -l- Backend
+Backend -d-> Database
+Backend -r-> MapService
+
+
+@enduml
+----
 
 ==== Contained BlackBoxes
 [options="header", cols = "1, 5"]
 |===========================================================================================================
 | Name            | Description                                                                                      
-| User            | External user that provides its data through a POD and that makes use of the application services
-| POD             | Privately holds all user data. The application asks for permission to access this information    
-| Webapp          | Provides a user-friendly interface to access all application services
-| LoMapCore       | Provides the services that the application offers. Connects to data sources to provide those services
-| Database        | Holds all common data that the application needs to run
-| Map Provider    | External service that provides map data to the application
+| User            | External user that provides its data through a POD and that makes use of the application services.
+| POD             | Privately holds all user data. The application asks for permission to access this information.
+| WebApp          | Provides a user-friendly interface to access all application services.
+| RestAPI         | Provides the services that the application offers. Connects to data sources to provide those services.
+| Database        | Holds all common data that the application needs to run.
+| Map Provider    | External service that provides map data to the application.
 |===========================================================================================================
 
-DISCLAIMER::
-The following sections will be further developed in higher-level diagrams. Some things not mentioned here will be explained later
+=== Level 2: WebApp
+The WebApp encompasses all UI-related components of the application. It is built with React, and follows a typical React structure.
 
-=== Level 2: Webapp
-The Webapp encompasses all UI-related components of the application. It is built with React, and follows a typical React structure.
+[plantuml, "Building Block View - Level 2 WebApp", svg]
+----
+@startuml
+' Building Block View Diagram v1.0
+' Level 2: Webapp
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+component WebApp as Frontend{
+    interface Api
+    frame App {
+        frame MapView as "MapView.tsx" {
+            frame Mav as "map.tsx"
+            frame SlidingPanel {
+                frame FriendP as "FriendPanel.tsx"
+                frame CommentForm as "CommentForm.tsx"
+                frame CommentList as "CommentList.tsx"
+                frame InfoWindow as "InfoWindow.tsx"
+            }
+        }
+        frame NavBar as "NavBar.tsx"{
+            card Login as "Log in"
+            card Signup as "Sign up"
+        }
+        frame LoginForm as "LoginForm.tsx" {
+            card Provider
+        }
+        frame UserProfile as "UserProfile.tsx" {
+            card username
+            card webid
+        }
+        frame About as "About.tsx"
+        frame Contact as "Contact.tsx"
+    }
+}
 
-image::5-buildingBlock-L2-Webapp-0.svg[Building Block View (Level 2: WebApp)]
+component RestAPI
+
+'-----------------------
+'Definition of relations
+'-----------------------
+App <-> Api
+Api <-l-> RestAPI
+webid -[hidden]- username
+Signup -[hidden]- Login
+
+
+@enduml
+----
 
 ==== Contained BlackBoxes
 [options="header", cols = "2, 5"]
@@ -50,20 +135,119 @@ image::5-buildingBlock-L2-Webapp-0.svg[Building Block View (Level 2: WebApp)]
 | MapView.tsx | Main component of the page itself. Contains the most important components of the frontend
 |===
 
-==== Level 2: LoMapCore
-The LoMapCore block, also called RestAPI, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.
+==== Level 2: RestAPI
+The RestAPI block, also called LoMapCore, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.
 
-image::5-buildingBlock-L2-Restapi-0.svg[Building Block View (Level 2: RestAPI)]
+[plantuml, "Building Block View - Level 2 RestAPI", svg]
+----
+@startuml
+' Building Block View Diagram v1.0
+' Level 2: RestAPI
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+component RestAPI as Backend{
+
+    component PodAccess {
+                artifact EntityParser as "EntityParser.ts"
+                artifact PodDataManager as "PodDataManager.ts"
+                artifact PodManager as "PodManager.ts"
+                artifact PodSessionManager as "PodSessionManager.ts"
+                artifact RDFCreator as "RDFCreator.ts"
+    }
+
+    component Domain {
+        file Entities
+        file Dtos
+    }
+
+    component Repositories {
+        artifact CommentRepo as "commentRepository.ts"
+        artifact PictureRepo as "pictureRepository.ts"
+        artifact PlaceRepo as "placeRepository.ts"
+        artifact ScoreRepo as "scoreRepository.ts"
+        artifact UserRepo as "userRepository.ts"
+
+    }
+
+    component Services {
+        artifact CommentService as "commentService.ts"
+        artifact PictureService as "pictureService.ts"
+        artifact PlaceService as "placeService.ts"
+        artifact ScoreService as "scoreService.ts"
+        artifact UserService as "userService.ts"
+    }
+
+    component Controllers {
+        collections CommentController as "comments.ts"
+        collections PictureController as "pictures.ts"
+        collections PlaceController as "places.ts"
+        collections ScoreController as "scores.ts"
+        collections UserController as "users.ts"
+    }
+}
+
+database Database
+database POD
+
+component WebApp
+
+'-----------------------
+'Definition of relations
+'-----------------------
+Controllers <-l-> WebApp
+
+CommentController -[hidden]- PictureController
+PictureController -[hidden]- PlaceController
+PlaceController -[hidden]- ScoreController
+ScoreController -[hidden]- UserController
+
+CommentRepo -[hidden]- PictureRepo
+PictureRepo -[hidden]- PlaceRepo
+PlaceRepo -[hidden]- ScoreRepo
+ScoreRepo -[hidden]- UserRepo
+
+CommentService -[hidden]- PictureService
+PictureService -[hidden]- PlaceService
+PlaceService -[hidden]- ScoreService
+ScoreService -[hidden]- UserService
+
+CommentService -> CommentRepo
+PictureService -> PictureRepo
+PlaceService -> PlaceRepo
+ScoreService -> ScoreRepo
+UserService -> UserRepo
+
+CommentController -> CommentService
+PictureController -> PictureService
+PlaceController -> PlaceService
+ScoreController -> ScoreService
+UserController -> UserService
+
+'Controllers -u-> Dtos
+'Services -u-> Dtos
+'
+'Repositories -u-> Entities
+'Services -u-> Entities
+
+PictureRepo -[hidden]r-> PodAccess
+Repositories <--d--> Database
+Repositories <-u-> PodAccess
+PodAccess <-d-> POD
+
+@enduml
+----
 
 ==== Contained BlackBoxes
 [options="header"]
 |===
 | Name            | Responsibility
-| WebApp   | Frontend of the application
-| Domain   | Holds all entities and DTOs used across the application to communicate modules
-| Controllers   | Declare the endpoints of the RestAPI and make use of the services to provide the functionality
-| Services   | Manage all business rules of the application, and use the repositories to persist said data
-| Repositories   | Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess
+| WebApp   | Frontend of the application.
+| Domain   | Holds all entities and DTOs used across the application to communicate modules.
+| Controllers   | Declare the endpoints of the RestAPI and make use of the services to provide the functionality.
+| Services   | Manage all business rules of the application, and use the repositories to persist said data.
+| Repositories   | Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess.
 | PodAccess   | In charge of handling POD accesses, authentication and data fetching.
 |===
 
@@ -72,7 +256,97 @@ The Database holds linked data for the application. This data is in charge of li
 
 Then, you could search for the ID of a place to retrieve all associated comments without going through several PODs to discover if they hold any useful information.
 
-(insert DB schema diagram)
+In the following diagrams, a schema of the data stored in the database and a possible snapshot are represented. It must be noted that, as the database is documental, the class diagram is not a direct representation of the internal structure of the data stored; but rather a schema of what is stored. A more realistic representation is the object diagram below.
+
+[plantuml, "Database Schema", svg]
+----
+@startuml
+' Database Schema Diagram v1.0
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+class Comment {
+    -_id : ObjectId
+    +comment : string
+    +place : string
+    +webId : string
+    +visibility : string
+}
+
+class Friend{
+    -_id : ObjectId
+    +requester : string
+    +requestee : string
+}
+
+class Picture{
+    -_id : ObjectId
+    +picture : string
+    +place : string
+    +webId : string
+    +visibility : string
+}
+
+class PublicUser{
+    -_id : ObjectId
+    +user : string
+}
+
+class Score{
+    -_id : ObjectId
+    +score : string
+    +place : string
+    +webId : string
+    +visibility : string
+}
+@enduml
+----
+
+[plantuml, "Database Snapshot", svg]
+----
+@startuml
+' Database Snapshot Diagram v1.0
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+object Comment {
+    -_id = ObjectId('64303996ce8fbc867cf72479')
+    +comment = 'ead40f95-867a-47d2-ace3-9d5bd764398d'
+    +place = '09cbdba9-47eb-487c-a402-72bb5d2a877f'
+    +webId = 'https://alice.inrupt.net/'
+    +visibility = 'PUBLIC'
+}
+
+object Friend{
+    -_id = ObjectId('644d37ff7efd719dd6ce8dd2')
+    +requester = 'https://alice.solidcommunity.net/'
+    +requestee = 'https://bob.solidcommunity.net/'
+}
+
+object Picture{
+    -_id = ObjectId('6430875c9f7e894ba5e62ba7')
+    +picture = '1f2f5b8a-351d-4aa8-b3a6-702ed7e160c7'
+    +place = '8ec5a292-3c91-43c9-80ea-a88655ea1e96'
+    +webId = 'https://bob.inrupt.net/'
+    +visibility = 'PRIVATE'
+}
+
+object PublicUser{
+    -_id = ObjectId('64468bfb1967c837c142aa08')
+    +user = 'https://alice.inrupt.net/'
+}
+
+object Score{
+    -_id = ObjectId('643040b678f47361b3407c8c')
+    +score = '024f9867-795c-440c-9df4-188fb385997a'
+    +place = '09cbdba9-47eb-487c-a402-72bb5d2a877f'
+    +webId = 'https://bob.inrupt.net/'
+    +visibility = 'PUBLIC'
+}
+@enduml
+----
 
 ==== MapService
 The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information.

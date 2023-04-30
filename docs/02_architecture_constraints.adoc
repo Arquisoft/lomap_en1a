@@ -1,7 +1,7 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-This application, and the whole system that follows behind, must adhere to some architectural constraints that have been set at the project definition; and thus cannot be changed.
+This application, and the whole system that follows behind, must adhere to some architectural constraints that have been set at the project definition or by the teachers; and thus cannot be changed.
 
 .Technical constraints
 These constraints relate to the technologies that must be used to successfully complete the application:
@@ -9,11 +9,10 @@ These constraints relate to the technologies that must be used to successfully c
 [options="header",cols = "1,2,5"]
 |===
 |Code |Constraint|Explanation
-| TC1 | _SOLID project_ | _The shared information of the users will be stored in a personal POD according to the SOLID project.
-It is a specification that stores data securely in decentralized data stores called PODs_
-| TC2 | _GIT_ | _Git must be used to track, manage and store code versions and branches. For this, GitHub will be used, as it also provides extra tools for issue tracking, continuous integration, and work assignment_
-| TC3 | _Web Interface_ | _The application should allow users to access its services through a web application_
-| TC4 | _Deployable_ | _The application should be deployable in the cloud, and being able to deploy both halves of the application in different containers or even machines_
+| TC1 | SOLID project | The shared information of the users will be stored in a personal POD according to the SOLID project. It is a specification that stores data securely in decentralized data stores called PODs.
+| TC2 | GIT | Git must be used to track, manage and store code versions and branches. For this, GitHub will be used, as it also provides extra tools for issue tracking, continuous integration, and work assignment.
+| TC3 | Web Interface | The application should allow users to access its services through a web application.
+| TC4 | Deployable | The application should be deployable in the cloud, and being able to deploy both halves of the application in different containers or even machines.
 |===
 
 .Organizational constraints
@@ -21,10 +20,20 @@ These constraints relate to how the project will be developed:
 [options="header",cols="1,2,5"]
 |===
 |Code|Constraint|Explanation
-|OC1| _Time schedule_ | _The project must follow a specific delivery schedule: Documentation 0.1 must be delivered in week 4; prototype 0.1 in week 7; prototype 1.0 and documentation 1.0 in week 10; prototype 1.1 and finally documentation 1.1 in week 13_
-|OC2| _Team_ | _The project will be done in a team composed of 6 students, so work must be assigned accordingly_
-|OC3| _Git-based development_ | _The project will be built around the Git workflow, so all tools used must be able to closely interact with this system_
-|OC4| _Testing_ | _The project must be tested thoroughly, and a high test coverage must be reached_
+|OC1| Time schedule | The project must follow a specific delivery schedule:
+
+- Documentation 0.1 must be delivered in week 4.
+
+- Prototype 0.1 in week 7.
+
+- Prototype 1.0 and documentation 1.0 in week 10.
+
+- Prototype 1.1 and documentation 1.1 in week 13.
+
+|OC2| Team | The project will be done in a team composed of 6 students, so work must be assigned accordingly.
+|OC3| Git-based development | The project will be built around the Git workflow, so all tools used must be able to closely interact with this system.
+|OC4| Testing | The project must be tested thoroughly, and a high test coverage must be reached.
+|OC5| Meetings | The project's development process must be reflected in the minutes of each meeting that happens.
 |===
 
 .Political constraints
@@ -32,8 +41,9 @@ These constraints relate to what conventions does the project follow:
 [options="header",cols="1,2,5"]
 |===
 |Code|Constraint|Explanation
-|PC1| _Documentation_ | _We are going to use AsciiDoc and follow the Arc42 template_
-|PC2| _Language_ | _The documentation and application will be developed in English_
-|PC3| _RDF Schemas_ | _The project aims to follow RDF schemas in its data models, to favour interoperability between different providers of the service_
+|PC1| Documentation | We are going to use AsciiDoc and follow the Arc42 template.
+|PC2| Language | The documentation and application will be developed in English.
+|PC3| RDF Schemas | The project aims to follow RDF schemas in its data models, to favour interoperability between different providers of the service.
+|PC4| Code | The code for the application must be as clear as possible, to favour code maintainability.
 |===
 

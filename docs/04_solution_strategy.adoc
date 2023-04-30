@@ -14,7 +14,7 @@ The libraries used are a key part of the project, and they can be divided by the
 
 . Frontend and UI:
 
-* We are going to use `React` for the UI of the application, as it is fairly simple, allows a great range of customization and integrates perfectly with the language of choice.
+* We are going to use React for the UI of the application, as it is fairly simple, allows a great range of customization and integrates perfectly with the language of choice.
 * To give the application a bit of style, libraries such as `@emotion`, `@mui`, and `@material-ui` are used. They include style elements integrated into React components to simplify the UI design.
 
 . Backend:

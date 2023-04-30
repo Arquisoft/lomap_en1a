@@ -1,11 +1,15 @@
 [![Actions Status](https://github.com/arquisoft/lomap_en1a/workflows/CI%20for%20LOMAP_EN1A/badge.svg)](https://github.com/arquisoft/lomap_en1a/actions)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_en1a&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_en1a)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Arquisoft_lomap_en1a&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Arquisoft_lomap_en1a)
-# LoMap :earth_africa:
-## _A private and user-friendly Map Service using SOLID PODs_
+# :earth_africa: LoMap :earth_africa:
+## _Private and user-friendly maps using SOLID PODs_
 
-LoMap is a map service intended for users who value their privacy above all. Developed for the Council of Brussels by HappySw, LoMap aims to give users back the control of their data, while providing a slick interface for the end-user.
+---
+
+LoMap is a map service intended for users who value their privacy above all. Developed by HappySw for the Council of Brussels, LoMap aims to give users back the control of their data, while providing a slick interface for the end-user.
 It is written in Typescript, built with React, Node.js and Express, and is based around the use of SolidProject's PODs to host the user's data.
+
+### :calling: Capabilities
 
 LoMap offers a wide range of capabilities:
 - Add, manage and classify markers :round_pushpin: in a map only you control.
@@ -13,8 +17,23 @@ LoMap offers a wide range of capabilities:
 - Invite friends :family: and share places within your friend-group.
 - Manage the privacy level :closed_lock_with_key: of everything you do.
 - Much more!
+
 ---
-Group members:
+
+### :construction: Built with:
+
+- Typescript
+- React
+- Node.js
+- Express
+- Jest
+- Selenium
+- Prometheus
+- SonarrCloud
+- MongoDB
+
+---
+### :construction_worker: Group members :
 
 - Pablo Valdés Fernández: UO282655@uniovi.es
 - Sergio del Rey Álvarez: UO282497@uniovi.es
