@@ -58,7 +58,7 @@ export default function Profile(props:LogoutProps): JSX.Element {
         <>
             <div className="profile-menu" ref={menuRef}>
                 <div onClick={() => {setOpen(!open)}}>
-                    <img id="user-icon" src={placeholderImage} alt="User icon"></img> 
+                    <img id="user-icon" src={ profile?.photo ? profile?.photo : placeholderImage } alt="User icon"></img> 
                 </div>
                 <div className={`profile-dropdown ${open? 'profile-active' : 'profile-inactive'} noHover`}>
                     <h3>{profile?.username}<br/><span>{profile?.webId}</span></h3>

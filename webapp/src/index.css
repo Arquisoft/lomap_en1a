@@ -520,11 +520,12 @@ footer {
 #user-icon {
   z-index : 4;
   right: 20px;
-  height: var(--nav-bar-size);
-  width: auto;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+  object-fit: cover;
+  width: var(--nav-bar-size);
+  height: var(--nav-bar-size);
 }
 
 #user-icon:hover {
