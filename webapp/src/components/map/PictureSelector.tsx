@@ -60,7 +60,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
       {isLoading ? <LoadingSpinner message="Loading image" /> : <></>}
       <form name="register" onSubmit={handleAddPicture}>
         <Grid container spacing={3} justifyContent="space-around">
-            <Grid item xs={10}>
+            <Grid item xs={9.5}>
             <Box 
               height="100%"
               display="flex"
@@ -83,7 +83,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
                 />
               </Box>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2.5}>
               <Box 
                   height="100%"
                   display="flex"

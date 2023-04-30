@@ -31,10 +31,10 @@ export default function UserProfile(): JSX.Element {
             </Box>
           </Grid>
           <Divider/>
-          <Grid item xs={12}>
+          <Grid item xs={12} textAlign={"center"}>
             <ProfileAttribute label="Username" text={profile?.username}></ProfileAttribute>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} textAlign={"center"}>
             <ProfileAttribute label="WebID" text={profile?.webId}></ProfileAttribute>
           </Grid>
           
@@ -46,6 +46,8 @@ export default function UserProfile(): JSX.Element {
 function ProfileAttribute(props: { label: string, text?: string }) {
     return (
       <Box className="profile-attribute"
+          marginLeft="auto"
+          marginRight="auto"
           height="100%"
           display="flex"
           justifyContent="center"

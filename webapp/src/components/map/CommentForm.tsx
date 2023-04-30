@@ -70,7 +70,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
     <>
       <form name="register" onSubmit={handleSubmit}>
         <Grid container spacing={3} justifyContent="space-around">
-          <Grid item xs={7}>
+          <Grid item xs={6.5}>
               <TextField className="text-box"
                 style={{ width: '100%'}}
                 multiline
@@ -96,7 +96,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
                 <VisibilitySelect visibility={visibility} handleVisibilityChange={handleChange}/>
               </Box>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={2.5}>
               <Box 
                   height="100%"
                   display="flex"
