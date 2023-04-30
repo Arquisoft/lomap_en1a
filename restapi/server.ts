@@ -14,26 +14,18 @@ const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
 let host = process.env.host || "localhost";
-api.use(
-  cors({
-    credentials: true,
-    origin: "http://" + host + ":3000",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    preflightContinue: true,
-  })
-);
 
-// var privateKey = readFileSync("certificates/host.key");
-// var certificate = readFileSync("certificates/host.cert");
-// var credentials = { key: privateKey, cert: certificate };
+var privateKey = readFileSync("certificates/host.key");
+var certificate = readFileSync("certificates/host.cert");
+var credentials = { key: privateKey, cert: certificate };
 
-// app.all("*", function (req, res, next) {
-//   if (req.secure) {
-//     return next();
-//   }
-//   console.log("redirecting to https");
-//   res.redirect("https://" + req.hostname + req.url);
-// });
+app.all("*", function (req, res, next) {
+  if (req.secure) {
+    return next();
+  }
+  console.log("redirecting to https");
+  res.redirect("https://" + req.hostname + req.url);
+});
 
 app.use(bp.json());
 
@@ -42,27 +34,18 @@ DatabaseConnection.setDatabase(
   "mongodb+srv://admin:admin@lomap.aux4co1.mongodb.net/?retryWrites=true&w=majority" as string
 );
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://" + host + ":3000",
-    allowedHeaders: ["Content-Type", "Authorization"],
-    preflightContinue: true,
-  })
-);
-
-app
-  .listen(port, (): void => {
-    console.log("Restapi listening on " + port);
-  })
-  .on("error", (error: Error) => {
-    console.error("Error occured: " + error.message);
-  });
-
-// createServer(credentials, app)
+// app
 //   .listen(port, (): void => {
 //     console.log("Restapi listening on " + port);
 //   })
 //   .on("error", (error: Error) => {
 //     console.error("Error occured: " + error.message);
 //   });
+
+createServer(credentials, app)
+  .listen(port, (): void => {
+    console.log("Restapi listening on " + port);
+  })
+  .on("error", (error: Error) => {
+    console.error("Error occured: " + error.message);
+  });
