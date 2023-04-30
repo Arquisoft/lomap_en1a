@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import type { AlertColor } from '@mui/material/Alert';
 import { NotificationType } from '../map/CommentForm';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,6 +16,7 @@ import { TableCell, TableFooter, TablePagination, TableRow, tableCellClasses } f
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions';
 import { addFriend, getFriendRequests } from '../../api/api';
 import LoadingSpinner from '../LoadingSpinner';
+import { Box } from '@mui/material';
 
 interface FriendsTableProps {
   friends: User[]
@@ -233,24 +233,34 @@ export default function FriendsView() {
       <div className="table-area">
         <h1>Friend management menu</h1>
         {isLoading ? <LoadingSpinner message="Loading your petition" /> : <div></div>}
-        <Grid container spacing={1} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}} >
-          <Grid item xs={12}>
-            <TextField
-              sx={{ width: 400 }}
-              multiline
-              rows={2}
-              required
-              name="text"
-              placeholder="Write your friend's web id"
-              variant="filled"
-              value={text}
-              onChange={e => {
-                setText(e.target.value);
-              }}
-
-            />
-            <Button variant="contained" onClick={() => handleSubmit(text)} sx={{ height: 52 }}>Send request</Button>
-
+        <Grid container spacing={2} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}} >
+          <Grid item xs={4}>
+            <Box 
+                  height="100%"
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column">
+              <TextField className="text-box"
+                style={{ width: '100%'}}
+                multiline
+                required
+                name="text"
+                placeholder="Write your friend's web ID"
+                variant="filled"
+                value={text}
+                onChange={e => {
+                  setText(e.target.value);
+                }}/>
+            </Box>
+          </Grid>
+          <Grid item xs={1.5}>
+            <Box 
+                height="100%"
+                display="flex"
+                justifyContent="center"
+                flexDirection="column">
+              <Button sx={{height: '100%'}} variant="contained" type="submit" onClick={() => handleSubmit(text)} disabled={text.length == 0}>Send request</Button>
+            </Box>
           </Grid>
 
           <Grid item xs={12}>
