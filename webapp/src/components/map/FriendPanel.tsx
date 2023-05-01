@@ -7,8 +7,8 @@ import { getPlacesToShareByUser } from "../../api/api";
 import { Place } from "../../domain/Place";
 import { Button } from "@mui/material";
 import { addFriendMarkerById, deleteMarkerById, displayMap } from "../ol/vector";
-import LoadingSpinner from "../LoadingSpinner";
 import { Divider } from '@material-ui/core';
+import LoadingSpinner from "../LoadingSpinner";
 
 
 
