@@ -1,4 +1,4 @@
-import { Link} from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
@@ -50,9 +50,21 @@ export default function NavBar(): JSX.Element {
 }
 
 function LoggedNavbar(props:LogoutProps) {
- let host = process.env.host || "localhost";
+ const getUrl=()=>{
+  let host = process.env.host || "localhost";
+  let url = window.location.href;
+  if(url.includes("https")){
+      return "https://"+host+":443/map"
+  }else{
+    return "http://"+host+":80/map"
+  }
+
+ }
+
+ //This is necessary because of a bug with Open layers. The page must be reloaded
   const reload = ()=>{
-    window.location.href="https://"+host+":443/map";
+    let url = getUrl();
+    window.location.href=url;
   }
   
   return (
