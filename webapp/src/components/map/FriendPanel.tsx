@@ -54,7 +54,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     return (
 
         <>
-            {/*isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <></>*/}
+            {isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <></>}
             
             <Grid container spacing={3} justifyContent="space-around"
                     marginLeft='auto' marginRight='auto'>
@@ -72,20 +72,6 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                     <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
             </Grid>
-            
-            {/*
-            <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
-                style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
-                <Grid item xs={6} textAlign="center">
-                    <Box component="h1" ><>{props.friend.username}</></Box>
-                </Grid>
-
-                <Grid alignItems="center" item xs={12}>
-                    <Box component="img" textAlign="center" src={image} sx={{ maxWidth: '100%', maxHeight: 350, width: 'auto', height: 'auto' }}></Box>
-                    <Box component="h2" textAlign="left">{"Shared sites"}</Box>
-                    <PlacesOf sharedSites={friendPlaces}></PlacesOf>
-                </Grid>
-            </Grid>*/}
         </>
 
     );
@@ -207,16 +193,6 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                                 </Grid>
                             </Grid>
                         </Grid>
-                                       
-                    {/*<Box key={place.id} component="p" textAlign="left">
-                        {place.name}
-                        <br></br>
-                        <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
-                            {getPlaceDisplayStatus(place.id) ? "Hide" : "Show"}
-                        </Button>
-                        <br></br>
-                        {place.latitude + "," + place.longitude}
-                        </Box>*/}
                     </>
 
                 ))

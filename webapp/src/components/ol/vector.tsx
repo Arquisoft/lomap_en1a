@@ -150,7 +150,7 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
@@ -267,7 +267,7 @@ export function changeMarkerColour(visibility: string) {
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
