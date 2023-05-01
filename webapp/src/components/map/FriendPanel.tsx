@@ -8,6 +8,7 @@ import { Place } from "../../domain/Place";
 import { Button } from "@mui/material";
 import { addFriendMarkerById, deleteMarkerById, displayMap } from "../ol/vector";
 import LoadingSpinner from "../LoadingSpinner";
+import { Divider } from '@material-ui/core';
 
 
 
@@ -53,7 +54,26 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     return (
 
         <>
-            {isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <div></div>}
+            {/*isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <></>*/}
+            
+            <Grid container spacing={3} justifyContent="space-around"
+                    marginLeft='auto' marginRight='auto'>
+                <Grid item xs={12} textAlign="center" paddingBottom="0.4em">
+                    <Box className="new-place">Shared sites by {props.friend.username}</Box>
+                    <Divider/>
+                </Grid>
+                <Grid item xs={12} textAlign={"center"} paddingBottom="0.6em">
+                    <Box component="img" 
+                        src={props.friend?.photo ? props.friend?.photo : image } 
+                        sx={{ objectFit: "cover", width: '6em', height: '6em', borderRadius: '50%' }}>
+                    </Box>
+                </Grid>
+                <Grid container spacing={1} justifyContent="space-around">
+                    <PlacesOf sharedSites={friendPlaces}></PlacesOf>
+                </Grid>
+            </Grid>
+            
+            {/*
             <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
                 style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
                 <Grid item xs={6} textAlign="center">
@@ -65,7 +85,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
                     <Box component="h2" textAlign="left">{"Shared sites"}</Box>
                     <PlacesOf sharedSites={friendPlaces}></PlacesOf>
                 </Grid>
-            </Grid>
+            </Grid>*/}
         </>
 
     );
@@ -76,7 +96,7 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
 function PlacesOf(props: PlaceOfProps): JSX.Element {
 
     const [updateCount, setUpdateCount] = useState(0);
-
+    
     const changePlaceDisplayStatus = (id: string) => {
         if (!displayMap.has(id)) {
             displayMap.set(id, true);
@@ -106,8 +126,89 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
         <>
             {
                 props.sharedSites.map((place) => (
-
-                    <Box key={place.id} component="p" textAlign="left">
+                    <>
+                        <Grid item xs={12} textAlign={"center"}>
+                            <Grid container justifyContent="space-around"
+                                    marginBottom="0.3em"
+                                    border="0.1em solid rgb(134, 134, 134)"
+                                    padding="0.2em 0.5em"
+                                    borderRadius="0.4em">
+                                <Grid item xs={8} textAlign={"center"} fontSize={"1em"}>
+                                    <Box key={place.id} textAlign="left"
+                                            height="100%"
+                                            display="flex"
+                                            justifyContent="center"
+                                            flexDirection="column">
+                                        {place.name}
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={4} textAlign={"center"} fontSize={"0.6em"}>
+                                    <Box key={place.id} textAlign="right"
+                                            height="100%"
+                                            display="flex"
+                                            justifyContent="center"
+                                            flexDirection="column">
+                                        <i>{place.category}</i>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={5} textAlign={"center"}>
+                                    <Box key={place.id}
+                                            height="100%"
+                                            display="flex"
+                                            justifyContent="center"
+                                            flexDirection="column">
+                                        <Button variant="contained" 
+                                                id={`${getPlaceDisplayStatus(place.id) ? "btn-hide" : "btn-show"}`}
+                                                sx={{height: '75%', width: '65%', marginLeft: 'auto', marginRight: 'auto'}} 
+                                                onClick={() => changePlaceDisplayStatus(place.id)}>
+                                            {getPlaceDisplayStatus(place.id) ? "Hide" : "Show"}
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={7} textAlign={"center"}>
+                                    <Grid container spacing={1} justifyContent="space-around" marginTop="0.1em">
+                                        <Grid item xs={2} textAlign={"center"} fontSize={"0.6em"}>
+                                            <Box key={place.id} textAlign="left"
+                                                    height="100%"
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    flexDirection="column">
+                                                <i>Lat: </i>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={10} textAlign={"center"} fontSize={"0.8em"}>
+                                            <Box key={place.id}
+                                                    height="100%"
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    flexDirection="column">
+                                                {place.latitude}
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={2} textAlign={"center"} fontSize={"0.6em"}>
+                                            <Box key={place.id} textAlign="left"
+                                                    height="100%"
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    flexDirection="column">
+                                                <i>Lon: </i>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={10} textAlign={"center"} fontSize={"0.8em"}>
+                                            <Box key={place.id}
+                                                    height="100%"
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    flexDirection="column">
+                                                {place.longitude}
+                                            </Box>
+                                        </Grid>
+                                    </Grid>     
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                                       
+                    {/*<Box key={place.id} component="p" textAlign="left">
                         {place.name}
                         <br></br>
                         <Button variant="contained" onClick={() => changePlaceDisplayStatus(place.id)}>
@@ -115,7 +216,8 @@ function PlacesOf(props: PlaceOfProps): JSX.Element {
                         </Button>
                         <br></br>
                         {place.latitude + "," + place.longitude}
-                    </Box>
+                        </Box>*/}
+                    </>
 
                 ))
             }

@@ -80,7 +80,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   const handleAddScore = async (value: number) => {
     props.handleIsLoading(true, "Posting score");//Start showing loading symbol
-    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), visibility);
+    let score = new Score("", value, props.infoWindowData?.id, "", new Date(), visibility);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);
@@ -125,7 +125,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   }
 
   const handleVisibilityChange = async (value: string) => {
-    var newVisibility = (Visibility as any)[value]
+    let newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }

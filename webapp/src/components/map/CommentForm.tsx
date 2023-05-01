@@ -33,7 +33,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
 
   const handleChange = async (value: string) => {
-    var newVisibility = (Visibility as any)[value]
+    let newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
