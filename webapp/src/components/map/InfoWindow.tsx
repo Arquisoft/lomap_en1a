@@ -83,7 +83,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
-      
+
     }
     props.handleIsLoading(false);//Remove loading symbol
   }
@@ -96,10 +96,10 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     getScores(props.infoWindowData.id).then((s) => {
       let sum = 0;
       s.forEach((score) => {
-        sum += score.score/s.length;
+        sum += score.score / s.length;
       });
       let a = sum.toFixed(1)
-      setAvg(parseFloat(a)); 
+      setAvg(parseFloat(a));
 
     });
   }
@@ -118,15 +118,15 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
     setVisibility(newVisibility);
   }
 
-  const getCreatorName = async(id: string) => {
-    if (id === null || typeof id === undefined) {
+  const getCreatorName = async (id: string) => {
+    if (id === null || id === undefined) {
       setCreatorName("")
     } else {
       let creator = await getProfileById(id);
       setCreatorName(creator.username)
     }
   }
-  
+
   const getCreatorText = () => {
     // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
     if (creatorName === null || typeof creatorName === 'undefined' || creatorName.trim().length === 0) {
@@ -154,16 +154,16 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
     <>
-      <Grid container spacing={3} style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
+      <Grid container spacing={3} style={props.isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
         <Grid item xs={12} textAlign="center">
           <Box className="place-name">{props.infoWindowData?.title}</Box>
           <Box className="place-category">{getCreatorText()} {props.infoWindowData?.category}</Box>
-          <Divider/>
+          <Divider />
         </Grid>
         <Grid item xs={12} textAlign="center">
-          { pictureURLs.length == 0 ?
-            <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found" 
-              sx={{maxWidth: '100%', maxHeight: '12em', width: 'auto', height: 'auto'}}></Box>
+          {pictureURLs.length === 0 ?
+            <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"
+              sx={{ maxWidth: '100%', maxHeight: '12em', width: 'auto', height: 'auto' }}></Box>
             :
             <div id="photos">
               <Slideshow images={pictureURLs} />
@@ -181,19 +181,19 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
             //variant="filled"
             value={props.infoWindowData.description}
             sx={{
-              "& fieldset": 
-                { 
-                  //border: 'none'
-                }
+              "& fieldset":
+              {
+                //border: 'none'
+              }
             }}
           />
         </Grid>
         <Grid item xs={12}>
-          <Divider/>
+          <Divider />
         </Grid>
-        
+
         <Grid item xs={12}>
-          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading}/>
+          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={6.5} alignItems="stretch" textAlign="center">
           <Box
@@ -213,32 +213,32 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
                 refreshScoresAfterAdding(value as number);
               }}
             />
-            
+
             {value !== null && (
               <Box sx={{ ml: 2 }}>{value + "/5"}</Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <Box 
+          <Box
             height="100%"
             display="flex"
             justifyContent="center"
             flexDirection="column">
-              <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+            <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
           </Box>
-          
+
         </Grid>
         <Grid item xs={2.5}>
           <Box textAlign="center" >{avg + " "}
-          <StarIcon htmlColor='orange' fontSize='medium'/></Box>
+            <StarIcon htmlColor='orange' fontSize='medium' /></Box>
         </Grid>
 
         <Grid item xs={12}>
           <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={12}>
-          <Divider/>
+          <Divider />
         </Grid>
         <Grid item xs={12}>
           <CommentList comments={comments} />

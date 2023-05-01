@@ -32,9 +32,9 @@ interface VisibilitySelectProps {
 
 export function VisibilitySelect(props: VisibilitySelectProps): JSX.Element {
 
-  return(
+  return (
     <div className='selector'>
-      <FormControl style={{width: '100%', height: '100%'}}>
+      <FormControl style={{ width: '100%', height: '100%' }}>
         <InputLabel id="visibility-select-label">Visibility</InputLabel>
         <Select
           labelId="visibility-select-label"
@@ -51,8 +51,8 @@ export function VisibilitySelect(props: VisibilitySelectProps): JSX.Element {
         </Select>
       </FormControl>
     </div>
-  
-    
+
+
   )
 
 }
@@ -92,7 +92,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
       let place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
       let result = await addPlace(place);
 
-      if (result.id != "ERR") {
+      if (result.id !== "ERR") {
         props.handleNewPlace(); //New place is increased when a place is added
         setNotificationStatus(true);
         setNotification({
@@ -106,7 +106,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         changeMarkerColour(v); //Changes the last marker colour
 
         updateMapList(result);
-        
+
       }
       else {
         setNotificationStatus(true);
@@ -116,7 +116,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         });
         props.handleDeleteMarker(true);
       }
-      
+
     }
     setIsLoading(false);
 
@@ -145,19 +145,19 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         <Grid container spacing={3} justifyContent="space-around" style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
           <Grid item xs={12} textAlign="center">
             <Box className="new-place">New place!</Box>
-            <Divider/>
-            </Grid>
+            <Divider />
+          </Grid>
           <Grid item xs={12} textAlign="center">
             <Box component="img" src={image} sx={{ maxWidth: '100%', maxHeight: "350px", width: 'auto', height: 'auto', marginLeft: 'auto', marginRight: 'auto' }}></Box>
           </Grid>
           <Grid item xs={5.5}>
-            <Box 
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column">
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
               <TextField className="text-box"
-                style={{ width: '100%'}}
+                style={{ width: '100%' }}
                 error={showError}
                 required
                 spellCheck={false}
@@ -169,59 +169,59 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
                 value={name}
                 onChange={e => {
                   setName(e.target.value);
-                }}/>
+                }} />
             </Box>
           </Grid>
           <Grid item xs={2}>
-            <Box 
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column">
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
               <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange} />
             </Box>
           </Grid>
           <Grid item xs={2}>
-            <Box 
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column">
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
               <div className='selector'>
-                <FormControl style={{width: '100%', height: '100%'}}>
+                <FormControl style={{ width: '100%', height: '100%' }}>
                   <InputLabel id="category-select-label">Category</InputLabel>
-                    <Select
-                      labelId="category-select-label"
-                      id="category-select"
-                      value={category}
-                      label="Category"
-                      onChange={e => {
-                        handleCategoryChange(e.target.value as string);
-                      }}
-                    >
-                      <MenuItem value={'BAR'}>Bar</MenuItem>
-                      <MenuItem value={'MONUMENT'}>Monument</MenuItem>
-                      <MenuItem value={'MUSEUM'}>Museum</MenuItem>
-                      <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
-                      <MenuItem value={'SIGHT'}>Sight</MenuItem>
-                      <MenuItem value={'SHOP'}>Shop</MenuItem>
+                  <Select
+                    labelId="category-select-label"
+                    id="category-select"
+                    value={category}
+                    label="Category"
+                    onChange={e => {
+                      handleCategoryChange(e.target.value as string);
+                    }}
+                  >
+                    <MenuItem value={'BAR'}>Bar</MenuItem>
+                    <MenuItem value={'MONUMENT'}>Monument</MenuItem>
+                    <MenuItem value={'MUSEUM'}>Museum</MenuItem>
+                    <MenuItem value={'RESTAURANT'}>Restaurant</MenuItem>
+                    <MenuItem value={'SIGHT'}>Sight</MenuItem>
+                    <MenuItem value={'SHOP'}>Shop</MenuItem>
                   </Select>
                 </FormControl>
               </div>
             </Box>
           </Grid>
           <Grid item xs={2.5}>
-            <Box 
-                height="100%"
-                display="flex"
-                justifyContent="center"
-                flexDirection="column">
-              <Button sx={{ height: '100%'}} variant="contained" type="submit" disabled={name.length == 0}>Add place</Button>
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+              <Button sx={{ height: '100%' }} variant="contained" type="submit" disabled={name.length === 0}>Add place</Button>
             </Box>
           </Grid>
           <Grid item xs={12}>
             <TextField className="text-box"
-              style={{ width: '100%'}}
+              style={{ width: '100%' }}
               multiline
               rows={7}
               spellCheck={false}

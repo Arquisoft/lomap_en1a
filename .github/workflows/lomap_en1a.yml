@@ -43,6 +43,8 @@ jobs:
     needs: [unit-test-webapp, unit-test-restapi]
     runs-on: ubuntu-20.04
     steps:
+    env:
+      CI: false
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:

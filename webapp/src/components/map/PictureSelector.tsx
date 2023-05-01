@@ -28,7 +28,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
   const handleAddPicture = async (e: React.FormEvent<HTMLFormElement>) => {
-    props.handleIsLoading(true,"Loading image...")
+    props.handleIsLoading(true, "Loading image...")
     e.preventDefault();
     let result: boolean = await addPicture(new Picture("", url, props.place, "", new Date(), Visibility.PUBLIC));
     if (result) {
@@ -56,39 +56,39 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
     <>
       <form name="register" onSubmit={handleAddPicture}>
         <Grid container spacing={3} justifyContent="space-around">
-            <Grid item xs={9.5}>
-            <Box 
+          <Grid item xs={9.5}>
+            <Box
               height="100%"
               display="flex"
               justifyContent="center"
               flexDirection="column">
-                <TextField className="text-box"
-                  style={{width: '100%'}}
-                  multiline
-                  rows={2}
-                  required
-                  spellCheck={false}
-                  name="text"
-                  placeholder="Write the URL of your new picture" 
-                  variant="filled"
-                  value={url}
-                  onChange={e => {
-                      setUrl(e.target.value);
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={2.5}>
-              <Box 
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column">
-                <Button id="btn-Add-Image" variant="contained" type="submit" disabled={url.length == 0}>
-                    <img id="img-Add-Image" src={btnImage} alt="Add image"/>
-                </Button>
-              </Box>
-            </Grid>
+              <TextField className="text-box"
+                style={{ width: '100%' }}
+                multiline
+                rows={2}
+                required
+                spellCheck={false}
+                name="text"
+                placeholder="Write the URL of your new picture"
+                variant="filled"
+                value={url}
+                onChange={e => {
+                  setUrl(e.target.value);
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs={2.5}>
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+              <Button id="btn-Add-Image" variant="contained" type="submit" disabled={url.length === 0}>
+                <img id="img-Add-Image" src={btnImage} alt="" />
+              </Button>
+            </Box>
+          </Grid>
         </Grid>
 
 

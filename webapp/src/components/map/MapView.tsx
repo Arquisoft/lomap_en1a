@@ -30,7 +30,7 @@ export type FriendWindowDataType = {
 export type InfoWindowDataType = {
   title: string,
   creator: string,
-  category:Category,
+  category: Category,
   id: string,
   latitude: number,
   longitude: number,
@@ -68,7 +68,7 @@ export default function MapView(): JSX.Element {
     description: ""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
-    friend: new User("", "",null),
+    friend: new User("", "", null),
     friendPhoto: "",
     sharedSites: []
   });
@@ -119,13 +119,6 @@ export default function MapView(): JSX.Element {
     }
 
 
-  }
-
-  function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  function toggleIsMainLoading() {
-    setIsMainLoading(false);
   }
 
 
