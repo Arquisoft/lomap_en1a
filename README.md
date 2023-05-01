@@ -29,7 +29,7 @@ LoMap offers a wide range of capabilities:
 - Jest
 - Selenium
 - Prometheus
-- SonarrCloud
+- SonarCloud
 - MongoDB
 
 ---
