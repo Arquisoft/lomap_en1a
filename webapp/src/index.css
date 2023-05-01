@@ -389,7 +389,7 @@ footer {
 }
 
 #btn-hide, #btn-show {
-  border-width: 0px;
+  border-radius: 0.6em;
   color: var(--main-text-color);
   font-size: 2.5vmin;
 }
