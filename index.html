@@ -467,7 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
 <li><a href="#_level_1_whitebox_overall_system">5.1. Level 1: Whitebox Overall System</a></li>
-<li><a href="#_level_2_webapp">5.2. Level 2: Webapp</a></li>
+<li><a href="#_level_2_webapp">5.2. Level 2: WebApp</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Runtime View</a>
@@ -494,7 +494,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
 </ul>
 </li>
-<li><a href="#section-technical-risks">11. Risks and Technical Debts</a></li>
+<li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
+<ul class="sectlevel2">
+<li><a href="#_risks">11.1. Risks</a></li>
+<li><a href="#_technical_debt">11.2. Technical debt</a></li>
+</ul>
+</li>
 <li><a href="#section-glossary">12. Glossary</a></li>
 </ul>
 </div>
@@ -539,15 +544,15 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <h2 id="section-introduction-and-goals">1. Introduction and Goals</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The main goal of the project is to develop a software system that allows users to create personalized maps holding any place they want. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.</p>
+<p>The goal of the project is to develop a software system that allows users to create personalized maps holding any place they want. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.</p>
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview">1.1. Requirements Overview</h3>
 <div class="paragraph">
-<p>The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, saving interesting places for them, finding or promoting different places of it, etc.</p>
+<p>The principal motivation for the creation of this system is to develop a software that the users could use to move around their cities, save interesting places for them, find or promote different places of it, etc.</p>
 </div>
 <div class="paragraph">
-<p>The software is planned to include several features to provide some services. It must:</p>
+<p>The software is planned to include several features to provide several services. It must:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -561,7 +566,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <p>Allow to add and see their and other person&#8217;s reviews, comments, pics, etc. about some place.</p>
 </li>
 <li>
-<p>Include a way of managing the information that is accesible with other users, i.e. the level of privacy desired for each piece of information.</p>
+<p>Include a way of managing the information that is accessible with other users, i.e. the level of privacy desired for each piece of information.</p>
 </li>
 <li>
 <p>Filter the map&#8217;s markers by category, friends, etc.</p>
@@ -569,62 +574,59 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </ul>
 </div>
 <div class="paragraph">
-<p>There and more requirements can be found in the <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
+<p>This and more requirements can be found in the <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_quality_goals">1.2. Quality Goals</h3>
 <div class="paragraph">
-<p>These are some quality goals this application must fulfill:</p>
+<p>These are the most important quality goals this application must fulfill:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 8.3333%;">
-<col style="width: 16.6666%;">
-<col style="width: 41.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6669%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Quality category</th>
 <th class="tableblock halign-left valign-top">Quality attribute</th>
 <th class="tableblock halign-left valign-top">Scenario</th>
-<th class="tableblock halign-left valign-top">Priority</th>
-<th class="tableblock halign-left valign-top">Implementation complexity</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QG3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Understandability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A new user should be able to find or add a place with the app in less than 5 minutes</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QG4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security/Privacy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QG5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be usable both on a computer and on mobile devices</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ease of Learning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QG6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25 concurrent users request the map of a given city in less than 10 seconds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privacy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability &amp; Support</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application should allow for easy testing of its main components</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should have a test coverage greater than 80%.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>For the full list of quality goals, refer to the <a href="10_quality_scenarios.adoc">quality scenarios section</a>.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_stakeholders">1.3. Stakeholders</h3>
@@ -646,28 +648,29 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Developers</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
-Pablo Valdés Fernández</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Create, test (not entirely), and document the system and communicate with the other roles to get feedback and resources.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Developers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen, Pablo Valdés Fernández</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create, test (not entirely), and document the system and communicate with the other roles to get feedback and resources.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Teacher</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Pablo González González</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Guide the developers and solve any conflicts. He is present in the meeting minutes and also provides the
-project&#8217;s skeleton.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Teaching staff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pablo González González</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guide the developers and solve any conflicts. He is present in the meeting minutes and also provides the project&#8217;s skeleton.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>SOLID challenge</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Inrupt/Empathy</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>From what is know currently, a public challenge will take place and people in this institution will have to evaluate the
-usage of SOLID regarding user data.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SOLID challenge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inrupt/Empathy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">From what is know currently, a public challenge will take place and people in this institution will have to evaluate the usage of SOLID regarding user data.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Users</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>People that use or are expected to use the application</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The developers will use them in the intermediate phases of the development to
-find problems, and test things like usability or UX</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Users</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">People that use or are expected to use the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The developers will use them in the intermediate phases of the development to find problems, and test things like usability or UX.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Government</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Government of Brussels</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Government is the client that is paying for the development of the software.</p></td>
 </tr>
 </tbody>
 </table>
@@ -679,7 +682,7 @@ find problems, and test things like usability or UX</em></p></td>
 <h2 id="section-architecture-constraints">2. Architecture Constraints</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This application, and the whole system that follows behind, must adhere to some architectural constraints that have been set at the project definition; and thus cannot be changed.</p>
+<p>This application, and the whole system that follows behind, must adhere to some architectural constraints that have been set at the project definition or by the teachers; and thus cannot be changed.</p>
 </div>
 <div class="paragraph">
 <div class="title">Technical constraints</div>
@@ -701,24 +704,23 @@ find problems, and test things like usability or UX</em></p></td>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TC1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>SOLID project</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The shared information of the users will be stored in a personal POD according to the SOLID project.
-It is a specification that stores data securely in decentralized data stores called PODs</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SOLID project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The shared information of the users will be stored in a personal POD according to the SOLID project. It is a specification that stores data securely in decentralized data stores called PODs.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TC2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>GIT</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Git must be used to track, manage and store code versions and branches. For this, GitHub will be used, as it also provides extra tools for issue tracking, continuous integration, and work assignment</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GIT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Git must be used to track, manage and store code versions and branches. For this, GitHub will be used, as it also provides extra tools for issue tracking, continuous integration, and work assignment.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TC3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Web Interface</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The application should allow users to access its services through a web application</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Web Interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should allow users to access its services through a web application.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TC4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Deployable</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The application should be deployable in the cloud, and being able to deploy both halves of the application in different containers or even machines</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deployable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be deployable in the cloud, and being able to deploy both halves of the application in different containers or even machines.</p></td>
 </tr>
 </tbody>
 </table>
@@ -742,23 +744,32 @@ It is a specification that stores data securely in decentralized data stores cal
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OC1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Time schedule</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The project must follow a specific delivery schedule: Documentation 0.1 must be delivered in week 4; prototype 0.1 in week 7; prototype 1.0 and documentation 1.0 in week 10; prototype 1.1 and finally documentation 1.1 in week 13</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time schedule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project must follow a specific delivery schedule:</p>
+<p class="tableblock">- Documentation 0.1 must be delivered in week 4.</p>
+<p class="tableblock">- Prototype 0.1 in week 7.</p>
+<p class="tableblock">- Prototype 1.0 and documentation 1.0 in week 10.</p>
+<p class="tableblock">- Prototype 1.1 and documentation 1.1 in week 13.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OC2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Team</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The project will be done in a team composed of 6 students, so work must be assigned accordingly</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Team</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project will be done in a team composed of 6 students, so work must be assigned accordingly.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OC3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Git-based development</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The project will be built around the Git workflow, so all tools used must be able to closely interact with this system</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Git-based development</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project will be built around the Git workflow, so all tools used must be able to closely interact with this system.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">OC4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Testing</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The project must be tested thoroughly, and a high test coverage must be reached</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project must be tested thoroughly, and a high test coverage must be reached.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OC5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meetings</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project&#8217;s development process must be reflected in the minutes of each meeting that happens.</p></td>
 </tr>
 </tbody>
 </table>
@@ -782,18 +793,23 @@ It is a specification that stores data securely in decentralized data stores cal
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PC1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Documentation</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We are going to use AsciiDoc and follow the Arc42 template</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We are going to use AsciiDoc and follow the Arc42 template.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PC2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Language</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The documentation and application will be developed in English</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The documentation and application will be developed in English.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PC3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>RDF Schemas</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The project aims to follow RDF schemas in its data models, to favour interoperability between different providers of the service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RDF Schemas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The project aims to follow RDF schemas in its data models, to favour interoperability between different providers of the service.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PC4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The code for the application must be as clear as possible, to favour code maintainability.</p></td>
 </tr>
 </tbody>
 </table>
@@ -804,10 +820,8 @@ It is a specification that stores data securely in decentralized data stores cal
 <h2 id="section-system-scope-and-context">3. System Scope and Context</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this chapter we will give a brief description of what will be the scope of the project, as well as for which context it is being created for.</p>
-</div>
-<div class="paragraph">
-<p>As stated in the introduction, the project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. As such, the application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.</p>
+<p>As stated in the introduction, the project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods.
+As such, the application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.</p>
 </div>
 <div class="sect2">
 <h3 id="_business_context">3.1. Business Context</h3>
@@ -816,7 +830,7 @@ It is a specification that stores data securely in decentralized data stores cal
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/3-businessContext-0.svg" alt="Business Diagram">
+<img src="./images/Business%20Context.svg" alt="Business Context" width="606" height="353">
 </div>
 </div>
 <div class="paragraph">
@@ -839,27 +853,27 @@ It is a specification that stores data securely in decentralized data stores cal
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Uses the application to manage its markers, reviews and other content</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">User data that will be stored in its POD and shown to other users, according to the level of privacy desired</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User data that will be stored in its POD and shown to other users, according to the level of privacy desired.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Holds user data, in control of its owner</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provides access to the data the user wants to share</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides access to the data the user wants to share.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LoMap</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application that provides the services to the user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interacts with the user, its POD and the Map provider to provide the desired service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interacts with the user, its POD and the Map provider to provide the desired service.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Holds user link data, to compartmentalize and link separate pieces of data</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Link information that allows data to be fetched from the correct places</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link information that allows data to be fetched from the correct places.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Map provider</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Provides the map the user sees when it uses the application</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The map, and the coordinate information needed to create new markers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The map, and the coordinate information needed to create new markers.</p></td>
 </tr>
 </tbody>
 </table>
@@ -871,7 +885,7 @@ It is a specification that stores data securely in decentralized data stores cal
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/3-technicalContext-0.svg" alt="Technical Diagram">
+<img src="./images/Technical%20Context.svg" alt="Technical Context" width="533" height="673">
 </div>
 </div>
 <div class="paragraph">
@@ -891,35 +905,35 @@ It is a specification that stores data securely in decentralized data stores cal
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">GitHub Repository</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Repository storing the code and documentation of the project</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Repository storing the code and documentation of the project.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Documentation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Files explaining the system&#8217;s architecture following the arc42 template</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Files explaining the system&#8217;s architecture following the arc42 template.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Frontend</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System components that handle the interaction with the user through the user interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System components that handle the interaction with the user through the user interface.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Backend</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">System components that handle the data processing logic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System components that handle the data processing logic.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Persistent storage system to store the link data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Persistent storage system to store the link data.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Map provider</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Company that provides map information to display in the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Company that provides map information to display in the application.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SOLID</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Architecture providing a way to store the user data in a decentralized and remote way</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Architecture providing a way to store the user data in a decentralized and remote way.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Decentralized server in which a single user&#8217;s information is stored</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decentralized server in which a single user&#8217;s information is stored.</p></td>
 </tr>
 </tbody>
 </table>
@@ -964,7 +978,7 @@ It is a specification that stores data securely in decentralized data stores cal
 <div class="ulist">
 <ul>
 <li>
-<p>We are going to use <code>React</code> for the UI of the application, as it is fairly simple, allows a great range of customization and integrates perfectly with the language of choice.</p>
+<p>We are going to use React for the UI of the application, as it is fairly simple, allows a great range of customization and integrates perfectly with the language of choice.</p>
 </li>
 <li>
 <p>To give the application a bit of style, libraries such as <code>@emotion</code>, <code>@mui</code>, and <code>@material-ui</code> are used. They include style elements integrated into React components to simplify the UI design.</p>
@@ -1082,7 +1096,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/5-buildingBlock-L1-0.svg" alt="Building Block View (Level 1)">
+<img src="./images/Building%20Block%20View.svg" alt="Building Block View" width="579" height="404">
 </div>
 </div>
 <div class="sect3">
@@ -1101,48 +1115,40 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">External user that provides its data through a POD and that makes use of the application services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External user that provides its data through a POD and that makes use of the application services.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Privately holds all user data. The application asks for permission to access this information</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privately holds all user data. The application asks for permission to access this information.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Webapp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provides a user-friendly interface to access all application services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebApp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides a user-friendly interface to access all application services.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LoMapCore</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Provides the services that the application offers. Connects to data sources to provide those services</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RestAPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provides the services that the application offers. Connects to data sources to provide those services.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Holds all common data that the application needs to run</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds all common data that the application needs to run.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Map Provider</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">External service that provides map data to the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External service that provides map data to the application.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">DISCLAIMER</dt>
-<dd>
-<p>The following sections will be further developed in higher-level diagrams. Some things not mentioned here will be explained later</p>
-</dd>
-</dl>
-</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_level_2_webapp">5.2. Level 2: Webapp</h3>
+<h3 id="_level_2_webapp">5.2. Level 2: WebApp</h3>
 <div class="paragraph">
-<p>The Webapp encompasses all UI-related components of the application. It is built with React, and follows a typical React structure.</p>
+<p>The WebApp encompasses all UI-related components of the application. It is built with React, and follows a typical React structure.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/5-buildingBlock-L2-Webapp-0.svg" alt="Building Block View (Level 2: WebApp)">
+<img src="./images/Building%20Block%20View%20-%20Level%202%20WebApp.svg" alt="Building Block View   Level 2 WebApp" width="1463" height="457">
 </div>
 </div>
 <div class="sect3">
@@ -1195,13 +1201,13 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </table>
 </div>
 <div class="sect3">
-<h4 id="_level_2_lomapcore">5.2.2. Level 2: LoMapCore</h4>
+<h4 id="_level_2_restapi">5.2.2. Level 2: RestAPI</h4>
 <div class="paragraph">
-<p>The LoMapCore block, also called RestAPI, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.</p>
+<p>The RestAPI block, also called LoMapCore, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/5-buildingBlock-L2-Restapi-0.svg" alt="Building Block View (Level 2: RestAPI)">
+<img src="./images/Building%20Block%20View%20-%20Level%202%20RestAPI.svg" alt="Building Block View   Level 2 RestAPI" width="1588" height="652">
 </div>
 </div>
 </div>
@@ -1221,23 +1227,23 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WebApp</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Frontend of the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Frontend of the application.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Holds all entities and DTOs used across the application to communicate modules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds all entities and DTOs used across the application to communicate modules.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Controllers</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Declare the endpoints of the RestAPI and make use of the services to provide the functionality</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Declare the endpoints of the RestAPI and make use of the services to provide the functionality.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Services</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Manage all business rules of the application, and use the repositories to persist said data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manage all business rules of the application, and use the repositories to persist said data.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Repositories</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PodAccess</p></td>
@@ -1255,13 +1261,23 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <p>Then, you could search for the ID of a place to retrieve all associated comments without going through several PODs to discover if they hold any useful information.</p>
 </div>
 <div class="paragraph">
-<p>(insert DB schema diagram)</p>
+<p>In the following diagrams, a schema of the data stored in the database and a possible snapshot are represented. It must be noted that, as the database is documental, the class diagram is not a direct representation of the internal structure of the data stored; but rather a schema of what is stored. A more realistic representation is the object diagram below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Database%20Schema.svg" alt="Database Schema" width="472" height="346">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/Database%20Snapshot.svg" alt="Database Snapshot" width="1128" height="309">
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_mapservice">5.2.5. MapService</h4>
 <div class="paragraph">
-<p>The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information.</p>
+<p>The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information. The vendor selected is OpenStreetMaps, as it provides free access to their API for non-commercial usage, and it aligns with the privacy principles of our application.</p>
 </div>
 <div class="paragraph">
 <p>In order to receive the service of the Map provider, an API key was obtained that authenticates all requests done through the WebApp.</p>
@@ -1295,7 +1311,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Add%20location%20scenario.svg" alt="Add location scenario" width="671" height="427">
+<img src="./images/Add%20location%20scenario.svg" alt="Add location scenario" width="640" height="427">
 </div>
 </div>
 </div>
@@ -1309,7 +1325,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/View%20location%20details%20scenario.svg" alt="View location details scenario" width="590" height="570">
+<img src="./images/View%20location%20details%20scenario.svg" alt="View location details scenario" width="578" height="570">
 </div>
 </div>
 </div>
@@ -1320,7 +1336,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Review%20location%20scenario.svg" alt="Review location scenario" width="602" height="427">
+<img src="./images/Review%20location%20scenario.svg" alt="Review location scenario" width="571" height="427">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1331,7 +1347,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <h2 id="section-deployment-view">7. Deployment View</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The deployment of the application is done, ideally, in an Azure Machine in the Microsoft Cloud. Inside, two Docker containers are deployed: one holds the RestAPI and the other holds the WebApp.</p>
+<p>The deployment of the application is designed for a deployment in a Virtual Machine in the Azure Cloud. Inside, two Docker containers are deployed: one holds the RestAPI and the other holds the WebApp.</p>
 </div>
 <div class="paragraph">
 <p>Also, the POD and the Database are cloud-based, so they are held in their respective provider&#8217;s infrastructure.</p>
@@ -1399,11 +1415,11 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <div class="sect2">
 <h3 id="_domain_model">8.1. Domain model</h3>
 <div class="paragraph">
-<p>The following domain diagram and its description aim to describe the entities the application manages. It is important to note that some of these entities are, as of now, not implemented or lacking their functionality.</p>
+<p>The following domain diagram and its description aims to describe the entities the application manages.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Domain%20Model.svg" alt="Domain Model" width="747" height="386">
+<img src="./images/Domain%20Model.svg" alt="Domain Model" width="612" height="473">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1468,11 +1484,24 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <div class="paragraph">
 <p>A document database will be used to store metadata about entities in the domain model. This metadata is intended to link entities with their containers, for example linking a comment to its associated place.</p>
 </div>
+<div class="sect3">
+<h4 id="_structure_of_link_data">8.3.1. Structure of link data</h4>
+<div class="paragraph">
+<p>The concept of link data aims to provide a faster, more private way of handling information inside the application. It works as follows: entities (such as places or reviews) are stored in each user&#8217;s POD, and have a UUID associated with them. They only contain data about themselves, such as names, links or webIds.
+They do not contain other entities (for example, in the case of places, they don&#8217;t contain its reviews), but that information is stored in the database as small documents that contain the two entities to link, as well as some extra information to include the privacy level of the item and the webId of the owner.</p>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="05_building_block_view.adoc">the database schema</a> for a representation of this data.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_session_management">8.4. Session management</h3>
 <div class="paragraph">
-<p>Since the POD is the only identity 'item' the application uses, each person will only sign in and have access to their saved data through it. Passwords will only be used by the Identity Provider to ensure the correct user is giving access to the POD&#8217;s resources.</p>
+<p>Since the POD is the only identity 'token' the application uses, each person will only sign in and have access to their saved data through it. Passwords will only be used by the Identity Provider to ensure the correct user is giving access to the POD&#8217;s resources.</p>
+</div>
+<div class="paragraph">
+<p>As a consequence, the application does not have to manage users. At a more basic level, the application is just another POD browser: it manages data stored in the PODs of users.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1482,17 +1511,20 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <h2 id="section-design-decisions">9. Design Decisions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following table contains some of the design decisions we have taken:</p>
+<p>Along the process of developing the application, decisions had to be taken as problems arise.
+The following table contains some of the design decisions that were imposed to us due to the architectural constraints:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Decisions</caption>
+<caption class="title">Table 1. Imposed decisions</caption>
 <colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 33.3333%;">
-<col style="width: 50.0001%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 42.8572%;">
 </colgroup>
 <thead>
 <tr>
+<th class="tableblock halign-left valign-top">Code</th>
 <th class="tableblock halign-left valign-top">Decision</th>
 <th class="tableblock halign-left valign-top">Advantages</th>
 <th class="tableblock halign-left valign-top">Disadvantages</th>
@@ -1500,34 +1532,95 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>TypeScript</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Similar to JavaScript, but with types.</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TypeScript</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Similar to JavaScript, but with types.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We have never used it before</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>React.js</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">React.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We have never used it before</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MongoDB</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We are quite new with MongoDB. It does not need to be started manually.</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Since our Mongo database is not stored locally, queries can take some time to be performed</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We are quite new with MongoDB. It does not need to be started manually.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Since our Mongo database is not stored locally, queries can take some time to be performed</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Node.js</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Easy escalability, easy to learn, high performance for real-time applications</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never used it before</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node.js</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Easy escalability, easy to learn, high performance for real-time applications</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We have never used it before</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Docker</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Fast deployment, ease of moving/maintaining your applications</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We do not have much experience using Docker</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fast deployment, ease of moving/maintaining your applications</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We do not have much experience using Docker</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>PlantUML</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Allows drawing diagrams very easily, with a simple syntax.</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Does not allow as much control over the exact layout of the elements in the diagram as other tools.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PlantUML</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows drawing diagrams very easily, with a simple syntax.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Does not allow as much control over the exact layout of the elements in the diagram as other tools.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The most interesting design decisions are reflected in this architectural records:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Architectural Records</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 62.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Context</th>
+<th class="tableblock halign-left valign-top">Record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-02-27">27-02-2023</a> , when discussing about the privacy of the stored data.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of deciding what use to give to the system&#8217;s database, facing the desire to keep as much data in control of the users as possible, we decided to store link data in the database instead of public data of the users to achieve better user ownership of the data. This decision was taken accepting a possible downside in performance, because the public data must still be fetched from the user&#8217;s PODs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-03-06">06-03-2023</a>, when discussing how to create the UI of the application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of implementing a map view for the application, facing the API chosen to provide the map service, we decided to change the responsibility of fetching the map from the RestAPI to the WebApp. This was made because the map provider offers a simple way to embed the map into the webpage, so implementing it into the RestAPI would prove much more difficult than needed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-03-20">20-03-2023</a>, when reviewing the deliverable notes and corrections.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of accessing linkage data in the DB, facing the complexity of implementing a functional access to the kind of data stored, we decided to switch our DB system from MySQL to MongoDB. This was made to achieve a more easy and efficient way of accessing these data, accepting the extra effort needed to rebuild the database structure and the changes to the data model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-06">06-04-2023</a>, when discussing the implementation of a functional POD access.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of implementing the functionalities of the backend of the system, facing the increasing complexity of the RestAPI, we decided to completely refactor its code following a 3-layer architectural pattern. This was made to favor code cohesion, improve code independence and maintainability, accepting the effort needed to refactor the code of our API and the discarding of the progress made in that regard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-17">17-04-2023</a>, when discussing the usability problems of the application.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of improving the usability of the application, facing the tediousness of loading the username when fetching reviews, we decided to add the whole user entity to the database entries for reviews. This was made because before, the reviews showed the webId of the OP (link to glossary), which was not adequate as it cluttered the view.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-27">27-04-2023</a>, when discussing the privacy concerns of managing friends.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of reviewing the security level of the application, facing the possible privacy concerns of being added to friends of an unknown individual, we decided to create a friend-request system. This was made because you might not want to be friends with some individual, and a request system adds an extra layer of protection for the user, accepting the extra effort needed to implement such feature..</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This decision was taken on <a href="https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-27">27-04-2023</a>, when discussing the tediousness of managing friends.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the context of finding ways to improve the usability of the application, facing the tediousness of managing friends, we decided to create a friend-request window to accompany the friend-request feature. This was made because handling friends through a POD browser is hard and tedious, and a window specific for that purpose is a better solution, accepting the extra complexity added for the end-user.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1539,25 +1632,33 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_quality_tree">10.1. Quality Tree</h3>
+<div class="paragraph">
+<p>The quality tree classifies the qualities the system will be evaluated about. We divide them in four main categories: Usability, Operational, Integrity and Maintainability &amp; Support.</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Quality%20Tree.svg" alt="Quality Tree" width="834" height="134">
+<img src="./images/Quality%20Tree.svg" alt="Quality Tree" width="1130" height="241">
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_quality_scenarios">10.2. Quality Scenarios</h3>
+<div class="paragraph">
+<p>The quality scenarios propose metrics and methods used to evaluate the quality requirements of the application. This table is classified by quality category.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 50%;">
-<col style="width: 10%;">
-<col style="width: 10%;">
+<col style="width: 8.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 41.6666%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3336%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Ref</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Quality category</th>
 <th class="tableblock halign-left valign-top">Quality attribute</th>
 <th class="tableblock halign-left valign-top">Scenario</th>
 <th class="tableblock halign-left valign-top">Priority</th>
@@ -1566,39 +1667,76 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ease of Use</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be usable on a computer.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ease of Learning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Availability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be available the 99% of the time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application must be available the 99% of the time.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25 concurrent users request the map of a given city in less than 10 seconds.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Robustness</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should keep working for other users if one user experiences problems.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User data must be transmitted and stored securely.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">25 concurrent users request the map of a given city in less than 10 seconds</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A new user wants to find a place with the app in less than 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privacy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Security</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sensible user data will not be accessible for anyone but the user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability &amp; Support</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The application should have a test coverage greater than 80%.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Usability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The application should be usable on a computer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability &amp; Support</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintainability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The code should be clear and documented enough to allow new developers to join the project.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Low</p></td>
 </tr>
 </tbody>
 </table>
@@ -1610,19 +1748,29 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <h2 id="section-technical-risks">11. Risks and Technical Debts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When making decisions, there are often trade-offs between various options. Risks and technical debt are two types of compromises that we may accept in order to make progress towards our goals.</p>
+<p>When making decisions, there are often trade-offs between various options.
+Risks and technical debt are two types of compromises that we may accept in order to make progress towards our goals.</p>
 </div>
 <div class="paragraph">
-<p>Risk refers to the possibility of something going wrong or not working out as planned. In other words, it&#8217;s the chance that an outcome will deviate from what we expect or hope for. When we make a decision, we may take on certain risks in order to achieve a certain outcome.</p>
+<p>Risk refers to the possibility of something going wrong or not working out as planned.
+In other words, it&#8217;s the chance that an outcome will deviate from what we expect or hope for.
+When we make a decision, we may take on certain risks in order to achieve a certain outcome.</p>
 </div>
 <div class="paragraph">
 <p>Technical debt, on the other hand, refers to the shortcuts or quick fixes we may make in order to achieve a short-term goal at the expense of long-term sustainability or maintainability.</p>
 </div>
 <div class="paragraph">
-<p>Both risks and technical debt are compromises that we accept in order to achieve our goals. However, it&#8217;s important to carefully consider the potential consequences of these compromises, and to weigh them against the potential benefits. If we take on too much risk or technical debt, we may end up with problems that are more difficult or costly to solve in the long run.</p>
+<p>Both risks and technical debt are compromises that we accept in order to achieve our goals.
+However, it&#8217;s important to carefully consider the potential consequences of these compromises, and to weigh them against the potential benefits.
+If we take on too much risk or technical debt, we may end up with problems that are more difficult or costly to solve in the long run.</p>
+</div>
+<div class="sect2">
+<h3 id="_risks">11.1. Risks</h3>
+<div class="paragraph">
+<p>This is a table of the risks we took during the development of the application:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Risks</caption>
+<caption class="title">Table 3. Risks</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -1630,52 +1778,55 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Risks</th>
+<th class="tableblock halign-left valign-top">Risk</th>
 <th class="tableblock halign-left valign-top">Explanation</th>
 <th class="tableblock halign-left valign-top">Solution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>No knowledge of React</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have never worked with React before, so we know nothing about it</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Read React&#8217;s documentation and analyze the provided exercises.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No knowledge of React</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We have never worked with React before, so we know nothing about it.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read React&#8217;s documentation and analyze the provided exercises, and take advantage of the fact that we are simultaneously taking the SDI course.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>No knowledge of SOLID</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>It is a new concept for us</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Explore SOLID&#8217;s documentation to familiarize ourselves with the technology</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No knowledge of SOLID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is a new concept and technology for us.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Explore SOLID&#8217;s documentation to familiarize ourselves with the technology, and seek examples of use.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Little knowledge of TypeScript</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Some of us know some JavaScript, but TypeScript is a little different</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Read TypeScript&#8217;s documentation, see code examples</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Little knowledge of TypeScript</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some of us know some JavaScript, but TypeScript is a little different.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read TypeScript&#8217;s documentation, see code examples, seek similarities with other languages and experiment with its capabilities and features.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Time</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We have to take into consideration the different deadlines, and balance the development time with the rest of stuff we have to do</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Try to manage our free time better, and make better use of the tools used in the development process</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We have to take into consideration the different deadlines, and balance the development time with the rest of stuff we have to do.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Try to manage our free time better, and make better use of the tools used in the development process to optimize the time spent.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Team members</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Good communication between team members, assigning tasks correctly and make good use of organizational tools provided with our Git service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Team members</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Good communication between team members, assigning tasks correctly and make good use of organizational tools provided with our Git service.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>External services' dependency</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>During this project, we will use some external services that are out of our control</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>If these services fail our project will not work correctly, or loose functionality in the long run</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External services' dependency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">During this project, we will use some external services that are out of our control.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create the application in such a way that minimizes the negative consequences of this dependency.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_technical_debt">11.2. Technical debt</h3>
 <div class="paragraph">
-<p>As of now, most of the technical debt has already been tackled and solver, but there is still stuff to fix.</p>
+<p>As of now, most of the technical debt has already been tackled and solved, but there is still stuff to fix.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Technical debts</caption>
+<caption class="title">Table 4. Technical debts</caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <thead>
 <tr>
@@ -1685,62 +1836,33 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>MySQL</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>We used MySQL database for the first prototype as it is the one we are more familiar with, and we still are not sure how to save the data</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We used MySQL for the first prototype as it is the DB provider we are more familiar with, and we were not sure how to save the data. Now, the DB schema and provider have been selected so that they fit better to the project.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Creating the tests at the end of development</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Usually, tests should be created before starting the development, but for a lack of time,
-we will create them at the end</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Creating the tests at the end of development</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ideally, tests should be created before starting the development or at the beginning, as that facilitates the design task. But due to time constraints, we will create them at the end.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>POD permissions</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The permissions of the directories inside the PODs are not configured properly, now everybody can see everything inside the folder</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD permissions</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The permissions of the directories inside the PODs are not configured properly and are difficult to manage, consequently everybody can see everything inside the LoMap folder and the owner can modify its data in any way, even corrupting its information.</p></td>
 </tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="section-glossary">12. Glossary</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
 <div class="paragraph">
-<div class="title">Contents</div>
-<p>The most important domain and technical terms that your stakeholders use when discussing the system.</p>
-</div>
-<div class="paragraph">
-<p>You can also see the glossary as source for translations if you work in multi-language teams.</p>
-</div>
-<div class="paragraph">
-<div class="title">Motivation</div>
-<p>You should clearly define your terms, so that all stakeholders</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>have an identical understanding of these terms</p>
-</li>
-<li>
-<p>do not use synonyms and homonyms</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<div class="title">Form</div>
-<p>A table with columns &lt;Term&gt; and &lt;Definition&gt;.</p>
-</div>
-<div class="paragraph">
-<p>Potentially more columns in case you need translations.</p>
-</div>
-</div>
+<p>This glossary contains an alphabetically sorted list of terms that are widely mentioned across this documentation:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
 </colgroup>
 <thead>
 <tr>
@@ -1750,8 +1872,36 @@ we will create them at the end</em></p></td>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Component</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In the WebApp, a component is a template for a visual element that is used as a reutilization mechanism to compose the views, joining and combining several components into others.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continuous Deployment (CD)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A process that automatically deploys a project into a deployment scenario whenever changes are committed in a repository.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Continuous Integration (CI)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A process that automatically builds and tests code from a repository whenever changes are committed.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Docker</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Software platform that allows you to deliver software in packages called containers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDentity Provider: Service in which a user can request a POD to hold its data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript Object Notation:Standard, language-independent format used to store and transmit data objects storing them as attribute-value pairs of standard, human-readable text.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Link data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In LoMap, we call link data to data that is used to relate entities of the domain. For example, there exists link data that joins a review and a place, or a place and a user.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data that defines characteristics of other data, such as date and time, size, format, etc.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
@@ -1762,20 +1912,32 @@ we will create them at the end</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Single-threaded, open-source, cross-platform runtime environment for building fast and scalable server-side and networking applications</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POD (Personal Online Data store)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Decentralized data stores. They are like secure personal web servers for data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Original Poster: the creator and owner of an entity, such a place, a review or a score.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Personal Online Datastore: Decentralized data stores. They are like secure personal web servers for data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A profile is a document that holds the personal information about a user, and its held into the user&#8217;s POD.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">React.js</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript library that allows developers to easily create fast user interfaces for websites and applications alike</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SessionId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A sessionId is a token that is used to identify a user across the layers of the application, so that the RestAPI and the WebApp can keep track of a user&#8217;s request.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TypeScript</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Open source high-level programming language. It is a strict syntactical superset of JavaScript and adds optional static typing</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JSON (JavaScript Object Notation)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard, language-independent format used to store and transmit data objects storing them as attribute-value pairs of standard, human-readable text.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A webId is a URL used as the ID of a user. It navigates to the user&#8217;s profile hosted in its POD.</p></td>
 </tr>
 </tbody>
 </table>
