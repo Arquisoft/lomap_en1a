@@ -64,7 +64,6 @@ footer {
 }
 
 #enter-btn {
-  border-width: 0px;
   color: var(--main-text-color);
   font-size: 4vmin;
   padding: 0.1em 0.5em;
@@ -389,6 +388,16 @@ footer {
   margin-right: auto;
 }
 
+#btn-hide, #btn-show {
+  border-width: 0px;
+  color: var(--main-text-color);
+  font-size: 2.5vmin;
+}
+
+#btn-hide {
+  background-color: green;
+}
+
 /* ------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------------------- */
 
@@ -520,7 +529,7 @@ footer {
 
 .btn-login {
   height: 100%;
-  font-size: 1em;
+  font-size: 1.25em;
   border-radius: 12px;
   border-width: 1px;
 }
