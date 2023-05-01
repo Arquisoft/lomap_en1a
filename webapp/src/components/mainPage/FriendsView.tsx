@@ -202,22 +202,32 @@ export default function FriendsView() {
   //Send a friend request
   const handleSubmit = async (text: string) => {
     setIsLoading(true)
-    let result: boolean = await addFriend(text);
-    if (result) {
-      setNotificationStatus(true);
-      setNotification({
-        severity: 'success',
-        message: 'Your friend request has been sent!'
-      });
-      setIsLoading(false)
-    }
-    else {
+    if (text.trim().length === 0) {
       setNotificationStatus(true);
       setNotification({
         severity: 'error',
         message: 'There\'s been an error sending your friend request.'
       });
       setIsLoading(false)
+    } else {
+      let result: boolean = await addFriend(text);
+      if (result) {
+        setText("");
+        setNotificationStatus(true);
+        setNotification({
+          severity: 'success',
+          message: 'Your friend request has been sent!'
+        });
+        setIsLoading(false)
+      }
+      else {
+        setNotificationStatus(true);
+        setNotification({
+          severity: 'error',
+          message: 'There\'s been an error sending your friend request.'
+        });
+        setIsLoading(false)
+      }
     }
   }
 
@@ -228,7 +238,7 @@ export default function FriendsView() {
     <>
       <div className="table-area">
         <h1>Friend management menu</h1>
-        {isLoading ? <LoadingSpinner message="Loading your petition" /> : <div></div>}
+        {isLoading ? <LoadingSpinner message="Loading your petition..." /> : <div></div>}
         <Grid container spacing={2} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}} >
           <Grid item xs={4}>
             <Box 
@@ -241,7 +251,7 @@ export default function FriendsView() {
                 multiline
                 required
                 name="text"
-                placeholder="Write your friend's web ID"
+                placeholder="https://friendwebid.net/"
                 variant="filled"
                 value={text}
                 onChange={e => {
