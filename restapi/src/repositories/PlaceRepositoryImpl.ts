@@ -98,12 +98,7 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   async findAll(sessionId: string): Promise<Place[]> {
     let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    let friendsWebIds: string[] = (
-      await PodManager.dataManager.getFriends(sessionId, webId)
-    ).map((f) => f.getWebId());
-
     let workers: Worker[] = [];
-    let aux: string[] = [];
     let places: Place[] = [];
     let resource = "$webIdlomap/$visibility/places";
 

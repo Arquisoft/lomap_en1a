@@ -196,23 +196,4 @@ module.exports = function (api: Router) {
       });
     }
   });
-
-  // api.get("/test", async (req: any, res: Response) => {
-  //   try {
-  //     let sessionId: string = <string>req.session.solidSessionId;
-
-  //     let commentRepository: CommentRepository =
-  //       Factory.repositories.getCommentRepository();
-
-  //     let response = await commentRepository.findByPlace(
-  //       sessionId,
-  //       "063c7f35-713c-4617-9e0a-9b0cb2fb6f35"
-  //     );
-
-  //     return res.send(response);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     return res.status(400).send({ error: "There was an error" });
-  //   }
-  // });
 };

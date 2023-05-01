@@ -25,13 +25,10 @@ export class PodSessionManager {
     Assertion.exists(provider, "A provider must be given.");
     provider = decodeURIComponent(provider);
 
-    let redirect = req.params.redirect;
-    redirect = "http://" + host + ":5080/api/login/success";
+    let redirect = "http://" + host + ":5080/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;
-
-    console.log("Redirecting to: " + redirect)
 
     try {
       await session.login({
