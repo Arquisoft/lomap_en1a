@@ -12,8 +12,8 @@ services:
   webapp:
     build: ./webapp
     ports:
-      - "80:80"
-      - "443:443"
+      - "3080:3080"
+      - "3443:3443"
     depends_on:
       - restapi
   prometheus:
