@@ -29,3 +29,16 @@ yarn-error.log*
 #documentation build does not go into master
 docs/build
 
+/.idea/lomap_en1a.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_22_[Changes]/shelved.patch
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_22_[Changes]1/shelved.patch
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_44_[Changes]/shelved.patch
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_44_[Changes]1/shelved.patch
+/.idea/shelf/Uncommitted_changes_before_Update_at_29_04_2023_13_02_[Changes]/shelved.patch
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_22__Changes_.xml
+/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_04_2023_23_44__Changes_.xml
+/.idea/shelf/Uncommitted_changes_before_Update_at_29_04_2023_13_02__Changes_.xml
+/.idea/vcs.xml
+/.idea/workspace.xml

@@ -1,17 +1,44 @@
 [[section-design-decisions]]
 == Design Decisions
-The following table contains some of the design decisions we have taken:
 
-.Decisions
-[options="header",cols="1,2,3"]
+Along the process of developing the application, decisions had to be taken as problems arise.
+The following table contains some of the design decisions that were imposed to us due to the architectural constraints:
+
+.Imposed decisions
+[options="header",cols="1,1,2,3"]
 |===
-|Decision|Advantages|Disadvantages
-| _TypeScript_ | _Similar to JavaScript, but with types._|_We have never used it before_
-| _React.js_ | _Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web_|_We have never used it before_
-| _MongoDB_ | _We are quite new with MongoDB. It does not need to be started manually._|_Since our Mongo database is not stored locally, queries can take some time to be performed_
-| _Node.js_ | _Easy escalability, easy to learn, high performance for real-time applications_|_We have never used it before_ 
-| _Docker_ | _Fast deployment, ease of moving/maintaining your applications_|_We do not have much experience using Docker_ 
-| _PlantUML_ | _Allows drawing diagrams very easily, with a simple syntax._|_Does not allow as much control over the exact layout of the elements in the diagram as other tools._
+|Code|Decision|Advantages|Disadvantages
+|ID1| TypeScript | Similar to JavaScript, but with types.|We have never used it before
+|ID2| React.js | Quite easy to learn in comparison to other front-end libraries. Increasingly popular in the web|We have never used it before
+|ID3| MongoDB | We are quite new with MongoDB. It does not need to be started manually.|Since our Mongo database is not stored locally, queries can take some time to be performed
+|ID4| Node.js | Easy escalability, easy to learn, high performance for real-time applications|We have never used it before
+|ID5| Docker | Fast deployment, ease of moving/maintaining your applications|We do not have much experience using Docker
+|ID6| PlantUML | Allows drawing diagrams very easily, with a simple syntax.|Does not allow as much control over the exact layout of the elements in the diagram as other tools.
+|===
+
+The most interesting design decisions are reflected in this architectural records:
+
+.Architectural Records
+[options="header",cols="1,2,5"]
+|===
+|Code |Context |Record
+
+|ADR1 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-02-27[27-02-2023] , when discussing about the privacy of the stored data. | In the context of deciding what use to give to the system's database, facing the desire to keep as much data in control of the users as possible, we decided to store link data in the database instead of public data of the users to achieve better user ownership of the data. This decision was taken accepting a possible downside in performance, because the public data must still be fetched from the user's PODs.
+
+|ADR2 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-03-06[06-03-2023], when discussing how to create the UI of the application. | In the context of implementing a map view for the application, facing the API chosen to provide the map service, we decided to change the responsibility of fetching the map from the RestAPI to the WebApp. This was made because the map provider offers a simple way to embed the map into the webpage, so implementing it into the RestAPI would prove much more difficult than needed.
+
+|ADR3 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-03-20[20-03-2023], when reviewing the deliverable notes and corrections. | In the context of accessing linkage data in the DB, facing the complexity of implementing a functional access to the kind of data stored, we decided to switch our DB system from MySQL to MongoDB. This was made to achieve a more easy and efficient way of accessing these data, accepting the extra effort needed to rebuild the database structure and the changes to the data model.
+
+|ADR4 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-06[06-04-2023], when discussing the implementation of a functional POD access. | In the context of implementing the functionalities of the backend of the system, facing the increasing complexity of the RestAPI, we decided to completely refactor its code following a 3-layer architectural pattern. This was made to favor code cohesion, improve code independence and maintainability, accepting the effort needed to refactor the code of our API and the discarding of the progress made in that regard.
+
+|ADR5 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-17[17-04-2023], when discussing the usability problems of the application. | In the context of improving the usability of the application, facing the tediousness of loading the username when fetching reviews, we decided to add the whole user entity to the database entries for reviews. This was made because before, the reviews showed the webId of the OP (link to glossary), which was not adequate as it cluttered the view.
+
+|ADR6 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-27[27-04-2023], when discussing the privacy concerns of managing friends. | In the context of reviewing the security level of the application, facing the possible privacy concerns of being added to friends of an unknown individual, we decided to create a friend-request system. This was made because you might not want to be friends with some individual, and a request system adds an extra layer of protection for the user, accepting the extra effort needed to implement such feature..
+
+|ADR7 | This decision was taken on link:https://github.com/Arquisoft/lomap_en1a/wiki/2023-04-27[27-04-2023], when discussing the tediousness of managing friends. | In the context of finding ways to improve the usability of the application, facing the tediousness of managing friends, we decided to create a friend-request window to accompany the friend-request feature. This was made because handling friends through a POD browser is hard and tedious, and a window specific for that purpose is a better solution, accepting the extra complexity added for the end-user.
+
+
+
 |===
 
 
