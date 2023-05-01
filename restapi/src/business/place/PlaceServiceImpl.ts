@@ -64,7 +64,7 @@ export class PlaceServiceImpl implements PlaceService {
 
     if (await this.placeRepository.add(sessionId, p)) return p;
 
-    return new Place("ERR", "", "", "", 0, 0, visibility, category);
+    throw new Error("The place could not be added.");
   }
 
   async findOwn(sessionId: string): Promise<Place[]> {

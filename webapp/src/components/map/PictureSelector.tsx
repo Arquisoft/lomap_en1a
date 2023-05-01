@@ -10,32 +10,29 @@ import Snackbar from '@mui/material/Snackbar';
 import { Visibility } from "../../domain/Visibility";
 import { NotificationType } from "./CommentForm";
 import { Box } from "@mui/material";
-import LoadingSpinner from "../LoadingSpinner";
 
 
 type PictureSelectorProps = {
   OnPictureListChange: () => void;
   place: string;
-  user: string;
+  handleIsLoading: (value: boolean, message?: string) => Promise<void>;
 }
 
 
 
 export default function PictureSelector(props: PictureSelectorProps): JSX.Element {
 
-  const [name, setName] = useState('');
   const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
 
   const handleAddPicture = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsLoading(true)
+    props.handleIsLoading(true,"Loading image...")
     e.preventDefault();
-    let result: boolean = await addPicture(new Picture("", url, props.place, props.user, new Date(), Visibility.PUBLIC));
+    let result: boolean = await addPicture(new Picture("", url, props.place, "", new Date(), Visibility.PUBLIC));
     if (result) {
-        setUrl("");
+      setUrl("");
       setNotificationStatus(true);
       setNotification({
         severity: 'success',
@@ -43,7 +40,7 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
       });
       //Notify the change to the parent component
       props.OnPictureListChange();
-      setIsLoading(false)
+      props.handleIsLoading(false)
     }
     else {
       setNotificationStatus(true);
@@ -57,7 +54,6 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
 
   return (
     <>
-      {isLoading ? <LoadingSpinner message="Loading image" /> : <></>}
       <form name="register" onSubmit={handleAddPicture}>
         <Grid container spacing={3} justifyContent="space-around">
             <Grid item xs={9.5}>
@@ -78,7 +74,6 @@ export default function PictureSelector(props: PictureSelectorProps): JSX.Elemen
                   value={url}
                   onChange={e => {
                       setUrl(e.target.value);
-                      setName(props.user);
                   }}
                 />
               </Box>

@@ -1,8 +1,10 @@
+import { Category } from "../domain/Category";
 import { Comment } from "../domain/Comment";
 import { Picture } from "../domain/Picture";
 import { Place } from "../domain/Place";
 import { Score } from "../domain/Score";
 import { User } from "../domain/User";
+import { Visibility } from "../domain/Visibility";
 
 //Comments----------------------------------------
 
@@ -32,7 +34,11 @@ export async function getComments(id: string): Promise<Comment[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //Scores--------------------------------------------
@@ -64,7 +70,11 @@ export async function getScores(id: String): Promise<Score[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //Places----------------------------------------------
@@ -88,8 +98,13 @@ export async function addPlace(place: Place): Promise<Place> {
     credentials: "include",
     mode: "cors",
   });
-
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    console.log(response.status)
+    return new Place("ERR", "", "", "", 0, 0, Visibility.PUBLIC, Category.BAR);
+  }
+  
 }
 
 //Pictures----------------------------------------------
@@ -101,7 +116,13 @@ export async function getPictures(id: string): Promise<Picture[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    console.log(response.status)
+    return []
+  }
+ 
 }
 
 export async function addPicture(picture: Picture): Promise<boolean> {
@@ -135,7 +156,11 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
     mode: "cors",
   });
 
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //List public places by user
@@ -151,7 +176,11 @@ export async function getPublicPlacesByPublicUser(
     mode: "cors",
   });
 
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function getPublicPlacesByUser(): Promise<Place[]> {
@@ -162,7 +191,11 @@ export async function getPublicPlacesByUser(): Promise<Place[]> {
     mode: "cors",
   });
 
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
@@ -174,7 +207,11 @@ export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
     mode: "cors",
   });
 
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function getPrivatePlacesByUser(): Promise<Place[]> {
@@ -184,7 +221,11 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //List shared places by user
@@ -195,7 +236,11 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //List shared places by friends
@@ -206,7 +251,11 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 //User--------------------------------------------------------
@@ -234,7 +283,11 @@ export async function getFriendRequests(): Promise<User[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function getFriendsForUser(id: string): Promise<User[]> {
@@ -246,7 +299,11 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function getProfile(): Promise<User> {
@@ -257,7 +314,11 @@ export async function getProfile(): Promise<User> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return new User("ERROR","ERROR",null);
+  }
 }
 
 export async function getProfileById(id: string): Promise<User> {
@@ -269,7 +330,11 @@ export async function getProfileById(id: string): Promise<User> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return new User("ERROR","ERROR",null);
+  }
 }
 
 export async function getAllPublicUsers(): Promise<User[]> {
@@ -280,7 +345,11 @@ export async function getAllPublicUsers(): Promise<User[]> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
 }
 
 export async function isLoggedIn(): Promise<boolean> {
@@ -291,7 +360,12 @@ export async function isLoggedIn(): Promise<boolean> {
     credentials: "include",
     mode: "cors",
   });
-  return response.json();
+  if (response.status === 200){
+    return response.json();
+  }else{
+    console.log("jdfnsdl "+response.status)
+    return false;
+  }
 }
 
 export async function addUserToList(): Promise<boolean> {

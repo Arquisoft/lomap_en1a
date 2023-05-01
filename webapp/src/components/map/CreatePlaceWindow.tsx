@@ -106,7 +106,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         changeMarkerColour(v); //Changes the last marker colour
 
         updateMapList(result);
-        setIsLoading(false);
+        
       }
       else {
         setNotificationStatus(true);
@@ -116,7 +116,9 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         });
         props.handleDeleteMarker(true);
       }
+      
     }
+    setIsLoading(false);
 
   }
 
