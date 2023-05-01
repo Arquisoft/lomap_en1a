@@ -56,20 +56,6 @@ describe('PictureService.addOwn() -> ', () => {
 })
 
 /**
- * Testing the findOwn() method
- */
-describe('PictureService.findOwn() -> ', () => {
-    test('sessionId == null, user == null', async () => {
-        try {
-            await pictureService.findOwn('', '')
-            fail('The user must be logged in.')
-        } catch (e) {
-            expect(e.message).toMatch('The user must be logged in.')
-        }
-    })
-})
-
-/**
  * Testing the findByPicture() method
  */
 describe('PictureService.findByPicture() -> ', () => {

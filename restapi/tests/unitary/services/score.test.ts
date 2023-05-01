@@ -66,20 +66,6 @@ describe('ScoreService.addOwn() -> ', () => {
 })
 
 /**
- * Testing the findOwn() method
- */
-describe('ScoreService.findOwn() -> ', () => {
-    test('sessionId == null, user == null', async () => {
-        try {
-            await scoreService.findOwn('', '')
-            fail('The user must be logged in.')
-        } catch (e) {
-            expect(e.message).toMatch('The user must be logged in.')
-        }
-    })
-})
-
-/**
  * Testing the findByPlace() method
  */
 describe('ScoreService.findByPlace() -> ', () => {

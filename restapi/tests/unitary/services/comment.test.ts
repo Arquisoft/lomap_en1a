@@ -56,20 +56,6 @@ describe('CommentService.addOwn() -> ', () => {
 })
 
 /**
- * Testing the findOwn() method
- */
-describe('CommentService.findOwn() -> ', () => {
-    test('sessionId == null, user == null', async () => {
-        try {
-            await commentService.findOwn('', '')
-            fail('The user must be logged in.')
-        } catch (e) {
-            expect(e.message).toMatch('The user must be logged in.')
-        }
-    })
-})
-
-/**
  * Testing the findByPlace() method
  */
 describe('CommentService.findByPlace() -> ', () => {

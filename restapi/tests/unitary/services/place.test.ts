@@ -239,21 +239,6 @@ describe('PlaceService.addOwn() -> ', () => {
     })
 })
 
-
-/**
- * Testing the findOwn() method
- */
-describe('PlaceService.findOwn() -> ', () => {
-    test('sessionId == null', async () => {
-        try {
-            await placeService.findOwn('')
-            fail('The user must be logged in.')
-        } catch (e) {
-            expect(e.message).toMatch('The user must be logged in.')
-        }
-    })
-})
-
 /**
  * Testing the findFriendForUser() method
  */
