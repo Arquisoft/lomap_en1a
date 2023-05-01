@@ -37,7 +37,7 @@ export class UserServiceImpl implements UserService {
         return this.userRepository.getPublicUsers(sessionId);
     }
 
-    getFriendRequests(sessionId: string): Promise<User[]> {
+    async getFriendRequests(sessionId: string): Promise<User[]> {
         return this.userRepository.getFriendRequests(sessionId);
     }
 }
