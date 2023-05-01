@@ -48,6 +48,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Name cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The name cannot be undefined.");
     }
   });
@@ -66,6 +67,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Description cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The description cannot be undefined.");
     }
   });
@@ -86,6 +88,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Latitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The latitude cannot be undefined.");
     }
   });
@@ -104,6 +107,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Latitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The latitude value is out of bounds.");
     }
   });
@@ -122,6 +126,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Latitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The latitude value is out of bounds.");
     }
   });
@@ -142,6 +147,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Longitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The longitude cannot be undefined.");
     }
   });
@@ -160,6 +166,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Longitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The longitude value is out of bounds.");
     }
   });
@@ -178,6 +185,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Longitude cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The longitude value is out of bounds.");
     }
   });
@@ -196,6 +204,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Visibility cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The visibility cannot be undefined.");
     }
   });
@@ -214,6 +223,7 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoNull);
       fail("Category cannot be undefined");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The category cannot be undefined.");
     }
   });
@@ -233,22 +243,9 @@ describe("PlaceService.addOwn() -> ", () => {
       await placeService.add("sessionId", dtoOk);
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
-
-    /*
-        await placeService.add('sessionId', dtoOk).then(place => {
-            expect(place.getId()).toMatch('ERR')
-            expect(place.getName()).toMatch('')
-            expect(place.getDescription()).toMatch('')
-            expect(place.getOwner()).toMatch('')
-            expect(place.getId()).toMatch('ERR')
-            expect(place.getLatitude()).toBe(0)
-            expect(place.getLongitude()).toBe(0)
-            expect(place.getVisibility()).toBe(dtoOk.visibility)
-            expect(place.getCategory()).toBe(dtoOk.category)
-        })
-         */
   });
 });
 
@@ -261,6 +258,7 @@ describe("PlaceService.findFriendForUser() -> ", () => {
       await placeService.findFriendForUser("", "");
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
   });
@@ -275,6 +273,7 @@ describe("PlaceService.findFriend() -> ", () => {
       await placeService.findFriend("");
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
   });
@@ -289,6 +288,7 @@ describe("PlaceService.findPublic() -> ", () => {
       await placeService.findPublic("", "");
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
   });
@@ -303,6 +303,7 @@ describe("PlaceService.findOwnPublic() -> ", () => {
       await placeService.findOwnPublic("");
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
   });
@@ -317,6 +318,22 @@ describe("PlaceService.findSharedFriends() -> ", () => {
       await placeService.findSharedFriends("");
       fail("The user must be logged in.");
     } catch (e) {
+      console.log(e.message)
+      expect(e.message).toMatch("The user must be logged in.");
+    }
+  });
+});
+
+/**
+ * Testing the findAll() method
+ */
+describe("PlaceService.findAll() -> ", () => {
+  test("sessionId == null", async () => {
+    try {
+      await placeService.findAll("");
+      fail("The user must be logged in.");
+    } catch (e) {
+      console.log(e.message)
       expect(e.message).toMatch("The user must be logged in.");
     }
   });
