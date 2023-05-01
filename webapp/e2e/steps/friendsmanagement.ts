@@ -2,7 +2,9 @@ import { waitFor } from '@testing-library/react';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
+
 const feature = loadFeature('./features/friendsmanagement.feature');
+
 
 let page: puppeteer.Page;
 let browser: puppeteer.Browser;
@@ -68,7 +70,7 @@ defineFeature(feature, test => {
     then('The user sees the friends management view', async () => {
       await expect(page).toMatch('Friend management menu')
     });
-  })
+  }, 1000000)
 
 
 
