@@ -25,19 +25,19 @@ const handleFriendWindowData = async (value:FriendWindowDataType) => {}
 const handleIsOpen = async (value:boolean) => {}
 const handleSlidingPaneView = async (value:number) => {}
 
-var friends: User[];
-friends=[ new User("TEST-USER","")];
+let friends: User[];
+friends=[ new User("TEST-USER","",null)];
 
-var users: User[];
-users=[ new User("TEST-USER-PUBLIC","")];
+let users: User[];
+users=[ new User("TEST-USER-PUBLIC","",null)];
 
-var publicPlaces: Place[];
+let publicPlaces: Place[];
 publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR)];
 
-var privatePlaces: Place[];
+let privatePlaces: Place[];
 privatePlaces=[ new Place("","TEST-PRIVATE","","",0,0,Visibility.PRIVATE,Category.BAR)];
 
-var sharedPlaces: Place[];
+let sharedPlaces: Place[];
 sharedPlaces=[ new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS,Category.BAR)];
 
 
@@ -47,7 +47,7 @@ beforeEach(()=>{
     jest.spyOn(api, 'getPublicPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(publicPlaces));
     jest.spyOn(api, 'getPrivatePlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(privatePlaces));
     jest.spyOn(api, 'getSharedPlacesByUser').mockImplementation((): Promise<Place[]> => Promise.resolve(sharedPlaces));
-    jest.spyOn(api, 'getProfile').mockImplementation((): Promise<User> => Promise.resolve(new User("","")));
+    jest.spyOn(api, 'getProfile').mockImplementation((): Promise<User> => Promise.resolve(new User("","",null)));
 }
 
 );
@@ -120,3 +120,5 @@ test('check public list place is shown', async () => {
       expect(await getByText("TEST-PRIVATE")).toBeInTheDocument();
     });
   })
+
+

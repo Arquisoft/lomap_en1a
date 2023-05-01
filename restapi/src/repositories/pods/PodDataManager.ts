@@ -1,154 +1,169 @@
 //Solid
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 import {
-    getSessionFromStorage
-} from "@inrupt/solid-client-authn-node";
-import {
-    getSolidDataset,
-    getThing,
-    setThing,
-    saveSolidDatasetAt,
-    Thing,
-    getStringNoLocale,
-    getUrlAll,
-    SolidDataset,
-    createSolidDataset,
-    buildThing,
-    addIri
+  getSolidDataset,
+  getThing,
+  setThing,
+  saveSolidDatasetAt,
+  Thing,
+  getStringNoLocale,
+  getUrlAll,
+  SolidDataset,
+  createSolidDataset,
+  addIri,
+  getUrl,
 } from "@inrupt/solid-client";
 
 //Configuration
-import configuration from '../../configuration.json';
+import configuration from "../../configuration.json";
 import { User } from "../../domain/User";
-import { FOAF } from "@inrupt/vocab-common-rdf";
+import { FOAF, VCARD } from "@inrupt/vocab-common-rdf";
 import { Assertion } from "../../Assertion";
 import { PodSessionManager } from "./PodSessionManager";
 import { Factory } from "../../Factory";
 import { PodManager } from "./PodManager";
 
 export class PodDataManager {
+  private location = configuration.location;
+  private profilePodZone = configuration.profilePodZone;
 
-    private location = configuration.location;
-    private profilePodZone = configuration.profilePodZone;
+  public async fetchData(
+    sessionId: string,
+    resource: string,
+    webId: string,
+    zone: string
+  ): Promise<SolidDataset> {
+    Assertion.exists(sessionId, "The user must be logged in.");
+    Assertion.exists(webId, "A web id must be provided.");
 
-    public async fetchData(sessionId: string, resource: string, webId: string, zone: string): Promise<SolidDataset> {
+    let session = await getSessionFromStorage(sessionId);
 
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
-
-        let session = await getSessionFromStorage(sessionId);
-
-        if (session == null) {
-            throw new Error("The user must be logged in.");
-        }
-
-        let dataset = createSolidDataset();
-
-        try {
-            dataset = await getSolidDataset(webId + this.location + zone + "/" + resource, {
-                fetch: session.fetch
-            });
-        }
-        catch (e) {
-            //console.log("Not found");
-        }
-
-        return dataset;
+    if (session == null) {
+      throw new Error("The user must be logged in.");
     }
 
+    let dataset = createSolidDataset();
 
-    public async writeData(sessionId: string, resource: string, thing: Thing, webId: string, zone: string): Promise<boolean> {
-
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
-
-        let session = await getSessionFromStorage(sessionId);
-
-        if (session == null) {
-            throw Error("The user must be logged in.");
+    try {
+      dataset = await getSolidDataset(
+        webId + this.location + zone + "/" + resource,
+        {
+          fetch: session.fetch,
         }
+      );
+    } catch (e) {}
 
-        let dataset = await this.fetchData(sessionId, resource, webId, zone)
+    return dataset;
+  }
 
-        dataset = setThing(dataset, thing);
+  public async writeData(
+    sessionId: string,
+    resource: string,
+    thing: Thing,
+    webId: string,
+    zone: string
+  ): Promise<boolean> {
+    Assertion.exists(sessionId, "The user must be logged in.");
+    Assertion.exists(webId, "A web id must be provided.");
 
-        await saveSolidDatasetAt(webId + this.location + zone + "/" + resource, dataset, { fetch: session.fetch })
+    let session = await getSessionFromStorage(sessionId);
 
-        return true;
+    if (session == null) {
+      throw Error("The user must be logged in.");
     }
 
-    public async getProfile(sessionId: string, webId: string) {
-        let session = await getSessionFromStorage(sessionId);
-        if (session == null) {
-            throw new Error('Session could not be found.');
-        }
+    let dataset = await this.fetchData(sessionId, resource, webId, zone);
 
-        if (webId == undefined) {
-            throw new Error('WebId cannot be undefined.');
-        }
-        let a = (webId.split("profile")[0])
-        let url = a + this.profilePodZone + "#me"
-        let myDataset = await getSolidDataset(url, { fetch: session.fetch });
-        const profile = getThing(myDataset, a + this.profilePodZone + "#me") as Thing;
-        return profile;
+    dataset = setThing(dataset, thing);
+
+    await saveSolidDatasetAt(
+      webId + this.location + zone + "/" + resource,
+      dataset,
+      { fetch: session.fetch }
+    );
+
+    return true;
+  }
+  public async getProfile(sessionId: string, webId: string) {
+    let session = await getSessionFromStorage(sessionId);
+    if (session == null) {
+      throw new Error("Session could not be found.");
     }
 
-    public async getFriends(sessionId: string, webId: string): Promise<User[]> {
+    if (webId == undefined) {
+      throw new Error("WebId cannot be undefined.");
+    }
+    let a = webId.split("profile")[0];
+    let url = a + this.profilePodZone + "#me";
+    let myDataset = await getSolidDataset(url, { fetch: session.fetch });
+    const profile = getThing(
+      myDataset,
+      a + this.profilePodZone + "#me"
+    ) as Thing;
+    return profile;
+  }
 
+  public async getFriends(sessionId: string, webId: string): Promise<User[]> {
+    let profile: Thing = await this.getProfile(sessionId, webId);
 
-        let profile: Thing = await this.getProfile(sessionId, webId);
+    let webIds: string[] = getUrlAll(profile, FOAF.knows);
 
-        let webIds: string[] = getUrlAll(profile, FOAF.knows);
+    let friends: User[] = [];
 
-        let friends: User[] = [];
-
-        for (let f in webIds) {
-            let user: User = await this.getUser(sessionId, webIds[f]);
-            friends.push(user)
-        }
-
-        return friends;
+    for (let f in webIds) {
+      let user: User = await this.getUser(sessionId, webIds[f]);
+      friends.push(user);
     }
 
-    public async getUser(sessionId: string, webId: string): Promise<User> {
+    return friends;
+  }
 
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
+  public async getUser(sessionId: string, webId: string): Promise<User> {
+    Assertion.exists(sessionId, "The user must be logged in.");
+    Assertion.exists(webId, "A web id must be provided.");
 
-        let profile = await this.getProfile(sessionId, webId);
+    let profile = await this.getProfile(sessionId, webId);
 
-        let name: string | null = getStringNoLocale(profile, FOAF.name);
+    let name: string | null = getStringNoLocale(profile, FOAF.name);
 
-        if (name == null) {
-            throw new Error("The name of the user whose web id is " + webId + ", is null");
-        }
+    let photo: string | null = getUrl(profile, VCARD.hasPhoto);
 
-        return new User(name, webId);
+    if (name == null) {
+      throw new Error(
+        "The name of the user whose web id is " + webId + ", is null"
+      );
     }
 
-    async addFriend(sessionId: string, webId: string): Promise<boolean> {
-        Assertion.exists(sessionId, "The user must be logged in.");
-        Assertion.exists(webId, "A web id must be provided.");
+    return new User(name, webId, photo);
+  }
 
-        let session = await getSessionFromStorage(sessionId);
+  async addFriend(sessionId: string, webId: string): Promise<boolean> {
+    Assertion.exists(sessionId, "The user must be logged in.");
+    Assertion.exists(webId, "A web id must be provided.");
 
-        if (session == null) {
-            throw Error("The user must be logged in.");
-        }
+    let session = await getSessionFromStorage(sessionId);
 
-        let userWebId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-
-        let url = userWebId.split("profile")[0] + this.profilePodZone + "#me"
-        let profileDataSet = await getSolidDataset(url, { fetch: session.fetch });
-
-        let profile = getThing(profileDataSet, url) as Thing;
-
-        profile = addIri(profile, FOAF.knows, webId);
-
-        profileDataSet = setThing(profileDataSet, profile);
-
-        await saveSolidDatasetAt(url, profileDataSet, {
-            fetch: session.fetch,
-        })
-        return true;
+    if (session == null) {
+      throw Error("The user must be logged in.");
     }
+
+    let userWebId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+
+    let url = userWebId.split("profile")[0] + this.profilePodZone + "#me";
+    let profileDataSet = await getSolidDataset(url, { fetch: session.fetch });
+
+    let profile = getThing(profileDataSet, url) as Thing;
+
+    profile = addIri(profile, FOAF.knows, webId);
+
+    profileDataSet = setThing(profileDataSet, profile);
+
+    await saveSolidDatasetAt(url, profileDataSet, {
+      fetch: session.fetch,
+    });
+
+    PodManager.permissionManager.setupFriendPermissions(sessionId);
+
+    return true;
+  }
 }

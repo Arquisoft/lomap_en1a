@@ -3,18 +3,19 @@ import { Permission } from "./Permission";
 import { access } from "@inrupt/solid-client";
 
 export class PublicPermission implements Permission {
+  async setAcl(sessionId: string, url: string): Promise<void> {
+    try {
+      let session = await getSessionFromStorage(sessionId);
 
-    async setAcl(sessionId: string, url: string): Promise<void> {
-        let session = await getSessionFromStorage(sessionId);
+      if (session == null) {
+        throw new Error("The user must be logged in.");
+      }
 
-        if (session == null) {
-            throw new Error("The user must be logged in.");
-        }
-
-        await access.setPublicAccess(
-            url,
-            { read: true },
-            { fetch: session.fetch }
-        );
-    }
+      await access.setPublicAccess(
+        url,
+        { read: true },
+        { fetch: session.fetch }
+      );
+    } catch (e) {}
+  }
 }

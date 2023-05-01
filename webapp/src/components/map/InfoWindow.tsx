@@ -14,11 +14,12 @@ import { addScore } from '../../api/api';
 import Rating from '@mui/material/Rating';
 import { getScores } from '../../api/api';
 import { Visibility } from '../../domain/Visibility';
-import PictureSelector from './PictureSelector';
 import Slideshow from '../mainPage/SlideShow';
 import { InfoWindowDataType } from './MapView';
 import { VisibilitySelect } from './CreatePlaceWindow';
 import TextField from '@mui/material/TextField';
+import { Divider } from '@material-ui/core';
+import PictureSelector from './PictureSelector';
 
 type InfoWindowProps = {
   infoWindowData: InfoWindowDataType;
@@ -42,6 +43,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   //For the pictures
   const [pictureURLs, setPictureURLs] = useState<string[]>([])
 
+  // Creator name
+  const [creatorName, setCreatorName] = useState<string>("")
+
 
 
 
@@ -57,25 +61,14 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   const refreshCommentList = async () => {
     props.handleIsLoading(true, "Loading comments...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
-
-
-    const newComments = await Promise.all(comments.map(async (comm) => {
-      const user = await getProfileById(comm.owner);
-      return {
-        ...comm,
-        owner: user.username,
-      };
-
-    }));
     props.handleIsLoading(false);//Stop showing loading symbol
-
-
-    setComments(newComments);
+    setComments(comments);
   }
 
 
   const handleAddScore = async (value: number) => {
-    var score = new Score("", value, props.infoWindowData?.id, "", new Date(), Visibility.PUBLIC);
+    props.handleIsLoading(true, "Posting score");//Start showing loading symbol
+    let score = new Score("", value, props.infoWindowData?.id, "", new Date(), visibility);
     let result: boolean = await addScore(score); //The score still has no ID
     if (result) {
       setNotificationStatus(true);
@@ -90,7 +83,9 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         severity: 'error',
         message: 'There\'s been an error posting your score.'
       });
+      
     }
+    props.handleIsLoading(false);//Remove loading symbol
   }
 
   //For the computation of the avg score
@@ -98,20 +93,13 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   const refreshScores = async () => {
 
-
     getScores(props.infoWindowData.id).then((s) => {
-      if (s.length > 0) {
-        let aux = 0;
-        for (let i = 0; i < s.length; i++) {
-
-          aux += s[i].score;
-        }
-        let avg = aux / s.length;
-        let a = avg.toFixed(1)
-        setAvg(parseFloat(a)); //Calculates the new average
-      } else {
-        setAvg(0)
-      }
+      let sum = 0;
+      s.forEach((score) => {
+        sum += score.score/s.length;
+      });
+      let a = sum.toFixed(1)
+      setAvg(parseFloat(a)); 
 
     });
   }
@@ -121,20 +109,38 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
   const refreshScoresAfterAdding = async (value: number) => {
     await handleAddScore(value); //Adds the new score
 
-    refreshScores();
+    await refreshScores();
   }
 
-  const handleVisibilityChange = async(value: string) => {
-    var newVisibility = (Visibility as any)[value]
+  const handleVisibilityChange = async (value: string) => {
+    let newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
 
+  const getCreatorName = async(id: string) => {
+    if (id === null || typeof id === undefined) {
+      setCreatorName("")
+    } else {
+      let creator = await getProfileById(id);
+      setCreatorName(creator.username)
+    }
+  }
+  
+  const getCreatorText = () => {
+    // return creatorName === ""?"Creator could not be found":"Place created by " + creatorName;
+    if (creatorName === null || typeof creatorName === 'undefined' || creatorName.trim().length === 0) {
+      return ""
+    }
+
+    return "by " + creatorName + " -";
+  }
 
 
 
   //Update comment list and scores when the info window data changes
   useEffect(() => {
+    getCreatorName(props.infoWindowData.creator);
     refreshScores();
     refreshCommentList();
     refreshPicturesSlide();
@@ -148,53 +154,53 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
 
     <>
-      <Grid container spacing={1} alignItems="center" justifyContent="center" className='info-window'
-        style={props.isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}}>
-
+      <Grid container spacing={3} style={props.isLoading ? {pointerEvents: "none", opacity: "0.4"} : {}}>
         <Grid item xs={12} textAlign="center">
-          <Box component="h3"  height={4}><>{props.infoWindowData?.title}</></Box>
+          <Box className="place-name">{props.infoWindowData?.title}</Box>
+          <Box className="place-category">{getCreatorText()} {props.infoWindowData?.category}</Box>
+          <Divider/>
         </Grid>
-
         <Grid item xs={12} textAlign="center">
-          <Box component="p" ><>{props.infoWindowData?.category}</></Box>
+          { pictureURLs.length == 0 ?
+            <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found" 
+              sx={{maxWidth: '100%', maxHeight: '12em', width: 'auto', height: 'auto'}}></Box>
+            :
+            <div id="photos">
+              <Slideshow images={pictureURLs} />
+            </div>
+          }
         </Grid>
-    
-
-        <div className="centered-element">
-          <Grid item xs={12}>
-            {
-              pictureURLs.length == 0 ?
-                <Box id="no-pictures-img" component="img" src={noPic} alt="No pictures found"></Box>
-                :
-                <Slideshow images={pictureURLs} />
-            }
-          </Grid>
-        </div>
-        <div className="description">
-          <Grid item xs={12}>
-              <TextField
-                disabled
-                multiline
-                rows={6}
-                fullWidth
-                name="description"
-                variant="filled"
-                value={props.infoWindowData.description}
-
-              />
-          </Grid>
-        </div>
-        
-
         <Grid item xs={12}>
-           <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
-        </Grid>  
-        
-        <Grid item xs={6}>
-          <Box
+          <TextField
+            className='description text-box'
+            disabled
+            multiline
+            fullWidth
+            spellCheck={false}
+            name="description"
+            //variant="filled"
+            value={props.infoWindowData.description}
             sx={{
-              width: 200,
-              display: 'flex',
+              "& fieldset": 
+                { 
+                  //border: 'none'
+                }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Divider/>
+        </Grid>
+        
+        <Grid item xs={12}>
+          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading}/>
+        </Grid>
+        <Grid item xs={6.5} alignItems="stretch" textAlign="center">
+          <Box
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            sx={{
               alignItems: 'center',
             }}>
             <Rating
@@ -207,35 +213,38 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
                 refreshScoresAfterAdding(value as number);
               }}
             />
+            
             {value !== null && (
               <Box sx={{ ml: 2 }}>{value + "/5"}</Box>
             )}
           </Box>
         </Grid>
         <Grid item xs={3}>
-          <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          <Box 
+            height="100%"
+            display="flex"
+            justifyContent="center"
+            flexDirection="column">
+              <VisibilitySelect visibility={visibility} handleVisibilityChange={handleVisibilityChange}/>
+          </Box>
+          
         </Grid>
-
-        <Grid item xs={2}>
-          <Box component="p" textAlign="right" >{avg}
-          <StarIcon htmlColor='orange' fontSize='medium' /></Box>
+        <Grid item xs={2.5}>
+          <Box textAlign="center" >{avg + " "}
+          <StarIcon htmlColor='orange' fontSize='medium'/></Box>
         </Grid>
-
-
 
         <Grid item xs={12}>
           <CommentForm OnCommentListChange={refreshCommentList} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading} />
         </Grid>
         <Grid item xs={12}>
+          <Divider/>
+        </Grid>
+        <Grid item xs={12}>
           <CommentList comments={comments} />
         </Grid>
-
-
       </Grid>
     </>
-
-
-
   );
 
 

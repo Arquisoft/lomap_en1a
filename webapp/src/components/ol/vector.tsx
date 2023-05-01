@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -58,62 +58,60 @@ const addAllMarkers = (p: Place[], myOwn: boolean) => {
 }
 
 //Adds all public places to the map
-const addPublicPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addPublicPlaces = async () => {
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
-
   });
 
   //When filtering, the public places of other users added to the map should appear too
   for (let i = 0; i < displayedUsers.length; i++) {
     getPublicPlacesByPublicUser(displayedUsers[i]).then((p) => {
       addAllMarkers(p, true);
-      if (counter) {
-        counter(a => a + 1);
-      }
     })
   }
 }
 
 //Adds all private places to the map
-const addPrivatePlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addPrivatePlaces = async () => {
   getPrivatePlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
   });
 }
 
 //Adds all shared places to the map
-const addSharedPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addSharedPlaces = async () => {
   getSharedPlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
   });
 }
 
 //Adds all friends places to the map
-export const addFriendPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+export const addFriendPlaces = async () => {
   getSharedPlacesByFriends().then((p) => {
     addAllMarkers(p, false);
-    if (counter) {
-      counter(a => a + 1);
+  });
+}
+
+//Adds all places created by current user to the map
+const addAllPlacesByUser = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
+  getAllPlacesByUser().then((p) => {
+    addAllMarkers(p, true);
+    if (handleIsMainLoading) {
+      handleIsMainLoading(false);
     }
   });
 }
 
 //Adds all places to the map
-const getMarkers = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
-  addPublicPlaces(counter)
-  addSharedPlaces(counter)
-  addFriendPlaces(counter)
-  addPrivatePlaces(counter)
+const getMarkers = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
+  //addPublicPlaces(counter)
+  //addSharedPlaces(counter)
+  if(handleIsMainLoading){
+    handleIsMainLoading(true);
+  }
+  addAllPlacesByUser(handleIsMainLoading);
+  addFriendPlaces();
+  //addPrivatePlaces(counter)
 }
 
 const checkCategory = (category: string) => {
@@ -345,7 +343,8 @@ function Vector(props: TVectorLayerComponentProps) {
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
-      category: place.category,
+      creator: place.owner,
+      category:place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude,
@@ -358,14 +357,6 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   }
-  const [counter, setCounter] = useState(0)
-
-  useEffect(() => {
-    console.log(counter)
-    if (counter == 4) {
-      setMainFalse()
-    }
-  }, [counter])
 
   //When map is first rendered
   useEffect(() => {
@@ -375,18 +366,14 @@ function Vector(props: TVectorLayerComponentProps) {
     props.map.on('singleclick', function (e) {
       props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
         onMarkerClick(feature);
-
       })
-
     });
 
-    getMarkers(setCounter)
+    getMarkers(props.handleIsMainLoading)
 
   }, [])
 
-  function setMainFalse() {
-    props.handleIsMainLoading(false)
-  }
+
 
 
 
