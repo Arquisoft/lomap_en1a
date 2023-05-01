@@ -1,36 +1,25 @@
 [[section-glossary]]
 == Glossary
+This glossary contains an alphabetically sorted list of terms that are widely mentioned across this documentation:
 
-
-
-[role="arc42help"]
-****
-.Contents
-The most important domain and technical terms that your stakeholders use when discussing the system.
-
-You can also see the glossary as source for translations if you work in multi-language teams.
-
-.Motivation
-You should clearly define your terms, so that all stakeholders
-
-* have an identical understanding of these terms
-* do not use synonyms and homonyms
-
-.Form
-A table with columns <Term> and <Definition>.
-
-Potentially more columns in case you need translations.
-
-****
-
-[options="header"]
+[options="header", cols="1, 5"]
 |===
-| Term         | Definition
-| Docker     | Software platform that allows you to deliver software in packages called containers
-| MongoDB     | Open-source, cross-platform, NoSQL document-oriented database management system which uses a document format similar to JSON, with the option to use schemas.
-| Node.js     | Single-threaded, open-source, cross-platform runtime environment for building fast and scalable server-side and networking applications
-| POD (Personal Online Data store) | Decentralized data stores. They are like secure personal web servers for data
-| React.js    | JavaScript library that allows developers to easily create fast user interfaces for websites and applications alike
+| Term          | Definition
+| Component     | In the WebApp, a component is a template for a visual element that is used as a reutilization mechanism to compose the views, joining and combining several components into others.
+| Continuous Deployment (CD) | A process that automatically deploys a project into a deployment scenario whenever changes are committed in a repository.
+| Continuous Integration (CI) | A process that automatically builds and tests code from a repository whenever changes are committed.
+| Docker        | Software platform that allows you to deliver software in packages called containers
+| IDP           | IDentity Provider: Service in which a user can request a POD to hold its data.
+| JSON          | JavaScript Object Notation:Standard, language-independent format used to store and transmit data objects storing them as attribute-value pairs of standard, human-readable text.
+| Link data     | In LoMap, we call link data to data that is used to relate entities of the domain. For example, there exists link data that joins a review and a place, or a place and a user.
+| Metadata      | Data that defines characteristics of other data, such as date and time, size, format, etc.
+| MongoDB       | Open-source, cross-platform, NoSQL document-oriented database management system which uses a document format similar to JSON, with the option to use schemas.
+| Node.js       | Single-threaded, open-source, cross-platform runtime environment for building fast and scalable server-side and networking applications
+| OP            | Original Poster: the creator and owner of an entity, such a place, a review or a score.
+| POD           | Personal Online Datastore: Decentralized data stores. They are like secure personal web servers for data
+| Profile       | A profile is a document that holds the personal information about a user, and its held into the user's POD.
+| React.js      | JavaScript library that allows developers to easily create fast user interfaces for websites and applications alike
+| SessionId     | A sessionId is a token that is used to identify a user across the layers of the application, so that the RestAPI and the WebApp can keep track of a user's request.
 | TypeScript    | Open source high-level programming language. It is a strict syntactical superset of JavaScript and adds optional static typing
-| JSON (JavaScript Object Notation) | Standard, language-independent format used to store and transmit data objects storing them as attribute-value pairs of standard, human-readable text.
+| WebId         | A webId is a URL used as the ID of a user. It navigates to the user's profile hosted in its POD.
 |===

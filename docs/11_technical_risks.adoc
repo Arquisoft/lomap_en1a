@@ -1,37 +1,46 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
-When making decisions, there are often trade-offs between various options. Risks and technical debt are two types of compromises that we may accept in order to make progress towards our goals.
 
-Risk refers to the possibility of something going wrong or not working out as planned. In other words, it's the chance that an outcome will deviate from what we expect or hope for. When we make a decision, we may take on certain risks in order to achieve a certain outcome.
+When making decisions, there are often trade-offs between various options.
+Risks and technical debt are two types of compromises that we may accept in order to make progress towards our goals.
+
+Risk refers to the possibility of something going wrong or not working out as planned.
+In other words, it's the chance that an outcome will deviate from what we expect or hope for.
+When we make a decision, we may take on certain risks in order to achieve a certain outcome.
 
 Technical debt, on the other hand, refers to the shortcuts or quick fixes we may make in order to achieve a short-term goal at the expense of long-term sustainability or maintainability.
 
-Both risks and technical debt are compromises that we accept in order to achieve our goals. However, it's important to carefully consider the potential consequences of these compromises, and to weigh them against the potential benefits. If we take on too much risk or technical debt, we may end up with problems that are more difficult or costly to solve in the long run.
+Both risks and technical debt are compromises that we accept in order to achieve our goals.
+However, it's important to carefully consider the potential consequences of these compromises, and to weigh them against the potential benefits.
+If we take on too much risk or technical debt, we may end up with problems that are more difficult or costly to solve in the long run.
+
+### Risks
 
 This is a table of the risks we took during the development of the application:
 
-.Risks 
+.Risks
 [options="header",cols="1,2,2"]
 |===
-|Risks|Explanation|Solution
-| _No knowledge of React_ | _We have never worked with React before, so we know nothing about it_|_Read React's documentation and analyze the provided exercises._
-| _No knowledge of SOLID_ | _It is a new concept for us_|_Explore SOLID's documentation to familiarize ourselves with the technology_
-| _Little knowledge of TypeScript_ | _Some of us know some JavaScript, but TypeScript is a little different_|_Read TypeScript's documentation, see code examples_
-| _Time_ | _We have to take into consideration the different deadlines, and balance the development time with the rest of stuff we have to do_|_Try to manage our free time better, and make better use of the tools used in the development process_
-| _Team members_ | _It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way_|_Good communication between team members, assigning tasks correctly and make good use of organizational tools provided with our Git service_
-| _External services' dependency_ | _During this project, we will use some external services that are out of our control_| _If these services fail our project will not work correctly, or loose functionality in the long run_
+|Risk|Explanation|Solution
+| No knowledge of React | We have never worked with React before, so we know nothing about it. | Read React's documentation and analyze the provided exercises, and take advantage of the fact that we are simultaneously taking the SDI course.
+| No knowledge of SOLID | It is a new concept and technology for us. | Explore SOLID's documentation to familiarize ourselves with the technology, and seek examples of use.
+| Little knowledge of TypeScript | Some of us know some JavaScript, but TypeScript is a little different. | Read TypeScript's documentation, see code examples, seek similarities with other languages and experiment with its capabilities and features.
+| Time | We have to take into consideration the different deadlines, and balance the development time with the rest of stuff we have to do. | Try to manage our free time better, and make better use of the tools used in the development process to optimize the time spent.
+| Team members | It can be difficult to work with a large group of people, as there may be disagreements and each person does things in their own way. | Good communication between team members, assigning tasks correctly and make good use of organizational tools provided with our Git service.
+| External services' dependency | During this project, we will use some external services that are out of our control. | Create the application in such a way that minimizes the negative consequences of this dependency.
 |===
 
-As of now, most of the technical debt has already been tackled and solver, but there is still stuff to fix.
+### Technical debt
+
+As of now, most of the technical debt has already been tackled and solved, but there is still stuff to fix.
 
 .Technical debts
-[options="header",cols="1,2"]
+[options="header",cols="1,4"]
 |===
 |Technical debt|Explanation
-| _MySQL_ | _We used MySQL database for the first prototype as it is the one we are more familiar with, and we still are not sure how to save the data_ 
-| _Creating the tests at the end of development_ | _Usually, tests should be created before starting the development, but for a lack of time,
-we will create them at the end_ 
-| _POD permissions_ | _The permissions of the directories inside the PODs are not configured properly, now everybody can see everything inside the folder_ 
+| MySQL | We used MySQL for the first prototype as it is the DB provider we are more familiar with, and we were not sure how to save the data. Now, the DB schema and provider have been selected so that they fit better to the project.
+| Creating the tests at the end of development | Ideally, tests should be created before starting the development or at the beginning, as that facilitates the design task. But due to time constraints, we will create them at the end.
+| POD permissions | The permissions of the directories inside the PODs are not configured properly and are difficult to manage, consequently everybody can see everything inside the LoMap folder and the owner can modify its data in any way, even corrupting its information.
 |===
 
 
