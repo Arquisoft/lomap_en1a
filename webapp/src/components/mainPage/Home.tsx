@@ -1,17 +1,16 @@
 import Slideshow from "./SlideShow"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import map from "../../images-places/map.jpg";
-import paris from "../../images-places/paris.jpg";
-import london from "../../images-places/Londres.jpg";
-import madrid from "../../images-places/Madrid.jpg";
-import eii from "../../images-places/eii.jpg";
-import new_york from "../../images-places/nueva-york.jpg";
+import map from "../../images/map-app.jpg";
+import addPlace from "../../images/addPlace.png";
+import addFriend from "../../images/addFriend.png";
+import reviews from "../../images/reviews.png";
+import infoWindow from "../../images/infoWindow.png";
 import lomap from "../../images/LoMap logo.png";
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 
-const images = [map, paris, london, eii, new_york, madrid];
+const images = [addPlace, reviews, infoWindow,addFriend];
 
 
 export default function Home(): JSX.Element {
