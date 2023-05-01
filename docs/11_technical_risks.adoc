@@ -8,6 +8,8 @@ Technical debt, on the other hand, refers to the shortcuts or quick fixes we may
 
 Both risks and technical debt are compromises that we accept in order to achieve our goals. However, it's important to carefully consider the potential consequences of these compromises, and to weigh them against the potential benefits. If we take on too much risk or technical debt, we may end up with problems that are more difficult or costly to solve in the long run.
 
+This is a table of the risks we took during the development of the application:
+
 .Risks 
 [options="header",cols="1,2,2"]
 |===
