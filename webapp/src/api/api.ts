@@ -313,7 +313,7 @@ export async function login(
   redirectUrl: string
 ): Promise<void> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5080/api";
 
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);

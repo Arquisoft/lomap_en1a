@@ -26,10 +26,12 @@ export class PodSessionManager {
     provider = decodeURIComponent(provider);
 
     let redirect = req.params.redirect;
-    redirect = "https://" + host + this.port + "/api/login/success";
+    redirect = "http://" + host + ":5080/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;
+
+    console.log("Redirecting to: " + redirect)
 
     try {
       await session.login({
@@ -53,12 +55,12 @@ export class PodSessionManager {
     let solidSession = await getSessionFromStorage(sessionId);
 
     await solidSession?.handleIncomingRedirect(
-      `https://${host}${this.port}${this.handle}${req.url}`
+      `http://${host}:5080${this.handle}${req.url}`
     );
 
     await PodManager.permissionManager.setupPod(sessionId);
 
-    return res.redirect("https://" + host + ":443/map");
+    return res.redirect("http://" + host + ":80/map");
   }
 
   public async logout(req: any, res: Response): Promise<any> {

@@ -16,7 +16,7 @@ defineFeature(feature, test => {
     page = await browser.newPage();
 
     await page
-      .goto("http://localhost:3000", {
+      .goto("http://localhost:80", {
         waitUntil: "networkidle0",
       })
       .catch(() => { });
@@ -54,7 +54,7 @@ defineFeature(feature, test => {
       await page.waitForSelector('a[href="/map"]')
       await page.waitForSelector('img')
       //Hago clic en el dropdown de perfil
-      await page.goto("http://localhost:3000/friends")
+      await page.goto("http://localhost:80/friends")
 
       //Espero a que se cargue la pagina de añadir lugar
 
