@@ -19,15 +19,6 @@ let privateKey = readFileSync("certificates/host.key");
 let certificate = readFileSync("certificates/host.cert");
 let credentials = { key: privateKey, cert: certificate };
 
-// app.all("*", function (req, res, next) {
-//   if (req.secure) {
-//     return next();
-//   }
-//   console.log("redirecting to https");
-//   console.log("https://" + req.hostname + req.url);
-//   res.redirect("https://" + req.hostname + req.url);
-// });
-
 app.use(bp.json());
 
 app.use("/api", api);

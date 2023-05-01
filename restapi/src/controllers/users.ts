@@ -122,13 +122,10 @@ module.exports = function (api: Router) {
     try {
       let sessionId: string = <string>req.session.solidSessionId;
 
-      console.log(sessionId)
-
       let userService: UserService = Factory.services.getUserService();
 
       return res.send(await userService.isLoggedIn(sessionId));
     } catch (error) {
-      console.log("isLogged error")
       console.log(error.message);
       return res.status(400).send({
         error: "There was an error while checking if the user is logged in",

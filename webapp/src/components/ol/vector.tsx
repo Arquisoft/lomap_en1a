@@ -17,13 +17,14 @@ import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
 import LoadingSpinner from "../LoadingSpinner";
+import { Category } from "../../domain/Category";
 
 //Global variables---------------------------------
 let source: VectorSource = new VectorSource({
   features: undefined,
 });
 export let displayMap = new Map();
-export let visibleCategories = [];
+export let visibleCategories: Category[] = [];
 let lastMarker = new Feature();
 let currVisibility = "";
 

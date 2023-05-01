@@ -219,16 +219,14 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 
 export async function getAllPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
   let response = await fetch(apiEndPoint + "/place/all/list", {
     credentials: "include",
     mode: "cors",
   });
-  if (response.status === 200){
-    return response.json();
-  }else{
-    return []
-  }
+  let url = "/place/all/list";
+  
+  return await handleErrorGet(url, [], response, apiEndPoint);
 }
 
 export async function getPublicPlacesByPublicUser(
@@ -357,7 +355,7 @@ export async function addFriend(id: string): Promise<boolean> {
     });
   } catch (error) {}
 
-  let url = "/picture/add";
+  let url = "/users/friends/add";
   let body = JSON.stringify({
     webId: id,
   })
