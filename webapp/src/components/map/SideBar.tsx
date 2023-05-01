@@ -194,6 +194,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
     refreshPublicPlaceList()
     refreshPrivatePlaceList()
     refreshSharedPlaceList()
+    refreshImportedPlaceList()
   }, [props.newPlace]);
 
 
@@ -377,7 +378,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-        <MenuItem onClick={()=>addUserToPublicList()}>Add me to public user list</MenuItem>
+        <MenuItem id="addToPublic" onClick={()=>addUserToPublicList()}>Add me to public user list</MenuItem>
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
         
       </Menu>
