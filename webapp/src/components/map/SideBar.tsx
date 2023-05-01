@@ -224,7 +224,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           {" "}
           <h2>LoMap</h2>
         </MenuItem>
-        <SubMenu label="Public sites" icon={<AddLocationIcon />} onClick={() => { refreshPublicPlaceList(); }
+        <SubMenu label="My public sites" icon={<AddLocationIcon />} onClick={() => { refreshPublicPlaceList(); }
 
         }>
 
@@ -253,7 +253,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
           ))}
 
         </SubMenu>
-        <SubMenu label="Private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
+        <SubMenu label="My private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
 
               {privatePlaces.map((place, index) => (
 
@@ -280,6 +280,33 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
               ))}
 
           </SubMenu>
+          <SubMenu label="My shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }}>
+
+            {sharedPlaces.map((place, index) => (
+
+
+              <MenuItem icon={<ArrowRightIcon />}
+
+                key={index}
+                onClick={() => {
+                  props.handleInfoWindowData({
+                    title: place.name,
+                    creator: place.owner,
+                    category:place.category,
+                    id: place.id,
+                    latitude: place.latitude,
+                    longitude: place.longitude,
+                    description:place.description
+
+                  });
+                  props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
+                  props.handleIsOpen(true);
+                }}
+
+              >{place.name}</MenuItem>
+            ))}
+
+            </SubMenu>
 
           <SubMenu label="Imported sites" icon={<AddLocationIcon />} onClick={() => { refreshImportedPlaceList(); }}>
 
@@ -309,33 +336,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
           </SubMenu>
 
-          <SubMenu label="Shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }}>
 
-            {sharedPlaces.map((place, index) => (
-
-
-              <MenuItem icon={<ArrowRightIcon />}
-
-                key={index}
-                onClick={() => {
-                  props.handleInfoWindowData({
-                    title: place.name,
-                    creator: place.owner,
-                    category:place.category,
-                    id: place.id,
-                    latitude: place.latitude,
-                    longitude: place.longitude,
-                    description:place.description
-
-                  });
-                  props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
-                  props.handleIsOpen(true);
-                }}
-
-              >{place.name}</MenuItem>
-            ))}
-
-          </SubMenu>
         <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } >
           {friends.map((ti, index) => (
             <MenuItem icon={<PersonIcon />}

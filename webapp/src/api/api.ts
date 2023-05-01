@@ -165,6 +165,20 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 
 //List public places by user
 
+export async function getAllPlacesByUser(): Promise<Place[]> {
+  const apiEndPoint =
+    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+  let response = await fetch(apiEndPoint + "/place/all/list", {
+    credentials: "include",
+    mode: "cors",
+  });
+  if (response.status === 200){
+    return response.json();
+  }else{
+    return []
+  }
+}
+
 export async function getPublicPlacesByPublicUser(
   id: string
 ): Promise<Place[]> {
@@ -336,6 +350,8 @@ export async function getProfileById(id: string): Promise<User> {
     return new User("ERROR","ERROR",null);
   }
 }
+
+
 
 export async function getAllPublicUsers(): Promise<User[]> {
   const apiEndPoint =
