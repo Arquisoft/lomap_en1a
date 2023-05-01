@@ -1,17 +1,15 @@
-import express, { Request, Response, Router } from 'express';
-import { Factory } from './src/Factory';
-import { PlaceService } from './src/business/place/PlaceService';
-import { CommentService } from './src/business/comment/CommentService';
-import { ScoreService } from './src/business/score/ScoreService';
-import { PictureService } from './src/business/picture/PictureService';
+import express, { Request, Response, Router } from "express";
+import { Factory } from "./src/Factory";
+import { PlaceService } from "./src/business/place/PlaceService";
+import { CommentService } from "./src/business/comment/CommentService";
+import { ScoreService } from "./src/business/score/ScoreService";
+import { PictureService } from "./src/business/picture/PictureService";
 import cors from "cors";
 
 const api: Router = express.Router();
 
-let factory: Factory = new Factory();
-
 const bodyParser = require("body-parser");
-const cookieSession = require('cookie-session');
+const cookieSession = require("cookie-session");
 api.use(bodyParser.json());
 api.use(
   cookieSession({
@@ -25,16 +23,15 @@ api.use(
   })
 );
 
-let host = process.env.host || 'localhost';
+let host = process.env.host || "localhost";
 api.use(
   cors({
     credentials: true,
-    origin: 'http://'+host+':3000',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    preflightContinue: true
-  }),
+    origin: "https://" + host + "",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: true,
+  })
 );
-
 
 //Place
 
@@ -64,12 +61,10 @@ require("./src/controllers/pictures.ts")(api, pictureService);
 
 require("./src/controllers/users.ts")(api);
 
-api.get("/",
-  async (req: Request, res: Response): Promise<Response> => {
+api.get("/", async (req: Request, res: Response): Promise<Response> => {
+  res.send("Rest API for LoMap");
 
-    res.send("Rest API for LoMap");
-
-    return res.status(200);
-  });
+  return res.status(200);
+});
 
 export default api;

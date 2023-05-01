@@ -10,7 +10,6 @@ import {
   getUrlAll,
   SolidDataset,
   createSolidDataset,
-  buildThing,
   addIri,
   getUrl,
 } from "@inrupt/solid-client";
@@ -52,9 +51,7 @@ export class PodDataManager {
           fetch: session.fetch,
         }
       );
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
 
     return dataset;
   }
@@ -87,15 +84,14 @@ export class PodDataManager {
 
     return true;
   }
-
   public async getProfile(sessionId: string, webId: string) {
     let session = await getSessionFromStorage(sessionId);
     if (session == null) {
-      throw new Error();
+      throw new Error("Session could not be found.");
     }
 
     if (webId == undefined) {
-      throw new Error();
+      throw new Error("WebId cannot be undefined.");
     }
     let a = webId.split("profile")[0];
     let url = a + this.profilePodZone + "#me";

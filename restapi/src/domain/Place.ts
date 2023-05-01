@@ -41,16 +41,12 @@ export class Place extends BaseEntity {
     return this.name;
   }
 
-  public setOwner(owner: string) {
-    this.owner = owner;
-  }
-
   public getOwner(): string {
     return this.owner;
   }
 
-  public setDescription(description: string) {
-    this.description = description;
+  public setOwner(owner: string): void {
+    this.owner = owner;
   }
 
   public getDescription(): string {
@@ -64,17 +60,8 @@ export class Place extends BaseEntity {
   public getLongitude(): number {
     return this.longitude;
   }
-
-  public setVisibility(visibility: Visibility) {
-    this.visibility = visibility;
-  }
-
   public getVisibility(): Visibility {
     return this.visibility;
-  }
-
-  public setCategory(category: Category) {
-    this.category = category;
   }
 
   public getCategory(): Category {

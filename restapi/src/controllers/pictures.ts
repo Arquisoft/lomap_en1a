@@ -23,8 +23,8 @@ module.exports = function (api: Router, service: PictureService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var place: string = <string>req.params.place;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let place: string = <string>req.params.place;
 
         return res.send(await service.findByPlace(sessionId, place));
       } catch (error) {
@@ -49,12 +49,12 @@ module.exports = function (api: Router, service: PictureService) {
         );
         Assertion.exists(req.body.visibility, "A visibility must be provided.");
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var url: string = <string>req.body.url;
-        var placeId: string = <string>req.body.place;
-        var visibility: Visibility = <Visibility>req.body.visibility;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let url: string = <string>req.body.url;
+        let placeId: string = <string>req.body.place;
+        let visibility: Visibility = <Visibility>req.body.visibility;
 
-        var picture: PictureDto = new PictureDto();
+        let picture: PictureDto = new PictureDto();
         picture.url = url;
         picture.place = placeId;
         picture.visibility = visibility;

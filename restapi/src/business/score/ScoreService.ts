@@ -16,15 +16,6 @@ export interface ScoreService {
   add(sessionId: string, score: ScoreDto): Promise<boolean>;
 
   /**
-   * Finds scores posted by a user.
-   * @param sessionId
-   * @param user REMOVE
-   * @returns A list of scores posted by the user.
-   */
-  // TODO: remove 'user'
-  findOwn(sessionId: string, user: string): Promise<Score[]>;
-
-  /**
    * Finds scores posted about a place.
    * @param sessionId
    * @param place ID of the place for which to find scores.

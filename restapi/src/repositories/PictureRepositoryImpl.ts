@@ -1,9 +1,10 @@
 import { PictureRepository } from "../business/repositories/PictureRepository";
 import { PodManager } from "./pods/PodManager";
 import { Picture } from "../domain/Picture";
-import { SolidDataset } from "@inrupt/solid-client";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { Visibility } from "../domain/Visibility";
+import { Worker } from "./pararelism/Worker";
+import { asyncParallelForEach } from "async-parallel-foreach";
 
 export class PictureRepositoryImpl implements PictureRepository {
   async add(sessionId: string, picture: Picture): Promise<boolean> {
@@ -29,102 +30,63 @@ export class PictureRepositoryImpl implements PictureRepository {
     );
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Picture[]> {
-    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
-
-    let pictures: Picture[] = [];
-
-    let dataset: SolidDataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "pictures",
-      webId,
-      "private"
-    );
-
-    pictures = PodManager.entityParser.parsePictures(dataset);
-
-    dataset = await PodManager.dataManager.fetchData(
-      sessionId,
-      "pictures",
-      webId,
-      "friends"
-    );
-
-    pictures = pictures.concat(PodManager.entityParser.parsePictures(dataset));
-
-    return pictures;
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Picture[]> {
     let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    let pictures = (await this.findOwn(sessionId, webId)).filter(
-      (c) => c.getPlace() === place
-    );
-
-    let friends: string[] = (
+    let friendsWebIds: string[] = (
       await PodManager.dataManager.getFriends(sessionId, webId)
     ).map((f) => f.getWebId());
 
-    let webIds: string[] = [];
+    let workers: Worker[] = [];
+    let aux: string[] = [];
+    let pictures: Picture[] = [];
+    let resource = "$webIdlomap/$visibility/pictures";
 
-    await (
-      await DatabaseConnection.find("pictures", {
-        place: place,
-        visibility: Visibility.PUBLIC,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId)) {
-        webIds.push(d.webId);
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "private")
+      )
+    );
+
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "friends")
+      )
+    );
+
+    let result = await DatabaseConnection.find("pictures", { place: place });
+
+    await result.forEach((picture) => {
+      if (
+        !aux.includes(picture.webId + "/" + picture.visibility.toLowerCase())
+      ) {
+        let webId = picture.webId;
+        let visibility = picture.visibility.toLowerCase();
+        aux.push(webId + "/" + visibility);
+        if (visibility == "public" || friendsWebIds.includes(webId)) {
+          workers.push(
+            new Worker(
+              sessionId,
+              resource
+                .replace("$webId", webId)
+                .replace("$visibility", visibility)
+            )
+          );
+        }
       }
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parsePictures(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "pictures",
-            webID,
-            "public"
-          )
-        )
-        .filter((p) => p.getPlace() == place)
-        .forEach((p) => {
-          pictures.push(p);
-        });
-    }
-
-    webIds = [];
-
-    await (
-      await DatabaseConnection.find("pictures", {
-        place: place,
-        visibility: Visibility.FRIENDS,
-      })
-    ).forEach((d) => {
-      if (!webIds.includes(d.webId) && friends.includes(d.webId)) {
-        webIds.push(d.webId);
-      }
+    await asyncParallelForEach(workers, -1, async (w: Worker) => {
+      await w.run();
     });
 
-    for (let w in webIds) {
-      let webID = webIds[w];
-      PodManager.entityParser
-        .parsePictures(
-          await PodManager.dataManager.fetchData(
-            sessionId,
-            "pictures",
-            webID,
-            "friends"
-          )
-        )
-        .filter((p) => p.getPlace() == place)
-        .forEach((p) => {
-          pictures.push(p);
-        });
-    }
+    workers.forEach((w) => {
+      pictures = pictures.concat(
+        PodManager.entityParser.parsePictures(w.getResult())
+      );
+    });
 
     return pictures;
   }

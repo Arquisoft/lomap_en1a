@@ -16,10 +16,6 @@ export class Picture extends Review {
     this.url = url;
   }
 
-  public setUrl(url: string) {
-    this.url = url;
-  }
-
   public getUrl(): string {
     return this.url;
   }
