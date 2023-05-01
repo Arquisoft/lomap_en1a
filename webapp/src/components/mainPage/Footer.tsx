@@ -9,7 +9,7 @@ export default function Footer():JSX.Element {
       <ul>
         <CustomLink to="/about">About us</CustomLink>
         <CustomLink to="/contact">Contact</CustomLink>
-        <CustomLink to="/faq">Frequently asked questions</CustomLink>
+        <CustomLink to="/faq">FAQ</CustomLink>
       </ul>
 
       
