@@ -34,9 +34,7 @@ test('check comment is added', async () => {
         expect(getByText("SHOP")).toBeInTheDocument();
 
         let buttons = getAllByText("Show");
-        let button = buttons[0]
         await fireEvent.click(buttons[0]);
-        let buttons2 = getAllByText("Hide");
 
         await waitFor(()=>expect(getByText("Hide")).toBeInTheDocument());
     });
