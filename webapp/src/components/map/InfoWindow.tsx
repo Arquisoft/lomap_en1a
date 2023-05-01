@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import noPic from "../../images/No_pictures_img.png";

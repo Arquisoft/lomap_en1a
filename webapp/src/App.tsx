@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NavBar from "./components/mainPage/NavBar"
 import React from 'react';
 import Home from "./components/mainPage/Home"
@@ -35,24 +36,24 @@ function App() {
     return (
 
         <div className="background-image container">
-    
-            <NavBar/>
+
+            <NavBar />
             <div className="margin">
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/contact" element={<Contact/>}/>
-                    <Route path="/login" element={<LoginForm/>}/>
-                    <Route path="/login/fail" element={<LoginForm fail={true}/>}/>
-                    <Route path="/map" element={<PrivateComponent children = {<MapView/>}/>}/>
-                    <Route path="/friends" element={<PrivateComponent children = {<FriendsView/>}/>}/>
-                    <Route path="/profile" element={<PrivateComponent children = {<UserProfile/>}/>}/>
-                    <Route path="/faq" element={<FAQ/>}></Route>
-                    <Route path="*" element={<Navigate to= "/"/>}/>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/login/fail" element={<LoginForm fail={true} />} />
+                    <Route path="/map" element={<PrivateComponent children={<MapView />} />} />
+                    <Route path="/friends" element={<PrivateComponent children={<FriendsView />} />} />
+                    <Route path="/profile" element={<PrivateComponent children={<UserProfile />} />} />
+                    <Route path="/faq" element={<FAQ />}></Route>
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </div>
-            <Footer/>
-    
+            <Footer />
+
 
             <Footer />
 

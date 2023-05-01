@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
