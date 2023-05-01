@@ -40,7 +40,7 @@ export class PodSessionManager {
         },
       });
     } catch (err) {
-      res.redirect("https://" + host + ":443/login/fail");
+      res.redirect("https://" + host + ":3443/login/fail");
     }
   }
 
@@ -57,7 +57,7 @@ export class PodSessionManager {
 
     await PodManager.permissionManager.setupPod(sessionId);
 
-    return res.redirect("http://" + host + ":80/map");
+    return res.redirect("http://" + host + ":3080/map");
   }
 
   public async logout(req: any, res: Response): Promise<any> {
