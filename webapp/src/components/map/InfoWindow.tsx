@@ -193,7 +193,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
         </Grid>
         
         <Grid item xs={12}>
-          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} user={"username"}/>
+          <PictureSelector OnPictureListChange={refreshPicturesSlide} place={props.infoWindowData?.id} handleIsLoading={props.handleIsLoading}/>
         </Grid>
         <Grid item xs={6.5} alignItems="stretch" textAlign="center">
           <Box

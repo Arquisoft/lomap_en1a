@@ -7,7 +7,6 @@ import { getPlacesToShareByUser } from "../../api/api";
 import { Place } from "../../domain/Place";
 import { Button } from "@mui/material";
 import { addFriendMarkerById, deleteMarkerById, displayMap } from "../ol/vector";
-import LoadingSpinner from "../LoadingSpinner";
 import { Divider } from '@material-ui/core';
 
 
@@ -54,7 +53,6 @@ export function FriendPanel(props: FriendPanelProps): JSX.Element {
     return (
 
         <>
-            {/*isLoading ? <LoadingSpinner message="Loading your friend's markers" /> : <></>*/}
             
             <Grid container spacing={3} justifyContent="space-around"
                     marginLeft='auto' marginRight='auto'>
