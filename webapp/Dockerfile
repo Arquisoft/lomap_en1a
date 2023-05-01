@@ -16,4 +16,5 @@ RUN npm run build
 
 #Execute npm run prod to run the server
 #CMD [ "npm", "run", "prod" ]
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
+CMD node server.ts

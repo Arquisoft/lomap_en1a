@@ -26,7 +26,7 @@ export class PodSessionManager {
     provider = decodeURIComponent(provider);
 
     let redirect = req.params.redirect;
-    redirect = "https://" + host + ":5000/api/login/success";
+    redirect = "https://" + host + this.port + "/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;

@@ -6,11 +6,13 @@ services:
   restapi:
     build: ./restapi
     ports:
-      - "5000:5000"
+      - "5080:5080"
+      - "5443:5443"
 
   webapp:
     build: ./webapp
     ports:
+      - "80:80"
       - "443:443"
     depends_on:
       - restapi

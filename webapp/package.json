@@ -14,6 +14,7 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "express": "^4.18.2",
+    "express-static-gzip": "^2.1.7",
     "ol": "^7.3.0",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
@@ -26,10 +27,10 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!ol)/\" --coverage",
-    "test:e2e": "start-server-and-test 'npm --prefix ../restapi run start' https://localhost:5000/api start 3000 \"cd e2e && jest\"",
+    "test:e2e": "start-server-and-test 'npm --prefix ../restapi run start' http://localhost:5080/api 'node server.js' http://localhost:80 \"cd e2e && jest\"",
     "eject": "react-scripts eject",
     "prod": "ts-node-dev ./server.ts"
   },

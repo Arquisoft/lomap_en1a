@@ -2,17 +2,13 @@ version: "3.5"
 services:
   restapi:
     image: ghcr.io/arquisoft/lomap_en1a/restapi:latest
-    volumes:
-      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/host.pem
-      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/host.cert
     ports:
-      - "5000:5000"
+      - "5080:5080"
+      - "5443:5443"
   webapp:
     image: ghcr.io/arquisoft/lomap_en1a/webapp:latest
-    volumes:
-      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/host.pem
-      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/host.cert
     ports:
+      - "80:80"
       - "443:443"
     depends_on:
       - restapi
