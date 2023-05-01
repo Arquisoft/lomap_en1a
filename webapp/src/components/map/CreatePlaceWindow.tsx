@@ -73,12 +73,12 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
 
 
   const handleVisibilityChange = async (value: string) => {
-    var newVisibility = (Visibility as any)[value]
+    let newVisibility = (Visibility as any)[value]
     setVisibility(newVisibility);
   }
 
   const handleCategoryChange = async (value: string) => {
-    var newCategory = (Category as any)[value]
+    let newCategory = (Category as any)[value]
 
     setCategory(newCategory);
   }
@@ -89,7 +89,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
     setIsLoading(true);
     e.preventDefault();
     if (validateText()) {//If the name of the place is valid
-      var place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
+      let place = new Place("", name, description, "", props.latitude, props.longitude, visibility, category);
       let result = await addPlace(place);
 
       if (result.id != "ERR") {
@@ -102,7 +102,7 @@ export default function CreatePlaceWindow(props: CreatePlaceWindowProps): JSX.El
         props.handleDeleteMarker(false);
         props.handleIsOpen(false); //Close the create place window automatically
 
-        var v = Visibility[visibility].toLowerCase();
+        let v = Visibility[visibility].toLowerCase();
         changeMarkerColour(v); //Changes the last marker colour
 
         updateMapList(result);
