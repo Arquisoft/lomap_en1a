@@ -10,30 +10,34 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
 import LoadingSpinner from "../LoadingSpinner";
-import { Category } from "../../domain/Category";
+
+
+
+
 
 //Global variables---------------------------------
-let source: VectorSource = new VectorSource({
+var source: VectorSource = new VectorSource({
   features: undefined,
 });
-export let displayMap = new Map();
-export let visibleCategories: Category[] = [];
-let lastMarker = new Feature();
-let currVisibility = "";
+export var displayMap = new Map();
+// @ts-ignore
+export var visibleCategories = new Array();
+var lastMarker = new Feature();
+var currVisibility = "";
 
 //List of all places added to the map
-let places: Place[];
+var places: Place[];
 places = [];
 
 //List of public users to show their places
-export let displayedUsers: string[];
+export var displayedUsers: string[];
 displayedUsers = [];
 //-------------------------------------------------
 
@@ -42,12 +46,12 @@ displayedUsers = [];
 
 //Adds all the places given in the array to the map
 const addAllMarkers = (p: Place[], myOwn: boolean) => {
-  let coordinates: number[];
+  var coordinates: number[];
   for (let i = 0; i < p.length; i++) {
     places.push(p[i])
     coordinates = [p[i].longitude, p[i].latitude];
-    let visibility = p[i].visibility;
-    let category = p[i].category;
+    var visibility = p[i].visibility;
+    var category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
       addMarker(coordinates, visibility, category, p[i].id);
   }
@@ -102,7 +106,7 @@ const addAllPlacesByUser = async (handleIsMainLoading?: (value: boolean) => Prom
 const getMarkers = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
   //addPublicPlaces(counter)
   //addSharedPlaces(counter)
-  if (handleIsMainLoading) {
+  if(handleIsMainLoading){
     handleIsMainLoading(true);
   }
   addAllPlacesByUser(handleIsMainLoading);
@@ -114,10 +118,10 @@ const checkCategory = (category: string) => {
   if (category === "DEFAULT" || visibleCategories.length === 0) {
     return true;
   } else {
-    if (category === undefined) {
+    if (typeof category === undefined) {
       return false;
     } else {
-      let isCategoryVisible = false;
+      var isCategoryVisible = false;
       for (let i = 0; i < visibleCategories.length; i++) {
         if (visibleCategories[i] === category) {
           isCategoryVisible = true;
@@ -137,14 +141,14 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
     name: "feature"
   });
 
-  let color;
+  var color;
 
   switch (visibility) {
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
@@ -160,9 +164,9 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
   featureToAdd.setStyle(style);
   featureToAdd.setId(id);
 
-  let markerVisibility = visibility.toUpperCase()
-  let markerCategory = category;
-  if (category !== null && category !== undefined) {
+  var markerVisibility = visibility.toUpperCase()
+  var markerCategory = category;
+  if (category !== null && typeof category !== undefined) {
     markerCategory = markerCategory.toUpperCase();
   }
 
@@ -182,7 +186,7 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
 
 const checkVisibility = (visibility: string) => {
 
-  if (currVisibility !== undefined) {
+  if (typeof currVisibility !== undefined) {
     if (currVisibility && visibility !== currVisibility) {
       return false;
     }
@@ -211,13 +215,13 @@ export function removeMarkersByUserId(id: string) {
 
 export function addFriendMarkerById(id: string) {
   getSharedPlacesByFriends().then((p) => {
-    let coordinates: number[];
+    var coordinates: number[];
     for (let i = 0; i < p.length; i++) {
       if (p[i].id === id) {
         places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
-        let visibility = p[i].visibility;
-        let category = p[i].category;
+        var visibility = p[i].visibility;
+        var category = p[i].category;
         addMarker(coordinates, visibility, category, p[i].id, false, true);
       }
     }
@@ -232,8 +236,8 @@ function deleteAllMarkers(places: Place[]) {
 
 //Deletes a marker given its ID
 export function deleteMarkerById(id: string) {
-  let sourceFeatures = source.getFeatures()
-  let markerToDelete = sourceFeatures.find(marker => marker.getId() === id)
+  var sourceFeatures = source.getFeatures()
+  var markerToDelete = sourceFeatures.find(marker => marker.getId() === id)
   if (markerToDelete !== undefined) {
     source.removeFeature(markerToDelete);
   }
@@ -254,14 +258,14 @@ export function deleteMarker() {
 //Changes the colour of the last marker given its visibility
 export function changeMarkerColour(visibility: string) {
 
-  let color;
+  var color;
 
   switch (visibility) {
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
@@ -335,12 +339,12 @@ function Vector(props: TVectorLayerComponentProps) {
 
     let f = feature as Feature<Point>;
     let id = f.getId() as string;
-    let place = findPlace(id);
+    var place = findPlace(id);
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
       creator: place.owner,
-      category: place.category,
+      category:place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude,

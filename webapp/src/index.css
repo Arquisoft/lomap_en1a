@@ -39,7 +39,7 @@ h1 {
 }
 
 ul {
-  list-style: none;
+  list-style: circle;
 }
 
 a {
@@ -56,6 +56,18 @@ footer {
 }
 
 /* General classes---------------------------------------------------- */
+
+.question {
+  border: 0.1em solid rgb(134, 134, 134);
+  padding: 0.2em 0.5em;
+  border-radius: 0.4em;
+  list-style: circle;
+}
+
+.question h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+}
 
 .bgr-color {
   background-color: rgba(51, 51, 51, 0.8);
