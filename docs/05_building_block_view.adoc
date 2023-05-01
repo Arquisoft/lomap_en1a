@@ -349,7 +349,7 @@ object Score{
 ----
 
 ==== MapService
-The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information.
+The Map provider is an external service, provided through an API, that allows LoMap to obtain the most recent and updated maps available, in order to avoid providing outdated information to the end user. It is interacted with through the WebApp, as the ResAPI does no longer need that information. The vendor selected is OpenStreetMaps, as it provides free access to their API for non-commercial usage, and it aligns with the privacy principles of our application.
 
 In order to receive the service of the Map provider, an API key was obtained that authenticates all requests done through the WebApp.
 
