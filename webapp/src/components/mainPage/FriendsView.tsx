@@ -55,7 +55,6 @@ function FriendsTable() {
   const [notificationStatus, setNotificationStatus] = useState(false);
   const [notification, setNotification] = useState<NotificationType>({ severity: 'success', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const [text, setText] = useState("");
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - requests.length) : 0;
   const handleChangePage = (
@@ -231,13 +230,13 @@ export default function FriendsView() {
         {isLoading ? <LoadingSpinner message="Loading your petition" /> : <div></div>}
         <Grid container spacing={2} style={isLoading ? { pointerEvents: "none", opacity: "0.4" } : {}} >
           <Grid item xs={4}>
-            <Box 
-                  height="100%"
-                  display="flex"
-                  justifyContent="center"
-                  flexDirection="column">
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
               <TextField className="text-box"
-                style={{ width: '100%'}}
+                style={{ width: '100%' }}
                 multiline
                 required
                 name="text"
@@ -246,16 +245,16 @@ export default function FriendsView() {
                 value={text}
                 onChange={e => {
                   setText(e.target.value);
-                }}/>
+                }} />
             </Box>
           </Grid>
           <Grid item xs={1.5}>
-            <Box 
-                height="100%"
-                display="flex"
-                justifyContent="center"
-                flexDirection="column">
-              <Button sx={{height: '100%'}} variant="contained" type="submit" onClick={() => handleSubmit(text)} disabled={text.length == 0}>Send request</Button>
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+              <Button sx={{ height: '100%' }} variant="contained" type="submit" onClick={() => handleSubmit(text)} disabled={text.length === 0}>Send request</Button>
             </Box>
           </Grid>
 

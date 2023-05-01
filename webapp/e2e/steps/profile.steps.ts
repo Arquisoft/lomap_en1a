@@ -1,4 +1,3 @@
-import { waitFor } from '@testing-library/react';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
@@ -68,7 +67,7 @@ defineFeature(feature, test => {
     then('The user sees his profile', async () => {
       await expect(page).toMatch('Username')
     });
-  })
+  }, 1000000)
 
 
 

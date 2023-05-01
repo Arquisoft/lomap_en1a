@@ -59,7 +59,7 @@ defineFeature(feature, test => {
     then('The user enters the map page', async () => {
       await expect(page).toMatch('Map')
     });
-  })
+  }, 1000000)
 
 
 

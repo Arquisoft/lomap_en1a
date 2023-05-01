@@ -1,5 +1,5 @@
-import { useState, useEffect} from "react";
-import { TextField, FormGroup } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { TextField } from "@material-ui/core";
 import { login } from "../../api/api";
 import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
@@ -10,11 +10,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 export interface LoginFormProps {
-  fail?:boolean;
+  fail?: boolean;
 }
 
-export default function LoginForm(props:LoginFormProps):JSX.Element{
-  const [cookies,setCookie] = useCookies();
+export default function LoginForm(props: LoginFormProps): JSX.Element {
+  const [cookies, setCookie] = useCookies();
 
   const [idp, setIdp] = useState("");
   const [currentUrl, setCurrentUrl] = useState("http://localhost:443/map");
@@ -28,10 +28,10 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
       errorHandler("This provider is not supported.")
     }
     setCurrentUrl(window.location.href);
-  }, [setCurrentUrl]);
+  }, [currentUrl]);
 
 
-  function errorHandler(message:string) {
+  function errorHandler(message: string) {
     setNotificationStatus(true);
     setNotification({
       severity: 'warning',
@@ -39,49 +39,49 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
     })
   }
 
-  const handleLogin =async () => {
+  const handleLogin = async () => {
     if (idp.trim().length === 0) {
       errorHandler("The provider cannot be empty.")
     } else {
       login(idp.trim(), currentUrl)
-      .then(()=>{
-        setCookie('isLogged','true')
-      })
+        .then(() => {
+          setCookie('isLogged', 'true')
+        })
     }
   };
 
-  const handleLoginBtn =async (idp2:string) => {
+  const handleLoginBtn = async (idp2: string) => {
     if (idp2.trim().length === 0) {
       errorHandler("The provider cannot be empty.")
     } else {
       login(idp2.trim(), currentUrl)
-      .then(()=>{
-        setCookie('isLogged','true')
-      })
+        .then(() => {
+          setCookie('isLogged', 'true')
+        })
     }
     login(idp2.trim(), currentUrl)
-      .then(()=>{
-        setCookie('isLogged','true')
+      .then(() => {
+        setCookie('isLogged', 'true')
       })
   };
 
   return (
     <>
-      <Grid container className="centered-grid grid-text-area" spacing={3} justifyContent="space-around" 
-            width={'80%'} height={'80%'} marginLeft={'auto'} marginRight={'auto'} padding={"0em 1em 1em 1em"}>
+      <Grid container className="centered-grid grid-text-area" spacing={3} justifyContent="space-around"
+        width={'80%'} height={'80%'} marginLeft={'auto'} marginRight={'auto'} padding={"0em 1em 1em 1em"}>
         <Grid item xs={12} textAlign={"center"}>
           <Box
-              sx={{ height: '20%' }}
-              display="flex"
-              justifyContent="center"
-              flexDirection="column">
+            sx={{ height: '20%' }}
+            display="flex"
+            justifyContent="center"
+            flexDirection="column">
             <h1>Log in with your POD!</h1>
           </Box>
           <Box
-              sx={{ height: '80%' }}
-              display="flex"
-              justifyContent="center"
-              flexDirection="column">
+            sx={{ height: '80%' }}
+            display="flex"
+            justifyContent="center"
+            flexDirection="column">
             <Grid container xs={12} spacing={1} justifyContent="space-around">
               <Grid item xs={8} textAlign={"center"}>
                 <Box
@@ -89,16 +89,16 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
                   display="flex"
                   justifyContent="center"
                   flexDirection="column">
-                    <Grid container xs={9} spacing={2} justifyContent="space-around" 
-                        marginLeft={'auto'} marginRight={'auto'}>
-                      <Grid item xs={10} textAlign={"center"}>
+                  <Grid container xs={9} spacing={2} justifyContent="space-around"
+                    marginLeft={'auto'} marginRight={'auto'}>
+                    <Grid item xs={10} textAlign={"center"}>
                       <Box
-                          height="100%"
-                          display="flex"
-                          justifyContent="center"
-                          flexDirection="column">
+                        height="100%"
+                        display="flex"
+                        justifyContent="center"
+                        flexDirection="column">
                         <TextField
-                          style={{ width: '100%'}}
+                          style={{ width: '100%' }}
                           required
                           spellCheck={false}
                           multiline
@@ -110,41 +110,41 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
                           onChange={(e) => setIdp(e.target.value)}
                         />
                       </Box>
-                        
-                      </Grid>
-                      <Grid item xs={2} textAlign={"center"}>
-                        <Box
-                            height="100%"
-                            width="100%"
-                            display="flex"
-                            justifyContent="center"
-                            flexDirection="column">
-                          <Button id="btn-Go" sx={{ height: '100%'}} variant="contained" type="submit" onClick={handleLogin} disabled={idp.length == 0}>
-                            Go
-                          </Button>            
-                          <Snackbar id="incorrect-Idp-Alert" open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
-                            <Alert severity={notification.severity} sx={{ width: '100%' }}>
-                              {notification.message}
-                            </Alert>
-                          </Snackbar>
-                        </Box>
-                      </Grid>
+
                     </Grid>
+                    <Grid item xs={2} textAlign={"center"}>
+                      <Box
+                        height="100%"
+                        width="100%"
+                        display="flex"
+                        justifyContent="center"
+                        flexDirection="column">
+                        <Button id="btn-Go" sx={{ height: '100%' }} variant="contained" type="submit" onClick={handleLogin} disabled={idp.length === 0}>
+                          Go
+                        </Button>
+                        <Snackbar id="incorrect-Idp-Alert" open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
+                          <Alert severity={notification.severity} sx={{ width: '100%' }}>
+                            {notification.message}
+                          </Alert>
+                        </Snackbar>
+                      </Box>
+                    </Grid>
+                  </Grid>
                 </Box>
                 <Box
-                    sx={{ height: '75%' }}
-                    display="flex"
-                    justifyContent="center"
-                    flexDirection="column">
-                  <Grid container xs={12} spacing={1} justifyContent="space-around" 
-                      width={'80%'} marginLeft={'auto'} marginRight={'auto'}>
+                  sx={{ height: '75%' }}
+                  display="flex"
+                  justifyContent="center"
+                  flexDirection="column">
+                  <Grid container xs={12} spacing={1} justifyContent="space-around"
+                    width={'80%'} marginLeft={'auto'} marginRight={'auto'}>
                     <ProviderButton text="Solid Community" idp="https://solidcommunity.net"></ProviderButton>
                     <ProviderButton text="Solid Web" idp="https://solidweb.org"></ProviderButton>
                     <ProviderButton text="inrupt.net" idp="https://inrupt.net"></ProviderButton>
                     <ProviderButton text="pod.inrupt.com" idp="https://login.inrupt.com"></ProviderButton>
                   </Grid>
                 </Box>
-              </Grid>              
+              </Grid>
             </Grid>
           </Box>
         </Grid>
@@ -160,15 +160,15 @@ export default function LoginForm(props:LoginFormProps):JSX.Element{
           display="flex"
           justifyContent="center"
           flexDirection="column">
-            <button className="btn-login" onClick={() => {
-                setIdp(props.idp);
-                handleLoginBtn(props.idp);
-                }}>
-              {props.text}
-            </button>
+          <button className="btn-login" onClick={() => {
+            setIdp(props.idp);
+            handleLoginBtn(props.idp);
+          }}>
+            {props.text}
+          </button>
         </Box>
       </Grid>
-    )      
+    )
   }
 }
 

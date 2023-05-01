@@ -1,4 +1,3 @@
-import { waitFor } from '@testing-library/react';
 import { defineFeature, loadFeature } from 'jest-cucumber';
 import puppeteer from "puppeteer";
 
@@ -12,7 +11,7 @@ defineFeature(feature, test => {
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: false, slowMo: 150 });
+      : await puppeteer.launch({ headless: true, slowMo: 50 });
     page = await browser.newPage();
 
     await page
@@ -68,7 +67,7 @@ defineFeature(feature, test => {
     then('The user sees the friends management view', async () => {
       await expect(page).toMatch('Friend management menu')
     });
-  })
+  }, 1000000)
 
 
 
