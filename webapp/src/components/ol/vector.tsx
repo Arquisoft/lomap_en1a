@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -17,7 +17,6 @@ import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
 import LoadingSpinner from "../LoadingSpinner";
-import { Grid } from "@mui/material";
 
 
 
@@ -28,6 +27,7 @@ var source: VectorSource = new VectorSource({
   features: undefined,
 });
 export var displayMap = new Map();
+// @ts-ignore
 export var visibleCategories = new Array();
 var lastMarker = new Feature();
 var currVisibility = "";
@@ -115,7 +115,7 @@ const getMarkers = async (handleIsMainLoading?: (value: boolean) => Promise<void
 }
 
 const checkCategory = (category: string) => {
-  if (category == "DEFAULT" || visibleCategories.length == 0) {
+  if (category === "DEFAULT" || visibleCategories.length === 0) {
     return true;
   } else {
     if (typeof category === undefined) {
