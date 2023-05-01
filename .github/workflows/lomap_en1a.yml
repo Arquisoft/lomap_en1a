@@ -6,7 +6,7 @@ on:
 
 jobs:
   unit-test-webapp:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     defaults:
       run:
         working-directory: webapp
@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   unit-test-restapi:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     defaults:
       run:
         working-directory: restapi
@@ -41,7 +41,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   e2e-tests:
     needs: [unit-test-webapp, unit-test-restapi]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -55,7 +55,7 @@ jobs:
       - run: npm --prefix webapp run test:e2e
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     # needs: [unit-test-webapp, unit-test-restapi]
     needs: [e2e-tests]
     steps:
@@ -73,7 +73,7 @@ jobs:
           buildargs: API_URI
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     # needs: [unit-test-webapp, unit-test-restapi]
     needs: [e2e-tests]
     steps:
@@ -88,7 +88,7 @@ jobs:
           workdir: restapi
   deploy:
     name: Deploy over SSH
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     needs: [docker-push-restapi, docker-push-webapp]
     steps:
       - name: Deploy over SSH
