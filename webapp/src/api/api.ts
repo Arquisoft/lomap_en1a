@@ -101,7 +101,6 @@ export async function addPlace(place: Place): Promise<Place> {
   if (response.status === 200){
     return response.json();
   }else{
-    console.log(response.status)
     return new Place("ERR", "", "", "", 0, 0, Visibility.PUBLIC, Category.BAR);
   }
   
@@ -119,7 +118,6 @@ export async function getPictures(id: string): Promise<Picture[]> {
   if (response.status === 200){
     return response.json();
   }else{
-    console.log(response.status)
     return []
   }
  
@@ -379,7 +377,6 @@ export async function isLoggedIn(): Promise<boolean> {
   if (response.status === 200){
     return response.json();
   }else{
-    console.log("jdfnsdl "+response.status)
     return false;
   }
 }

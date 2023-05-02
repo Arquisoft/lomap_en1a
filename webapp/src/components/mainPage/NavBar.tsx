@@ -53,7 +53,7 @@ function LoggedNavbar(props:LogoutProps) {
  const getUrl=()=>{
   let host = process.env.host || "localhost";
   let url = window.location.href;
-    return "http://"+host+":3000/map"
+  return "http://172.187.193.114:3000/map"
   
 
  }
