@@ -179,7 +179,7 @@ test('check public list place is shown', async () => {
     });
   })
 
-  test('check users can add themselves to public list', async () => {
+  test('check users can add themselves to public list succesfully', async () => {
 
     await act(async () => {
       const { container, getByText } = render(
@@ -194,6 +194,28 @@ test('check public list place is shown', async () => {
       const button = getByText("Add me to public user list");
       fireEvent.click(button);
       expect(jest.spyOn(api, 'addUserToList')).toBeCalled()
+      await waitFor(()=>expect(getByText("You have been added to the public user list!")).toBeInTheDocument());
+    });
+  })
+
+
+  test('check users can add themselves to public list fail', async () => {
+
+    jest.spyOn(api, 'addUserToList').mockImplementation((): Promise<boolean> => Promise.resolve(false));
+    await act(async () => {
+      const { container, getByText } = render(
+      <ProSidebarProvider>
+          <MySideBar handleFriendWindowData={handleFriendWindowData} 
+              handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
+          visibility="test" handleIsOpen={handleIsOpen} newPlace={1} />
+      </ProSidebarProvider>
+  
+        )
+      await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
+      const button = getByText("Add me to public user list");
+      fireEvent.click(button);
+      expect(jest.spyOn(api, 'addUserToList')).toBeCalled()
+      await waitFor(()=>expect(getByText("There\'s been an error adding you to the public user list.")).toBeInTheDocument());
     });
   })
 
@@ -240,6 +262,32 @@ test('check public list place is shown', async () => {
   })
 
   test('check imported places can be removed', async () => {
+
+    await act(async () => {
+      const { container, getByText } = render(
+      <ProSidebarProvider>
+          <MySideBar handleFriendWindowData={handleFriendWindowData} 
+              handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
+          visibility="test" handleIsOpen={handleIsOpen} newPlace={1} />
+      </ProSidebarProvider>
+  
+        )
+        await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
+        const display = getByText("Public users");
+        fireEvent.click(display);
+        const button = getByText("Hide this user's markers")
+        fireEvent.click(button);
+        expect(jest.spyOn(api, 'getPublicPlacesByPublicUser')).toBeCalled()
+
+        const menu = getByText("Imported sites")
+        fireEvent.click(menu);
+
+        expect(() => getByText('TEST-IMPORTED')).toThrow('Unable to find an element');
+        expect(() => getByText('TEST-IMPORTED-2')).toThrow('Unable to find an element');
+    });
+  })
+
+  test('check add to public user list works ', async () => {
 
     await act(async () => {
       const { container, getByText } = render(
