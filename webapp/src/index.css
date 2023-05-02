@@ -177,8 +177,10 @@ footer {
   font-size: 1.6vmax;
 }
 
-.text-area ul {
+.text-area ul, .grid-text-area ul {
   list-style-type: circle;
+  text-align: left;
+  font-size: 1.6vmax;
 }
 
 .fade-in {
