@@ -45,12 +45,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+        env:
+          CI: ""
         with:
           node-version: 18
       - run: npm --prefix webapp install
       - run: npm --prefix restapi install
       - run: npm --prefix webapp run build
-        env: CI: ""
       - run: npm --prefix webapp run test:e2e
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
