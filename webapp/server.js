@@ -25,7 +25,7 @@ app.all('*', function (req, res, next) {
     if (req.secure) {
         return next();
     }
-    res.redirect('https://' + req.hostname + req.url);
+    res.redirect('https://lomapen1a.cloudns.ph' + req.url);
 });
 
 //Base path of our application. We serve first the brotli version (compression).

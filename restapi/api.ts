@@ -23,7 +23,6 @@ api.use(
   })
 );
 
-let host = process.env.host || "localhost";
 api.use(
   cors({
     credentials: true,

@@ -14,7 +14,7 @@ app.all('*', function(req, res, next){
   if (req.secure) {
       return next();
   }
-  res.redirect('https://'+ req.hostname + ":" + portHttps + req.url);
+  res.redirect('https://'+ "lomapen1a.cloudns.ph" + ":" + portHttps + req.url);
 });
 
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
