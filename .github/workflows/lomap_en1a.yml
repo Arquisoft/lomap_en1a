@@ -33,8 +33,8 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST }}
-        API_URI: https://${{ secrets.DEPLOY_HOST }}:5443/api
+        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST_RUBEN }}
+        API_URI: https://${{ secrets.DEPLOY_HOST_RUBEN }}:5443/api
       with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
@@ -51,7 +51,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST }}
+        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST_RUBEN }}
       with:
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
@@ -67,9 +67,9 @@ jobs:
     - name: Deploy over SSH
       uses: fifsky/ssh-action@master
       with:
-        host: ${{ secrets.DEPLOY_HOST }}
+        host: ${{ secrets.DEPLOY_HOST_RUBEN }}
         user: ${{ secrets.DEPLOY_USER }}
-        key: ${{ secrets.DEPLOY_KEY }}
+        key: ${{ secrets.DEPLOY_KEY_RUBEN }}
         command: |
           wget https://raw.githubusercontent.com/arquisoft/lomap_en1a/deploy-with-https-certificate-3/docker-compose-deploy.yml -O docker-compose.yml
           docker-compose stop
