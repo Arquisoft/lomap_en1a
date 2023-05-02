@@ -40,11 +40,11 @@ database POD
 
 User-> Frontend: Send location data
 Frontend-> Backend: Location data addition request
-Backend-> DB: Insert location metadata
-Backend-> POD: Insert location metadata
+Backend-> DB: Insert location link data
+Backend-> POD: Insert location data
 
 DB --> Backend: Insertion results
-POD --> Backend: Insertion results
+' POD --> Backend: Insertion results
 Backend--> Frontend: Send feedback
 Frontend--> User: Feedback presentation
 @enduml

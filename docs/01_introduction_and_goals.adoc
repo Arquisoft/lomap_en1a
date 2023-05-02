@@ -13,7 +13,7 @@ The software is planned to include several features to provide several services.
 * Include a way of managing the information that is accessible with other users, i.e. the level of privacy desired for each piece of information.
 * Filter the map's markers by category, friends, etc.
 
-This and more requirements can be found in the link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
+These and more requirements can be found in the link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
 
 === Quality Goals
 These are the most important quality goals this application must fulfill:
@@ -27,7 +27,7 @@ These are the most important quality goals this application must fulfill:
 |QS8|Maintainability & Support|Testability|The application should have a test coverage greater than 80%.
 |===
 
-For the full list of quality goals, refer to the link:10_quality_scenarios.adoc[quality scenarios section].
+For the full list of quality goals, refer to the <<_quality_goals>>.
 
 === Stakeholders
 These are some stakeholders the application has to interact with:
