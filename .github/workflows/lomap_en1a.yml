@@ -72,7 +72,6 @@ jobs:
           registry: ghcr.io
           workdir: webapp
           buildargs: HOST_DOMAIN, API_URI
-        run: echo ${{ secrets.HOST_NAME }}
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
