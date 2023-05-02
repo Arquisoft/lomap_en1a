@@ -516,27 +516,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 	.arc42help {display:hidden;}
 }
 </style>
-<hr>
-<div class="sidebarblock arc42help">
-<div class="content">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This version of the template contains some help and explanations.
-It is used for familiarization with arc42 and the understanding of the concepts.
-For documentation of your own system you use better the <em>plain</em> version.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -574,7 +553,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </ul>
 </div>
 <div class="paragraph">
-<p>This and more requirements can be found in the <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
+<p>These and more requirements can be found in the <a href="https://arquisoft.github.io/course2223/labAssignmentDescription.html">version 1.0 of the assignment description</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -606,7 +585,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">25 concurrent users request the map of a given city in less than 10 seconds.</p></td>
 </tr>
@@ -625,7 +604,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </tbody>
 </table>
 <div class="paragraph">
-<p>For the full list of quality goals, refer to the <a href="10_quality_scenarios.adoc">quality scenarios section</a>.</p>
+<p>For the full list of quality goals, refer to the <a href="10_quality_scenarios.adoc#_quality_scenarios">quality scenario list</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1148,7 +1127,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Building%20Block%20View%20-%20Level%202%20WebApp.svg" alt="Building Block View   Level 2 WebApp" width="1463" height="457">
+<img src="./images/Building%20Block%20View%20-%20Level%202%20WebApp.svg" alt="Building Block View   Level 2 WebApp" width="1670" height="497">
 </div>
 </div>
 <div class="sect3">
@@ -1166,36 +1145,84 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Api</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interacts with the RestAPI through HTTP requests</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">About.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Redirects to the about page.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">App</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main component of the application, that is the only component that the index shows</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">api.ts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interacts with the RestAPI through HTTP requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CommentForm.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Form to post a new comment in a place.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CommentList.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">List that contains all the comments of a place.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Contact.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Redirects to the contact information page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Redirects to the contact information page.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">About.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Redirects to the about page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CreatePlaceWindow.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Window for the creation of a new place.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">UserProfile.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shows the name and webId of the current user logged in</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FilterCategory.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Strip holding the filters of the application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Footer.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the links to the About and Contact pages.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FriendPanel.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Small panel that holds your friends.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FriendsView.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friend management page.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Home.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Presents the application and its features.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InfoWindow.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Holds the information of a place.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LoginForm.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Offers the option to log in with an Identity Provider</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NavBar.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tops the main view of the page, and offers log in and logout options</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Offers the option to log in with an Identity Provider.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MapView.tsx</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Main component of the page itself. Contains the most important components of the frontend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Main component of the page itself. Contains the most important components of the frontend.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NavBar.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tops the main view of the page, and offers log in and logout options.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PictureSelector.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows users to select an image to upload.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Profile.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shows your profile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sidebar.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains all pop-down menus of the map.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SlideShow.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Used to hold several images as a carousel.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UserProfile.tsx</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shows the name and webId of the current user logged in.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1207,7 +1234,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Building%20Block%20View%20-%20Level%202%20RestAPI.svg" alt="Building Block View   Level 2 RestAPI" width="1588" height="652">
+<img src="./images/Building%20Block%20View%20-%20Level%202%20RestAPI.svg" alt="Building Block View   Level 2 RestAPI" width="2045" height="742">
 </div>
 </div>
 </div>
@@ -1248,6 +1275,10 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PodAccess</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">In charge of handling POD accesses, authentication and data fetching.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PermissionManagement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handles the required permissions to access POD data.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1311,7 +1342,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="./images/Add%20location%20scenario.svg" alt="Add location scenario" width="640" height="427">
+<img src="./images/Add%20location%20scenario.svg" alt="Add location scenario" width="635" height="397">
 </div>
 </div>
 </div>
@@ -1491,7 +1522,7 @@ In order to speed up data fetching and access, the system is fitted with a JSON-
 They do not contain other entities (for example, in the case of places, they don&#8217;t contain its reviews), but that information is stored in the database as small documents that contain the two entities to link, as well as some extra information to include the privacy level of the item and the webId of the owner.</p>
 </div>
 <div class="paragraph">
-<p>Refer to <a href="05_building_block_view.adoc">the database schema</a> for a representation of this data.</p>
+<p>Refer to <a href="05_building_block_view.adoc#_database">database schema</a> for a representation of this data.</p>
 </div>
 </div>
 </div>
@@ -1684,7 +1715,7 @@ The following table contains some of the design decisions that were imposed to u
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Availability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The application must be available the 99% of the time.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Medium</p></td>
@@ -1692,7 +1723,7 @@ The following table contains some of the design decisions that were imposed to u
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Operational</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Performance</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">25 concurrent users request the map of a given city in less than 10 seconds.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">High</p></td>
@@ -1966,7 +1997,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-04-03 15:29:12 +0200
+Last updated 2023-05-03 01:45:00 +0200
 </div>
 </div>
 </body>
