@@ -27,7 +27,7 @@ let host = process.env.host || "localhost";
 api.use(
   cors({
     credentials: true,
-    origin: ["https://20.77.68.160", "https://lomapen1a.cloudns.ph"],
+    origin: ["https://20.77.68.160", "https://lomapen1a.cloudns.ph", "https://localhost"],
     allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: true,
   })
