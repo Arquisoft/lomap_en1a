@@ -61,7 +61,7 @@ export default function InfoWindow(props: InfoWindowProps): JSX.Element {
 
   //Gets the list of comments for a specific place
   const refreshCommentList = async () => {
-    props.handleIsLoading(true, "Loading comments...");//Start showing loading symbol
+    props.handleIsLoading(true, "Loading your data...");//Start showing loading symbol
     const comments = await getComments(props.infoWindowData?.id);
     props.handleIsLoading(false);//Stop showing loading symbol
     setComments(comments);

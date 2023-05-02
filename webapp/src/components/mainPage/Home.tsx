@@ -23,7 +23,7 @@ export default function Home(): JSX.Element {
 
 
   const handleClick = () => {
-    navigate("/login");
+    navigate("/map");
   }
 
   return (

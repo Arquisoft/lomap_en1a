@@ -15,6 +15,8 @@ import { NotificationType } from "./CommentForm";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Box, Button } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import { Divider } from '@material-ui/core';
 
 
 
@@ -367,16 +369,25 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         </SubMenu>
 
 
-        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />}>
+        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   }>
+        <Grid container justifyContent="space-around">
+            
+          
           {users.map((user, index) => (
-            <Box key={index} component="p" textAlign="left">
-              {user.username}
-              <br></br>
-              <Button variant="contained" onClick={() => handleUserMarkers(user.webId)}>
-                {getUserDisplayStatus(user.webId) ? "Hide this user's markers" : "Show this user's markers"}
-              </Button>
-            </Box>
+            <Grid item xs={12} textAlign={"center"}>
+              <Box width="75%" marginLeft='auto' marginRight='auto' key={index} component="p" textAlign="center">
+                {user.username}
+                <Button id={`${getUserDisplayStatus(user.webId) ? "btn-hide2" : ""}`}
+                  sx={{ marginTop: "0.5em" }} variant="contained" 
+                  onClick={() => handleUserMarkers(user.webId)}>
+                    {getUserDisplayStatus(user.webId)?"Hide this user's markers":"Show this user's markers"}
+                </Button>
+              </Box>
+              <Divider/>
+            </Grid>
+            
           ))}
+        </Grid>
 
         </SubMenu>
         <MenuItem id="addToPublic" onClick={() => addUserToPublicList()}>Add me to public user list</MenuItem>
