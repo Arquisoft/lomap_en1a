@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG host="lomapen1a.cloudns.ph"
-ENV host=$host
+ARG HOST_DOMAIN="lomapen1a.cloudns.ph"
+ENV host=$HOST_DOMAIN
 
 CMD [ "npm", "start" ]
