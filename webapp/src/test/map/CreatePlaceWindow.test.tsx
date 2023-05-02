@@ -2,12 +2,7 @@ import { render, act, waitFor, fireEvent } from "@testing-library/react";
 
 import * as api from '../../api/api'
 import { Place } from "../../domain/Place";
-import MySideBar from "../../components/map/SideBar";
-import { FriendWindowDataType, InfoWindowDataType } from "../../components/map/MapView";
 import { Visibility } from "../../domain/Visibility";
-import { useRef, useState } from "react";
-import { ProSidebarProvider } from "react-pro-sidebar";
-import { User } from "../../domain/User";
 import CreatePlaceWindow from "../../components/map/CreatePlaceWindow";
 import { Category } from "../../domain/Category";
 

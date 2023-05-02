@@ -42,6 +42,7 @@ function FilterCategory(props: { name: string, handleChange: (event: React.Chang
   return (
     <>
       <FormControlLabel control={<Checkbox
+        id={props.name}
         value={props.name.toUpperCase()}
         onChange={event => props.handleChange(event, event.currentTarget.value)}
       />} label={props.name} />
