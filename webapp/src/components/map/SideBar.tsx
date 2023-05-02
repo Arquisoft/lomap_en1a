@@ -4,9 +4,9 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import PersonIcon from '@mui/icons-material/Person';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Place } from "../../domain/Place";
-import { addUserToList, getAllPublicUsers, getFriendsForUser,getPrivatePlacesByUser, getProfile, getPublicPlacesByPublicUser, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
+import { addUserToList, getAllPublicUsers, getFriendsForUser, getPrivatePlacesByUser, getProfile, getPublicPlacesByPublicUser, getPublicPlacesByUser, getSharedPlacesByUser } from "../../api/api";
 import { FriendWindowDataType, InfoWindowDataType, SlidingPaneView } from "./MapView";
 import { User } from "../../domain/User";
 import { CategoryList } from "./FilterCategory";
@@ -41,11 +41,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const [publicPlaces, setPublicPlaces] = useState<Place[]>([]);
   const refreshPublicPlaceList = async () => {
     getPublicPlacesByUser().then((places) => {
-      places.sort(function(a, b) {
+      places.sort(function (a, b) {
         let name1 = a.name.toLowerCase();
         let name2 = b.name.toLowerCase();
-        if(name1 < name2) { return -1; }
-        if(name1 > name2) { return 1; }
+        if (name1 < name2) { return -1; }
+        if (name1 > name2) { return 1; }
         return 0;
       })
 
@@ -58,14 +58,14 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const [privatePlaces, setPrivatePlaces] = useState<Place[]>([]);
   const refreshPrivatePlaceList = async () => {
     getPrivatePlacesByUser().then((places) => {
-      places.sort(function(a, b) {
+      places.sort(function (a, b) {
         let name1 = a.name.toLowerCase();
         let name2 = b.name.toLowerCase();
-        if(name1 < name2) { return -1; }
-        if(name1 > name2) { return 1; }
+        if (name1 < name2) { return -1; }
+        if (name1 > name2) { return 1; }
         return 0;
       })
-      
+
       setPrivatePlaces(places)
     });
 
@@ -79,14 +79,15 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
       let userPlaces = await getPublicPlacesByPublicUser(id);
 
       userPlaces.forEach(p => {
-        places.push(p)});
+        places.push(p)
+      });
     }
 
-    places.sort(function(a, b) {
+    places.sort(function (a, b) {
       let name1 = a.name.toLowerCase();
       let name2 = b.name.toLowerCase();
-      if(name1 < name2) { return -1; }
-      if(name1 > name2) { return 1; }
+      if (name1 < name2) { return -1; }
+      if (name1 > name2) { return 1; }
       return 0;
     })
 
@@ -97,11 +98,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const [sharedPlaces, setSharedPlaces] = useState<Place[]>([]);
   const refreshSharedPlaceList = async () => {
     getSharedPlacesByUser().then((places) => {
-      places.sort(function(a, b) {
+      places.sort(function (a, b) {
         let name1 = a.name.toLowerCase();
         let name2 = b.name.toLowerCase();
-        if(name1 < name2) { return -1; }
-        if(name1 > name2) { return 1; }
+        if (name1 < name2) { return -1; }
+        if (name1 > name2) { return 1; }
         return 0;
       })
 
@@ -110,15 +111,15 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   }
 
- //Get the list of places for the current user
+  //Get the list of places for the current user
   const [friends, setFriends] = useState<User[]>([]);
   const refreshFriendList = async () => {
     getProfile().then((user) => getFriendsForUser(user.webId).then((friends) => {
-      friends.sort(function(a, b) {
+      friends.sort(function (a, b) {
         let name1 = a.username.toLowerCase();
         let name2 = b.username.toLowerCase();
-        if(name1 < name2) { return -1; }
-        if(name1 > name2) { return 1; }
+        if (name1 < name2) { return -1; }
+        if (name1 > name2) { return 1; }
         return 0;
       })
 
@@ -127,7 +128,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
   }
 
-   //Get the list of public users
+  //Get the list of public users
   const [users, setUsers] = useState<User[]>([]);
   const refreshPublicUsersList = async () => {
     let publicUsers = await getAllPublicUsers();
@@ -136,11 +137,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
     let index = publicUsers.map(u => u.webId).indexOf(profile.webId);
     if (index >= 0) publicUsers.splice(index, 1);
 
-    publicUsers.sort(function(a, b) {
+    publicUsers.sort(function (a, b) {
       let name1 = a.username.toLowerCase();
       let name2 = b.username.toLowerCase();
-      if(name1 < name2) { return -1; }
-      if(name1 > name2) { return 1; }
+      if (name1 < name2) { return -1; }
+      if (name1 > name2) { return 1; }
       return 0;
     })
 
@@ -215,7 +216,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
   const [updateCount, setUpdateCount] = useState(0);
 
   return (
-    <Sidebar style={{ height: "80vh", color: "black"}}>
+    <Sidebar style={{ height: "80vh", color: "black" }}>
       <Menu
       >
         <MenuItem
@@ -241,11 +242,11 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
                 props.handleInfoWindowData({
                   title: place.name,
                   creator: place.owner,
-                  category:place.category,
+                  category: place.category,
                   id: place.id,
                   latitude: place.latitude,
                   longitude: place.longitude,
-                  description:place.description
+                  description: place.description
 
                 });
                 props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
@@ -258,89 +259,89 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         </SubMenu>
         <SubMenu label="My private sites" icon={<AddLocationIcon />} onClick={() => { refreshPrivatePlaceList(); }}>
 
-              {privatePlaces.map((place, index) => (
+          {privatePlaces.map((place, index) => (
 
 
-                <MenuItem icon={<ArrowRightIcon />}
+            <MenuItem icon={<ArrowRightIcon />}
 
-                  key={index}
-                  onClick={() => {
-                    props.handleInfoWindowData({
-                      title: place.name,
-                      creator: place.owner,
-                      category:place.category,
-                      id: place.id,
-                      latitude: place.latitude,
-                      longitude: place.longitude,
-                      description:place.description
+              key={index}
+              onClick={() => {
+                props.handleInfoWindowData({
+                  title: place.name,
+                  creator: place.owner,
+                  category: place.category,
+                  id: place.id,
+                  latitude: place.latitude,
+                  longitude: place.longitude,
+                  description: place.description
 
-                    });
-                    props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
-                    props.handleIsOpen(true);
-                  }}
+                });
+                props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
+                props.handleIsOpen(true);
+              }}
 
-                >{place.name}</MenuItem>
-              ))}
+            >{place.name}</MenuItem>
+          ))}
 
-          </SubMenu>
-          <SubMenu label="My shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }}>
+        </SubMenu>
+        <SubMenu label="My shared sites" icon={<AddLocationIcon />} onClick={() => { refreshSharedPlaceList(); }}>
 
-            {sharedPlaces.map((place, index) => (
-
-
-              <MenuItem icon={<ArrowRightIcon />}
-
-                key={index}
-                onClick={() => {
-                  props.handleInfoWindowData({
-                    title: place.name,
-                    creator: place.owner,
-                    category:place.category,
-                    id: place.id,
-                    latitude: place.latitude,
-                    longitude: place.longitude,
-                    description:place.description
-
-                  });
-                  props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
-                  props.handleIsOpen(true);
-                }}
-
-              >{place.name}</MenuItem>
-            ))}
-
-            </SubMenu>
-
-          <SubMenu label="Imported sites" icon={<AddLocationIcon />} onClick={() => { refreshImportedPlaceList(); }}>
-
-              {importedPlaces.map((place, index) => (
+          {sharedPlaces.map((place, index) => (
 
 
-                <MenuItem icon={<ArrowRightIcon />}
+            <MenuItem icon={<ArrowRightIcon />}
 
-                  key={index}
-                  onClick={() => {
-                    props.handleInfoWindowData({
-                      title: place.name,
-                      creator: place.owner,
-                      category:place.category,
-                      id: place.id,
-                      latitude: place.latitude,
-                      longitude: place.longitude,
-                      description:place.description
+              key={index}
+              onClick={() => {
+                props.handleInfoWindowData({
+                  title: place.name,
+                  creator: place.owner,
+                  category: place.category,
+                  id: place.id,
+                  latitude: place.latitude,
+                  longitude: place.longitude,
+                  description: place.description
 
-                    });
-                    props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
-                    props.handleIsOpen(true);
-                  }}
+                });
+                props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
+                props.handleIsOpen(true);
+              }}
 
-                >{place.name}</MenuItem>
-              ))}
+            >{place.name}</MenuItem>
+          ))}
 
-          </SubMenu>
+        </SubMenu>
+
+        <SubMenu label="Imported sites" icon={<AddLocationIcon />} onClick={() => { refreshImportedPlaceList(); }}>
+
+          {importedPlaces.map((place, index) => (
 
 
-        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />   } >
+            <MenuItem icon={<ArrowRightIcon />}
+
+              key={index}
+              onClick={() => {
+                props.handleInfoWindowData({
+                  title: place.name,
+                  creator: place.owner,
+                  category: place.category,
+                  id: place.id,
+                  latitude: place.latitude,
+                  longitude: place.longitude,
+                  description: place.description
+
+                });
+                props.handleSlidingPaneView(SlidingPaneView.InfoWindowView);
+                props.handleIsOpen(true);
+              }}
+
+            >{place.name}</MenuItem>
+          ))}
+
+        </SubMenu>
+
+
+        <SubMenu label="Friends" icon={<PeopleOutlinedIcon />} >
           {friends.map((ti, index) => (
             <MenuItem icon={<PersonIcon />}
               key={index}
@@ -364,34 +365,34 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
         </SubMenu>
 
         <SubMenu label="Categories" icon={<AddLocationIcon />}>
-          <CategoryList/>
+          <CategoryList />
         </SubMenu>
 
 
-        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />   }>
-        <Grid container justifyContent="space-around">
-            
-          
-          {users.map((user, index) => (
-            <Grid item xs={12} textAlign={"center"}>
-              <Box width="75%" marginLeft='auto' marginRight='auto' key={index} component="p" textAlign="center">
-                {user.username}
-                <Button id={`${getUserDisplayStatus(user.webId) ? "btn-hide2" : ""}`}
-                  sx={{ marginTop: "0.5em" }} variant="contained" 
-                  onClick={() => handleUserMarkers(user.webId)}>
-                    {getUserDisplayStatus(user.webId)?"Hide this user's markers":"Show this user's markers"}
-                </Button>
-              </Box>
-              <Divider/>
-            </Grid>
-            
-          ))}
-        </Grid>
+        <SubMenu label="Public users" icon={<PeopleOutlinedIcon />}>
+          <Grid container justifyContent="space-around">
+
+
+            {users.map((user, index) => (
+              <Grid item xs={12} textAlign={"center"}>
+                <Box width="75%" marginLeft='auto' marginRight='auto' key={index} component="p" textAlign="center">
+                  {user.username}
+                  <Button id={`${getUserDisplayStatus(user.webId) ? "btn-hide2" : ""}`}
+                    sx={{ marginTop: "0.5em" }} variant="contained"
+                    onClick={() => handleUserMarkers(user.webId)}>
+                    {getUserDisplayStatus(user.webId) ? "Hide this user's markers" : "Show this user's markers"}
+                  </Button>
+                </Box>
+                <Divider />
+              </Grid>
+
+            ))}
+          </Grid>
 
         </SubMenu>
-        <MenuItem id="addToPublic" onClick={()=>addUserToPublicList()}>Add me to public user list</MenuItem>
+        <MenuItem id="addToPublic" onClick={() => addUserToPublicList()}>Add me to public user list</MenuItem>
         <MenuItem>{displayVisibility(props.visibility)}</MenuItem>
-        
+
       </Menu>
       <Snackbar open={notificationStatus} autoHideDuration={3000} onClose={() => { setNotificationStatus(false) }}>
         <Alert severity={notification.severity} sx={{ width: '100%' }}>
@@ -401,7 +402,7 @@ export default function MySideBar(props: SideBarProps): JSX.Element {
 
 
     </Sidebar>
-    
+
 
   )
 

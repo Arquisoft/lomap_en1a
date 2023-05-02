@@ -8,8 +8,8 @@ RUN npm install
 ARG API_URI="https://20.13.141.12:5443/api"
 ENV REACT_APP_API_URI=$API_URI
 
-ARG HOST_URI="20.13.141.12"
-ENV host=$HOST_URI
+ARG host="20.13.141.12"
+ENV host=$host
 
 #Create an optimized version of the webapp
 RUN npm run build

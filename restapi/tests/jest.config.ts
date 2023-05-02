@@ -7,8 +7,6 @@ export default {
     collectCoverageFrom:
         [
             "**/src/**",
-            "!**/src/configuration.json",
-            // "**/src/controllers/**",
-            // "**/src/repositories/**",
+            "!**/src/configuration.json"
         ]
 }
