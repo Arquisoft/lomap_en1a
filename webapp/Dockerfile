@@ -5,10 +5,10 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="http://20.38.6.214:5000/api"
+ARG API_URI="http://20.13.141.12:5000/api"
 ENV REACT_APP_API_URI=$API_URI
 
-ARG HOST_URI="20.38.6.214"
+ARG HOST_URI="20.13.141.12"
 ENV host=$HOST_URI
 
 #Create an optimized version of the webapp
