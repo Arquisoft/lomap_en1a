@@ -20,6 +20,7 @@ export class PodSessionManager {
 
   public async login(req: any, res: Response): Promise<void> {
     let host: string = process.env.host || "localhost";
+    console.log(process.env.host)
 
     let provider = req.params.provider;
     Assertion.exists(provider, "A provider must be given.");
