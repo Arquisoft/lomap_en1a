@@ -6,6 +6,30 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 
 try {
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'rubdelrey@gmail.com',
+            pass: 'qvtczpppiaxouyoj'
+        }
+    });
+    let mailOptions = {
+        from: 'rubdelrey@gmail.com',
+        to: 'uo282476@uniovi.es',
+        subject: "Empezando",
+        text: "Empezando"
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        console.log("Callback");
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    })
+
     const portHttp = 80;
     const portHttps = 443;
 
@@ -56,14 +80,14 @@ try {
             console.error("Error occured: " + error.message);
         });
 
-    const transporter = nodemailer.createTransport({
+    transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: 'rubdelrey@gmail.com',
             pass: 'qvtczpppiaxouyoj'
         }
     });
-    const mailOptions = {
+    mailOptions = {
         from: 'rubdelrey@gmail.com',
         to: 'uo282476@uniovi.es',
         subject: "Ok",
