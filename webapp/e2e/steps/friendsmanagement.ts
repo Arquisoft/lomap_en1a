@@ -11,14 +11,20 @@ defineFeature(feature, test => {
   beforeAll(async () => {
     browser = process.env.GITHUB_ACTIONS
       ? await puppeteer.launch()
-      : await puppeteer.launch({ headless: true, slowMo: 50 });
+      : await puppeteer.launch({ headless: false, slowMo: 150 });
     page = await browser.newPage();
 
     await page
-      .goto("http://localhost:80", {
+      .goto("https://localhost:80", {
         waitUntil: "networkidle0",
       })
       .catch(() => { });
+
+      await page.waitForSelector('#details-button')
+      await page.click('#details-button')
+
+      await page.waitForSelector('#proceed-link')
+      await page.click('#proceed-link')
   });
 
   test('The user wants to see the friends management tab', ({ given, when, then }) => {

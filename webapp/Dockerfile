@@ -5,11 +5,11 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="https://lomapen1a.cloudns.ph:5443/api"
+ARG API_URI="https://localhost:5443/api"
 ENV REACT_APP_API_URI=$API_URI
 
-ARG host="lomapen1a.cloudns.ph"
-ENV host=$host
+ARG HOST_DOMAIN="localhost"
+ENV host=$HOST_DOMAIN
 
 #Create an optimized version of the webapp
 RUN npm run build
