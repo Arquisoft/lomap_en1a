@@ -88,6 +88,7 @@ export class PictureRepositoryImpl implements PictureRepository {
       );
     });
 
-    return pictures;
+    let filteredPictures = pictures.filter((p) => p.getPlace() === place);
+    return filteredPictures;
   }
 }
