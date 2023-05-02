@@ -23,8 +23,8 @@ defineFeature(feature, test => {
     await page.waitForSelector('#details-button')
     await page.click('#details-button')
 
-    await page.waitForSelector('#proceed-link')
-    await page.click('#proceed-link')
+    // await page.waitForSelector('#proceed-link')
+      // await page.click('#proceed-link')
 
     // await page.waitForSelector('.btn btn-primary')
     // await page.click('.btn btn-primary')

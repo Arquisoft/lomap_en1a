@@ -117,8 +117,8 @@ export class CommentRepositoryImpl implements CommentRepository {
       c.setOwner(owner);
     });
 
-    comments.filter((c) => c.getPlace() == place);
+    let comments2 = comments.filter((c) => c.getPlace() == place);
 
-    return comments;
+    return comments2;
   }
 }
