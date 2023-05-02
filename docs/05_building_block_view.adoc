@@ -113,9 +113,10 @@ component WebApp as Frontend{
         }
     }
 }
-
 component RestAPI
 
+RestAPI <-> Api
+Api <-> App
 @enduml
 ----
 
