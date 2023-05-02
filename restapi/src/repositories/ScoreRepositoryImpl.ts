@@ -86,6 +86,8 @@ export class ScoreRepositoryImpl implements ScoreRepository {
       );
     });
 
+    scores.filter((c) => c.getPlace() == place);
+
     return scores;
   }
 }

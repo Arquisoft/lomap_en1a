@@ -25,6 +25,12 @@ let privateKey = readFileSync("certificates/host.key");
 let certificate = readFileSync("certificates/host.cert");
 let credentials = { key: privateKey, cert: certificate };
 
+try {
+    privateKey = readFileSync("certificates/privkey.pem");
+    certificate = readFileSync("certificates/fullchain.pem");
+    credentials = { key: privateKey, cert: certificate };
+} catch (e) { console.log("Error loading certificates: " + e.message); }
+
 app.use(bp.json());
 
 app.use("/api", api);
