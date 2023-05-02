@@ -51,8 +51,7 @@ export default function NavBar(): JSX.Element {
 
 function LoggedNavbar(props: LogoutProps) {
   const getUrl = () => {
-    let host = process.env.host || "localhost";
-    return "https://" + host + ":443/map"
+    return "https://lomapen1a.cloudns.ph:443/map"
 
   }
 

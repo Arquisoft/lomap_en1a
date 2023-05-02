@@ -20,8 +20,8 @@ defineFeature(feature, test => {
       })
       .catch(() => { });
 
-      await page.waitForSelector('#details-button')
-      await page.click('#details-button')
+      // await page.waitForSelector('#details-button')
+      // await page.click('#details-button')
 
       // await page.waitForSelector('#proceed-link')
       // await page.click('#proceed-link')

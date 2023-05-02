@@ -532,15 +532,7 @@ async function handleErrorGet(url:string,errorResponse:any,response:Response | u
   if (response !== undefined && response.status === 200){
     return response.json();
   }else{
-    let response2 = await fetch(apiEndPoint.replace("https","http").replace("5443","5080") + url, {
-      credentials: "include",
-      mode: "cors",
-    });
-    if (response2.status === 200){
-      return response2.json();
-    }else{
-      return errorResponse;
-    }
+    return errorResponse;
   }
 }
 
@@ -548,18 +540,7 @@ async function handleErrorPostBoolean(url:string,errorResponse:any,response:Resp
   if (response !== undefined && response.status === 200){
     return true;
   }else{
-    let response2 = await fetch(apiEndPoint.replace("https","http").replace("5443","5080") + url, {
-      credentials: "include",
-      mode: "cors",
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: body
-    });
-    if (response2.status === 200){
-      return true;
-    }else{
-      return errorResponse;
-    }
+    return errorResponse;
   }
 }
 
@@ -567,17 +548,6 @@ async function handleErrorPost(url:string,errorResponse:any,response:Response | 
   if (response !== undefined && response.status === 200){
     return response.json();
   }else{
-    let response2 = await fetch(apiEndPoint.replace("https","http").replace("5443","5080") + url, {
-      credentials: "include",
-      mode: "cors",
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: body
-    });
-    if (response2.status === 200){
-      return response2.json();
-    }else{
-      return errorResponse;
-    }
+    return errorResponse;
   }
 }
