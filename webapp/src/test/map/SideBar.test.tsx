@@ -26,22 +26,40 @@ const handleIsOpen = async (value:boolean) => {}
 const handleSlidingPaneView = async (value:number) => {}
 
 let friends: User[];
-friends=[ new User("TEST-USER","",null)];
+friends=[
+  new User("TEST-USER","friendsUserWebId",null),
+  new User("TEST-USER-2","friendsUserWebId2",null)
+  ];
 
 let users: User[];
-users=[ new User("TEST-USER-PUBLIC","publicUserWebId",null)];
+users=[
+  new User("TEST-USER-PUBLIC","publicUserWebId",null),
+  new User("TEST-USER-PUBLIC-2","publicUserWebId2",null)
+];
 
 let publicPlaces: Place[];
-publicPlaces=[ new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR)];
+publicPlaces=[
+  new Place("","TEST-PUBLIC","","",0,0,Visibility.PUBLIC,Category.BAR),
+  new Place("","TEST-PUBLIC-2","","",0,0,Visibility.PUBLIC,Category.MONUMENT)
+];
 
 let privatePlaces: Place[];
-privatePlaces=[ new Place("","TEST-PRIVATE","","",0,0,Visibility.PRIVATE,Category.BAR)];
+privatePlaces=[
+  new Place("","TEST-PRIVATE","","",0,0,Visibility.PRIVATE,Category.BAR),
+  new Place("","TEST-PRIVATE-2","","",0,0,Visibility.PRIVATE,Category.MONUMENT)
+];
 
 let sharedPlaces: Place[];
-sharedPlaces=[ new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS,Category.BAR)];
+sharedPlaces=[
+  new Place("","TEST-FRIENDS","","",0,0,Visibility.FRIENDS,Category.BAR),
+  new Place("","TEST-FRIENDS-2","","",0,0,Visibility.FRIENDS,Category.MONUMENT)
+];
 
 let importedPlaces: Place[];
-importedPlaces=[ new Place("","TEST-IMPORTED","","",0,0,Visibility.FRIENDS,Category.BAR)];
+importedPlaces=[
+  new Place("","TEST-IMPORTED","","",0,0,Visibility.FRIENDS,Category.BAR),
+  new Place("","TEST-IMPORTED-2","","",0,0,Visibility.FRIENDS,Category.BAR)
+];
 
 
 beforeEach(()=>{
@@ -69,7 +87,11 @@ test('check friend list is shown', async () => {
       )
     await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
     expect(jest.spyOn(api, 'getFriendsForUser')).toHaveBeenCalled()
+
+    const menu = getByText("Friends")
+    fireEvent.click(menu);
     expect(await getByText("TEST-USER")).toBeInTheDocument();
+    expect(await getByText("TEST-USER-2")).toBeInTheDocument();
   });
 })
 
@@ -86,6 +108,7 @@ test('check public users list is shown', async () => {
     await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
     expect(jest.spyOn(api, 'getAllPublicUsers')).toHaveBeenCalled()
     expect(await getByText("TEST-USER-PUBLIC")).toBeInTheDocument();
+    expect(await getByText("TEST-USER-PUBLIC-2")).toBeInTheDocument();
   });
 })
 
@@ -102,7 +125,12 @@ test('check public list place is shown', async () => {
         )
       await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
       expect(jest.spyOn(api, 'getPublicPlacesByUser')).toHaveBeenCalled()
+
+      const menu = getByText("My public sites")
+      fireEvent.click(menu);
+
       expect(await getByText("TEST-PUBLIC")).toBeInTheDocument();
+      expect(await getByText("TEST-PUBLIC-2")).toBeInTheDocument();
     });
   })
 
@@ -119,7 +147,12 @@ test('check public list place is shown', async () => {
         )
       await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
       expect(jest.spyOn(api, 'getSharedPlacesByUser')).toHaveBeenCalled()
+
+      const menu = getByText("My shared sites")
+      fireEvent.click(menu);
+
       expect(await getByText("TEST-FRIENDS")).toBeInTheDocument();
+      expect(await getByText("TEST-FRIENDS-2")).toBeInTheDocument();
     });
   })
 
@@ -135,8 +168,14 @@ test('check public list place is shown', async () => {
   
         )
       await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
+      
       expect(jest.spyOn(api, 'getPrivatePlacesByUser')).toHaveBeenCalled()
+
+      const menu = getByText("My private sites")
+      fireEvent.click(menu);
+
       expect(await getByText("TEST-PRIVATE")).toBeInTheDocument();
+      expect(await getByText("TEST-PRIVATE-2")).toBeInTheDocument();
     });
   })
 
@@ -161,7 +200,7 @@ test('check public list place is shown', async () => {
   test('check imported list place is updated when adding public markers', async () => {
 
     await act(async () => {
-      const { container, getByText } = render(
+      const { container, getByText, getAllByText } = render(
       <ProSidebarProvider>
           <MySideBar handleFriendWindowData={handleFriendWindowData} 
               handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
@@ -172,8 +211,8 @@ test('check public list place is shown', async () => {
       await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
       const display = getByText("Public users");
       fireEvent.click(display);
-      const secondButton = getByText("Show this user's markers")
-      fireEvent.click(secondButton);
+      const buttons = getAllByText("Show this user's markers")
+      fireEvent.click(buttons[0]);
       expect(jest.spyOn(api, 'getPublicPlacesByPublicUser')).toBeCalled()
     });
   })
@@ -191,8 +230,37 @@ test('check public list place is shown', async () => {
         )
       await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
       expect(jest.spyOn(api, 'getPublicPlacesByPublicUser')).toHaveBeenCalled()
+
+      const menu = getByText("Imported sites")
+      fireEvent.click(menu);
+
       expect(await getByText("TEST-IMPORTED")).toBeInTheDocument();
+      expect(await getByText("TEST-IMPORTED-2")).toBeInTheDocument();
     });
   })
 
+  test('check imported places can be removed', async () => {
 
+    await act(async () => {
+      const { container, getByText } = render(
+      <ProSidebarProvider>
+          <MySideBar handleFriendWindowData={handleFriendWindowData} 
+              handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
+          visibility="test" handleIsOpen={handleIsOpen} newPlace={1} />
+      </ProSidebarProvider>
+  
+        )
+        await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
+        const display = getByText("Public users");
+        fireEvent.click(display);
+        const button = getByText("Hide this user's markers")
+        fireEvent.click(button);
+        expect(jest.spyOn(api, 'getPublicPlacesByPublicUser')).toBeCalled()
+
+        const menu = getByText("Imported sites")
+        fireEvent.click(menu);
+
+        expect(() => getByText('TEST-IMPORTED')).toThrow('Unable to find an element');
+        expect(() => getByText('TEST-IMPORTED-2')).toThrow('Unable to find an element');
+    });
+  })
