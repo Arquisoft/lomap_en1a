@@ -63,14 +63,15 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         env:
-          host: ${{ secrets.HOST_NAME }}
+          HOST_NAME: ${{ secrets.HOST_NAME }}
+          API_URI: https://${{ secrets.HOST_NAME }}:5443
         with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PUSH_TOKEN }}
           registry: ghcr.io
           workdir: webapp
-          buildargs: API_URI
+          buildargs: HOST_NAME
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
@@ -81,7 +82,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         env:
-          API_URI: https://${{ secrets.HOST_NAME }}:5443/api
+          HOST_NAME: ${{ secrets.HOST_NAME }}
         with:
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
