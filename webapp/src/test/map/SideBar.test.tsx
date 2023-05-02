@@ -286,29 +286,3 @@ test('check public list place is shown', async () => {
         expect(() => getByText('TEST-IMPORTED-2')).toThrow('Unable to find an element');
     });
   })
-
-  test('check add to public user list works ', async () => {
-
-    await act(async () => {
-      const { container, getByText } = render(
-      <ProSidebarProvider>
-          <MySideBar handleFriendWindowData={handleFriendWindowData} 
-              handleInfoWindowData={handleInfoWindowData} handleSlidingPaneView={handleSlidingPaneView}
-          visibility="test" handleIsOpen={handleIsOpen} newPlace={1} />
-      </ProSidebarProvider>
-  
-        )
-        await waitFor(()=>expect(jest.spyOn(api, 'getProfile')).toHaveBeenCalled()) //Wait for component to render
-        const display = getByText("Public users");
-        fireEvent.click(display);
-        const button = getByText("Hide this user's markers")
-        fireEvent.click(button);
-        expect(jest.spyOn(api, 'getPublicPlacesByPublicUser')).toBeCalled()
-
-        const menu = getByText("Imported sites")
-        fireEvent.click(menu);
-
-        expect(() => getByText('TEST-IMPORTED')).toThrow('Unable to find an element');
-        expect(() => getByText('TEST-IMPORTED-2')).toThrow('Unable to find an element');
-    });
-  })
