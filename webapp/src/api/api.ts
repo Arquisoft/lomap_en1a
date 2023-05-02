@@ -11,7 +11,7 @@ import { Visibility } from "../domain/Visibility";
 //Add a comment
 export async function addComment(comment: Comment): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/comment/add", {
     credentials: "include",
     mode: "cors",
@@ -29,7 +29,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
 
 export async function getComments(id: string): Promise<Comment[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/comment/list/" + id, {
     credentials: "include",
     mode: "cors",
@@ -46,7 +46,7 @@ export async function getComments(id: string): Promise<Comment[]> {
 //Add a score
 export async function addScore(score: Score): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/score/add", {
     credentials: "include",
     mode: "cors",
@@ -65,7 +65,7 @@ export async function addScore(score: Score): Promise<boolean> {
 //Get scores for a place
 export async function getScores(id: String): Promise<Score[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/score/list/" + id, {
     credentials: "include",
     mode: "cors",
@@ -82,7 +82,7 @@ export async function getScores(id: String): Promise<Score[]> {
 //Add a place
 export async function addPlace(place: Place): Promise<Place> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/add", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ export async function addPlace(place: Place): Promise<Place> {
 //Pictures----------------------------------------------
 export async function getPictures(id: string): Promise<Picture[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/picture/list/" + id, {
     credentials: "include",
@@ -127,7 +127,7 @@ export async function getPictures(id: string): Promise<Picture[]> {
 
 export async function addPicture(picture: Picture): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/picture/add", {
     credentials: "include",
     mode: "cors",
@@ -149,7 +149,7 @@ export async function addPicture(picture: Picture): Promise<boolean> {
 //List places by visibility
 export async function getPlaces(visibility: string): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/place/" + visibility + "/list", {
     credentials: "include",
@@ -167,7 +167,7 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 
 export async function getAllPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/all/list", {
     credentials: "include",
     mode: "cors",
@@ -184,7 +184,7 @@ export async function getPublicPlacesByPublicUser(
 ): Promise<Place[]> {
   let userId = encodeURIComponent(id);
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/public/list/" + userId, {
     credentials: "include",
     mode: "cors",
@@ -199,7 +199,7 @@ export async function getPublicPlacesByPublicUser(
 
 export async function getPublicPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/public/list", {
     credentials: "include",
     mode: "cors",
@@ -214,7 +214,7 @@ export async function getPublicPlacesByUser(): Promise<Place[]> {
 
 export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let newId = encodeURIComponent(id);
   let response = await fetch(apiEndPoint + "/place/friends/list/" + newId, {
     credentials: "include",
@@ -230,7 +230,7 @@ export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
 
 export async function getPrivatePlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/private/list", {
     credentials: "include",
     mode: "cors",
@@ -245,7 +245,7 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
 //List shared places by user
 export async function getSharedPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/friends/list", {
     credentials: "include",
     mode: "cors",
@@ -260,7 +260,7 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
 //List shared places by friends
 export async function getSharedPlacesByFriends(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/place/shared/list", {
     credentials: "include",
     mode: "cors",
@@ -275,7 +275,7 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
 //User--------------------------------------------------------
 export async function addFriend(id: string): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/users/friends/add", {
     credentials: "include",
     mode: "cors",
@@ -291,7 +291,7 @@ export async function addFriend(id: string): Promise<boolean> {
 
 export async function getFriendRequests(): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/users/request", {
     credentials: "include",
@@ -306,7 +306,7 @@ export async function getFriendRequests(): Promise<User[]> {
 
 export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let userId = encodeURIComponent(id);
   let response = await fetch(apiEndPoint + "/friends/" + userId, {
@@ -322,7 +322,7 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
 
 export async function getProfile(): Promise<User> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/profile", {
     credentials: "include",
@@ -337,7 +337,7 @@ export async function getProfile(): Promise<User> {
 
 export async function getProfileById(id: string): Promise<User> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let userId = encodeURIComponent(id);
   let response = await fetch(apiEndPoint + "/profile/" + userId, {
@@ -355,7 +355,7 @@ export async function getProfileById(id: string): Promise<User> {
 
 export async function getAllPublicUsers(): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/users/public", {
     credentials: "include",
@@ -370,7 +370,7 @@ export async function getAllPublicUsers(): Promise<User[]> {
 
 export async function isLoggedIn(): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let response = await fetch(apiEndPoint + "/isLogged", {
     credentials: "include",
@@ -386,7 +386,7 @@ export async function isLoggedIn(): Promise<boolean> {
 
 export async function addUserToList(): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
   let response = await fetch(apiEndPoint + "/users/share", {
     credentials: "include",
     mode: "cors",
@@ -403,7 +403,7 @@ export async function login(
   redirectUrl: string
 ): Promise<void> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);
@@ -415,7 +415,7 @@ export async function login(
 //Logout
 export async function logout(): Promise<void> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5000/api";
+    process.env.REACT_APP_API_URI || "http://localhost:5000/api";
 
   await fetch(apiEndPoint + "/logout", {
     credentials: "include",
