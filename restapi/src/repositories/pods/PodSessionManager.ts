@@ -25,7 +25,7 @@ export class PodSessionManager {
     Assertion.exists(provider, "A provider must be given.");
     provider = decodeURIComponent(provider);
 
-    let redirect = "https://" + host + ":443/api/login/success";
+    let redirect = "https://" + host + ":5443/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;
@@ -52,7 +52,7 @@ export class PodSessionManager {
     let solidSession = await getSessionFromStorage(sessionId);
 
     await solidSession?.handleIncomingRedirect(
-      `https://${host}:443${this.handle}${req.url}`
+      `https://${host}${this.port}${this.handle}${req.url}`
     );
 
     await PodManager.permissionManager.setupPod(sessionId);

@@ -21,8 +21,8 @@ const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
 //Load certificates
-let privateKey = readFileSync("certificates/privkey.pem");
-let certificate = readFileSync("certificates/fullchain.pem");
+let privateKey = readFileSync("certificates/host.key");
+let certificate = readFileSync("certificates/host.cert");
 let credentials = { key: privateKey, cert: certificate };
 
 app.use(bp.json());
