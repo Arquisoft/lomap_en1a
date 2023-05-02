@@ -29,6 +29,7 @@ export default function Contact(){
                   you may think about.
                   <br/>
                   These are our contact emails:
+                </p>
                   <ul className="email">
                     <li>Vanesa Alonso Ramos: <a href="mailto:UO281801@uniovi.es">UO281801@uniovi.es</a></li>
                     <li>Álvaro González Erigoyen: <a href="mailto:UO282790@uniovi.es">UO282790@uniovi.es</a></li>
@@ -37,7 +38,6 @@ export default function Contact(){
                     <li>Sergio del Rey Álvarez: <a href="mailto:UO282497@uniovi.es">UO282497@uniovi.es</a></li>
                     <li>Pablo Valdés Fernández: <a href="mailto:UO282655@uniovi.es">UO282655@uniovi.es</a></li>
                   </ul>
-                </p>
               </Box>
             </Grid>
           </Grid>
