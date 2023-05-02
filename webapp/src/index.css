@@ -474,7 +474,7 @@ footer {
 .slideshow {
   margin: 0 auto;
   overflow: hidden;
-  max-width: 39vw;
+  max-width: 38vw;
 }
 
 .slideshowSlider {
@@ -504,8 +504,8 @@ footer {
 
 .slideshowDot {
   display: inline-block;
-  height: 20px;
-  width: 20px;
+  height: 1.2vw;
+  width: 1.2vw;
   border-radius: 50%;
 
   cursor: pointer;
@@ -540,7 +540,7 @@ footer {
 
 .btn-login {
   height: 100%;
-  font-size: 1.25em;
+  font-size: 3.2vmin;
   border-radius: 12px;
   border-width: 1px;
 }
