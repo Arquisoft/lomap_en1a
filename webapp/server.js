@@ -4,13 +4,20 @@ const express = require('express');
 let expressStaticGzip = require('express-static-gzip');
 const path = require('path');
 
-const portHttp = 3080;
-const portHttps = 3443;
+const portHttp = 80;
+const portHttps = 443;
 
 //Load certificates
-let privateKey = fs.readFileSync("certificates/privkey.pem");
-let certificate = fs.readFileSync("certificates/fullchain.pem");
+
+let privateKey = fs.readFileSync("certificates/host.key");
+let certificate = fs.readFileSync("certificates/host.cert");
 let credentials = { key: privateKey, cert: certificate };
+
+try {
+    privateKey = fs.readFileSync("certificates/privkey.pem");
+    certificate = fs.readFileSync("certificates/fullchain.pem");
+    credentials = { key: privateKey, cert: certificate };
+} catch (e) { console.log("Error loading certificates: " + e.message); }
 
 let app = express();
 

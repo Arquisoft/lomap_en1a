@@ -15,7 +15,7 @@ services:
       - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/privkey.pem
       - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/fullchain.pem
     ports:
-      - "3080:3080"
-      - "3443:3443"
+      - "80:80"
+      - "443:443"
     depends_on:
       - restapi

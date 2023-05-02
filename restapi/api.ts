@@ -27,7 +27,7 @@ let host = process.env.host || "localhost";
 api.use(
   cors({
     credentials: true,
-    origin: ["https://" + host + ":3443"],
+    origin: ["https://" + host + ":443"],
     allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: true,
   })
