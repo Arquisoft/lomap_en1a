@@ -24,6 +24,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
+app.all('*', function (req, res, next) {
+    if (req.secure) {
+        return next();
+    }
+    res.redirect('https://' + req.hostname + req.url);
+});
+
 https.createServer(credentials, app).listen(portHttps, () => {
     console.log("Webapp listening on " + portHttps);
 })
