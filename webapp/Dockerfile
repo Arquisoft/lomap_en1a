@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="https://localhost/api"
+ARG API_URI="https://localhost:5443/api"
 ENV REACT_APP_API_URI=$API_URI
 
 ARG host="localhost"
