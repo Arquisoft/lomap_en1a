@@ -80,43 +80,41 @@ skinparam actorStyle awesome
 'Definition of actors
 '-----------------------
 component WebApp as Frontend{
-    interface Api
+    interface Api as "api.ts"
+
     frame App {
-        frame MapView as "MapView.tsx" {
-            frame Mav as "map.tsx"
-            frame SlidingPanel {
-                frame FriendP as "FriendPanel.tsx"
-                frame CommentForm as "CommentForm.tsx"
-                frame CommentList as "CommentList.tsx"
-                frame InfoWindow as "InfoWindow.tsx"
-            }
+
+        package MapView as "Map" {
+            frame Mav as "MapView.tsx"
+            frame FriendP as "FriendPanel.tsx"
+            frame CommentForm as "CommentForm.tsx"
+            frame CommentList as "CommentList.tsx"
+            frame InfoWindow as "InfoWindow.tsx"
+            frame CreatePlaceWindow as "CreatePlaceWindow.tsx"
+            frame FilterCategory as "FilterCategory.tsx"
+            frame FilterList as "FilterList.tsx"
+            frame InfoWindow as "InfoWindow.tsx"
+            frame PictureSelector as "PictureSelector.tsx"
+            frame Sidebar as "Sidebar.tsx"
         }
-        frame NavBar as "NavBar.tsx"{
-            card Login as "Log in"
-            card Signup as "Sign up"
+
+        package Main as "mainPage"{
+            frame About as "About.tsx"
+            frame Contact as "Contact.tsx"
+            frame Footer as "Footer.tsx"
+            frame Home as "Home.tsx"
+            frame FV as "FriendsView.tsx"
+            frame Profile as "Profile.tsx"
+            frame SS as "SlideShow.tsx"
+            frame UserProfile as "UserProfile.tsx"
+            frame NavBar as "NavBar.tsx"
+            frame LoginForm as "LoginForm.tsx"
+            frame FAQ as "FAQ.tsx"
         }
-        frame LoginForm as "LoginForm.tsx" {
-            card Provider
-        }
-        frame UserProfile as "UserProfile.tsx" {
-            card username
-            card webid
-        }
-        frame About as "About.tsx"
-        frame Contact as "Contact.tsx"
     }
 }
 
 component RestAPI
-
-'-----------------------
-'Definition of relations
-'-----------------------
-App <-> Api
-Api <-l-> RestAPI
-webid -[hidden]- username
-Signup -[hidden]- Login
-
 
 @enduml
 ----
@@ -125,15 +123,28 @@ Signup -[hidden]- Login
 [options="header", cols = "2, 5"]
 |===
 | Name            | Responsibility
-| Api | Interacts with the RestAPI through HTTP requests
-| App | Main component of the application, that is the only component that the index shows
-| Contact.tsx | Redirects to the contact information page
-| About.tsx | Redirects to the about page
-| UserProfile.tsx | Shows the name and webId of the current user logged in
-| LoginForm.tsx | Offers the option to log in with an Identity Provider
-| NavBar.tsx | Tops the main view of the page, and offers log in and logout options
-| MapView.tsx | Main component of the page itself. Contains the most important components of the frontend
+| About.tsx | Redirects to the about page.
+| api.ts | Interacts with the RestAPI through HTTP requests.
+| CommentForm.tsx | Form to post a new comment in a place.
+| CommentList.tsx | List that contains all the comments of a place.
+| Contact.tsx | Redirects to the contact information page.
+| CreatePlaceWindow.tsx | Window for the creation of a new place.
+| FilterCategory.tsx | Strip holding the filters of the application.
+| Footer.tsx | Contains the links to the About and Contact pages.
+| FriendPanel.tsx | Small panel that holds your friends.
+| FriendsView.tsx | Friend management page.
+| Home.tsx | Presents the application and its features.
+| InfoWindow.tsx | Holds the information of a place.
+| LoginForm.tsx | Offers the option to log in with an Identity Provider.
+| MapView.tsx | Main component of the page itself. Contains the most important components of the frontend.
+| NavBar.tsx | Tops the main view of the page, and offers log in and logout options.
+| PictureSelector.tsx | Allows users to select an image to upload.
+| Profile.tsx | Shows your profile.
+| Sidebar.tsx | Contains all pop-down menus of the map.
+| SlideShow.tsx | Used to hold several images as a carousel.
+| UserProfile.tsx | Shows the name and webId of the current user logged in.
 |===
+
 
 ==== Level 2: RestAPI
 The RestAPI block, also called LoMapCore, encompasses all business-logic components, as well as data-source management and interaction with other services. It is in charge of managing the storage of data, the interaction with the PODs and the enforcement of all business rules.
@@ -155,6 +166,13 @@ component RestAPI as Backend{
                 artifact PodManager as "PodManager.ts"
                 artifact PodSessionManager as "PodSessionManager.ts"
                 artifact RDFCreator as "RDFCreator.ts"
+                artifact PermissionManager as "PermissionManager.ts"
+                component PermissionManagement {
+                    artifact FriendPermission as "FriendPermission.ts"
+                    artifact Permission as "Permission.ts"
+                    artifact PublicPermission as "PublicPermission.ts"
+                    artifact PrivatePermission as "PrivatePermission.ts"
+                }
     }
 
     component Domain {
@@ -198,6 +216,11 @@ component WebApp
 '-----------------------
 Controllers <-l-> WebApp
 
+PictureRepo -[hidden]r-> PodAccess
+Repositories <--d--> Database
+Repositories <-u-> PodAccess
+PodAccess <-d-> POD
+
 CommentController -[hidden]- PictureController
 PictureController -[hidden]- PlaceController
 PlaceController -[hidden]- ScoreController
@@ -225,16 +248,7 @@ PlaceController -> PlaceService
 ScoreController -> ScoreService
 UserController -> UserService
 
-'Controllers -u-> Dtos
-'Services -u-> Dtos
-'
-'Repositories -u-> Entities
-'Services -u-> Entities
-
-PictureRepo -[hidden]r-> PodAccess
-Repositories <--d--> Database
-Repositories <-u-> PodAccess
-PodAccess <-d-> POD
+PodAccess -[hidden]d-- Domain
 
 @enduml
 ----
@@ -249,6 +263,7 @@ PodAccess <-d-> POD
 | Services   | Manage all business rules of the application, and use the repositories to persist said data.
 | Repositories   | Handle the storage of the data provided by the services. They interact with the database dn with the PodAccess.
 | PodAccess   | In charge of handling POD accesses, authentication and data fetching.
+| PermissionManagement   | Handles the required permissions to access POD data.
 |===
 
 ==== Database
