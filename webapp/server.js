@@ -14,6 +14,13 @@ let credentials = { key: privateKey, cert: certificate };
 
 let app = express();
 
+app.all('*', function (req, res, next) {
+    if (req.secure) {
+        return next();
+    }
+    res.redirect('https://' + req.hostname + req.url);
+});
+
 //Base path of our application. We serve first the brotli version (compression).
 app.use('/', expressStaticGzip('build', {
     enableBrotli: true,
@@ -24,23 +31,18 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
-app.all('*', function (req, res, next) {
-    if (req.secure) {
-        return next();
-    }
-    res.redirect('https://' + req.hostname + req.url);
-});
-
-https.createServer(credentials, app).listen(portHttps, () => {
-    console.log("Webapp listening on " + portHttps);
-})
-    .on("error", (error) => {
-        console.error("Error occured: " + error.message);
-    });;
 app
     .listen(portHttp, () => {
         console.log("Webapp listening on " + portHttp);
     })
+    .on("error", (error) => {
+        console.error("Error occured: " + error.message);
+    });
+
+
+https.createServer(credentials, app).listen(portHttps, () => {
+    console.log("Webapp listening on " + portHttps);
+})
     .on("error", (error) => {
         console.error("Error occured: " + error.message);
     });

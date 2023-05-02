@@ -10,11 +10,19 @@ const app: Application = express();
 const portHttp: number = 5080;
 const portHttps: number = 5443;
 
+app.all('*', function(req, res, next){
+  if (req.secure) {
+      return next();
+  }
+  res.redirect('https://'+ req.hostname + ":" + portHttps + req.url);
+});
+
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
 let host = process.env.host || "localhost";
 
+//Load certificates
 let privateKey = readFileSync("certificates/privkey.pem");
 let certificate = readFileSync("certificates/fullchain.pem");
 let credentials = { key: privateKey, cert: certificate };
@@ -25,13 +33,6 @@ app.use("/api", api);
 DatabaseConnection.setDatabase(
   "mongodb+srv://admin:admin@lomap.aux4co1.mongodb.net/?retryWrites=true&w=majority" as string
 );
-
-app.all('*', function(req, res, next){
-  if (req.secure) {
-      return next();
-  }
-  res.redirect('https://'+req.hostname + req.url);
-});
 
 app
   .listen(portHttp, (): void => {
