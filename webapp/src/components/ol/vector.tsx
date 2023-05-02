@@ -10,7 +10,7 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser,getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
@@ -19,7 +19,7 @@ import { Place } from "../../domain/Place";
 import LoadingSpinner from "../LoadingSpinner";
 
 
-
+// @ts-ignore
 
 
 //Global variables---------------------------------
@@ -106,7 +106,7 @@ const addAllPlacesByUser = async (handleIsMainLoading?: (value: boolean) => Prom
 const getMarkers = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
   //addPublicPlaces(counter)
   //addSharedPlaces(counter)
-  if(handleIsMainLoading){
+  if (handleIsMainLoading) {
     handleIsMainLoading(true);
   }
   addAllPlacesByUser(handleIsMainLoading);
@@ -344,7 +344,7 @@ function Vector(props: TVectorLayerComponentProps) {
     props.handleInfoWindowData({
       title: place.name,
       creator: place.owner,
-      category:place.category,
+      category: place.category,
       id: place.id,
       latitude: place.latitude,
       longitude: place.longitude,
