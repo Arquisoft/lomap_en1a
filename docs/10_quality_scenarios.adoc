@@ -59,9 +59,9 @@ The quality scenarios propose metrics and methods used to evaluate the quality r
 
 |QS2|Usability|Ease of Learning|A new user wants to find a place with the app in less than 5 minutes.|High|Low
 
-|QS3|Operational|Availability|The application must be available the 99% of the time.|Medium|High
+|QS3|Operability|Availability|The application must be available the 99% of the time.|Medium|High
 
-|QS4|Operational|Performance|25 concurrent users request the map of a given city in less than 10 seconds.|High|High
+|QS4|Operability|Performance|25 concurrent users request the map of a given city in less than 10 seconds.|High|High
 
 |QS5|Operational|Robustness|The application should keep working for other users if one user experiences problems.|Medium|Medium
 |QS6|Integrity|Security|User data must be transmitted and stored securely.|Low|High

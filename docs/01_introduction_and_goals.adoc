@@ -22,12 +22,12 @@ These are the most important quality goals this application must fulfill:
 |===
 |Code|Quality category|Quality attribute|Scenario
 |QS2|Usability|Ease of Learning|A new user wants to find a place with the app in less than 5 minutes.
-|QS4|Operational|Performance|25 concurrent users request the map of a given city in less than 10 seconds.
+|QS4|Operability|Performance|25 concurrent users request the map of a given city in less than 10 seconds.
 |QS7|Integrity|Privacy|Sensible user data will not be accessible for anyone but the user.
 |QS8|Maintainability & Support|Testability|The application should have a test coverage greater than 80%.
 |===
 
-For the full list of quality goals, refer to the <<_quality_goals>>.
+For the full list of quality goals, refer to the link:10_quality_scenarios.adoc#_quality_scenarios[quality scenario list].
 
 === Stakeholders
 These are some stakeholders the application has to interact with:

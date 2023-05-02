@@ -104,7 +104,7 @@ A document database will be used to store metadata about entities in the domain 
 The concept of link data aims to provide a faster, more private way of handling information inside the application. It works as follows: entities (such as places or reviews) are stored in each user's POD, and have a UUID associated with them. They only contain data about themselves, such as names, links or webIds.
 They do not contain other entities (for example, in the case of places, they don't contain its reviews), but that information is stored in the database as small documents that contain the two entities to link, as well as some extra information to include the privacy level of the item and the webId of the owner.
 
-Refer to link:05_building_block_view.adoc[the database schema] for a representation of this data.
+Refer to link:05_building_block_view.adoc#_database[database schema] for a representation of this data.
 
 
 === Session management
