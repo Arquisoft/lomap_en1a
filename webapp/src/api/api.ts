@@ -11,7 +11,7 @@ import { Visibility } from "../domain/Visibility";
 //Add a comment
 export async function addComment(comment: Comment): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
   try{
     response = await fetch(apiEndPoint + "/comment/add", {
@@ -39,7 +39,7 @@ export async function addComment(comment: Comment): Promise<boolean> {
 
 export async function getComments(id: string): Promise<Comment[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -59,7 +59,7 @@ export async function getComments(id: string): Promise<Comment[]> {
 //Add a score
 export async function addScore(score: Score): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -89,7 +89,7 @@ export async function addScore(score: Score): Promise<boolean> {
 //Get scores for a place
 export async function getScores(id: String): Promise<Score[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -109,7 +109,7 @@ export async function getScores(id: String): Promise<Score[]> {
 //Add a place
 export async function addPlace(place: Place): Promise<Place> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -146,7 +146,7 @@ export async function addPlace(place: Place): Promise<Place> {
 //Pictures----------------------------------------------
 export async function getPictures(id: string): Promise<Picture[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -165,7 +165,7 @@ export async function getPictures(id: string): Promise<Picture[]> {
 
 export async function addPicture(picture: Picture): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -199,7 +199,7 @@ export async function addPicture(picture: Picture): Promise<boolean> {
 //List places by visibility
 export async function getPlaces(visibility: string): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -219,7 +219,7 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 
 export async function getAllPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response = await fetch(apiEndPoint + "/place/all/list", {
     credentials: "include",
     mode: "cors",
@@ -234,7 +234,7 @@ export async function getPublicPlacesByPublicUser(
 ): Promise<Place[]> {
   let userId = encodeURIComponent(id);
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -251,7 +251,7 @@ export async function getPublicPlacesByPublicUser(
 
 export async function getPublicPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -268,7 +268,7 @@ export async function getPublicPlacesByUser(): Promise<Place[]> {
 
 export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let newId = encodeURIComponent(id);
   let response;
 
@@ -286,7 +286,7 @@ export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
 
 export async function getPrivatePlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -304,7 +304,7 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
 //List shared places by user
 export async function getSharedPlacesByUser(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -322,7 +322,7 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
 //List shared places by friends
 export async function getSharedPlacesByFriends(): Promise<Place[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -340,7 +340,7 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
 //User--------------------------------------------------------
 export async function addFriend(id: string): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -365,7 +365,7 @@ export async function addFriend(id: string): Promise<boolean> {
 
 export async function getFriendRequests(): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -383,7 +383,7 @@ export async function getFriendRequests(): Promise<User[]> {
 
 export async function getFriendsForUser(id: string): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let userId = encodeURIComponent(id);
   let response;
@@ -402,7 +402,7 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
 
 export async function getProfile(): Promise<User> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -420,7 +420,7 @@ export async function getProfile(): Promise<User> {
 
 export async function getProfileById(id: string): Promise<User> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let userId = encodeURIComponent(id);
   let response;
@@ -442,7 +442,7 @@ export async function getProfileById(id: string): Promise<User> {
 
 export async function getAllPublicUsers(): Promise<User[]> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -460,7 +460,7 @@ export async function getAllPublicUsers(): Promise<User[]> {
 
 export async function isLoggedIn(): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let response;
 
@@ -478,7 +478,7 @@ export async function isLoggedIn(): Promise<boolean> {
 
 export async function addUserToList(): Promise<boolean> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
   let response;
 
   try {
@@ -503,7 +503,7 @@ export async function login(
   redirectUrl: string
 ): Promise<void> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);
@@ -516,7 +516,7 @@ export async function login(
 //Logout
 export async function logout(): Promise<void> {
   const apiEndPoint =
-    process.env.REACT_APP_API_URI || "https://localhost:5443/api";
+    "https://lomapen1a.cloudns.ph:5443/api";
 
   await fetch(apiEndPoint + "/logout", {
     credentials: "include",
