@@ -4,8 +4,6 @@
 # :earth_africa: LoMap :earth_africa:
 ## _Private and user-friendly maps using SOLID PODs_
 
----
-
 LoMap is a map service intended for users who value their privacy above all. Developed by HappySw for the Council of Brussels, LoMap aims to give users back the control of their data, while providing a slick interface for the end-user.
 It is written in Typescript, built with React, Node.js and Express, and is based around the use of SolidProject's PODs to host the user's data.
 
