@@ -83,7 +83,7 @@ export class PodSessionManager {
   }
 
   public async isLoggedIn(sessionId: string): Promise<boolean> {
-    Assertion.exists(sessionId, "The user must be logged in.");
+    if (sessionId === undefined || sessionId === null) return false
     let isLoggedIn = (await getSessionFromStorage(sessionId))?.info.isLoggedIn;
 
     if (isLoggedIn == undefined) {
