@@ -54,9 +54,9 @@ function LoggedNavbar(props: LogoutProps) {
     let host = process.env.host || "localhost";
     let url = window.location.href;
     if (url.includes("https")) {
-      return "https://" + host + ":3443/map"
+      return "https://" + host + ":443/map"
     } else {
-      return "http://" + host + ":3080/map"
+      return "http://" + host + ":80/map"
     }
 
   }

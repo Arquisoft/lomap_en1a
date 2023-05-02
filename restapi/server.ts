@@ -15,8 +15,8 @@ app.use(metricsMiddleware);
 
 let host = process.env.host || "localhost";
 
-let privateKey = readFileSync("certificates/host.key");
-let certificate = readFileSync("certificates/host.cert");
+let privateKey = readFileSync("certificates/privkey.pem");
+let certificate = readFileSync("certificates/fullchain.pem");
 let credentials = { key: privateKey, cert: certificate };
 
 app.use(bp.json());
@@ -25,6 +25,13 @@ app.use("/api", api);
 DatabaseConnection.setDatabase(
   "mongodb+srv://admin:admin@lomap.aux4co1.mongodb.net/?retryWrites=true&w=majority" as string
 );
+
+app.all('*', function(req, res, next){
+  if (req.secure) {
+      return next();
+  }
+  res.redirect('https://'+req.hostname + req.url);
+});
 
 app
   .listen(portHttp, (): void => {

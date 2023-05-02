@@ -5,7 +5,7 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="https://20.38.6.214:3443/api"
+ARG API_URI="https://20.38.6.214:443/api"
 ENV REACT_APP_API_URI=$API_URI
 
 ARG HOST_URI="20.38.6.214"
