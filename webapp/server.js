@@ -4,8 +4,8 @@ const express = require('express');
 let expressStaticGzip = require('express-static-gzip');
 const path = require('path');
 
-const portHttp = 80;
-const portHttps = 443;
+const portHttp = 3080;
+const portHttps = 3443;
 
 //Load certificates
 let privateKey = fs.readFileSync("certificates/privkey.pem");
