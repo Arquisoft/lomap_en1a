@@ -15,7 +15,7 @@ defineFeature(feature, test => {
     page = await browser.newPage();
 
     await page
-      .goto("http://localhost:80", {
+      .goto("http://172.187.193.114:3000", {
         waitUntil: "networkidle0",
       })
       .catch(() => { });
