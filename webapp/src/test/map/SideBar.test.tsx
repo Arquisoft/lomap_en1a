@@ -5,7 +5,6 @@ import { Place } from "../../domain/Place";
 import MySideBar from "../../components/map/SideBar";
 import { FriendWindowDataType, InfoWindowDataType } from "../../components/map/MapView";
 import { Visibility } from "../../domain/Visibility";
-import { useState } from "react";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { User } from "../../domain/User";
 import { Category } from "../../domain/Category";
