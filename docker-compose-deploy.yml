@@ -11,6 +11,9 @@ services:
       
   webapp:
     image: ghcr.io/arquisoft/lomap_en1a/webapp:latest
+    volumes:
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/privkey.pem
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/fullchain.pem
     ports:
       - "80:80"
       - "443:443"
