@@ -20,8 +20,6 @@ app.all('*', function(req, res, next){
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });
 app.use(metricsMiddleware);
 
-let host = process.env.host || "localhost";
-
 //Load certificates
 let privateKey = readFileSync("certificates/privkey.pem");
 let certificate = readFileSync("certificates/fullchain.pem");

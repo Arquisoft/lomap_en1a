@@ -63,7 +63,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         env:
-          API_URI: https://${{ secrets.DEPLOY_HOST }}:5443/api
+          host: ${{ secrets.HOST_NAME }}
         with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
@@ -80,6 +80,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
+        env:
+          API_URI: https://${{ secrets.HOST_NAME }}:5443/api
         with:
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
