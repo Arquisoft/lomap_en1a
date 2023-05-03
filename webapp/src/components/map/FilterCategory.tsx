@@ -1,5 +1,5 @@
 import { FormGroup } from "@material-ui/core";
-import { Button, Checkbox, FormControlLabel} from "@mui/material";
+import { Button, Checkbox, FormControlLabel } from "@mui/material";
 import { Category } from "../../domain/Category";
 import { updateMarkers, visibleCategories } from "../ol/vector";
 
@@ -24,12 +24,12 @@ export function CategoryList(): JSX.Element {
       className="checkbox-group"
       aria-label="categories"
     >
-      <FilterCategory name="Bar" handleChange={handleChange}/>
-      <FilterCategory name="Monument" handleChange={handleChange}/>
-      <FilterCategory name="Museum" handleChange={handleChange}/>
-      <FilterCategory name="Restaurant" handleChange={handleChange}/>
-      <FilterCategory name="Sight" handleChange={handleChange}/>
-      <FilterCategory name="Shop" handleChange={handleChange}/>
+      <FilterCategory name="Bar" handleChange={handleChange} />
+      <FilterCategory name="Monument" handleChange={handleChange} />
+      <FilterCategory name="Museum" handleChange={handleChange} />
+      <FilterCategory name="Restaurant" handleChange={handleChange} />
+      <FilterCategory name="Sight" handleChange={handleChange} />
+      <FilterCategory name="Shop" handleChange={handleChange} />
       <Button onClick={applyFilters}>
         Apply filters
       </Button>
@@ -42,6 +42,7 @@ function FilterCategory(props: { name: string, handleChange: (event: React.Chang
   return (
     <>
       <FormControlLabel control={<Checkbox
+        id={props.name}
         value={props.name.toUpperCase()}
         onChange={event => props.handleChange(event, event.currentTarget.value)}
       />} label={props.name} />

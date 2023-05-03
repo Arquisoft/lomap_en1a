@@ -6,6 +6,7 @@ import { Place } from "../../domain/Place";
  * Is used by the Place service to perform its operations.
  */
 export interface PlaceRepository {
+  findAll(sessionId: string): Place[] | PromiseLike<Place[]>;
   /**
    * Adds a place to the user's POD.
    * @param sessionId

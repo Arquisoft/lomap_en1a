@@ -5,15 +5,15 @@ import { PodManager } from "./pods/PodManager";
 
 export class UserRepositoryImpl implements UserRepository {
 
-    getProfile(sessionId: string, webId: string): Promise<User> {
+    async getProfile(sessionId: string, webId: string): Promise<User> {
         return PodManager.dataManager.getUser(sessionId, webId);
     }
 
-    getFriends(sessionId: string, webId: string): Promise<User[]> {
+    async getFriends(sessionId: string, webId: string): Promise<User[]> {
         return PodManager.dataManager.getFriends(sessionId, webId);
     }
 
-    isLoggedIn(sessionId: string): Promise<boolean> {
+    async isLoggedIn(sessionId: string): Promise<boolean> {
         return PodManager.sessionManager.isLoggedIn(sessionId);
     }
 
@@ -33,26 +33,32 @@ export class UserRepositoryImpl implements UserRepository {
     }
 
     private async sendFriendRequest(sessionId: string, currentUser: string, friend: string) {
-        let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
-
-        if (!friendFriends.includes(currentUser)) {
-            DatabaseConnection.add("friends",
-                {
-                    requester: currentUser,
-                    requestee: friend
-                });
+        try {
+            let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
+            if (!friendFriends.includes(currentUser)) {
+                DatabaseConnection.add("friends",
+                    {
+                        requester: currentUser,
+                        requestee: friend
+                    });
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
     private async deleteFriendRequest(sessionId: string, currentUser: string, friend: string) {
-        let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
-
-        if (friendFriends.includes(currentUser)) {
-            DatabaseConnection.delete("friends",
-                {
-                    requester: friend,
-                    requestee: currentUser
-                });
+        try {
+            let friendFriends = (await PodManager.dataManager.getFriends(sessionId, friend)).map(user => { return user.getWebId() });
+            if (friendFriends.includes(currentUser)) {
+                DatabaseConnection.delete("friends",
+                    {
+                        requester: friend,
+                        requestee: currentUser
+                    });
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

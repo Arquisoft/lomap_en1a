@@ -52,4 +52,6 @@ export interface PlaceService {
    * @returns A list of the places publicly posted by the current user.
    */
   findOwnPublic(sessionId: string): Promise<Place[]>;
+
+  findAll(sessionId: string): Promise<Place[]>;
 }

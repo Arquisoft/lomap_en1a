@@ -2,12 +2,7 @@ import { render, act, waitFor, fireEvent } from "@testing-library/react";
 
 import * as api from '../../api/api'
 import { Place } from "../../domain/Place";
-import MySideBar from "../../components/map/SideBar";
-import { FriendWindowDataType, InfoWindowDataType } from "../../components/map/MapView";
 import { Visibility } from "../../domain/Visibility";
-import { useRef, useState } from "react";
-import { ProSidebarProvider } from "react-pro-sidebar";
-import { User } from "../../domain/User";
 import CreatePlaceWindow from "../../components/map/CreatePlaceWindow";
 import { Category } from "../../domain/Category";
 
@@ -30,8 +25,8 @@ test('check place is added', async () => {
         handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
 
       )
-    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
-    const input = container.querySelector('input[name="text"]')!;
+    await waitFor(()=>expect(getByText("New place!")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('textarea[name="text"]')!;
     fireEvent.change(input, { target: { value: "hola" } })
     const button = getByText("Add place");
     fireEvent.click(button);
@@ -51,8 +46,8 @@ test('check place is not added', async () => {
         handleDeleteMarker={handleDeleteMarker} handleIsOpen={handleIsOpen} /> 
 
       )
-    await waitFor(()=>expect(getByText("Add place")).toBeInTheDocument()) //Wait for component to render
-    const input = container.querySelector('input[name="text"]')!;
+    await waitFor(()=>expect(getByText("New place!")).toBeInTheDocument()) //Wait for component to render
+    const input = container.querySelector('textarea[name="text"]')!;
     fireEvent.change(input, { target: { value: "hola" } })
     const button = getByText("Add place");
     fireEvent.click(button);

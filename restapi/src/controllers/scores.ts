@@ -23,8 +23,8 @@ module.exports = function (api: Router, service: ScoreService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var place: string = <string>req.params.place;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let place: string = <string>req.params.place;
 
         return res.send(await service.findByPlace(sessionId, place));
       } catch (error) {
@@ -37,7 +37,6 @@ module.exports = function (api: Router, service: ScoreService) {
   //Add a score
   api.post("/score/add", async (req: any, res: Response): Promise<Response> => {
     try {
-      Assertion.exists(req.body.user, "A user must be provided.");
       Assertion.exists(req.body.score, "An score must be provided.");
       Assertion.exists(req.body.place, "A place must be provided.");
       Assertion.exists(req.body.visibility, "A visibility must be provided.");
@@ -46,16 +45,15 @@ module.exports = function (api: Router, service: ScoreService) {
         "The user must be logged in."
       );
 
-      var sessionId: string = <string>req.session.solidSessionId;
-      var punt: number = <number>req.body.score;
-      var placeId: string = <string>req.body.place;
-      var visibility: Visibility = <Visibility>req.body.visibility;
+      let sessionId: string = <string>req.session.solidSessionId;
+      let punt: number = <number>req.body.score;
+      let placeId: string = <string>req.body.place;
+      let visibility: Visibility = <Visibility>req.body.visibility;
 
-      var score: ScoreDto = new ScoreDto();
+      let score: ScoreDto = new ScoreDto();
       score.score = punt;
       score.place = placeId;
       score.visibility = visibility;
-      score.visibility = Visibility.PUBLIC;
 
       return res.send(await service.add(sessionId, score));
     } catch (error) {

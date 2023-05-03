@@ -2,7 +2,7 @@
     "location": "lomap/",
     "appUrl": "http://localhost",
     "handle": "/api",
-    "port": ":5000",
+    "port": ":5443",
     "clientName": "LoMap EN1A",
     "profilePodZone": "profile/card",
     "mongoUrl": "mongodb+srv://lomapen1a:<password>@lomap.aux4co1.mongodb.net/?retryWrites=true&w=majority"

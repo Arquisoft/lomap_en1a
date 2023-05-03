@@ -16,15 +16,6 @@ export interface PictureService {
   add(sessionId: string, picture: PictureDto): Promise<boolean>;
 
   /**
-   * Finds images posted by a user.
-   * @param sessionId
-   * @param user REMOVE
-   * @returns A list of images posted by the user.
-   */
-  // TODO: Remove 'user'
-  findOwn(sessionId: string, user: string): Promise<Picture[]>;
-
-  /**
    * Finds images posted about a certain place.
    * <p>
    * Retrieves images posted by the current user or its friends; as long as they have shared said

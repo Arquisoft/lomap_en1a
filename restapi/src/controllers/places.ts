@@ -25,7 +25,7 @@ module.exports = function (api: Router, service: PlaceService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
+        let sessionId: string = <string>req.session.solidSessionId;
 
         return res.send(await service.findOwnPublic(sessionId));
       } catch (error) {
@@ -46,8 +46,8 @@ module.exports = function (api: Router, service: PlaceService) {
         );
         Assertion.exists(req.params.user, "A user must be provided.");
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var user: string = <string>req.params.user;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let user: string = <string>req.params.user;
         user = decodeURIComponent(user);
 
         return res.send(await service.findPublic(sessionId, user));
@@ -69,8 +69,8 @@ module.exports = function (api: Router, service: PlaceService) {
         );
         Assertion.exists(req.params.user, "A user must be provided.");
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var user: string = <string>req.params.user;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let user: string = <string>req.params.user;
         user = decodeURIComponent(user);
 
         return res.send(await service.findFriendForUser(sessionId, user));
@@ -91,7 +91,7 @@ module.exports = function (api: Router, service: PlaceService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
+        let sessionId: string = <string>req.session.solidSessionId;
 
         return res.send(await service.findFriend(sessionId));
       } catch (error) {
@@ -111,7 +111,7 @@ module.exports = function (api: Router, service: PlaceService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
+        let sessionId: string = <string>req.session.solidSessionId;
 
         return res.send(await service.findOwn(sessionId));
       } catch (error) {
@@ -131,7 +131,7 @@ module.exports = function (api: Router, service: PlaceService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
+        let sessionId: string = <string>req.session.solidSessionId;
 
         return res.send(await service.findSharedFriends(sessionId));
       } catch (error) {
@@ -154,15 +154,15 @@ module.exports = function (api: Router, service: PlaceService) {
         "The user must be logged in."
       );
 
-      var sessionId: string = <string>req.session.solidSessionId;
-      var name: string = <string>req.body.name;
-      var description: string = <string>req.body.description;
-      var visibility: Visibility = <Visibility>req.body.visibility;
-      var category: Category = <Category>req.body.category;
-      var latitude: number = <number>req.body.latitude;
-      var longitude: number = <number>req.body.longitude;
+      let sessionId: string = <string>req.session.solidSessionId;
+      let name: string = <string>req.body.name;
+      let description: string = <string>req.body.description;
+      let visibility: Visibility = <Visibility>req.body.visibility;
+      let category: Category = <Category>req.body.category;
+      let latitude: number = <number>req.body.latitude;
+      let longitude: number = <number>req.body.longitude;
 
-      var place: PlaceDto = new PlaceDto();
+      let place: PlaceDto = new PlaceDto();
       place.name = name;
       place.latitude = latitude;
       place.longitude = longitude;
@@ -176,4 +176,25 @@ module.exports = function (api: Router, service: PlaceService) {
       return res.status(400).send({ error: "The place could not be added." });
     }
   });
+
+  api.get(
+    "/place/all/list",
+    async (req: any, res: Response): Promise<Response> => {
+      try {
+        Assertion.exists(
+          req.session.solidSessionId,
+          "The user must be logged in."
+        );
+
+        let sessionId: string = <string>req.session.solidSessionId;
+
+        return res.send(await service.findAll(sessionId));
+      } catch (error) {
+        console.log(error.message);
+        return res
+          .status(400)
+          .send({ error: "The places could not be fetched." });
+      }
+    }
+  );
 };

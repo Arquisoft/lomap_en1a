@@ -23,8 +23,8 @@ module.exports = function (api: Router, service: CommentService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var place: string = <string>req.params.place;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let place: string = <string>req.params.place;
 
         return res.send(await service.findByPlace(sessionId, place));
       } catch (error) {
@@ -49,12 +49,12 @@ module.exports = function (api: Router, service: CommentService) {
           "The user must be logged in."
         );
 
-        var sessionId: string = <string>req.session.solidSessionId;
-        var text: string = <string>req.body.comment;
-        var placeId: string = <string>req.body.place;
-        var visibility: Visibility = <Visibility>req.body.visibility;
+        let sessionId: string = <string>req.session.solidSessionId;
+        let text: string = <string>req.body.comment;
+        let placeId: string = <string>req.body.place;
+        let visibility: Visibility = <Visibility>req.body.visibility;
 
-        var comment = new CommentDto();
+        let comment = new CommentDto();
         comment.place = placeId;
         comment.text = text;
         comment.visibility = visibility;

@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import { Comment } from '../../domain/Comment';
 import { Visibility } from '../../domain/Visibility';
 import { VisibilitySelect } from './CreatePlaceWindow';
+import { Box } from '@mui/material';
 
 type CommentFormProps = {
   OnCommentListChange: () => void;
@@ -32,7 +33,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
 
   const handleChange = async (value: string) => {
-    var newVisibility = (Visibility as any)[value]
+    let newVisibility = (Visibility as any)[value]
 
     setVisibility(newVisibility);
   }
@@ -44,6 +45,7 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
 
     let result: boolean = await addComment(new Comment("", text, props.place, "", new Date(), visibility)); //The comment still has no ID
     if (result) {
+      setText("");
       setNotificationStatus(true);
       setNotification({
         severity: 'success',
@@ -67,32 +69,42 @@ export default function CommentForm(props: CommentFormProps): JSX.Element {
   return (
     <>
       <form name="register" onSubmit={handleSubmit}>
-        <Grid container spacing={1} justifyContent="space-around">
+        <Grid container spacing={3} justifyContent="space-around">
+          <Grid item xs={6.5}>
+            <TextField className="text-box"
+              style={{ width: '100%' }}
+              multiline
+              rows={4}
+              required
+              spellCheck={false}
+              name="text"
+              placeholder="Write your review"
+              variant="filled"
+              value={text}
+              onChange={e => {
+                setText(e.target.value);
+              }}
 
-          <Grid item xs={6}>
-              <TextField
-                multiline
-                rows={2}
-                required
-                name="text"
-                placeholder="Write your review"
-                variant="filled"
-                value={text}
-                onChange={e => {
-                  setText(e.target.value);
-                
-
-                }}
-
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <VisibilitySelect visibility={visibility} handleVisibilityChange={handleChange}/>
-            </Grid>
-            <Grid item xs={3}>
-              <Button variant="contained" type="submit">Post</Button>
-            </Grid>
-         
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+              <VisibilitySelect visibility={visibility} handleVisibilityChange={handleChange} />
+            </Box>
+          </Grid>
+          <Grid item xs={2.5}>
+            <Box
+              height="100%"
+              display="flex"
+              justifyContent="center"
+              flexDirection="column">
+              <Button sx={{ height: '65%', fontSize: '60%' }} variant="contained" type="submit" disabled={text.length === 0}>Post</Button>
+            </Box>
+          </Grid>
         </Grid>
 
 

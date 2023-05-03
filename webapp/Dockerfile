@@ -5,15 +5,16 @@ WORKDIR /app
 #Install the dependencies
 RUN npm install
 
-ARG API_URI="http://20.77.8.13:5000/api"
+ARG API_URI="http://lomapen1a.cloudns.ph:5443/api"
 ENV REACT_APP_API_URI=$API_URI
 
-ARG HOST_URI="20.77.8.13"
-ENV host=$HOST_URI
+ARG HOST_DOMAIN="lomapen1a.cloudns.ph"
+ENV host=$HOST_DOMAIN
 
 #Create an optimized version of the webapp
 RUN npm run build
 
 #Execute npm run prod to run the server
 #CMD [ "npm", "run", "prod" ]
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
+CMD node server.js
