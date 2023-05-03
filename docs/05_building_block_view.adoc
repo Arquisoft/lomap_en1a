@@ -130,6 +130,7 @@ Api <-> App
 | CommentList.tsx | List that contains all the comments of a place.
 | Contact.tsx | Redirects to the contact information page.
 | CreatePlaceWindow.tsx | Window for the creation of a new place.
+| FAQ.tsx | Contains the Frequently Asked Questions of the application.
 | FilterCategory.tsx | Strip holding the filters of the application.
 | Footer.tsx | Contains the links to the About and Contact pages.
 | FriendPanel.tsx | Small panel that holds your friends.
