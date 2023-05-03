@@ -4,7 +4,7 @@ The runtime view offers a different perspective of the structure of the applicat
 
 === Login scenario
 
-This scenario describes a high-level overview of the process a user takes to log into the application, from the .
+This scenario describes a high-level overview of the process a user takes to log into the application.
 
 [plantuml,"Login scenario",svg]
 ----
