@@ -27,14 +27,14 @@ jobs:
   docker-push-webapp:
     name: Push webapp Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    #needs: [tests]
+    needs: [tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST_RUBEN }}
-        API_URI: https://${{ secrets.DEPLOY_HOST_RUBEN }}:5443/api
+        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST }}
+        API_URI: https://${{ secrets.DEPLOY_HOST }}:5443/api
       with:
           name: arquisoft/lomap_en1a/webapp
           username: ${{ github.actor }}
@@ -45,13 +45,13 @@ jobs:
   docker-push-restapi:
     name: Push restapi Docker Image to GitHub Packages
     runs-on: ubuntu-latest
-    #needs: [tests]
+    needs: [tests]
     steps:
     - uses: actions/checkout@v3
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
-        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST_RUBEN }}
+        HOST_DOMAIN: ${{ secrets.DEPLOY_HOST }}
       with:
           name: arquisoft/lomap_en1a/restapi
           username: ${{ github.actor }}
@@ -67,9 +67,9 @@ jobs:
     - name: Deploy over SSH
       uses: fifsky/ssh-action@master
       with:
-        host: ${{ secrets.DEPLOY_HOST_RUBEN }}
+        host: ${{ secrets.DEPLOY_HOST }}
         user: ${{ secrets.DEPLOY_USER }}
-        key: ${{ secrets.DEPLOY_KEY_RUBEN }}
+        key: ${{ secrets.DEPLOY_KEY }}
         command: |
           wget https://raw.githubusercontent.com/arquisoft/lomap_en1a/deploy-with-https-certificate-3/docker-compose-deploy.yml -O docker-compose.yml
           docker-compose stop
