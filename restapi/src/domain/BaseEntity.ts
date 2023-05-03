@@ -8,8 +8,4 @@ export abstract class BaseEntity {
   public getId(): string {
     return this.id;
   }
-
-  public setId(id: string) {
-    this.id = id;
-  }
 }

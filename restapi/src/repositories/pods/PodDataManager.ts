@@ -10,7 +10,6 @@ import {
   getUrlAll,
   SolidDataset,
   createSolidDataset,
-  buildThing,
   addIri,
   getUrl,
 } from "@inrupt/solid-client";
@@ -85,15 +84,14 @@ export class PodDataManager {
 
     return true;
   }
-
   public async getProfile(sessionId: string, webId: string) {
     let session = await getSessionFromStorage(sessionId);
     if (session == null) {
-      throw new Error();
+      throw new Error("Session could not be found.");
     }
 
     if (webId == undefined) {
-      throw new Error();
+      throw new Error("WebId cannot be undefined.");
     }
     let a = webId.split("profile")[0];
     let url = a + this.profilePodZone + "#me";
@@ -143,7 +141,8 @@ export class PodDataManager {
     Assertion.exists(sessionId, "The user must be logged in.");
     Assertion.exists(webId, "A web id must be provided.");
 
-    let session = await getSessionFromStorage(sessionId);
+    try{
+      let session = await getSessionFromStorage(sessionId);
 
     if (session == null) {
       throw Error("The user must be logged in.");
@@ -165,6 +164,9 @@ export class PodDataManager {
     });
 
     PodManager.permissionManager.setupFriendPermissions(sessionId);
+    }catch(e){
+      return false;
+    }
 
     return true;
   }

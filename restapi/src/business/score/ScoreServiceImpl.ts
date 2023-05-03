@@ -48,10 +48,6 @@ export class ScoreServiceImpl implements ScoreService {
     return this.scoreRepository.add(sessionId, s);
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Score[]> {
-    return this.scoreRepository.findOwn(sessionId, user);
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Score[]> {
     return this.scoreRepository.findByPlace(sessionId, place);
   }

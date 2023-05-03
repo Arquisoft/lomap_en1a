@@ -16,15 +16,6 @@ export interface CommentService {
   add(sessionId: string, comment: CommentDto): Promise<boolean>;
 
   /**
-   * Finds comments posted by a user.
-   * @param sessionId
-   * @param user REMOVE
-   * @returns A list of comments posted by the user.
-   */
-  // TODO: Remove 'user'
-  findOwn(sessionId: string, user: string): Promise<Comment[]>;
-
-  /**
    * Finds comments posted about a certain place.
    * <p>
    * Retrieves comments posted by the current user or its friends; as log as they have shared said

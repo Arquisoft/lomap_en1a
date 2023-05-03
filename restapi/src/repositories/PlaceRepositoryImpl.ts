@@ -2,7 +2,8 @@ import { PlaceRepository } from "../business/repositories/PlaceRepository";
 import { Place } from "../domain/Place";
 import { PodManager } from "./pods/PodManager";
 import { SolidDataset } from "@inrupt/solid-client";
-import { User } from "../domain/User";
+import { Worker } from "./pararelism/Worker";
+import { asyncParallelForEach } from "async-parallel-foreach";
 
 export class PlaceRepositoryImpl implements PlaceRepository {
   async add(sessionId: string, place: Place): Promise<boolean> {
@@ -62,26 +63,77 @@ export class PlaceRepositoryImpl implements PlaceRepository {
   async findSharedFriends(sessionId: string): Promise<Place[]> {
     let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
 
-    let places: Place[] = [];
+    let friendsWebIds: string[] = (
+      await PodManager.dataManager.getFriends(sessionId, webId)
+    ).map((f) => f.getWebId());
 
-    let friends: User[] = await PodManager.dataManager.getFriends(
-      sessionId,
-      webId
+    let workers: Worker[] = [];
+    let places: Place[] = [];
+    let resource = "$webIdlomap/$visibility/places";
+
+    friendsWebIds.forEach((webId: string) => {
+      workers.push(
+        new Worker(
+          sessionId,
+          resource.replace("$webId", webId).replace("$visibility", "friends")
+        )
+      );
+    });
+
+    if (workers.length == 0) return places;
+
+    await asyncParallelForEach(workers, -1, async (w: Worker) => {
+      await w.run();
+    });
+
+    workers.forEach((w) => {
+      places = places.concat(
+        PodManager.entityParser.parsePlaces(w.getResult())
+      );
+    });
+
+    return places;
+  }
+
+  async findAll(sessionId: string): Promise<Place[]> {
+    let webId = await PodManager.sessionManager.getCurrentWebId(sessionId);
+
+    let workers: Worker[] = [];
+    let places: Place[] = [];
+    let resource = "$webIdlomap/$visibility/places";
+
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "private")
+      )
     );
 
-    for (let f in friends) {
-      let friend: User = friends[f];
-      let thing: SolidDataset = await PodManager.dataManager.fetchData(
+    workers.push(
+      new Worker(
         sessionId,
-        "places",
-        friend.getWebId(),
-        "friends"
+        resource.replace("$webId", webId).replace("$visibility", "friends")
+      )
+    );
+
+    workers.push(
+      new Worker(
+        sessionId,
+        resource.replace("$webId", webId).replace("$visibility", "public")
+      )
+    );
+
+    if (workers.length == 0) return places;
+
+    await asyncParallelForEach(workers, -1, async (w: Worker) => {
+      await w.run();
+    });
+
+    workers.forEach((w) => {
+      places = places.concat(
+        PodManager.entityParser.parsePlaces(w.getResult())
       );
-      let ps: Place[] = PodManager.entityParser.parsePlaces(thing);
-      for (let place in ps) {
-        places.push(ps[place]);
-      }
-    }
+    });
 
     return places;
   }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import MySideBar from './SideBar';
 import { ProSidebarProvider } from "react-pro-sidebar";
 import InfoWindow from './InfoWindow';
@@ -29,6 +30,7 @@ export type FriendWindowDataType = {
 
 export type InfoWindowDataType = {
   title: string,
+  creator: string,
   category: Category,
   id: string,
   latitude: number,
@@ -59,6 +61,7 @@ export default function MapView(): JSX.Element {
   const [slidingPaneView, setSlidingPaneView] = useState(0);
   const [infoWindowData, setInfoWindowData] = useState<InfoWindowDataType>({
     title: "",
+    creator: "",
     category: Category.BAR,
     id: "",
     latitude: 0,
@@ -66,7 +69,7 @@ export default function MapView(): JSX.Element {
     description: ""
   });
   const [friendWindowData, setFriendWindowData] = useState<FriendWindowDataType>({
-    friend: new User("", ""),
+    friend: new User("", "", null),
     friendPhoto: "",
     sharedSites: []
   });
@@ -117,13 +120,6 @@ export default function MapView(): JSX.Element {
     }
 
 
-  }
-
-  function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  function toggleIsMainLoading() {
-    setIsMainLoading(false);
   }
 
 

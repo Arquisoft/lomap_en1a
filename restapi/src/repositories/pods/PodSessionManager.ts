@@ -19,14 +19,13 @@ export class PodSessionManager {
   private clientName = configuration.clientName;
 
   public async login(req: any, res: Response): Promise<void> {
-    let host: string = process.env.host || "localhost";
+    let host: string = "lomapen1a.cloudns.ph";
 
     let provider = req.params.provider;
     Assertion.exists(provider, "A provider must be given.");
     provider = decodeURIComponent(provider);
 
-    let redirect = req.params.redirect;
-    redirect = "http://" + host + ":5000/api/login/success";
+    let redirect = "https://" + host + ":5443/api/login/success";
 
     const session = new Session();
     req.session.solidSessionId = session.info.sessionId;
@@ -41,24 +40,24 @@ export class PodSessionManager {
         },
       });
     } catch (err) {
-      res.redirect("http://" + host + ":3000/login/fail");
+      res.redirect("https://" + host + ":443/login/fail");
     }
   }
 
   public async successfulLogin(req: any, res: Response): Promise<any> {
-    let host: string = process.env.host || "localhost";
+    let host: string = "lomapen1a.cloudns.ph";
 
     let sessionId = req.session.solidSessionId;
 
     let solidSession = await getSessionFromStorage(sessionId);
 
     await solidSession?.handleIncomingRedirect(
-      `http://${host}${this.port}${this.handle}${req.url}`
+      `https://${host}${this.port}${this.handle}${req.url}`
     );
 
     await PodManager.permissionManager.setupPod(sessionId);
 
-    return res.redirect("http://" + host + ":3000/map");
+    return res.redirect("https://" + host + ":443/map");
   }
 
   public async logout(req: any, res: Response): Promise<any> {
@@ -84,6 +83,7 @@ export class PodSessionManager {
   }
 
   public async isLoggedIn(sessionId: string): Promise<boolean> {
+    Assertion.exists(sessionId, "The user must be logged in.");
     let isLoggedIn = (await getSessionFromStorage(sessionId))?.info.isLoggedIn;
 
     if (isLoggedIn == undefined) {

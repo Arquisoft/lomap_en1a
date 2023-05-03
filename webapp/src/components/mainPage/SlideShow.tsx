@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 
 const delay = 2500;
@@ -39,7 +40,7 @@ export default function Slideshow(props: SlideshowProps): JSX.Element {
           <div className="slide"
             key={index}
             /*style={{ backgroundImage: `url(${image})` }}*/>
-            <img src={image}></img>
+            <img src={image} alt="Alternate text"></img>
           </div>
         ))}
       </div>

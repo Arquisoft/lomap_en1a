@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React from "react";
 import { MapBrowserEvent } from "ol";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -10,34 +11,35 @@ import { TOpenLayersProps, TVectorLayerComponentProps, IMapContext } from "./ol-
 import { Geometry } from 'ol/geom';
 import Icon from "ol/style/Icon";
 import { Coordinate } from "ol/coordinate";
-import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser } from "../../api/api";
+import { getPublicPlacesByUser, getPrivatePlacesByUser, getSharedPlacesByUser, getSharedPlacesByFriends, getPublicPlacesByPublicUser, getAllPlacesByUser } from "../../api/api";
 import { useEffect } from "react";
 import { FeatureLike } from "ol/Feature";
 import { useGeographic } from 'ol/proj';
 import { SlidingPaneView } from "../map/MapView";
 import { Place } from "../../domain/Place";
 import LoadingSpinner from "../LoadingSpinner";
-import { Grid } from "@mui/material";
+import { Category } from "../../domain/Category";
 
 
 
 
 
 //Global variables---------------------------------
-var source: VectorSource = new VectorSource({
+let source: VectorSource = new VectorSource({
   features: undefined,
 });
-export var displayMap = new Map();
-export var visibleCategories = new Array();
-var lastMarker = new Feature();
-var currVisibility = "";
+export let displayMap = new Map();
+// @ts-ignore
+export let visibleCategories: Category[] = [];
+let lastMarker = new Feature();
+let currVisibility = "";
 
 //List of all places added to the map
-var places: Place[];
+let places: Place[];
 places = [];
 
 //List of public users to show their places
-export var displayedUsers: string[];
+export let displayedUsers: string[];
 displayedUsers = [];
 //-------------------------------------------------
 
@@ -46,84 +48,82 @@ displayedUsers = [];
 
 //Adds all the places given in the array to the map
 const addAllMarkers = (p: Place[], myOwn: boolean) => {
-  var coordinates: number[];
+  let coordinates: number[];
   for (let i = 0; i < p.length; i++) {
     places.push(p[i])
     coordinates = [p[i].longitude, p[i].latitude];
-    var visibility = p[i].visibility;
-    var category = p[i].category;
+    let visibility = p[i].visibility;
+    let category = p[i].category;
     if (myOwn || displayMap.get(p[i].id))
       addMarker(coordinates, visibility, category, p[i].id);
   }
 }
 
 //Adds all public places to the map
-const addPublicPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addPublicPlaces = async () => {
   getPublicPlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
-
   });
 
   //When filtering, the public places of other users added to the map should appear too
   for (let i = 0; i < displayedUsers.length; i++) {
     getPublicPlacesByPublicUser(displayedUsers[i]).then((p) => {
       addAllMarkers(p, true);
-      if (counter) {
-        counter(a => a + 1);
-      }
     })
   }
 }
 
 //Adds all private places to the map
-const addPrivatePlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addPrivatePlaces = async () => {
   getPrivatePlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
   });
 }
 
 //Adds all shared places to the map
-const addSharedPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+const addSharedPlaces = async () => {
   getSharedPlacesByUser().then((p) => {
     addAllMarkers(p, true);
-    if (counter) {
-      counter(a => a + 1);
-    }
   });
 }
 
 //Adds all friends places to the map
-export const addFriendPlaces = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
+export const addFriendPlaces = async () => {
   getSharedPlacesByFriends().then((p) => {
     addAllMarkers(p, false);
-    if (counter) {
-      counter(a => a + 1);
+  });
+}
+
+//Adds all places created by current user to the map
+const addAllPlacesByUser = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
+  getAllPlacesByUser().then((p) => {
+    addAllMarkers(p, true);
+    if (handleIsMainLoading) {
+      handleIsMainLoading(false);
     }
   });
 }
 
 //Adds all places to the map
-const getMarkers = async (counter?: React.Dispatch<React.SetStateAction<number>>) => {
-  addPublicPlaces(counter)
-  addSharedPlaces(counter)
-  addFriendPlaces(counter)
-  addPrivatePlaces(counter)
+const getMarkers = async (handleIsMainLoading?: (value: boolean) => Promise<void>) => {
+  //addPublicPlaces(counter)
+  //addSharedPlaces(counter)
+  if (handleIsMainLoading) {
+    handleIsMainLoading(true);
+  }
+  addAllPlacesByUser(handleIsMainLoading);
+  addFriendPlaces();
+  //addPrivatePlaces(counter)
 }
 
 const checkCategory = (category: string) => {
-  if (category == "DEFAULT" || visibleCategories.length == 0) {
+  if (category === "DEFAULT" || visibleCategories.length === 0) {
     return true;
   } else {
-    if (typeof category === undefined) {
+    if (category === undefined) {
       return false;
     } else {
-      var isCategoryVisible = false;
+      let isCategoryVisible = false;
       for (let i = 0; i < visibleCategories.length; i++) {
         if (visibleCategories[i] === category) {
           isCategoryVisible = true;
@@ -143,14 +143,14 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
     name: "feature"
   });
 
-  var color;
+  let color;
 
   switch (visibility) {
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
@@ -166,9 +166,9 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
   featureToAdd.setStyle(style);
   featureToAdd.setId(id);
 
-  var markerVisibility = visibility.toUpperCase()
-  var markerCategory = category;
-  if (category !== null && typeof category !== undefined) {
+  let markerVisibility = visibility.toUpperCase()
+  let markerCategory = category;
+  if (category !== null && category !== undefined) {
     markerCategory = markerCategory.toUpperCase();
   }
 
@@ -188,7 +188,7 @@ const addMarker = (coordinate: Coordinate, visibility: string, category: string,
 
 const checkVisibility = (visibility: string) => {
 
-  if (typeof currVisibility !== undefined) {
+  if (currVisibility !== undefined) {
     if (currVisibility && visibility !== currVisibility) {
       return false;
     }
@@ -217,13 +217,13 @@ export function removeMarkersByUserId(id: string) {
 
 export function addFriendMarkerById(id: string) {
   getSharedPlacesByFriends().then((p) => {
-    var coordinates: number[];
+    let coordinates: number[];
     for (let i = 0; i < p.length; i++) {
       if (p[i].id === id) {
         places.push(p[i])
         coordinates = [p[i].longitude, p[i].latitude];
-        var visibility = p[i].visibility;
-        var category = p[i].category;
+        let visibility = p[i].visibility;
+        let category = p[i].category;
         addMarker(coordinates, visibility, category, p[i].id, false, true);
       }
     }
@@ -238,8 +238,8 @@ function deleteAllMarkers(places: Place[]) {
 
 //Deletes a marker given its ID
 export function deleteMarkerById(id: string) {
-  var sourceFeatures = source.getFeatures()
-  var markerToDelete = sourceFeatures.find(marker => marker.getId() === id)
+  let sourceFeatures = source.getFeatures()
+  let markerToDelete = sourceFeatures.find(marker => marker.getId() === id)
   if (markerToDelete !== undefined) {
     source.removeFeature(markerToDelete);
   }
@@ -260,14 +260,14 @@ export function deleteMarker() {
 //Changes the colour of the last marker given its visibility
 export function changeMarkerColour(visibility: string) {
 
-  var color;
+  let color;
 
   switch (visibility) {
     case "public":
       color = 'rgb(255, 0, 0)';
       break;
     case "friends":
-      color = 'rgb(230, 120, 110)';
+      color = 'rgb(61, 179, 61)';
       break;
     case "private":
       color = 'rgb(127, 127, 127)';
@@ -341,10 +341,11 @@ function Vector(props: TVectorLayerComponentProps) {
 
     let f = feature as Feature<Point>;
     let id = f.getId() as string;
-    var place = findPlace(id);
+    let place = findPlace(id);
     place = place as Place;
     props.handleInfoWindowData({
       title: place.name,
+      creator: place.owner,
       category: place.category,
       id: place.id,
       latitude: place.latitude,
@@ -358,14 +359,6 @@ function Vector(props: TVectorLayerComponentProps) {
 
 
   }
-  const [counter, setCounter] = useState(0)
-
-  useEffect(() => {
-    console.log(counter)
-    if (counter == 4) {
-      setMainFalse()
-    }
-  }, [counter])
 
   //When map is first rendered
   useEffect(() => {
@@ -375,18 +368,14 @@ function Vector(props: TVectorLayerComponentProps) {
     props.map.on('singleclick', function (e) {
       props.map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
         onMarkerClick(feature);
-
       })
-
     });
 
-    getMarkers(setCounter)
+    getMarkers(props.handleIsMainLoading)
 
   }, [])
 
-  function setMainFalse() {
-    props.handleIsMainLoading(false)
-  }
+
 
 
 

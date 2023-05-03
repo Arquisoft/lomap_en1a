@@ -15,15 +15,6 @@ export interface PictureRepository {
   add(sessionId: string, picture: Picture): Promise<boolean>;
 
   /**
-   * Finds images posted by a specific user.
-   * @param sessionId
-   * @param user REMOVE
-   * @returns A list of the images found.
-   */
-  // TODO: Remove 'user'
-  findOwn(sessionId: string, user: string): Promise<Picture[]>;
-
-  /**
    * Finds images posted about a specific place.
    * @param sessionId
    * @param place Id of the place

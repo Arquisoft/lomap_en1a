@@ -42,10 +42,6 @@ export class CommentServiceImpl implements CommentService {
     return this.commentRepository.add(sessionId, c);
   }
 
-  async findOwn(sessionId: string, user: string): Promise<Comment[]> {
-    return this.commentRepository.findOwn(sessionId, user);
-  }
-
   async findByPlace(sessionId: string, place: string): Promise<Comment[]> {
     return this.commentRepository.findByPlace(sessionId, place);
   }
