@@ -23,10 +23,13 @@ api.use(
   })
 );
 
+const hostName = process.env.DOMAIN;
+const hostIp = process.env.IP;
+
 api.use(
   cors({
     credentials: true,
-    origin: ["https://20.77.68.160", "https://lomapen1a.cloudns.ph", "https://localhost"],
+    origin: ["https://" + hostName, "https://" + hostIp, "https://localhost"],
     allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: true,
   })

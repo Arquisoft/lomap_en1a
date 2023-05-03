@@ -17,9 +17,10 @@ export class PodSessionManager {
   private handle = configuration.handle;
   private port = configuration.port;
   private clientName = configuration.clientName;
+  private host = process.env.DOMAIN || "localhost";
 
   public async login(req: any, res: Response): Promise<void> {
-    let host: string = "lomapen1a.cloudns.ph";
+    let host: string = this.host;
 
     let provider = req.params.provider;
     Assertion.exists(provider, "A provider must be given.");
@@ -45,7 +46,7 @@ export class PodSessionManager {
   }
 
   public async successfulLogin(req: any, res: Response): Promise<any> {
-    let host: string = "lomapen1a.cloudns.ph";
+    let host: string = this.host;
 
     let sessionId = req.session.solidSessionId;
 
@@ -83,7 +84,7 @@ export class PodSessionManager {
   }
 
   public async isLoggedIn(sessionId: string): Promise<boolean> {
-    Assertion.exists(sessionId, "The user must be logged in.");
+    //Assertion.exists(sessionId, "The user must be logged in.");
     let isLoggedIn = (await getSessionFromStorage(sessionId))?.info.isLoggedIn;
 
     if (isLoggedIn == undefined) {

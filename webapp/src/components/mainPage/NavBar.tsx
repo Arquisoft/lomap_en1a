@@ -51,8 +51,8 @@ export default function NavBar(): JSX.Element {
 
 function LoggedNavbar(props: LogoutProps) {
   const getUrl = () => {
-    return "https://lomapen1a.cloudns.ph:443/map"
-
+    const host = process.env.DOMAIN || "localhost"
+    return "https://" + host + ":443/map"
   }
 
   //This is necessary because of a bug with Open layers. The page must be reloaded

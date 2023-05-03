@@ -10,9 +10,8 @@ import { Visibility } from "../domain/Visibility";
 
 //Add a comment
 export async function addComment(comment: Comment): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
   try{
     response = await fetch(apiEndPoint + "/comment/add", {
       credentials: "include",
@@ -38,12 +37,12 @@ export async function addComment(comment: Comment): Promise<boolean> {
 }
 
 export async function getComments(id: string): Promise<Comment[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
+  
   try {
     response = await fetch(apiEndPoint + "/comment/list/" + id, {
+      
       credentials: "include",
       mode: "cors",
     });
@@ -58,9 +57,8 @@ export async function getComments(id: string): Promise<Comment[]> {
 
 //Add a score
 export async function addScore(score: Score): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/score/add", {
@@ -88,9 +86,8 @@ export async function addScore(score: Score): Promise<boolean> {
 
 //Get scores for a place
 export async function getScores(id: String): Promise<Score[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/score/list/" + id, {
@@ -108,9 +105,8 @@ export async function getScores(id: String): Promise<Score[]> {
 
 //Add a place
 export async function addPlace(place: Place): Promise<Place> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/add", {
@@ -145,9 +141,8 @@ export async function addPlace(place: Place): Promise<Place> {
 
 //Pictures----------------------------------------------
 export async function getPictures(id: string): Promise<Picture[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -164,9 +159,8 @@ export async function getPictures(id: string): Promise<Picture[]> {
 }
 
 export async function addPicture(picture: Picture): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/picture/add", {
@@ -198,9 +192,8 @@ export async function addPicture(picture: Picture): Promise<boolean> {
 
 //List places by visibility
 export async function getPlaces(visibility: string): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -218,9 +211,8 @@ export async function getPlaces(visibility: string): Promise<Place[]> {
 //List public places by user
 
 export async function getAllPlacesByUser(): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response = await fetch(apiEndPoint + "/place/all/list", {
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response = await fetch(apiEndPoint + "/place/all/list", {
     credentials: "include",
     mode: "cors",
   });
@@ -233,9 +225,8 @@ export async function getPublicPlacesByPublicUser(
   id: string
 ): Promise<Place[]> {
   let userId = encodeURIComponent(id);
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/public/list/" + userId, {
@@ -250,9 +241,8 @@ export async function getPublicPlacesByPublicUser(
 }
 
 export async function getPublicPlacesByUser(): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/public/list", {
@@ -267,9 +257,8 @@ export async function getPublicPlacesByUser(): Promise<Place[]> {
 }
 
 export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let newId = encodeURIComponent(id);
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let newId = encodeURIComponent(id);
   let response;
 
   try {
@@ -285,9 +274,8 @@ export async function getPlacesToShareByUser(id: string): Promise<Place[]> {
 }
 
 export async function getPrivatePlacesByUser(): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/private/list", {
@@ -303,9 +291,8 @@ export async function getPrivatePlacesByUser(): Promise<Place[]> {
 
 //List shared places by user
 export async function getSharedPlacesByUser(): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/friends/list", {
@@ -321,9 +308,8 @@ export async function getSharedPlacesByUser(): Promise<Place[]> {
 
 //List shared places by friends
 export async function getSharedPlacesByFriends(): Promise<Place[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/place/shared/list", {
@@ -339,9 +325,8 @@ export async function getSharedPlacesByFriends(): Promise<Place[]> {
 
 //User--------------------------------------------------------
 export async function addFriend(id: string): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/users/friends/add", {
@@ -364,9 +349,8 @@ export async function addFriend(id: string): Promise<boolean> {
 }
 
 export async function getFriendRequests(): Promise<User[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -382,9 +366,8 @@ export async function getFriendRequests(): Promise<User[]> {
 }
 
 export async function getFriendsForUser(id: string): Promise<User[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let userId = encodeURIComponent(id);
   let response;
 
@@ -401,9 +384,8 @@ export async function getFriendsForUser(id: string): Promise<User[]> {
 }
 
 export async function getProfile(): Promise<User> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -419,9 +401,8 @@ export async function getProfile(): Promise<User> {
 }
 
 export async function getProfileById(id: string): Promise<User> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let userId = encodeURIComponent(id);
   let response;
 
@@ -441,9 +422,8 @@ export async function getProfileById(id: string): Promise<User> {
 
 
 export async function getAllPublicUsers(): Promise<User[]> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -459,9 +439,8 @@ export async function getAllPublicUsers(): Promise<User[]> {
 }
 
 export async function isLoggedIn(): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let response;
 
   try {
@@ -477,9 +456,8 @@ export async function isLoggedIn(): Promise<boolean> {
 }
 
 export async function addUserToList(): Promise<boolean> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-  let response;
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";  let response;
 
   try {
     response = await fetch(apiEndPoint + "/users/share", {
@@ -502,9 +480,8 @@ export async function login(
   oidcIssuer: string,
   redirectUrl: string
 ): Promise<void> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   let provider = encodeURIComponent(oidcIssuer);
   let redirect = encodeURIComponent(redirectUrl);
 
@@ -515,9 +492,8 @@ export async function login(
 
 //Logout
 export async function logout(): Promise<void> {
-  const apiEndPoint =
-    "https://lomapen1a.cloudns.ph:5443/api";
-
+  const host = process.env.DOMAIN || "localhost"
+const apiEndPoint = "https://" + host +":5443/api";
   await fetch(apiEndPoint + "/logout", {
     credentials: "include",
     mode: "cors",

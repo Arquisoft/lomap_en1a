@@ -6,6 +6,9 @@ WORKDIR /app
 RUN npm install
 
 ARG HOST_DOMAIN="lomapen1a.cloudns.ph"
-ENV host=$HOST_DOMAIN
+ENV DOMAIN=$HOST_DOMAIN
+
+ARG HOST_IP="localhost"
+ENV IP=$HOST_IP
 
 CMD [ "npm", "start" ]

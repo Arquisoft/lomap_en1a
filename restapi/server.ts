@@ -10,11 +10,13 @@ const app: Application = express();
 const portHttp: number = 5080;
 const portHttps: number = 5443;
 
+const hostName = process.env.DOMAIN || "localhost";
+
 app.all('*', function(req, res, next){
   if (req.secure) {
       return next();
   }
-  res.redirect('https://'+ "lomapen1a.cloudns.ph" + ":" + portHttps + req.url);
+  res.redirect('https://'+ hostName + ":" + portHttps + req.url);
 });
 
 const metricsMiddleware: RequestHandler = promBundle({ includeMethod: true });

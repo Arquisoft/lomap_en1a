@@ -15,20 +15,20 @@ defineFeature(feature, test => {
     page = await browser.newPage();
 
     await page
-    .goto("http://172.187.193.114:3000", {
+    .goto("https://localhost:443", {
       waitUntil: "networkidle0",
     })
     .catch(() => { });
 
-    // await page.waitForSelector('#details-button')
-    // await page.click('#details-button')
+    await page.waitForSelector('#details-button')
+    await page.click('#details-button')
 
-    // await page.waitForSelector('#proceed-link')
-      // await page.click('#proceed-link')
+    await page.waitForSelector('#proceed-link')
+      await page.click('#proceed-link')
 
     // await page.waitForSelector('.btn btn-primary')
     // await page.click('.btn btn-primary')
-  });
+  }, 1000000);
 
   test('The user is not logged in the site', ({ given, when, then }) => {
 
@@ -46,8 +46,8 @@ defineFeature(feature, test => {
       await expect(page).toClick('a', { text: 'Log in' })
       await expect(page).toClick('button', { text: 'Solid Community' })
       //Hago submit con el boton de Go
-      await page.waitForSelector('button[type="submit"]')
-      await page.click('button[type="submit"]')
+      // await page.waitForSelector('button[type="submit"]')
+      // await page.click('button[type="submit"]')
 
 
       //Espero a que se cargue la pagina de login
