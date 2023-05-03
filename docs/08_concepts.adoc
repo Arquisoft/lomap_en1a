@@ -3,7 +3,7 @@
 The application manages a lot of information. As such, it is required to define and explain some of them to reflect its internal workings.
 
 === Domain model
-The following domain diagram and its description aim to describe the entities the application manages. It is important to note that some of these entities are, as of now, not implemented or lacking their functionality.
+The following domain diagram and its description aims to describe the entities the application manages.
 
 [plantuml,"Domain Model",svg]
 ----
@@ -14,13 +14,31 @@ enum Visibility{
     FRIEND
 }
 
+enum Category {
+    BAR
+    MONUMENT
+    MUSEUM
+    RESTAURANT
+    SIGHT
+    SHOP
+}
+
+class User{
+    username : string
+    webId : string
+    photo : string
+}
+
+class Review {
+    place : string
+    owner : string
+    date : Date
+    visibility : Visibility
+}
+
 class Place{
     name : String
     coordinates : Coordinates
-}
-
-class Category{
-    name : String
 }
 
 class Picture{
@@ -35,37 +53,26 @@ class Score{
     score : int
 }
 
-class Route{
-    name : String
-}
+Visibility -[hidden]d- Category
 
-class User{
-    username : String
-    webId : String
-}
+User -[hidden]l-- Place
 
-enum Role{
-    CITIZEN
-    TOURIST
-    BUSINESS
-}
-
-
-
-Place "0..n" -down- "1" Category
-Place o-down- "0..n" Picture
-Place o-down- "0..n" Comment
-Place o-down- "0..n" Score
-
-
-User "1" -up- "0..n" Picture
-User "1" -up- "0..n" Comment
-User "1" -up- "0..n" Score
+User "1" -up- "0..n" Review
 User "1" -- "0..n" User : is friends with
-User "1" -left- "0..n" Place
+User "1" --- "n" Place
 
-Route "0..n" -- "1" Category
-Route "0..n" -left- "0..n" Place
+User -[hidden]right- Place
+Picture -[hidden]right- Comment
+Comment -[hidden]right- Score
+
+Score --d|> Review
+Picture --d|> Review
+Comment --d|> Review
+
+Review o-- Place
+Place -l- Category
+Visibility -d- Place
+Review -l- Visibility
 
 @enduml
 ----
@@ -84,17 +91,24 @@ Route "0..n" -left- "0..n" Place
 | Role | Users can be classified into different roles.
 |===
 
-
 === Security and user privacy
 
 In order to increase security and privacy, all users authenticate through their POD, that will store their data, friends and maps. This way the users can decide who can see and use their information, giving them more freedom and control over the data they share.
-
 
 === Persistence
 
 A document database will be used to store metadata about entities in the domain model. This metadata is intended to link entities with their containers, for example linking a comment to its associated place.
 
+==== Structure of link data
+
+The concept of link data aims to provide a faster, more private way of handling information inside the application. It works as follows: entities (such as places or reviews) are stored in each user's POD, and have a UUID associated with them. They only contain data about themselves, such as names, links or webIds.
+They do not contain other entities (for example, in the case of places, they don't contain its reviews), but that information is stored in the database as small documents that contain the two entities to link, as well as some extra information to include the privacy level of the item and the webId of the owner.
+
+Refer to link:index.html#_database[database schema] for a representation of this data.
+
 
 === Session management
 
-Since the POD is the only identity 'item' the application uses, each person will only sign in and have access to their saved data through it. Passwords will only be used by the Identity Provider to ensure the correct user is giving access to the POD's resources.
+Since the POD is the only identity 'token' the application uses, each person will only sign in and have access to their saved data through it. Passwords will only be used by the Identity Provider to ensure the correct user is giving access to the POD's resources.
+
+As a consequence, the application does not have to manage users. At a more basic level, the application is just another POD browser: it manages data stored in the PODs of users.

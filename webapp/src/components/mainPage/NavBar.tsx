@@ -1,59 +1,81 @@
-import { Link, useLocation} from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import logo from '../../images/logo.png';
 import Profile from "./Profile";
 import { CustomLink } from "../CustomLink";
+import { isLoggedIn } from "../../api/api";
 
 
-/*export interface NavBarProps {
-  isLoggedIn: boolean;
-}*/
+export interface LogoutProps {
+  handleLogout: (value: boolean) => Promise<void>;
+}
 
-export default function NavBar(/*props: NavBarProps*/): JSX.Element {
 
-  //FIXME: temporal
-  var url = useLocation();
-  const [show,setShow] = useState(false);
+export default function NavBar(): JSX.Element {
+  //const [cookies,setCookie] = useCookies();
 
-  //FIXME:temporal
+  //Better to use this here instead of the cookie
+  const handleShow = async () => {
+    isLoggedIn().then(b => {
+      setShow(b);
+    });
+  }
+
+  const handleLogout = async (value: boolean) => {
+    setLogout(value);
+  }
+  const [show, setShow] = useState(false);
+
+  const [logout, setLogout] = useState(false);
+
   useEffect(() => {
-    if(url.pathname!=="/" && url.pathname!=="/login"){
-      setShow(true)
-    }else{
-      setShow(false)
-    }
-  }, [url]);
+    handleShow();
+  }, []);
 
-    return (
-        <nav className="menu">
-            <Link to="/" className="site-title">
-                <img src={logo} alt="Logo" id="logo_img"></img>
-            </Link>
-            {/*props.isLoggedIn*/ show?<LoggedNavbar/> : <NotLoggedNavbar/>}
-        </nav>
-       
-    )
-    
+  useEffect(() => {
+    handleShow();
+  }, [logout]);
+
+  return (
+    <nav className="menu">
+      <Link to="/" className="site-title">
+        <img src={logo} alt="Logo" id="logo_img"></img>
+      </Link>
+      {show ? <LoggedNavbar handleLogout={handleLogout} /> : <NotLoggedNavbar />}
+    </nav>
+
+  )
+
 
 }
 
-function LoggedNavbar() {
+function LoggedNavbar(props: LogoutProps) {
+  const getUrl = () => {
+    return "https://lomapen1a.cloudns.ph:443/map"
+
+  }
+
+  //This is necessary because of a bug with Open layers. The page must be reloaded
+  const reload = () => {
+    let url = getUrl();
+    window.location.href = url;
+  }
+
   return (
-      <ul>
-        <CustomLink to="/map" >Map</CustomLink>
-        <Profile></Profile>
-      </ul>
-    
+    <ul>
+      <CustomLink to="/map" onClick={reload}>Map</CustomLink>
+      <Profile handleLogout={props.handleLogout} />
+    </ul>
+
   )
 }
 
 
 function NotLoggedNavbar() {
   return (
-      <ul>
-        <CustomLink to="/login" >Log in</CustomLink>
-        <CustomLink to="/signup" >Sign up</CustomLink>
-      </ul>
+    <ul>
+      <CustomLink to="/login" >Log in</CustomLink>
+    </ul>
   )
 }
 

@@ -1,7 +1,7 @@
 [[section-deployment-view]]
 
 == Deployment View
-The deployment of the application is done, ideally, in an Azure Machine in the Microsoft Cloud. Inside, two Docker containers are deployed: one holds the RestAPI and the other holds the WebApp.
+The deployment of the application is designed for a deployment in a Virtual Machine in the Azure Cloud. Inside, two Docker containers are deployed: one holds the RestAPI and the other holds the WebApp.
 
 Also, the POD and the Database are cloud-based, so they are held in their respective provider's infrastructure.
 
@@ -40,7 +40,7 @@ cloud Internet {
 
 POD <-r- RestAPI
 RestAPI -l-> Database
-WebApp -r-> MapProv
+WebApp -l-> MapProv
 DBProv -[hidden]- IDP
 IDP -[hidden]- MapProv
 

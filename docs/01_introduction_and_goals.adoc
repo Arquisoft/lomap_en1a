@@ -1,43 +1,43 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
-The main goal of the project is to develop a software system that allows users to create personalized maps holding any place they want. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
+The goal of the project is to develop a software system that allows users to create personalized maps holding any place they want. These maps will be completely controlled by the users and may include places such as shops, bars, sights, etc. The software will include features to allow the users to add reviews, comments, etc.; share information with others; and many other options.
 
 === Requirements Overview
-The principal motivation for the creation of this system is to develop a software that the users could use and find useful for moving around their cities, saving interesting places for them, finding or promoting different places of it, etc.
+The principal motivation for the creation of this system is to develop a software that the users could use to move around their cities, save interesting places for them, find or promote different places of it, etc.
 
-The software is planned to include several features to provide some services. It must:
+The software is planned to include several features to provide several services. It must:
 
 * Allow the users to add and store any location they want to include in their maps.
 * Customize said locations with images and names.
 * Allow to add and see their and other person's reviews, comments, pics, etc. about some place.
-* Include a way of managing the information that is accesible with other users, i.e. the level of privacy desired for each piece of information.
+* Include a way of managing the information that is accessible with other users, i.e. the level of privacy desired for each piece of information.
 * Filter the map's markers by category, friends, etc.
 
-There and more requirements can be found in the link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
+These and more requirements can be found in the link:https://arquisoft.github.io/course2223/labAssignmentDescription.html[version 1.0 of the assignment description].
 
 === Quality Goals
-These are some quality goals this application must fulfill:
+These are the most important quality goals this application must fulfill:
 
-[options="header", cols = "1,2,5,2,2"]
+[options="header", cols = "1,2,2,5"]
 |===
-|Code|Quality attribute|Scenario|Priority|Implementation complexity
-|QG3|Understandability|A new user should be able to find or add a place with the app in less than 5 minutes|High|Medium
-|QG4|Security/Privacy|Sensible user data will not be accessible for anyone but the user|High|High
-|QG5|Usability|The application should be usable both on a computer and on mobile devices|Medium|Medium
-|QG6|Testability|The application should allow for easy testing of its main components|Medium|High
+|Code|Quality category|Quality attribute|Scenario
+|QS2|Usability|Ease of Learning|A new user wants to find a place with the app in less than 5 minutes.
+|QS4|Operability|Performance|25 concurrent users request the map of a given city in less than 10 seconds.
+|QS7|Integrity|Privacy|Sensible user data will not be accessible for anyone but the user.
+|QS8|Maintainability & Support|Testability|The application should have a test coverage greater than 80%.
 |===
+
+For the full list of quality goals, refer to the link:index.html#_quality_scenarios[quality scenario list].
 
 === Stakeholders
 These are some stakeholders the application has to interact with:
 [options="header", cols= "1,3,3"]
 |===
 |Role/Name|Contact|Expectations
-| _Developers_ | _Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen
-Pablo Valdés Fernández_ | _Create, test (not entirely), and document the system and communicate with the other roles to get feedback and resources._
-| _Teacher_ | _Pablo González González_ | _Guide the developers and solve any conflicts. He is present in the meeting minutes and also provides the
-project's skeleton._
-| _SOLID challenge_ | _Inrupt/Empathy_ | _From what is know currently, a public challenge will take place and people in this institution will have to evaluate the
-usage of SOLID regarding user data._
-| _Users_ | _People that use or are expected to use the application_ | _The developers will use them in the intermediate phases of the development to
-find problems, and test things like usability or UX_
+| Developers | Sergio del Rey Álvarez, Diego Moragón Merallo, Vanesa Alonso Ramos, Rubén del Rey Álvarez, Álvaro González Erigoyen, Pablo Valdés Fernández | Create, test (not entirely), and document the system and communicate with the other roles to get feedback and resources.
+| Teaching staff | Pablo González González | Guide the developers and solve any conflicts. He is present in the meeting minutes and also provides the project's skeleton.
+| SOLID challenge | Inrupt/Empathy | From what is know currently, a public challenge will take place and people in this institution will have to evaluate the usage of SOLID regarding user data.
+| Users | People that use or are expected to use the application | The developers will use them in the intermediate phases of the development to find problems, and test things like usability or UX.
+| Government | Government of Brussels | The Government is the client that is paying for the development of the software.
+
 |===

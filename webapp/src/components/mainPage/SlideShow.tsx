@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 
 const delay = 2500;
@@ -34,18 +35,13 @@ export default function Slideshow(props: SlideshowProps): JSX.Element {
 
   return (
     <div className="slideshow">
-      <div
-        className="slideshowSlider"
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-      >
+      <div className="slideshowSlider" style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
         {props.images.map((image, index) => (
-          <div
-            className="slide"
+          <div className="slide"
             key={index}
-            style={{ 
-                backgroundImage: `url(${image})`
-              }}
-          ></div>
+            /*style={{ backgroundImage: `url(${image})` }}*/>
+            <img src={image} alt="Alternate text"></img>
+          </div>
         ))}
       </div>
 

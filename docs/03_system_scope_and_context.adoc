@@ -1,43 +1,115 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
-In this chapter we will give a brief description of what will be the scope of the project, as well as for which context it is being created for.
 
-As stated in the introduction, the project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods. As such, the application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
+As stated in the introduction, the project is aimed at creating a software system for decentralized maps, where users can store their shared information in SOLID Pods.
+As such, the application will be able to retrieve that data (given the permission from the user), and use it to display whatever markers the user might want to add.
 
 === Business Context
+
 The system is related with several partners, shown in the following diagram:
 
-image::3-businessContext-0.svg[Business Diagram]
+[plantuml, "Business Context", svg]
+----
+@startuml
+' Business Context Diagram v1.0
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+actor User
+database POD
+database Database
+hexagon LoMap
+cloud "Map Provider" as MapService
+
+'-----------------------
+'Definition of relations
+'-----------------------
+User -r..> LoMap : Uses the services
+User -d-> POD : Controlls permissions
+POD <-> LoMap : Fetches data about the user
+LoMap <-d-> Database : Stores link data
+LoMap <- MapService : Provides the map
+
+@enduml
+----
 
 The elements shown in the diagram and their functions are explained here:
 
-[options="header", cols = "2, 4, 4"]
+[options="header",cols = "2, 4, 4"]
 |=======================
 |Partner          |Description             |Output
-|User             |Uses the application to manage its markers, reviews and other content |User data that will be stored in its POD and shown to other users, according to the level of privacy desired
-|POD              |Holds user data, in control of its owner | Provides access to the data the user wants to share
-|LoMap            |The application that provides the services to the user      |Interacts with the user, its POD and the Map provider to provide the desired service
-|Database       |Holds user link data, to compartmentalize and link separate pieces of data |Link information that allows data to be fetched from the correct places
-|Map provider    |Provides the map the user sees when it uses the application  | The map, and the coordinate information needed to create new markers
+|User             |Uses the application to manage its markers, reviews and other content |User data that will be stored in its POD and shown to other users, according to the level of privacy desired.
+|POD              |Holds user data, in control of its owner | Provides access to the data the user wants to share.
+|LoMap            |The application that provides the services to the user      |Interacts with the user, its POD and the Map provider to provide the desired service.
+|Database       |Holds user link data, to compartmentalize and link separate pieces of data |Link information that allows data to be fetched from the correct places.
+|Map provider    |Provides the map the user sees when it uses the application  | The map, and the coordinate information needed to create new markers.
 |=======================
 
 === Technical Context
 
 The technical system's structure consists in the following components:
 
-image::3-technicalContext-0.svg[Technical Diagram]
+[plantuml, "Technical Context", svg]
+----
+@startuml
+' Technical Context Diagram v1.0
+skinparam actorStyle awesome
+'-----------------------
+'Definition of actors
+'-----------------------
+node UserPC{
+    actor User
+}
+
+node AzureVM {
+    component Frontend
+    component Backend
+}
+
+cloud Internet
+
+cloud MapService as "Map Provider"
+
+node MongoDB{
+    database Database
+}
+
+frame SOLID {
+    database POD
+}
+
+node GitHubRepo as "GitHub repository" {
+    file Documentation
+}
+
+'-----------------------
+'Definition of relations
+'-----------------------
+Backend --> Internet
+User -[hidden]- AzureVM
+User --> Frontend : webpage
+Frontend <-> Backend : local
+Frontend -d-> Internet
+GitHubRepo --> AzureVM : deployment
+Internet -- MapService
+Internet --> MongoDB
+Internet -r-> SOLID
+@enduml
+----
 
 Each component will be explained in more detail:
 
-[options="header", cols = "2, 5"]
+[options="header",cols = "2, 5"]
 |=======================
 |Technical component   |Description
-|GitHub Repository     |Repository storing the code and documentation of the project
-|Documentation         |Files explaining the system's architecture following the arc42 template
-|Frontend              |System components that handle the interaction with the user through the user interface
-|Backend               |System components that handle the data processing logic
-|Database              |Persistent storage system to store the link data
-|Map provider          |Company that provides map information to display in the application
-|SOLID                 |Architecture providing a way to store the user data in a decentralized and remote way
-|POD                   |Decentralized server in which a single user's information is stored
+
+|GitHub Repository     |Repository storing the code and documentation of the project.
+|Documentation         |Files explaining the system's architecture following the arc42 template.
+|Frontend              |System components that handle the interaction with the user through the user interface.
+|Backend               |System components that handle the data processing logic.
+|Database              |Persistent storage system to store the link data.
+|Map provider          |Company that provides map information to display in the application.
+|SOLID                 |Architecture providing a way to store the user data in a decentralized and remote way.
+|POD                   |Decentralized server in which a single user's information is stored.
 |=======================

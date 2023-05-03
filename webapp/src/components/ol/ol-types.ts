@@ -1,19 +1,16 @@
 import Map from "ol/Map";
 import Feature from "ol/Feature";
+import { InfoWindowDataType } from "../map/MapView";
 
 export type TOpenLayersProps = {
   visibility: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setLatitude: React.Dispatch<React.SetStateAction<number>>;
-  setLongitude: React.Dispatch<React.SetStateAction<number>>;
-  setSlidingPaneView: React.Dispatch<React.SetStateAction<number>>;
-  setInfoWindowData: React.Dispatch<React.SetStateAction<{
-    id: string; //The ID of the place to show
-    title: string; //The name of the place to show
-    latitude: number;
-    longitude: number;
-
-  }>>
+  handleIsOpen: (value: boolean) => Promise<void>,
+  handleLatitude: (value: number) => Promise<void>,
+  handleLongitude: (value: number) => Promise<void>,
+  handleSlidingPaneView: (value: number) => Promise<void>,
+  handleInfoWindowData: (value: InfoWindowDataType) => Promise<void>
+  handleIsMainLoading: (value: boolean) => Promise<void>,
+  isMainLoading: boolean
 };
 
 export type TVectorLayerComponentProps = TOpenLayersProps & {

@@ -14,68 +14,84 @@ import { PlaceService } from "./PlaceService";
 import { PlaceRepository } from "../repositories/PlaceRepository";
 
 //Others
-import { v4 as generateUUID } from 'uuid';
-
+import { v4 as generateUUID } from "uuid";
 
 export class PlaceServiceImpl implements PlaceService {
+  private placeRepository: PlaceRepository =
+    Factory.repositories.getPlaceRepository();
 
-    private placeRepository: PlaceRepository = Factory.repositories.getPlaceRepository();
+  async add(sessionId: string, place: PlaceDto): Promise<Place> {
+    let id = generateUUID();
+    let name = place.name;
+    let description = place.description;
+    let latitude = place.latitude;
+    let longitude = place.longitude;
+    let visibility = place.visibility;
+    let category = place.category;
 
-    async add(sessionId: string, place: PlaceDto): Promise<Place> {
-        let id = generateUUID();
-        let name = place.name;
-        let description = place.description;
-        let latitude = place.latitude;
-        let longitude = place.longitude;
-        let visibility = place.visibility;
+    if (name == undefined || name == null)
+      throw new Error("The name cannot be undefined.");
 
-        if (name == undefined || name == null) {
-            throw new Error();
-        }
+    if (description == undefined || description == null)
+      throw new Error("The description cannot be undefined.");
 
-        if (description == undefined || description == null) {
-            throw new Error();
-        }
+    if (latitude == undefined || latitude == null)
+      throw new Error("The latitude cannot be undefined.");
+    if (latitude > 90 || latitude < -90)
+      throw new Error("The latitude value is out of bounds.");
 
-        if (latitude == undefined || latitude == null) {
-            throw new Error();
-        }
+    if (longitude == undefined || longitude == null)
+      throw new Error("The longitude cannot be undefined.");
+    if (longitude > 90 || longitude < -90)
+      throw new Error("The longitude value is out of bounds.");
 
-        if (longitude == undefined || longitude == null) {
-            throw new Error();
-        }
+    if (visibility == undefined || visibility == null)
+      throw new Error("The visibility cannot be undefined.");
 
-        if (visibility == undefined || visibility == null) {
-            throw new Error();
-        }
+    if (category == undefined || category == null)
+      throw new Error("The category cannot be undefined.");
 
-        let p = new Place(id, name, description, "", latitude, longitude, visibility);
+    let p = new Place(
+      id,
+      name,
+      description,
+      "",
+      latitude,
+      longitude,
+      visibility,
+      category
+    );
 
-        if (await this.placeRepository.add(sessionId, p)) {
-            return p;
-        }
+    if (await this.placeRepository.add(sessionId, p)) return p;
 
-        //FIXME
-        return new Place("ERR","","","",0,0,visibility);
-    }
+    throw new Error("The place could not be added.");
+  }
 
-    async findOwn(sessionId: string): Promise<Place[]> {
-        return this.placeRepository.findOwn(sessionId);
-    }
+  async findOwn(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findOwn(sessionId);
+  }
 
-    async findFriendForUser(sessionId: string, user: string): Promise<Place[]> {
-        return this.placeRepository.findFriendForUser(sessionId, user);
-    }
+  async findFriendForUser(sessionId: string, user: string): Promise<Place[]> {
+    return this.placeRepository.findFriendForUser(sessionId, user);
+  }
 
-    async findFriend(sessionId: string): Promise<Place[]> {
-        return this.placeRepository.findFriend(sessionId);
-    }
+  async findFriend(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findFriend(sessionId);
+  }
 
-    async findPublic(sessionId: string): Promise<Place[]> {
-        return this.placeRepository.findPublic(sessionId);
-    }
+  async findPublic(sessionId: string, webId: string): Promise<Place[]> {
+    return this.placeRepository.findPublic(sessionId, webId);
+  }
 
-    async findSharedFriends(sessionId: string): Promise<Place[]> {
-        return this.placeRepository.findSharedFriends(sessionId);
-    }
+  async findOwnPublic(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findOwnPublic(sessionId);
+  }
+
+  async findSharedFriends(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findSharedFriends(sessionId);
+  }
+
+  async findAll(sessionId: string): Promise<Place[]> {
+    return this.placeRepository.findAll(sessionId);
+  }
 }

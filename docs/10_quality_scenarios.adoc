@@ -3,44 +3,72 @@
 
 === Quality Tree
 
+The quality tree classifies the qualities the system will be evaluated about. We divide them in four main categories: Usability, Operational, Integrity and Maintainability & Support.
+
 [plantuml, "Quality Tree", svg]
 ----
 @startuml
-card Quality
+node Quality as "Quality Categories"
 
+card Usability
+storage EoU as "Ease of Use"
+storage EoL as "Ease of Learning"
+
+card Operational
 storage Availability
 storage Performance
-storage Understandability
-storage Privacy
-storage Security
-storage Usability
+storage Robustness
+
+card Integrity
+storage Sec as "Security"
+storage Priv as "Privacy"
+
+card MaS as "Maintainability & Support"
 storage Testability
+storage Maintainability
 
-Availability -[hidden]r- Performance
-Performance -[hidden]r- Understandability
-Understandability -[hidden]r- Privacy
-Privacy -[hidden]r- Security
-Security -[hidden]r- Usability
-Usability -[hidden]r- Testability
-
-Quality -d-> Availability
-Quality -d-> Performance
-Quality -d-> Understandability
-Quality -d-> Privacy
-Quality -d-> Security
+Quality -d-> Operational
+Quality -d-> Integrity
 Quality -d-> Usability
-Quality -d-> Testability
+Quality -d-> MaS
+
+Usability -d-> EoU
+Usability -d-> EoL
+
+Operational -d-> Availability
+Operational -d-> Performance
+Operational -d-> Robustness
+
+Integrity -d-> Sec
+Integrity -d-> Priv
+
+MaS -d-> Maintainability
+MaS -d-> Testability
 @enduml
 ----
 
 === Quality Scenarios
 
-[options="header",cols="1,2,5,1,1"]
+The quality scenarios propose metrics and methods used to evaluate the quality requirements of the application. This table is classified by quality category.
+
+[options="header",cols="1,2,2,5,1,1"]
 |===
-|Ref|Quality attribute|Scenario|Priority|Implementation complexity
-|1|Availability|The application must be available the 99% of the time|Low|High
-|2|Performance|25 concurrent users request the map of a given city in less than 10 seconds|Medium|High
-|3|Usability|A new user wants to find a place with the app in less than 5 minutes|High|Medium
-|4|Security|Sensible user data will not be accessible for anyone but the user|High|High
-|5|Usability|The application should be usable on a computer|High|Medium
+|Code|Quality category|Quality attribute|Scenario|Priority|Implementation complexity
+
+|QS1|Usability|Ease of Use|The application should be usable on a computer.|Medium|Medium
+
+|QS2|Usability|Ease of Learning|A new user wants to find a place with the app in less than 5 minutes.|High|Low
+
+|QS3|Operability|Availability|The application must be available the 99% of the time.|Medium|High
+
+|QS4|Operability|Performance|25 concurrent users request the map of a given city in less than 10 seconds.|High|High
+
+|QS5|Operational|Robustness|The application should keep working for other users if one user experiences problems.|Medium|Medium
+|QS6|Integrity|Security|User data must be transmitted and stored securely.|Low|High
+
+|QS7|Integrity|Privacy|Sensible user data will not be accessible for anyone but the user.|High|Medium
+|QS8|Maintainability & Support|Testability|The application should have a test coverage greater than 80%. |High|Low
+
+|QS9|Maintainability & Support|Maintainability|The code should be clear and documented enough to allow new developers to join the project.|Low|Low
+
 |===

@@ -1,29 +1,21 @@
-version: '3.5'
+version: "3.5"
 services:
   restapi:
     image: ghcr.io/arquisoft/lomap_en1a/restapi:latest
+    volumes:
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/privkey.pem
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/fullchain.pem
     ports:
-      - "5000:5000"
+      - "5080:5080"
+      - "5443:5443"
+      
   webapp:
     image: ghcr.io/arquisoft/lomap_en1a/webapp:latest
+    volumes:
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/privkey.pem:/app/certificates/privkey.pem
+      - /etc/letsencrypt/live/lomapen1a.cloudns.ph/fullchain.pem:/app/certificates/fullchain.pem
     ports:
-      - "3000:3000"
-    depends_on: 
+      - "80:80"
+      - "443:443"
+    depends_on:
       - restapi
-
-deploy:
-    name: Deploy over SSH
-    runs-on: ubuntu-latest
-    needs: [docker-push-restapi,docker-push-webapp]
-    steps:
-    - name: Deploy over SSH
-      uses: fifsky/ssh-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        mongo: ${{ secrets.MONGO_DATABASE_CONNECTION }}
-        command: |
-          wget https://raw.githubusercontent.com/arquisoft/lomap_en1a/master/docker-compose-deploy.yml -O docker-compose.yml
-          docker-compose stop
-          docker-compose rm -f
-          docker-compose pull   
-          docker-compose up -d
