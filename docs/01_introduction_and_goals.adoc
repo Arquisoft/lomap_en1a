@@ -27,7 +27,7 @@ These are the most important quality goals this application must fulfill:
 |QS8|Maintainability & Support|Testability|The application should have a test coverage greater than 80%.
 |===
 
-For the full list of quality goals, refer to the link:10_quality_scenarios.adoc#_quality_scenarios[quality scenario list].
+For the full list of quality goals, refer to the link:index.html#_quality_scenarios[quality scenario list].
 
 === Stakeholders
 These are some stakeholders the application has to interact with:
