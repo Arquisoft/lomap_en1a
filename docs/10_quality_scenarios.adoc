@@ -14,7 +14,7 @@ card Usability
 storage EoU as "Ease of Use"
 storage EoL as "Ease of Learning"
 
-card Operational
+card Operability
 storage Availability
 storage Performance
 storage Robustness
@@ -27,7 +27,7 @@ card MaS as "Maintainability & Support"
 storage Testability
 storage Maintainability
 
-Quality -d-> Operational
+Quality -d-> Operability
 Quality -d-> Integrity
 Quality -d-> Usability
 Quality -d-> MaS
@@ -35,9 +35,9 @@ Quality -d-> MaS
 Usability -d-> EoU
 Usability -d-> EoL
 
-Operational -d-> Availability
-Operational -d-> Performance
-Operational -d-> Robustness
+Operability -d-> Availability
+Operability -d-> Performance
+Operability -d-> Robustness
 
 Integrity -d-> Sec
 Integrity -d-> Priv
@@ -63,7 +63,7 @@ The quality scenarios propose metrics and methods used to evaluate the quality r
 
 |QS4|Operability|Performance|25 concurrent users request the map of a given city in less than 10 seconds.|High|High
 
-|QS5|Operational|Robustness|The application should keep working for other users if one user experiences problems.|Medium|Medium
+|QS5|Operability|Robustness|The application should keep working for other users if one user experiences problems.|Medium|Medium
 |QS6|Integrity|Security|User data must be transmitted and stored securely.|Low|High
 
 |QS7|Integrity|Privacy|Sensible user data will not be accessible for anyone but the user.|High|Medium
