@@ -5,7 +5,7 @@ import map from "../../images/map-app.png";
 import addPlace from "../../images/addPlace.png";
 import addFriend from "../../images/addFriend.png";
 import reviews from "../../images/reviews.png";
-import infoWindow from "../../images/infoWindow.png";
+import infoWindow from "../../images/barInfoWindow.png";
 import lomap from "../../images/LoMap logo.png";
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
