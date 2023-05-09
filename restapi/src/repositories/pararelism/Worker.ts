@@ -16,19 +16,21 @@ export class Worker {
   }
 
   public async run(): Promise<void> {
-    let session = await getSessionFromStorage(this.sessionId);
-
-    if (session == null) {
-      throw new Error("The user must be logged in.");
-    }
-
     let dataset = createSolidDataset();
 
-    try {
-      dataset = await getSolidDataset(this.resource, {
-        fetch: session.fetch,
-      });
-    } catch (e) {}
+    try{
+      let session = await getSessionFromStorage(this.sessionId);
+
+      if (session == null) {
+        throw new Error("The user must be logged in.");
+      }
+      try {
+        dataset = await getSolidDataset(this.resource, {
+          fetch: session.fetch,
+        });
+      } catch (e) {}
+    }catch(e){}
+
 
     this.result = dataset;
   }
